@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</title>
+<meta name="description" content="Navigable knowledge graph of an enterprise ontology that maps NIST SP 800-53 Rev. 5 controls to MITRE ATT&amp;CK Enterprise techniques, with source assertions, mitigation claims and SHACL shapes.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='%232457c5'/%3E%3Crect x='19' y='10' width='12' height='12' fill='%23b42318'/%3E%3Cpath d='M15 16h4' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --ink: #1d1d1f; --muted: #5a5a60; --line: #d9d9de;
+  --accent: #2457c5; --focus: #ffbf47; --hover: #eef2fb;
+  --control: #2457c5; --technique: #b42318; --group: #6d3fc0; --claim: #0b7a52;
+  --assertion: #b45309; --nonmap: #5f6b7a; --vocab: #0e7490; --dataset: #3f4a5a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141417; --panel: #1d1d22; --ink: #ececf0; --muted: #a6a6b0; --line: #34343c;
+    --accent: #8db1ff; --hover: #262c3a;
+    --control: #7fa6ff; --technique: #ff8a7a; --group: #b79bff; --claim: #4fd1a1;
+    --assertion: #f6b35b; --nonmap: #a9b4c2; --vocab: #5fd0e6; --dataset: #b6c0cf;
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); display: grid; grid-template-rows: auto 1fr; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 8px; top: 8px; background: var(--panel); padding: 6px 10px; z-index: 10; }
+header { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+header h1 { font-size: 17px; margin: 0; }
+header p { margin: 0; color: var(--muted); font-size: 13px; }
+header nav { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.btn { font: inherit; padding: 5px 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px; cursor: pointer; text-decoration: none; }
+.btn:hover { background: var(--hover); }
+.btn[aria-current="page"] { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+main { display: grid; grid-template-columns: 300px 1fr 360px; min-height: 0; }
+aside, #detail { background: var(--panel); overflow: auto; min-height: 0; }
+aside { border-right: 1px solid var(--line); padding: 12px; }
+#detail { border-left: 1px solid var(--line); padding: 14px 16px; }
+#stage { position: relative; min-height: 0; min-width: 0; }
+#graph { width: 100%; height: 100%; display: block; }
+label.field { display: block; font-weight: 600; margin: 0 0 4px; }
+input[type="search"] { width: 100%; font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.tabs { display: flex; gap: 4px; margin: 12px 0 8px; flex-wrap: wrap; }
+.tabs button { font: inherit; font-size: 13px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--ink); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--panel); border-color: var(--accent); }
+ul.list { list-style: none; margin: 0; padding: 0; }
+ul.list li a { display: flex; gap: 8px; align-items: baseline; padding: 4px 6px; border-radius: 5px; text-decoration: none; color: var(--ink); }
+ul.list li a:hover { background: var(--hover); }
+ul.list li a[aria-current="true"] { background: var(--hover); font-weight: 600; }
+.id { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 68px; }
+.sub { color: var(--muted); flex: 1; }
+.count { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.note { color: var(--muted); font-size: 12.5px; }
+.badge { display: inline-block; font-size: 12px; padding: 1px 7px; border-radius: 10px; border: 1px solid currentColor; }
+h2 { font-size: 18px; margin: 4px 0 2px; }
+h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 18px 0 6px; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 3px 10px; margin: 0; font-size: 13px; }
+dt { color: var(--muted); }
+dd { margin: 0; word-break: break-word; }
+blockquote { margin: 6px 0; padding: 6px 10px; border-left: 3px solid var(--assertion); background: var(--bg); font-size: 13px; }
+details summary { cursor: pointer; font-weight: 600; margin: 8px 0 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+code { font-size: 12px; }
+#legend { position: absolute; left: 10px; bottom: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: calc(100% - 20px); }
+#legend span { display: inline-flex; align-items: center; gap: 4px; }
+#toolbar { position: absolute; left: 10px; top: 10px; right: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; pointer-events: none; }
+#toolbar > * { pointer-events: auto; }
+#crumb { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; font-size: 13px; }
+#toolbar label { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; font-size: 13px; }
+svg text { fill: var(--ink); font-size: 11px; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+svg .edge { stroke: var(--muted); stroke-opacity: .45; }
+svg .edge-label { font-size: 9.5px; fill: var(--muted); }
+svg .node { cursor: pointer; }
+svg .node:focus { outline: none; }
+svg .node:focus-visible path, svg .node.focus path { stroke: var(--focus); stroke-width: 4px; }
+svg .node path { stroke: var(--panel); stroke-width: 1.5px; }
+svg .node.dim path { opacity: .35; }
+@media (max-width: 1100px) {
+  main { grid-template-columns: 260px 1fr; grid-template-rows: 1fr auto; }
+  #detail { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); max-height: 45vh; }
+}
+@media (max-width: 720px) {
+  main { grid-template-columns: 1fr; grid-template-rows: auto 60vh auto; }
+  aside { max-height: 40vh; border-right: 0; border-bottom: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#detail">Skip to details</a>
+<header>
+  <h1>NIST 800-53 Rev. 5 to MITRE ATT&amp;CK Enterprise ontology</h1>
+  <p id="subtitle"></p>
+  <nav aria-label="Views">
+    <a class="btn" href="#overview" data-view="overview">Overview</a>
+    <a class="btn" href="#schema" data-view="schema">Schema</a>
+    <a class="btn" href="#about" data-view="about">About</a>
+    <a class="btn" href="https://github.com/mmccalla/nist-attack-enterprise-ontology">Repository</a>
+  </nav>
+</header>
+<main>
+  <aside aria-label="Browse">
+    <label class="field" for="q">Search controls, techniques and groups</label>
+    <input id="q" type="search" placeholder="AC-02, T1078, phishing" autocomplete="off">
+    <div class="tabs" role="tablist" aria-label="Browse lists">
+      <button role="tab" id="tab-groups" aria-controls="browse" aria-selected="true" data-tab="groups">Groups</button>
+      <button role="tab" id="tab-controls" aria-controls="browse" aria-selected="false" data-tab="controls">Controls</button>
+      <button role="tab" id="tab-techniques" aria-controls="browse" aria-selected="false" data-tab="techniques">Techniques</button>
+      <button role="tab" id="tab-classes" aria-controls="browse" aria-selected="false" data-tab="classes">Classes</button>
+    </div>
+    <div id="browse" role="tabpanel" aria-live="polite"></div>
+  </aside>
+  <section id="stage" aria-label="Graph">
+    <div id="toolbar">
+      <div id="crumb" aria-live="polite"></div>
+      <label><input type="checkbox" id="prov" checked> Show source rows and claims</label>
+    </div>
+    <svg id="graph" role="img" aria-labelledby="graph-desc"><desc id="graph-desc">Graph of the selected node and its neighbours. Use the lists and the details panel for keyboard navigation.</desc></svg>
+    <div id="legend" aria-label="Legend"></div>
+  </section>
+  <section id="detail" aria-label="Details" tabindex="-1"></section>
+</main>
+<script>/*__D3__*/</script>
+<script>
+"use strict";
+const DATA = /*__GRAPH_DATA__*/;
+const NODES = DATA.nodes;
+const BY_ID = new Map(NODES.map(n => [n.id, n]));
+const OUT = new Map(), IN = new Map();
+for (const n of NODES) { OUT.set(n.id, []); IN.set(n.id, []); }
+for (const [s, p, o] of DATA.edges) {
+  OUT.get(NODES[s].id).push([p, NODES[o].id]);
+  IN.get(NODES[o].id).push([p, NODES[s].id]);
+}
+const PROPS = new Map(DATA.schema.properties.map(p => [p.id, p]));
+const TYPES = {
+  SecurityControl: ["Security control", "control", d3.symbolCircle, 260],
+  AttackTechnique: ["ATT&CK technique", "technique", d3.symbolSquare, 200],
+  CapabilityGroup: ["Capability group", "group", d3.symbolStar, 520],
+  MitigationClaim: ["Mitigation claim", "claim", d3.symbolDiamond, 150],
+  MitigatesAssertion: ["Mitigates assertion (source row)", "assertion", d3.symbolTriangle, 150],
+  NonMappableAssertion: ["Non-mappable assertion (source row)", "nonmap", d3.symbolTriangle, 150],
+  MappingType: ["Mapping type", "vocab", d3.symbolWye, 260],
+  ConceptScheme: ["Concept scheme", "vocab", d3.symbolWye, 300],
+  CybersecurityMappingDataset: ["Mapping dataset", "dataset", d3.symbolCross, 360],
+  DatasetMetadataRecord: ["Dataset metadata record", "dataset", d3.symbolCross, 260],
+  Reference: ["Reference", "dataset", d3.symbolCross, 200],
+};
+const PROVENANCE = new Set(["MitigationClaim", "MitigatesAssertion", "NonMappableAssertion"]);
+const MAX_NEIGHBOURS = 160;
+const color = t => getComputedStyle(document.documentElement).getPropertyValue("--" + TYPES[t][1]).trim();
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const link = id => { const n = BY_ID.get(id); return `<a href="#n/${encodeURIComponent(id)}">${esc(n.l)}</a>${n.s ? ` <span class="sub">${esc(n.s)}</span>` : ""}`; };
+const ofType = t => NODES.filter(n => n.t === t);
+const mitigated = id => OUT.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
+const mitigatedBy = id => IN.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
+const isNonMappable = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique" && BY_ID.get(s).t === "NonMappableAssertion");
+const byLabel = (a, b) => a.l.localeCompare(b.l, "en", {numeric: true});
+
+/* Header and legend */
+const M = DATA.meta, C = M.counts;
+document.getElementById("subtitle").textContent =
+  `Ontology ${M.version}. ATT&CK ${M.source.attackVersion} ${M.source.domain}. Sample population: ${C.MitigatesAssertion} mitigates rows and ${C.NonMappableAssertion} non-mappable rows, ${C.SecurityControl} controls and ${C.AttackTechnique} techniques.`;
+document.getElementById("legend").innerHTML = Object.entries(TYPES)
+  .filter(([t]) => t !== "ConceptScheme" && t !== "Reference")
+  .map(([t, [name, , sym]]) => `<span><svg width="14" height="14" aria-hidden="true"><path transform="translate(7,7)" d="${d3.symbol(sym, 70)()}" fill="${color(t)}"/></svg>${esc(name)}</span>`).join("");
+
+/* Browse lists */
+let tab = "groups";
+const browse = document.getElementById("browse");
+const q = document.getElementById("q");
+function listItems(items, current) {
+  return `<ul class="list">${items.map(n => `<li><a href="#n/${encodeURIComponent(n.id)}"${n.id === current ? ' aria-current="true"' : ""}><span class="id">${esc(n.l)}</span><span class="sub">${esc(n.s ?? "")}</span><span class="count">${n.c ?? ""}</span></a></li>`).join("")}</ul>`;
+}
+function renderBrowse() {
+  const current = route().id;
+  const term = q.value.trim().toLowerCase();
+  if (term) {
+    const hits = NODES.filter(n => ["SecurityControl", "AttackTechnique", "CapabilityGroup"].includes(n.t))
+      .filter(n => (n.l + " " + (n.s ?? "")).toLowerCase().includes(term)).sort(byLabel);
+    browse.innerHTML = `<p class="note">${hits.length} match${hits.length === 1 ? "" : "es"}${hits.length > 100 ? ", first 100 shown" : ""}.</p>` + listItems(hits.slice(0, 100), current);
+    return;
+  }
+  if (tab === "groups") {
+    browse.innerHTML = `<p class="note">Count: controls in the group.</p>` + listItems(ofType("CapabilityGroup").sort(byLabel)
+      .map(n => ({...n, c: OUT.get(n.id).filter(([p]) => p === ":hasMemberControl").length || IN.get(n.id).filter(([p]) => p === ":inCapabilityGroup").length})), current);
+  } else if (tab === "controls") {
+    browse.innerHTML = `<p class="note">Count: techniques mitigated in the sample.</p>` + listItems(ofType("SecurityControl").sort(byLabel).map(n => ({...n, c: mitigated(n.id)})), current);
+  } else if (tab === "techniques") {
+    const onlyMapped = document.getElementById("only-mapped")?.checked ?? true;
+    const items = ofType("AttackTechnique").sort(byLabel).map(n => ({...n, c: mitigatedBy(n.id) || (isNonMappable(n.id) ? "n/m" : "")}))
+      .filter(n => !onlyMapped || n.c !== "");
+    browse.innerHTML = `<label class="note"><input type="checkbox" id="only-mapped"${onlyMapped ? " checked" : ""}> Only techniques with a sample row (${items.length} shown)</label>
+      <p class="note">Count: mitigating controls in the sample. n/m: non-mappable row.</p>` + listItems(items, current);
+    document.getElementById("only-mapped").addEventListener("change", renderBrowse);
+  } else {
+    browse.innerHTML = `<p class="note">Open a class in the schema view.</p><ul class="list">${DATA.schema.classes.map(c =>
+      `<li><a href="#class/${encodeURIComponent(c.id)}"${current === c.id ? ' aria-current="true"' : ""}><span class="id">${esc(c.label ?? c.id)}</span><span class="count">${C[c.id.replace(/^:/, "")] ?? ""}</span></a></li>`).join("")}</ul>`;
+  }
+}
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+  tab = b.dataset.tab;
+  document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  q.value = ""; renderBrowse();
+}));
+q.addEventListener("input", renderBrowse);
+
+/* Graph */
+const svg = d3.select("#graph");
+const root = svg.append("g");
+svg.call(d3.zoom().scaleExtent([0.2, 5]).on("zoom", e => root.attr("transform", e.transform)));
+let sim;
+function draw(nodes, links, focusId, opts = {}) {
+  if (sim) sim.stop();
+  root.selectAll("*").remove();
+  svg.call(d3.zoom().transform, d3.zoomIdentity);
+  const {width, height} = document.getElementById("graph").getBoundingClientRect();
+  const showLabels = nodes.length <= 90 || opts.labels;
+  const link = root.append("g").selectAll("line").data(links).join("line").attr("class", "edge");
+  const edgeLabels = links.length <= 16 ? root.append("g").selectAll("text").data(links).join("text").attr("class", "edge-label").attr("text-anchor", "middle").text(d => d.label) : null;
+  const node = root.append("g").selectAll("g").data(nodes).join("g")
+    .attr("class", d => "node" + (d.id === focusId ? " focus" : "") + (d.dim ? " dim" : ""))
+    .attr("tabindex", 0).attr("role", "link")
+    .attr("aria-label", d => `${(TYPES[d.t] ?? ["Class"])[0]}: ${d.l}${d.s ? ", " + d.s : ""}`)
+    .on("click", (e, d) => { location.hash = d.href; })
+    .on("keydown", (e, d) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); location.hash = d.href; } });
+  node.append("path")
+    .attr("d", d => d3.symbol(d.sym ?? TYPES[d.t][2], d.size ?? TYPES[d.t][3] * (d.id === focusId ? 2.2 : 1))())
+    .attr("fill", d => d.fill ?? color(d.t));
+  node.append("title").text(d => `${d.l}${d.s ? ": " + d.s : ""}`);
+  node.filter(d => showLabels || d.id === focusId || d.label).append("text").attr("x", 10).attr("y", 4).text(d => d.short ?? d.l);
+  node.call(d3.drag()
+    .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+    .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); if (d.id !== focusId) { d.fx = null; d.fy = null; } }));
+  const f = nodes.find(n => n.id === focusId);
+  if (f) { f.fx = width / 2; f.fy = height / 2; }
+  sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(opts.distance ?? (nodes.length < 20 ? 190 : 90)).strength(0.6))
+    .force("charge", d3.forceManyBody().strength(opts.charge ?? (nodes.length < 20 ? -1100 : -260)))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collide", d3.forceCollide(opts.collide ?? 16))
+    .force("x", d3.forceX(width / 2).strength(opts.pull ?? 0.04)).force("y", d3.forceY(height / 2).strength(opts.pull ?? 0.06))
+    .on("tick", () => {
+      link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+      node.attr("transform", d => `translate(${d.x},${d.y})`);
+      if (edgeLabels) edgeLabels.attr("x", d => (d.source.x + d.target.x) / 2).attr("y", d => (d.source.y + d.target.y) / 2);
+    });
+}
+const nodeView = n => ({id: n.id, t: n.t, l: n.l, s: n.s, href: "n/" + encodeURIComponent(n.id)});
+const EXTERNAL_LABELS = {"prov:wasDerivedFrom": "was derived from", "skos:inScheme": "in scheme"};
+const propLabel = p => PROPS.get(p)?.label ?? EXTERNAL_LABELS[p] ?? p.replace(/^[a-z]*:/, "");
+const radius = size => Math.sqrt(size / Math.PI);
+
+function neighbourhood(id) {
+  const showProv = document.getElementById("prov").checked || PROVENANCE.has(BY_ID.get(id).t);
+  const pairs = [...OUT.get(id).map(([p, o]) => [id, p, o]), ...IN.get(id).map(([p, s]) => [s, p, id])];
+  const keep = pairs.filter(([s, , o]) => showProv || !PROVENANCE.has(BY_ID.get(s === id ? o : s).t));
+  const ids = [...new Set(keep.map(([s, , o]) => (s === id ? o : s)))];
+  const shown = ids.slice(0, MAX_NEIGHBOURS);
+  const set = new Set([id, ...shown]);
+  // Add edges among neighbours too, so claim, assertion and technique form visible triangles.
+  const links = [];
+  const seen = new Set();
+  for (const nid of set) for (const [p, o] of OUT.get(nid)) {
+    if (!set.has(o)) continue;
+    const pair = [nid, o].sort().join("|");
+    if (seen.has(pair)) continue;
+    seen.add(pair);
+    links.push({source: nid, target: o, label: propLabel(p)});
+  }
+  return {nodes: [...set].map(x => nodeView(BY_ID.get(x))), links, total: ids.length, shown: shown.length};
+}
+
+function overview() {
+  const groups = ofType("CapabilityGroup"), controls = ofType("SecurityControl");
+  const nodes = [...groups.map(g => ({...nodeView(g), short: g.s, label: true, size: 700})),
+    ...controls.map(c => { const m = mitigated(c.id); return {...nodeView(c), size: 60 + Math.sqrt(m) * 120, dim: m === 0, label: m >= 10}; })];
+  const links = controls.flatMap(c => OUT.get(c.id).filter(([p]) => p === ":inCapabilityGroup").map(([, g]) => ({source: c.id, target: g})));
+  draw(nodes, links, null, {distance: l => 24 + radius(l.source.size) + radius(l.target.size) * 0.4, charge: -70, collide: d => radius(d.size) + 3});
+}
+
+function schemaGraph(focus) {
+  const classes = DATA.schema.classes;
+  const known = new Set(classes.map(c => c.id));
+  const nodes = classes.map(c => ({id: c.id, t: "Class", l: c.label ?? c.id, short: c.label ?? c.id, href: "class/" + encodeURIComponent(c.id), label: true,
+    sym: d3.symbolSquare, size: 420, fill: c.id === focus ? "var(--focus)" : (c.id.startsWith(":") ? "var(--accent)" : "var(--nonmap)")}));
+  const add = new Set();
+  const links = [];
+  for (const c of classes) for (const s of c.super) {
+    if (!known.has(s)) { if (!add.has(s)) { add.add(s); nodes.push({id: s, t: "Class", l: s, short: s, href: "schema", label: true, sym: d3.symbolSquare, size: 300, fill: "var(--nonmap)"}); } }
+    links.push({source: c.id, target: s, label: "subClassOf"});
+  }
+  for (const p of DATA.schema.properties) if (p.kind === "object" && known.has(p.domain) && known.has(p.range) && !(p.inverse && p.id > p.inverse && PROPS.get(p.inverse)?.domain === p.range))
+    links.push({source: p.domain, target: p.range, label: p.label ?? p.id});
+  draw(nodes, links, focus, {distance: 150, charge: -700, collide: 40, labels: true, pull: 0.12});
+}
+
+/* Detail panel */
+const detail = document.getElementById("detail");
+function attackUrl(tid) { return "https://attack.mitre.org/techniques/" + tid.replace(".", "/") + "/"; }
+function relations(id) {
+  const groups = new Map();
+  for (const [p, o] of OUT.get(id)) { const k = propLabel(p); (groups.get(k) ?? groups.set(k, []).get(k)).push(o); }
+  for (const [p, s] of IN.get(id)) {
+    const inv = PROPS.get(p)?.inverse;
+    const k = inv ? propLabel(inv) : `${propLabel(p)} (incoming)`;
+    const list = groups.get(k) ?? groups.set(k, []).get(k);
+    if (!list.includes(s)) list.push(s);
+  }
+  return [...groups.entries()].sort((a, b) => a[1].length - b[1].length).map(([k, ids]) => {
+    const items = ids.map(x => BY_ID.get(x)).sort(byLabel).map(n => `<li>${link(n.id)}</li>`).join("");
+    return ids.length > 12
+      ? `<details><summary>${esc(k)} (${ids.length})</summary><ul>${items}</ul></details>`
+      : `<h3>${esc(k)} (${ids.length})</h3><ul>${items}</ul>`;
+  }).join("");
+}
+function evidence(id) {
+  // Rationale text on source rows behind this node, so the claim can be checked against what the source says.
+  const n = BY_ID.get(id);
+  let rows = [];
+  if (n.t === "SecurityControl") rows = IN.get(id).filter(([p]) => p === ":assertsControl").map(([, s]) => s);
+  else if (n.t === "AttackTechnique") rows = IN.get(id).filter(([p]) => p === ":assertsTechnique").map(([, s]) => s);
+  else if (n.t === "MitigationClaim") rows = OUT.get(id).filter(([p]) => p === ":supportedByAssertion").map(([, o]) => o);
+  else if (PROVENANCE.has(n.t)) rows = [id];
+  const withText = rows.map(r => BY_ID.get(r)).filter(r => r.p[":rationaleText"]);
+  if (!rows.length) return "";
+  return `<h3>Source rationale</h3>` + (withText.length
+    ? withText.map(r => `<blockquote>${esc(r.p[":rationaleText"])}<br><span class="note">${link(r.id)}</span></blockquote>`).join("")
+    : `<p class="note">None of the ${rows.length} source row${rows.length === 1 ? "" : "s"} here carries rationale text in the sample (${M.withRationale} of ${C.MitigatesAssertion} do).</p>`);
+}
+function showNode(id) {
+  const n = BY_ID.get(id);
+  const [typeName] = TYPES[n.t];
+  const props = Object.entries(n.p).filter(([k]) => k !== ":rationaleText");
+  let extra = "";
+  if (n.t === "AttackTechnique") {
+    extra += `<p><a href="${attackUrl(n.l)}" rel="noopener">Open ${esc(n.l)} on attack.mitre.org</a> <span class="note">(current ATT&amp;CK, not pinned to ${esc(M.source.attackVersion)})</span></p>`;
+    const parent = n.l.includes(".") ? BY_ID.get("technique_" + n.l.split(".")[0]) : null;
+    if (parent) extra += `<p class="note">Parent technique, from the ID pattern: ${link(parent.id)}</p>`;
+    if (!mitigatedBy(id) && !isNonMappable(id)) extra += `<p class="note">No source row for this technique is in the sample population. That does not mean the source dataset has none.</p>`;
+  }
+  if (n.t === "SecurityControl" && !mitigated(id)) extra += `<p class="note">No mitigation claim for this control is in the sample population.</p>`;
+  if (n.t === "MitigationClaim") extra += `<p class="note">An enterprise claim interpreted from source rows. It is not the same thing as the source row that supports it.</p>`;
+  if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
+  const nb = neighbourhood(id);
+  detail.innerHTML = `<span class="badge" style="color:${color(n.t)}">${esc(typeName)}</span>
+    <h2>${esc(n.l)}</h2>${n.s ? `<p>${esc(n.s)}</p>` : ""}${extra}
+    ${props.length ? `<h3>Properties</h3><dl>${props.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
+    ${evidence(id)}${relations(id)}
+    <h3>IRI</h3><p class="note"><code>${esc((n.id.startsWith("capabilityGroup_") || n.id.startsWith("mappingType_") || n.id.endsWith("Scheme") ? "https://w3id.org/example/nist-attack-mapping/ontology/1.0#" : "https://w3id.org/example/nist-attack-mapping/data/1.0#") + n.id)}</code></p>`;
+  draw(nb.nodes, nb.links, id);
+  crumb(`${typeName}: ${n.l}. Showing ${nb.shown} of ${nb.total} neighbours.`);
+}
+function showClass(id) {
+  const c = DATA.schema.classes.find(x => x.id === id);
+  if (!c) return showSchema();
+  const props = DATA.schema.properties.filter(p => p.domain === id || p.range === id);
+  const shapes = DATA.shapes.filter(s => s.target === id);
+  const local = id.replace(/^:/, "");
+  const count = C[local];
+  detail.innerHTML = `<span class="badge">OWL class</span><h2>${esc(c.label ?? id)}</h2><p class="note"><code>${esc(id)}</code></p>
+    ${c.comment ? `<p>${esc(c.comment)}</p>` : ""}
+    ${count ? `<p>${count} instance${count === 1 ? "" : "s"} in the sample. ${TYPES[local] ? `Browse them from the lists or start at ${link(ofType(local).sort(byLabel)[0].id)}.` : ""}</p>` : ""}
+    ${c.super.length ? `<h3>Subclass of</h3><ul>${c.super.map(s => `<li><a href="#class/${encodeURIComponent(s)}">${esc(s)}</a></li>`).join("")}</ul>` : ""}
+    ${c.restrictions.length ? `<h3>OWL restrictions</h3><ul>${c.restrictions.map(r => `<li><code>${esc(r)}</code></li>`).join("")}</ul>` : ""}
+    ${c.disjoint.length ? `<h3>Disjoint with</h3><p>${c.disjoint.map(d => `<a href="#class/${encodeURIComponent(d)}">${esc(d)}</a>`).join(", ")}</p>` : ""}
+    ${shapes.length ? `<h3>SHACL shape</h3>${shapes.map(s => `<p class="note"><code>${esc(s.id)}</code></p><ul>${s.rules.map(r => `<li><code>${esc(r)}</code></li>`).join("")}</ul>`).join("")}` : ""}
+    ${props.length ? `<h3>Properties</h3><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>${props.map(p => `<tr><td><code>${esc(p.id)}</code>${p.functional ? " (functional)" : ""}</td><td>${esc(p.domain)}</td><td>${esc(p.range)}</td></tr>`).join("")}</tbody></table>` : ""}`;
+  schemaGraph(id);
+  crumb(`Schema: ${c.label ?? id}`);
+}
+function showSchema() {
+  detail.innerHTML = `<h2>Schema</h2><p>${DATA.schema.classes.length} OWL classes and ${DATA.schema.properties.length} properties. Boxes are classes. Lines are <code>rdfs:subClassOf</code> or object properties from domain to range. Select a class for its restrictions and SHACL shape.</p>
+    <h3>Object properties</h3><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>${DATA.schema.properties.filter(p => p.kind === "object").map(p => `<tr><td><code>${esc(p.id)}</code>${p.inverse ? `<br><span class="note">inverse ${esc(p.inverse)}</span>` : ""}</td><td>${esc(p.domain)}</td><td>${esc(p.range)}</td></tr>`).join("")}</tbody></table>
+    <h3>Datatype properties</h3><table><thead><tr><th>Property</th><th>Domain</th></tr></thead><tbody>${DATA.schema.properties.filter(p => p.kind === "datatype").map(p => `<tr><td><code>${esc(p.id)}</code>${p.functional ? " (functional)" : ""}</td><td>${esc(p.domain)}</td></tr>`).join("")}</tbody></table>`;
+  schemaGraph(null);
+  crumb("Schema");
+}
+function showOverview() {
+  const top = ofType("SecurityControl").map(c => ({...c, c: mitigated(c.id)})).sort((a, b) => b.c - a.c).slice(0, 8);
+  detail.innerHTML = `<h2>Overview</h2>
+    <p>${C.SecurityControl} NIST 800-53 controls in their ${C.CapabilityGroup} capability groups (stars). A larger circle means more techniques mitigated in the sample. Faded circles have no claim in the sample.</p>
+    <p class="note">The sample is not spread evenly: ${top[0].l} and ${top[1].l} hold ${top[0].c + top[1].c} of the ${C.MitigationClaim} claims. Read the sizes as a picture of the sample, not of the source dataset.</p>
+    <p>Select a node, or search on the left, to walk the graph. Each mitigation claim links a control to a technique and points back to the source row that supports it.</p>
+    <h3>Controls with the most claims in the sample</h3><ul>${top.map(c => `<li>${link(c.id)} <span class="count">${c.c}</span></li>`).join("")}</ul>
+    <h3>Try</h3><ul>
+      <li><a href="#n/technique_T1078">T1078 Valid Accounts</a>: a technique and its mitigating controls</li>
+      <li><a href="#n/claim_AC-02_T1556.009">A claim and its supporting source row</a></li>
+      <li><a href="#n/nonmappable_1">A non-mappable source row</a></li>
+      <li><a href="#class/:MitigationClaim">The MitigationClaim class</a></li></ul>`;
+  overview();
+  crumb("Overview: capability groups and controls");
+}
+function showAbout() {
+  const s = M.source;
+  detail.innerHTML = `<h2>About</h2><p>${esc(M.description)}</p>
+    <dl><dt>Ontology IRI</dt><dd><code>${esc(M.iri)}</code></dd><dt>Version</dt><dd>${esc(M.version)}, created ${esc(M.created)}</dd>
+    <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a></dd>
+    <dt>Source file</dt><dd><code>${esc(s.file)}</code></dd><dt>Framework</dt><dd>${esc(s.framework)} ${esc(s.frameworkVersion)}</dd>
+    <dt>ATT&amp;CK</dt><dd>${esc(s.attackVersion)} ${esc(s.domain)}</dd><dt>Source last update</dt><dd>${esc(s.lastUpdate)}</dd>
+    <dt>Triples</dt><dd>${M.triples} (ontology and population)</dd></dl>
+    <h3>Sample counts</h3><dl>${Object.entries(C).map(([k, v]) => `<dt>${esc(TYPES[k]?.[0] ?? k)}</dt><dd>${v}</dd>`).join("")}</dl>
+    <h3>Limits</h3><ul>
+      <li>The population is a sample. The source has 5410 mapping objects; the sample holds ${C.MitigatesAssertion + C.NonMappableAssertion} of them. A missing link here is not a missing link in the source.</li>
+      <li>The namespace is <code>w3id.org/example</code>. The IRIs do not resolve.</li>
+      <li>A mapping is not evidence that a system has the control in place or that the control stops the technique.</li></ul>
+    <h3>Attribution</h3><p class="note">Mappings derive from the MITRE Center for Threat-Informed Defense <a href="https://ctid.io/mappings-explorer">Mappings Explorer</a> (Apache 2.0). MITRE ATT&amp;CK&reg; is a registered trademark of The MITRE Corporation; ATT&amp;CK content &copy; The MITRE Corporation. NIST SP 800-53 is a NIST publication. Graph browser uses <a href="https://d3js.org">D3</a> (ISC).</p>`;
+  overview();
+  crumb("About");
+}
+
+/* Routing */
+function route() {
+  const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if (h.startsWith("n/")) return {view: "node", id: h.slice(2)};
+  if (h.startsWith("class/")) return {view: "class", id: h.slice(6)};
+  return {view: ["schema", "about"].includes(h) ? h : "overview"};
+}
+function crumb(t) { document.getElementById("crumb").textContent = t; }
+function go() {
+  const r = route();
+  document.querySelectorAll("header nav a[data-view]").forEach(a => a.toggleAttribute("aria-current", a.dataset.view === (r.view === "class" ? "schema" : r.view)));
+  document.querySelectorAll("header nav a[aria-current]").forEach(a => a.setAttribute("aria-current", "page"));
+  if (r.view === "node" && BY_ID.has(r.id)) showNode(r.id);
+  else if (r.view === "class") showClass(r.id);
+  else if (r.view === "schema") showSchema();
+  else if (r.view === "about") showAbout();
+  else showOverview();
+  document.title = `${document.getElementById("crumb").textContent.split(".")[0]} | NIST 800-53 to ATT&CK ontology`;
+  renderBrowse();
+  detail.scrollTop = 0;
+}
+document.getElementById("prov").addEventListener("change", go);
+addEventListener("hashchange", go);
+addEventListener("resize", () => { clearTimeout(window.__r); window.__r = setTimeout(go, 200); });
+go();
+</script>
+</body>
+</html>

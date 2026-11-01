@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xml:base="https://w3id.org/example/nist-attack-mapping/ontology/1.0#"
+    xmlns="https://w3id.org/example/nist-attack-mapping/ontology/1.0#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:prov="http://www.w3.org/ns/prov#">
+
+  <owl:Ontology rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0">
+    <owl:versionInfo>1.0.0</owl:versionInfo>
+    <dcterms:title>Enterprise ontology for NIST 800-53 Rev.5 to MITRE ATT&amp;CK Enterprise mapping</dcterms:title>
+    <dcterms:description>Enterprise-grade, schema-first ontology that separates source assertions from interpreted mitigation claims and supports validation, provenance, and controlled vocabularies.</dcterms:description>
+  </owl:Ontology>
+
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#CybersecurityMappingDataset"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#DatasetMetadataRecord"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#SourceAssertion"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#MitigatesAssertion">
+    <rdfs:subClassOf rdf:resource="https://w3id.org/example/nist-attack-mapping/ontology/1.0#SourceAssertion"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#NonMappableAssertion">
+    <rdfs:subClassOf rdf:resource="https://w3id.org/example/nist-attack-mapping/ontology/1.0#SourceAssertion"/>
+  </owl:Class>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#MitigationClaim"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#SecurityControl"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#AttackTechnique"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#CapabilityGroup"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#MappingType"/>
+  <owl:Class rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#Reference"/>
+
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#hasMetadataRecord"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#containsAssertion"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#assertsControl"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#assertsTechnique"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#assertsCapabilityGroup"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#assertedMappingType"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#hasReference"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#inCapabilityGroup"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#hasMemberControl"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#claimSubjectControl"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#claimObjectTechnique"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#supportedByAssertion"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#mitigatesTechnique"/>
+  <owl:ObjectProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#isMitigatedByControl"/>
+
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#frameworkId"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#frameworkVersion"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#attackVersion"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#technologyDomain"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#sourceCreationDate"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#sourceLastUpdate"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#controlId"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#controlDescription"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#techniqueId"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#techniqueName"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#groupCode"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#groupName"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#mappingTypeCode"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#rationaleText"/>
+  <owl:DatatypeProperty rdf:about="https://w3id.org/example/nist-attack-mapping/ontology/1.0#referenceText"/>
+
+</rdf:RDF>

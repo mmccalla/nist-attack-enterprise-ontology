@@ -1,0 +1,11 @@
+{
+  "name": "nist-attack-enterprise-ontology",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "uat": "node scripts/uat_browser.mjs index.html"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
+}
