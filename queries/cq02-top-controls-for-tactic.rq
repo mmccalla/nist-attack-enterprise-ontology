@@ -1,0 +1,19 @@
+# id: CQ02
+# persona: Threat modeller
+# question: Which ten controls mitigate the most Initial Access techniques?
+# decision: Which controls give the widest cover against how an adversary first gets in.
+# evidence: Mitigation claims (CTID), technique tactics (ATT&CK STIX kill_chain_phases).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?control ?title (COUNT(DISTINCT ?t) AS ?techniques)
+WHERE {
+  ?t :inTactic/:tacticId "TA0001" .
+  ?c :mitigatesTechnique ?t ; :controlId ?control ; :controlTitle ?title .
+}
+GROUP BY ?control ?title
+ORDER BY DESC(?techniques) ?control
+LIMIT 10

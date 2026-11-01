@@ -1,0 +1,18 @@
+# id: CQ09
+# persona: Data steward
+# question: Which control and technique pairs are asserted by more than one source row?
+# decision: Whether duplicate rows inflate counts, and how to report them to the publisher.
+# evidence: Source rows (CTID).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?control ?technique (COUNT(?row) AS ?rows) (GROUP_CONCAT(STR(?record); separator=" ") AS ?records)
+WHERE {
+  ?row a :MitigatesAssertion ; :assertsControl/:controlId ?control ; :assertsTechnique/:techniqueId ?technique ; :sourceRecordNumber ?record .
+}
+GROUP BY ?control ?technique
+HAVING (COUNT(?row) > 1)
+ORDER BY ?control ?technique

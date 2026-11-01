@@ -1,0 +1,35 @@
+@prefix : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# Alignment to NIST OSCAL (catalog and profile models). OSCAL is published as JSON, XML and YAML schemas with no
+# normative RDF form, so the correspondence is recorded as annotations. The population carries the OSCAL control
+# id of every control (:oscalControlId), resolved through the catalog's zero-padded label, and the baselines
+# each control belongs to. See docs/vocabulary-alignment.md.
+
+<https://w3id.org/example/nist-attack-mapping/ontology/alignment/oscal> a owl:Ontology ;
+    dcterms:title "Alignment of the NIST 800-53 to ATT&CK ontology to NIST OSCAL" ;
+    owl:versionInfo "2.0.0" ;
+    owl:imports <https://w3id.org/example/nist-attack-mapping/ontology/2.0.0> ;
+    rdfs:seeAlso <https://pages.nist.gov/OSCAL/> ,
+        <https://github.com/usnistgov/oscal-content/tree/main/nist.gov/SP800-53/rev5> .
+
+:oscalAssembly a owl:AnnotationProperty ;
+    rdfs:label "OSCAL assembly" ;
+    skos:definition "The OSCAL model and assembly whose instances correspond to instances of this class." .
+:oscalPath a owl:AnnotationProperty ;
+    rdfs:label "OSCAL path" ;
+    skos:definition "Where in the OSCAL JSON the value of this property is read from." .
+
+:SecurityControl :oscalAssembly "catalog control (class SP800-53), base controls only; control enhancements are not in the mapping source" .
+:CapabilityGroup :oscalAssembly "catalog group (class family)" .
+:ControlBaseline :oscalAssembly "profile" .
+
+:oscalControlId :oscalPath "catalog.groups[].controls[].id" .
+:controlId :oscalPath "catalog.groups[].controls[].props[name=label, class=zero-padded].value" .
+:controlTitle :oscalPath "catalog.groups[].controls[].title" .
+:oscalFamilyTitle :oscalPath "catalog.groups[class=family].title" .
+:inBaseline :oscalPath "profile.imports[].include-controls[].with-ids contains the control's OSCAL id" .
+:baselineLevel :oscalPath "derived from the profile file name: LOW, MODERATE, HIGH or PRIVACY" .

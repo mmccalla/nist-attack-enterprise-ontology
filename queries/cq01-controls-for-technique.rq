@@ -1,0 +1,19 @@
+# id: CQ01
+# persona: Software engineer
+# question: Which NIST 800-53 controls mitigate T1078 Valid Accounts, and which baselines include each control?
+# decision: Which security requirements to put in the backlog for a system exposed to credential abuse.
+# evidence: Mitigation claims (CTID), baseline profiles (OSCAL).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?control ?title (GROUP_CONCAT(?level; separator=" ") AS ?baselines)
+WHERE {
+  ?claim :claimObjectTechnique data:technique_T1078 ; :claimSubjectControl ?c .
+  ?c :controlId ?control ; :controlTitle ?title .
+  OPTIONAL { ?c :inBaseline/:baselineLevel ?level }
+}
+GROUP BY ?control ?title
+ORDER BY ?control

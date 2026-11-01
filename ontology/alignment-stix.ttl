@@ -1,0 +1,50 @@
+@prefix : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# Alignment to STIX 2.1 as used by the MITRE ATT&CK STIX data. STIX has no normative RDF or OWL form, so this
+# module cannot use OWL axioms against STIX terms. It records the correspondence as annotations, and the
+# population carries the STIX identifier of every technique, tactic and ATT&CK mitigation (:stixId), which is
+# the identity link a STIX consumer needs. See docs/vocabulary-alignment.md.
+
+<https://w3id.org/example/nist-attack-mapping/ontology/alignment/stix> a owl:Ontology ;
+    dcterms:title "Alignment of the NIST 800-53 to ATT&CK ontology to STIX 2.1 and the ATT&CK data model" ;
+    owl:versionInfo "2.0.0" ;
+    owl:imports <https://w3id.org/example/nist-attack-mapping/ontology/2.0.0> ;
+    rdfs:seeAlso <https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html> ,
+        <https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md> .
+
+:stixObjectType a owl:AnnotationProperty ;
+    rdfs:label "STIX object type" ;
+    skos:definition "The STIX 2.1 object type whose instances correspond to instances of this class." .
+:stixRelationshipType a owl:AnnotationProperty ;
+    rdfs:label "STIX relationship type" ;
+    skos:definition "The relationship_type of the STIX relationship object that corresponds to this property or class." .
+:stixProperty a owl:AnnotationProperty ;
+    rdfs:label "STIX property" ;
+    skos:definition "The STIX or ATT&CK extension property that this property is read from." .
+:stixAlignmentNote a owl:AnnotationProperty ; rdfs:label "STIX alignment note" .
+
+:AttackTechnique :stixObjectType "attack-pattern" .
+:Tactic :stixObjectType "x-mitre-tactic" .
+:AttackMitigation :stixObjectType "course-of-action" .
+:SecurityControl :stixObjectType "course-of-action" ;
+    :stixAlignmentNote "ATT&CK itself has no NIST control objects. CTID's STIX release of the NIST 800-53 Rev. 5 mappings (attack-control-framework-mappings, now archived) represented each control as a course-of-action with external_id such as AC-1 and source_name NIST 800-53 Revision 5." .
+:MitigationClaim :stixObjectType "relationship" ; :stixRelationshipType "mitigates" ;
+    :stixAlignmentNote "Corresponds to a STIX relationship of type mitigates from the control's course-of-action to the technique's attack-pattern, as in the CTID STIX release. The claim adds what STIX lacks: the link to the source rows that support it." .
+
+:stixId :stixProperty "id" .
+:techniqueId :stixProperty "external_references[source_name=mitre-attack].external_id" .
+:tacticId :stixProperty "external_references[source_name=mitre-attack].external_id" .
+:mitigationId :stixProperty "external_references[source_name=mitre-attack].external_id" .
+:techniqueName :stixProperty "name" .
+:tacticShortName :stixProperty "x_mitre_shortname" .
+:isSubTechnique :stixProperty "x_mitre_is_subtechnique" .
+:inAttackEnterprise :stixProperty "x_mitre_domains contains enterprise-attack, revoked false, x_mitre_deprecated false" .
+:inTactic :stixProperty "kill_chain_phases[kill_chain_name=mitre-attack].phase_name, matched to x-mitre-tactic x_mitre_shortname" .
+:targetsPlatform :stixProperty "x_mitre_platforms" .
+:tacticOrder :stixProperty "position in x-mitre-matrix tactic_refs" .
+:subTechniqueOf :stixRelationshipType "subtechnique-of" .
+:attackMitigationFor :stixRelationshipType "mitigates" .

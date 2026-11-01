@@ -1,0 +1,57 @@
+# Competency questions
+
+The Stage 1 deliverable of *A Practical Guide to Ontology Engineering*. A competency question states something the ontology and its populated graph must be able to answer. Following the guide's procedure, each question below names the decision it supports, the source evidence it needs and its acceptance test. The questions set the minimum requirement; they do not limit what else the graph can answer.
+
+Every question is a SPARQL file in [`queries/`](../queries). The acceptance test in [`tests/test_competency.py`](../tests/test_competency.py) runs the query over the graph and compares the answer with the same answer computed independently from the raw source JSON ([`tests/source_model.py`](../tests/source_model.py)), with no RDF involved. Agreement on both paths is the acceptance criterion. Each question can also be opened in the [graph browser](https://mmccalla.github.io/nist-attack-enterprise-ontology/#questions), where the answer links into the graph.
+
+Answers below were produced on 2026-11-01 from the pinned sources listed in [semantic-decisions.md](semantic-decisions.md).
+
+## Catalogue
+
+| ID | Persona | Question | Decision it supports | Evidence |
+| --- | --- | --- | --- | --- |
+| CQ01 | Software engineer | Which NIST 800-53 controls mitigate T1078 Valid Accounts, and which baselines include each control? | Which security requirements to put in the backlog for a system exposed to credential abuse | Claims (CTID); baselines (OSCAL) |
+| CQ02 | Threat modeller | Which ten controls mitigate the most Initial Access techniques? | Which controls give the widest cover against how an adversary first gets in | Claims (CTID); tactics (STIX) |
+| CQ03 | GRC analyst | Which techniques have mitigating controls in the mapping, but none of them in the LOW baseline? | What residual exposure a LOW-baseline system accepts | Claims (CTID); LOW profile (OSCAL) |
+| CQ04 | Security architect | Which techniques depend on a single mitigating control? | Which controls are single points of failure and need assurance or compensation | Claims (CTID) |
+| CQ05 | Threat-informed defence analyst | Which techniques does the source mark non-mappable, and does ATT&CK list a mitigation for any of them? | Whether "no NIST control" means no defence, or a defence that NIST 800-53 does not express | Non-mappable rows (CTID); ATT&CK mitigations (STIX) |
+| CQ06 | Threat-informed defence analyst | For T1078, which ATT&CK mitigations apply next to the NIST controls? | How ATT&CK guidance and the control catalogue line up for one technique | ATT&CK mitigations (STIX); claims (CTID) |
+| CQ07 | Auditor | What source evidence supports the claim that AC-02 mitigates T1556.009, and which exact file is it from? | Whether a claim can be traced before it is relied on in an assessment | Claim, rows, dataset metadata, file digest |
+| CQ08 | Data steward | Which source rows name a technique that is not an active technique in ATT&CK Enterprise 16.1? | Which rows to raise with the publisher and keep out of enterprise claims | Rows (CTID); STIX bundle |
+| CQ09 | Data steward | Which control and technique pairs are asserted by more than one source row? | Whether duplicate rows inflate counts | Rows (CTID) |
+| CQ10 | Security architect | How many techniques does each control family mitigate in each tactic? | Which families carry the defence at each stage of an attack | Claims, families (CTID); tactics (STIX) |
+| CQ11 | Cloud platform engineer | Which IaaS techniques are mitigated by fewer than three controls? | Where a cloud landing zone needs guardrails beyond the catalogue mapping | Platforms (STIX); claims (CTID) |
+| CQ12 | Threat-informed defence analyst | Which active ATT&CK Enterprise 16.1 techniques does the mapping not address at all? | Where the mapping is silent, so silence is not read as "no control needed" | STIX bundle; rows (CTID) |
+| CQ13 | GRC analyst | Where does the mapping name a control or family differently from the OSCAL catalog? | Which labels to correct before output goes into an OSCAL-based assessment | Rows (CTID); OSCAL catalog |
+
+## What the answers show
+
+**CQ01.** 25 controls mitigate T1078. 23 are in the HIGH baseline, 22 in MODERATE and 15 in LOW. IA-13 (Identity Providers and Authorization Servers) and SC-43 are in no baseline, so a team that implements a baseline and stops there will not get them.
+
+**CQ02.** SI-04 System Monitoring covers the most Initial Access techniques (15), then CM-06 (14), AC-06 and CA-07 (13 each), AC-03 and SC-07 (10 each).
+
+**CQ03.** Six techniques have claims but no claim from a LOW-baseline control: T1090.004 Domain Fronting, T1535 Unused/Unsupported Cloud Regions, T1550.004 Web Session Cookie, T1595.003 Wordlist Scanning, T1657 Financial Theft and T1666 Modify Cloud Resource Hierarchy.
+
+**CQ04.** Eleven techniques rest on one control. SI-03 Malicious Code Protection is the only control for four of them (T1027.013, T1027.014, T1055.015, T1564.012).
+
+**CQ05.** The source marks 96 techniques non-mappable. ATT&CK links 82 of them only to M1056 Pre-compromise, a category for activity before initial access, which agrees with the source. One links only to M1055 Do Not Mitigate. Ten have no ATT&CK mitigation. Three have a substantive ATT&CK mitigation: T1566.004 and T1598.004 Spearphishing Voice (M1017 User Training) and T1656 Impersonation (M1017 User Training and M1019 Threat Intelligence Program). User training maps naturally to the SP 800-53 Awareness and Training family, which is not among the 11 families in the source, so these rows read better as "outside the mapping's scope" than as "no control".
+
+**CQ06.** ATT&CK lists 8 mitigations for T1078 (M1013, M1015, M1017, M1018, M1026, M1027, M1032, M1036) next to the 25 NIST controls. The two sets come from different publishers and stay separate in the model.
+
+**CQ07.** The claim rests on source row 98, which carries the rationale "Control AC-2 (Account Management) contains provisions for the monitoring of accounts for unusual activity...". The row comes from the CTID file for ATT&CK 16.1, last updated 04/16/2025, with SHA-256 `355ae97d...c8`.
+
+**CQ08.** One row, record 637, maps SC-12 to T1521.003 SSL Pinning, which is not an Enterprise technique. Rule R1 withholds the claim and SHACL reports a warning.
+
+**CQ09.** 50 pairs appear in two identical rows; 47 of them involve CM-02, the others IA-09, SC-08 and SI-12. Counting rows instead of distinct pairs would overstate cover by 50.
+
+**CQ10.** Defense Evasion and Persistence draw the most family-technique links (648 and 472); Discovery (48) and Reconnaissance (27) the fewest. AC, CM and SI lead in almost every tactic.
+
+**CQ11.** 17 IaaS techniques have fewer than three controls. 15 have none, mostly Discovery techniques such as T1526 Cloud Service Discovery, plus T1496 Resource Hijacking and T1578.004 Revert Cloud Instance.
+
+**CQ12.** 91 active Enterprise techniques have no row in the mapping at all, including T1014 Rootkit and T1020 Automated Exfiltration. The graph records this as silence, not as a non-mappable statement.
+
+**CQ13.** Three names differ from OSCAL: IA-08 (letter case only), SC-32 (the source uses the Rev. 4 title "Information System Partitioning") and the CA family (the source uses the Rev. 4 name; Rev. 5 calls it "Assessment, Authorization, and Monitoring").
+
+## Open-world caution
+
+OWL reads the graph under open-world semantics: a missing statement is not a false one. CQ03, CQ04, CQ11 and CQ12 use `FILTER NOT EXISTS` or counts, which are closed-world readings **of the pinned sources**. Their answers mean "the sources say nothing more", not "nothing more exists". The answers are as good as the mapping and should go to a domain expert before they drive a control decision.

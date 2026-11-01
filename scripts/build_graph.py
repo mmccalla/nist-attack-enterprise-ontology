@@ -1,4 +1,4 @@
-"""Build index.html, a standalone graph browser, from the Turtle files in ontology/.
+"""Build index.html, a standalone graph browser, from ontology/ and data/, with the competency answers.
 
 Usage:
     python scripts/build_graph.py          write index.html
@@ -13,13 +13,19 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+import re
+
 from rdflib import OWL, RDF, RDFS, SKOS, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import DCTERMS, PROV
 
 ROOT = Path(__file__).resolve().parent.parent
-ONTOLOGY = ROOT / "ontology" / "nist_attack_enterprise_ontology_v2.ttl"
-POPULATION = ROOT / "ontology" / "nist_attack_enterprise_population_v2.ttl"
-SHAPES = ROOT / "ontology" / "nist_attack_enterprise_shapes_v2.ttl"
+ONTOLOGY = ROOT / "ontology" / "core.ttl"
+ALIGNMENTS = [ROOT / "ontology" / f"alignment-{name}.ttl" for name in ("stix", "oscal", "uco")]
+POPULATION = ROOT / "data" / "population.ttl"
+SHAPES = ROOT / "ontology" / "shapes.ttl"
+QUERIES = ROOT / "queries"
+CHECKS = ROOT / "data" / "source-checks.json"
+MAX_CQ_ROWS = 200
 TEMPLATE = ROOT / "src" / "viewer.html"
 D3 = ROOT / "vendor" / "d3.v7.min.js"
 OUTPUT = ROOT / "index.html"
@@ -28,6 +34,7 @@ ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
 DATA = Namespace("https://w3id.org/example/nist-attack-mapping/data/1.0#")
 ONT_IRI = URIRef("https://w3id.org/example/nist-attack-mapping/ontology/1.0")
 SH = Namespace("http://www.w3.org/ns/shacl#")
+UCO = Namespace("https://ontology.unifiedcyberontology.org/uco/core/")
 
 # Classes shown as nodes, most specific first so each node gets one display type.
 NODE_TYPES = [
@@ -37,13 +44,20 @@ NODE_TYPES = [
     "SecurityControl",
     "AttackTechnique",
     "CapabilityGroup",
-    "MappingType",
+    "Tactic",
+    "Platform",
+    "AttackMitigation",
+    "ControlBaseline",
     "CybersecurityMappingDataset",
+    "ReferenceDataset",
     "DatasetMetadataRecord",
-    "Reference",
 ]
-SCHEMES = {ONT.CapabilityGroupScheme, ONT.MappingTypeScheme}
+# Edges left out of the browser: they point at hub nodes (vocabularies, datasets) or restate another edge.
+# Their values appear as properties instead.
+SKIP_EDGES = {ONT.containsAssertion, ONT.assertsCapabilityGroup, PROV.wasDerivedFrom, SKOS.inScheme}
+AS_PROPERTY = {ONT.assertedMappingType: "mapping type", ONT.assertedStatus: "status", PROV.wasDerivedFrom: "derived from"}
 SKIP_LITERALS = {SKOS.prefLabel}
+ALIGNMENT_ANNOTATIONS = ["stixObjectType", "stixRelationshipType", "stixProperty", "stixAlignmentNote", "oscalAssembly", "oscalPath"]
 
 
 def local(term: URIRef) -> str:
@@ -69,40 +83,42 @@ def text(graph: Graph, subject, predicate) -> str | None:
 def load() -> Graph:
     graph = Graph()
     graph.parse(ONTOLOGY)
+    for path in ALIGNMENTS:
+        graph.parse(path)
     graph.parse(POPULATION)
     graph.bind("", ONT)
     graph.bind("data", DATA)
+    graph.bind("core", UCO)
     return graph
 
 
 def node_label(graph: Graph, subject, kind: str) -> tuple[str, str | None]:
+    pref = text(graph, subject, SKOS.prefLabel)
     if kind == "SecurityControl":
-        return text(graph, subject, ONT.controlId), text(graph, subject, ONT.controlDescription)
+        return text(graph, subject, ONT.controlId), text(graph, subject, ONT.controlTitle)
     if kind == "AttackTechnique":
         return text(graph, subject, ONT.techniqueId), text(graph, subject, ONT.techniqueName)
     if kind == "CapabilityGroup":
-        return text(graph, subject, ONT.groupCode), text(graph, subject, ONT.groupName)
+        return text(graph, subject, ONT.groupCode), text(graph, subject, ONT.oscalFamilyTitle)
+    if kind == "Tactic":
+        return text(graph, subject, ONT.tacticId), pref
+    if kind == "AttackMitigation":
+        return text(graph, subject, ONT.mitigationId), pref
+    if kind == "ControlBaseline":
+        return text(graph, subject, ONT.baselineLevel), "SP 800-53B baseline"
     if kind == "MitigationClaim":
         control = graph.value(subject, ONT.claimSubjectControl)
         technique = graph.value(subject, ONT.claimObjectTechnique)
-        return (
-            f"Claim {text(graph, control, ONT.controlId)} mitigates {text(graph, technique, ONT.techniqueId)}",
-            None,
-        )
+        return f"Claim {text(graph, control, ONT.controlId)} mitigates {text(graph, technique, ONT.techniqueId)}", None
     if kind in ("MitigatesAssertion", "NonMappableAssertion"):
         technique = graph.value(subject, ONT.assertsTechnique)
         control = graph.value(subject, ONT.assertsControl)
+        row = text(graph, subject, ONT.sourceRecordNumber)
         tid = text(graph, technique, ONT.techniqueId)
         if control is None:
-            return f"Source row: {tid} non_mappable", None
-        return f"Source row: {text(graph, control, ONT.controlId)} mitigates {tid}", None
-    label = (
-        text(graph, subject, SKOS.prefLabel)
-        or text(graph, subject, DCTERMS.title)
-        or text(graph, subject, RDFS.label)
-        or local(subject)
-    )
-    return label, None
+            return f"Row {row}: {tid} non_mappable", None
+        return f"Row {row}: {text(graph, control, ONT.controlId)} mitigates {tid}", None
+    return pref or text(graph, subject, DCTERMS.title) or text(graph, subject, RDFS.label) or local(subject), None
 
 
 def build_instances(graph: Graph) -> tuple[list, list]:
@@ -113,35 +129,44 @@ def build_instances(graph: Graph) -> tuple[list, list]:
             if subject in ids:
                 continue
             node_id = local(subject)
-            if node_id in ids.values():
-                raise SystemExit(f"duplicate local name {node_id}")
             ids[subject] = node_id
             label, subtitle = node_label(graph, subject, kind)
             props = {}
             for predicate, value in sorted(graph.predicate_objects(subject)):
                 if isinstance(value, Literal) and predicate not in SKIP_LITERALS:
                     props[curie(graph, predicate)] = str(value)
+                elif predicate in AS_PROPERTY and isinstance(value, URIRef):
+                    if predicate == PROV.wasDerivedFrom and not (
+                        (value, RDF.type, ONT.ReferenceDataset) in graph or (value, RDF.type, ONT.CybersecurityMappingDataset) in graph
+                    ):
+                        continue
+                    props[AS_PROPERTY[predicate]] = node_label(graph, value, "")[0]
             node = {"id": node_id, "t": kind, "l": label, "p": props}
             if subtitle:
                 node["s"] = subtitle
             nodes.append(node)
-    for scheme in sorted(SCHEMES):
-        ids[scheme] = local(scheme)
-        nodes.append(
-            {"id": local(scheme), "t": "ConceptScheme", "l": text(graph, scheme, SKOS.prefLabel), "p": {}}
-        )
+    if len(set(ids.values())) != len(ids):
+        raise SystemExit("duplicate local names")
 
     edges = set()
     for subject, predicate, value in graph:
-        if predicate == RDF.type or subject not in ids or value not in ids:
+        if predicate == RDF.type or predicate in SKIP_EDGES or subject not in ids or value not in ids:
             continue
         edges.add((ids[subject], curie(graph, predicate), ids[value]))
     return nodes, sorted(edges)
 
 
+def alignments(graph: Graph, term) -> list:
+    out = [f"{name}: {graph.value(term, ONT[name])}" for name in ALIGNMENT_ANNOTATIONS if graph.value(term, ONT[name]) is not None]
+    for predicate, label in ((RDFS.subClassOf, "UCO superclass"), (RDFS.subPropertyOf, "UCO super-property")):
+        out += [f"{label}: {curie(graph, o)}" for o in graph.objects(term, predicate) if str(o).startswith(str(UCO))]
+    return sorted(out)
+
+
 def build_schema(graph: Graph) -> dict:
+    core = Graph().parse(ONTOLOGY)
     classes = []
-    for cls in sorted(graph.subjects(RDF.type, OWL.Class)):
+    for cls in sorted(core.subjects(RDF.type, OWL.Class)):
         if not isinstance(cls, URIRef):
             continue
         supers = [curie(graph, s) for s in graph.objects(cls, RDFS.subClassOf) if isinstance(s, URIRef)]
@@ -164,12 +189,15 @@ def build_schema(graph: Graph) -> dict:
                     restrictions.append(f"{curie(graph, prop)} {word} {count}{target}")
             has_value = graph.value(restriction, OWL.hasValue)
             if has_value is not None:
-                restrictions.append(f"{curie(graph, prop)} has value {curie(graph, has_value)}")
+                shown = curie(graph, has_value) if isinstance(has_value, URIRef) else repr(str(has_value).lower() if isinstance(has_value.toPython(), bool) else str(has_value))
+                restrictions.append(f"{curie(graph, prop)} has value {shown}")
         classes.append(
             {
                 "id": curie(graph, cls),
                 "label": text(graph, cls, RDFS.label),
-                "comment": text(graph, cls, RDFS.comment),
+                "comment": text(graph, cls, SKOS.definition) or text(graph, cls, RDFS.comment),
+                "deprecated": (cls, OWL.deprecated, Literal(True)) in graph,
+                "alignments": alignments(graph, cls),
                 "super": sorted(supers),
                 "disjoint": sorted(
                     {curie(graph, d) for d in graph.objects(cls, OWL.disjointWith)}
@@ -180,14 +208,17 @@ def build_schema(graph: Graph) -> dict:
         )
     props = []
     for kind, rdf_type in (("object", OWL.ObjectProperty), ("datatype", OWL.DatatypeProperty)):
-        for prop in sorted(graph.subjects(RDF.type, rdf_type)):
-            inverse = graph.value(prop, OWL.inverseOf) or graph.value(None, OWL.inverseOf, prop)
+        for prop in sorted(core.subjects(RDF.type, rdf_type)):
+            named = [i for i in (*graph.objects(prop, OWL.inverseOf), *graph.subjects(OWL.inverseOf, prop)) if isinstance(i, URIRef)]
+            inverse = sorted(named)[0] if named else None
             props.append(
                 {
                     "id": curie(graph, prop),
                     "kind": kind,
                     "label": text(graph, prop, RDFS.label),
-                    "comment": text(graph, prop, RDFS.comment),
+                    "comment": text(graph, prop, SKOS.definition) or text(graph, prop, RDFS.comment),
+                    "deprecated": (prop, OWL.deprecated, Literal(True)) in graph,
+                    "alignments": alignments(graph, prop),
                     "domain": curie(graph, graph.value(prop, RDFS.domain)) if graph.value(prop, RDFS.domain) else None,
                     "range": curie(graph, graph.value(prop, RDFS.range)) if graph.value(prop, RDFS.range) else None,
                     "inverse": curie(graph, inverse) if inverse is not None else None,
@@ -217,24 +248,64 @@ def build_shapes() -> list:
             rules.append(f"{path}: " + "; ".join(parts))
         for sparql in shapes.objects(shape, SH.sparql):
             rules.append("SPARQL: " + str(shapes.value(sparql, SH.message)))
+        severity = shapes.value(shape, SH.severity)
         out.append(
             {
                 "id": curie(shapes, shape),
-                "target": curie(shapes, shapes.value(shape, SH.targetClass)),
+                "target": curie(shapes, shapes.value(shape, SH.targetClass)) if shapes.value(shape, SH.targetClass) else "graph",
+                "targets": sorted(curie(shapes, t) for t in shapes.objects(shape, SH.targetClass)),
+                "severity": "warning" if severity == SH.Warning else "violation",
                 "rules": sorted(rules),
             }
         )
     return out
 
 
+ID_PATTERNS = [
+    (re.compile(r"^[A-Z]{2}-[0-9]{2}$"), "control_"),
+    (re.compile(r"^T[0-9]{4}([.][0-9]{3})?$"), "technique_"),
+    (re.compile(r"^M[0-9]{4}$"), "mitigation_"),
+    (re.compile(r"^TA[0-9]{4}$"), "tactic_"),
+]
+
+
+def cell(value) -> str | None:
+    return None if value is None else (local(value) if isinstance(value, URIRef) else str(value))
+
+
+def build_questions(graph: Graph) -> list:
+    out = []
+    for path in sorted(QUERIES.glob("cq*.rq")):
+        text_ = path.read_text(encoding="utf-8")
+        head = dict(re.findall(r"^# (id|persona|question|decision|evidence): (.+)$", text_, re.M))
+        result = graph.query(text_)
+        # SPARQL leaves GROUP_CONCAT order undefined; sort the tokens so the build is reproducible.
+        concat = set(re.findall(r"GROUP_CONCAT\([^)]*\) AS \?(\w+)", text_))
+        columns = [str(v) for v in result.vars]
+        rows = [
+            [" ".join(sorted(c.split(), key=lambda t: (0, int(t), "") if t.isdigit() else (1, 0, t))) if c and columns[i] in concat else c for i, c in enumerate(map(cell, row))]
+            for row in result
+        ]
+        out.append({
+            **head,
+            "file": f"queries/{path.name}",
+            "sparql": "\n".join(line for line in text_.splitlines() if not line.startswith("# ") and not line.startswith("PREFIX")).strip(),
+            "columns": columns,
+            "rows": rows[:MAX_CQ_ROWS],
+            "total": len(rows),
+        })
+    return out
+
+
 def build_meta(graph: Graph, nodes: list) -> dict:
     record = DATA.datasetMetadataRecord
-    with_rationale = sum(1 for _ in graph.subjects(ONT.rationaleText, None))
+    checks = json.loads(CHECKS.read_text(encoding="utf-8"))
     return {
         "title": text(graph, ONT_IRI, DCTERMS.title),
         "description": text(graph, ONT_IRI, DCTERMS.description),
         "version": text(graph, ONT_IRI, OWL.versionInfo),
-        "created": text(graph, ONT_IRI, DCTERMS.created),
+        "versionIri": text(graph, ONT_IRI, OWL.versionIRI),
+        "modified": text(graph, ONT_IRI, DCTERMS.modified),
         "license": text(graph, ONT_IRI, DCTERMS.license),
         "iri": str(ONT_IRI),
         "source": {
@@ -245,8 +316,10 @@ def build_meta(graph: Graph, nodes: list) -> dict:
             "domain": text(graph, record, ONT.technologyDomain),
             "lastUpdate": text(graph, record, ONT.sourceLastUpdate),
         },
+        "sources": checks["sources"],
+        "checks": {k: v for k, v in checks.items() if k not in ("sources", "counts")},
+        "sourceCounts": checks["counts"],
         "counts": dict(sorted(Counter(n["t"] for n in nodes).items())),
-        "withRationale": with_rationale,
         "triples": len(graph),
     }
 
@@ -255,12 +328,16 @@ def render() -> str:
     graph = load()
     nodes, edges = build_instances(graph)
     index = {n["id"]: i for i, n in enumerate(nodes)}
+    predicates = sorted({p for _, p, _ in edges})
+    pindex = {p: i for i, p in enumerate(predicates)}
     payload = {
         "meta": build_meta(graph, nodes),
         "nodes": nodes,
-        "edges": [[index[s], p, index[o]] for s, p, o in edges],
+        "predicates": predicates,
+        "edges": [[index[s], pindex[p], index[o]] for s, p, o in edges],
         "schema": build_schema(graph),
         "shapes": build_shapes(),
+        "questions": build_questions(graph),
     }
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
     data = data.replace("</", "<\\/")

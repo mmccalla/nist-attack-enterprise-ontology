@@ -1,0 +1,221 @@
+@prefix data: <https://w3id.org/example/nist-attack-mapping/data/1.0#> .
+@prefix : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# Data conformance shapes for ontology 2.0.0. Violations fail the gate; warnings report known source issues
+# that the population keeps on purpose (see data/source-checks.json).
+
+:prefixes a owl:Ontology ;
+    sh:declare [ sh:prefix "" ; sh:namespace "https://w3id.org/example/nist-attack-mapping/ontology/1.0#"^^xsd:anyURI ] ,
+        [ sh:prefix "prov" ; sh:namespace "http://www.w3.org/ns/prov#"^^xsd:anyURI ] .
+
+:DatasetMetadataRecordShape a sh:NodeShape ;
+    sh:targetClass :DatasetMetadataRecord ;
+    sh:property [ sh:path :frameworkId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path :frameworkVersion ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path :attackVersion ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path :technologyDomain ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+:DatasetShape a sh:NodeShape ;
+    sh:targetClass :CybersecurityMappingDataset, :ReferenceDataset, :ControlBaseline ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path :sha256 ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[0-9a-f]{64}$" ] .
+
+:CapabilityGroupShape a sh:NodeShape ;
+    sh:targetClass :CapabilityGroup ;
+    sh:property [ sh:path :groupCode ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}$" ] ;
+    sh:property [ sh:path :groupName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path :oscalFamilyTitle ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+:VocabularyShape a sh:NodeShape ;
+    sh:targetClass :MappingType, :MappingStatus, :Tactic, :Platform ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+:SecurityControlShape a sh:NodeShape ;
+    sh:targetClass :SecurityControl ;
+    sh:property [ sh:path :controlId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}-[0-9]{2}$" ] ;
+    sh:property [ sh:path :controlTitle ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path :inCapabilityGroup ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :CapabilityGroup ] ;
+    sh:property [ sh:path :inBaseline ; sh:class :ControlBaseline ] ;
+    sh:property [ sh:path :oscalControlId ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[a-z]{2}-[0-9]{1,2}$" ;
+        sh:message "Every control must resolve to a control in the OSCAL catalog." ] .
+
+:ControlBaselineShape a sh:NodeShape ;
+    sh:targetClass :ControlBaseline ;
+    sh:property [ sh:path :baselineLevel ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "LOW" "MODERATE" "HIGH" "PRIVACY" ) ] .
+
+:AttackTechniqueShape a sh:NodeShape ;
+    sh:targetClass :AttackTechnique ;
+    sh:property [ sh:path :techniqueId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^T[0-9]{4}([.][0-9]{3})?$" ] ;
+    sh:property [ sh:path :techniqueName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path :inAttackEnterprise ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+    sh:property [ sh:path :subTechniqueOf ; sh:maxCount 1 ; sh:class :AttackTechnique ] ;
+    sh:property [ sh:path :inTactic ; sh:class :Tactic ] ;
+    sh:property [ sh:path :targetsPlatform ; sh:class :Platform ] ;
+    sh:property [ sh:path :stixId ; sh:maxCount 1 ; sh:pattern "^attack-pattern--[0-9a-f-]{36}$" ] .
+
+:TacticShape a sh:NodeShape ;
+    sh:targetClass :Tactic ;
+    sh:property [ sh:path :tacticId ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^TA[0-9]{4}$" ] ;
+    sh:property [ sh:path :tacticOrder ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ] ;
+    sh:property [ sh:path :stixId ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^x-mitre-tactic--" ] .
+
+:AttackMitigationShape a sh:NodeShape ;
+    sh:targetClass :AttackMitigation ;
+    sh:property [ sh:path :mitigationId ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^M[0-9]{4}$" ] ;
+    sh:property [ sh:path :stixId ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^course-of-action--" ] ;
+    sh:property [ sh:path :attackMitigationFor ; sh:class :AttackTechnique ] .
+
+:SourceAssertionShape a sh:NodeShape ;
+    sh:targetClass :SourceAssertion ;
+    sh:property [ sh:path :assertsTechnique ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :AttackTechnique ] ;
+    sh:property [ sh:path :assertedStatus ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :MappingStatus ] ;
+    sh:property [ sh:path :assertedMappingType ; sh:maxCount 1 ; sh:class :MappingType ] ;
+    sh:property [ sh:path :sourceRecordNumber ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ] ;
+    sh:property [ sh:path :rationaleText ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ; sh:class :CybersecurityMappingDataset ] .
+
+:MitigatesAssertionShape a sh:NodeShape ;
+    sh:targetClass :MitigatesAssertion ;
+    sh:property [ sh:path :assertedMappingType ; sh:minCount 1 ; sh:hasValue :mappingType_mitigates ] ;
+    sh:property [ sh:path :assertedStatus ; sh:hasValue :mappingStatus_complete ] ;
+    sh:property [ sh:path :assertsControl ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :SecurityControl ] ;
+    sh:property [ sh:path :assertsCapabilityGroup ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :CapabilityGroup ] .
+
+:NonMappableAssertionShape a sh:NodeShape ;
+    sh:targetClass :NonMappableAssertion ;
+    sh:property [ sh:path :assertedStatus ; sh:hasValue :mappingStatus_nonMappable ] ;
+    sh:property [ sh:path :assertedMappingType ; sh:maxCount 0 ] ;
+    sh:property [ sh:path :assertsControl ; sh:maxCount 0 ] ;
+    sh:property [ sh:path :assertsCapabilityGroup ; sh:maxCount 0 ] .
+
+:MitigationClaimShape a sh:NodeShape ;
+    sh:targetClass :MitigationClaim ;
+    sh:property [ sh:path :claimSubjectControl ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :SecurityControl ] ;
+    sh:property [ sh:path :claimObjectTechnique ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :AttackTechnique ] ;
+    sh:property [ sh:path :supportedByAssertion ; sh:minCount 1 ; sh:class :MitigatesAssertion ] .
+
+# Whole-graph rules. pySHACL runs a SPARQL constraint once per focus node, so rules over thousands of nodes
+# target the mapping dataset once and report each offending node as the value.
+:GraphRuleShape a sh:NodeShape ;
+    sh:targetNode data:sourceDataset ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The OSCAL id must be the lower-case, unpadded form of the control id." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :controlId ?cid ; :oscalControlId ?oid .
+              FILTER (LCASE(REPLACE(?cid, "-0", "-")) != ?oid)
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A technique in ATT&CK Enterprise must carry its STIX id and at least one tactic." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :inAttackEnterprise true .
+              FILTER (NOT EXISTS { ?value :stixId ?s } || NOT EXISTS { ?value :inTactic ?t })
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A sub-technique must have exactly one parent whose id is the prefix of its own." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :inAttackEnterprise true ; :isSubTechnique true ; :techniqueId ?id .
+              FILTER NOT EXISTS { ?value :subTechniqueOf ?p . ?p :techniqueId ?pid . FILTER (STRBEFORE(?id, ".") = ?pid) }
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Two source assertions must not share a source record number." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              { SELECT $this ?n WHERE { ?a :sourceRecordNumber ?n } GROUP BY $this ?n HAVING (COUNT(?a) > 1) }
+              ?value :sourceRecordNumber ?n .
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The asserted capability group must match the control's capability group." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :assertsControl ?c ; :assertsCapabilityGroup ?g .
+              ?c :inCapabilityGroup ?cg .
+              FILTER (?g != ?cg)
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Rule R1: a mitigates assertion about an ATT&CK Enterprise technique must support a mitigation claim." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value a :MitigatesAssertion ; :assertsTechnique ?t . ?t :inAttackEnterprise true .
+              OPTIONAL { ?claim :supportedByAssertion ?value }
+              FILTER (!BOUND(?claim))
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Each mitigation claim must be supported only by assertions about the same control and technique." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :claimSubjectControl ?c ; :claimObjectTechnique ?t ; :supportedByAssertion ?a .
+              FILTER NOT EXISTS { ?a :assertsControl ?c ; :assertsTechnique ?t . }
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Rule R1: a claim may only name a technique that is active in ATT&CK Enterprise." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE { ?value :claimObjectTechnique ?t . FILTER NOT EXISTS { ?t :inAttackEnterprise true } }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The direct relation mitigatesTechnique must be materialised for every claim." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :claimSubjectControl ?c ; :claimObjectTechnique ?t .
+              FILTER NOT EXISTS { ?c :mitigatesTechnique ?t }
+            }""" ;
+    ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "A direct mitigatesTechnique relation must be backed by a mitigation claim." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :mitigatesTechnique ?t .
+              FILTER NOT EXISTS { ?claim :claimSubjectControl ?value ; :claimObjectTechnique ?t }
+            }""" ;
+    ] .
+
+:GraphWarningShape a sh:NodeShape ;
+    sh:targetNode data:sourceDataset ;
+    sh:severity sh:Warning ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The mapping source names a technique that is not an active technique in ATT&CK Enterprise 16.1." ;
+        sh:prefixes :prefixes ;
+        sh:select """
+            SELECT $this ?value WHERE {
+              ?value :inAttackEnterprise false .
+              FILTER EXISTS { ?row :assertsTechnique ?value }
+            }""" ;
+    ] .

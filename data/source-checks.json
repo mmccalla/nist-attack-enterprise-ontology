@@ -1,0 +1,122 @@
+{
+  "claimsWithheld": [
+    "SC-12 T1521.003"
+  ],
+  "controlTitleDifferences": {
+    "IA-08": {
+      "oscal": "Identification and Authentication (Non-organizational Users)",
+      "source": "Identification and Authentication (Non-Organizational Users)"
+    },
+    "SC-32": {
+      "oscal": "System Partitioning",
+      "source": "Information System Partitioning"
+    }
+  },
+  "controlsNotInOscalCatalog": [],
+  "counts": {
+    "attackMitigations": 44,
+    "claims": 5263,
+    "controls": 109,
+    "mitigatesRows": 5314,
+    "nonMappableRows": 96,
+    "platforms": 10,
+    "rowsWithComments": 10,
+    "sourceRows": 5410,
+    "tactics": 14,
+    "techniquesInAttackEnterprise": 656,
+    "techniquesInMapping": 566,
+    "triples": 91717
+  },
+  "duplicateRows": [
+    "CM-02 T1021.001",
+    "CM-02 T1021.005",
+    "CM-02 T1053.002",
+    "CM-02 T1053.005",
+    "CM-02 T1059",
+    "CM-02 T1068",
+    "CM-02 T1176",
+    "CM-02 T1204.003",
+    "CM-02 T1210",
+    "CM-02 T1211",
+    "CM-02 T1212",
+    "CM-02 T1213",
+    "CM-02 T1213.001",
+    "CM-02 T1213.002",
+    "CM-02 T1484",
+    "CM-02 T1505",
+    "CM-02 T1505.001",
+    "CM-02 T1505.002",
+    "CM-02 T1505.004",
+    "CM-02 T1525",
+    "CM-02 T1528",
+    "CM-02 T1530",
+    "CM-02 T1542.004",
+    "CM-02 T1542.005",
+    "CM-02 T1543",
+    "CM-02 T1548",
+    "CM-02 T1548.002",
+    "CM-02 T1550.001",
+    "CM-02 T1552",
+    "CM-02 T1552.001",
+    "CM-02 T1552.004",
+    "CM-02 T1552.006",
+    "CM-02 T1553",
+    "CM-02 T1554",
+    "CM-02 T1558.004",
+    "CM-02 T1562",
+    "CM-02 T1563",
+    "CM-02 T1574",
+    "CM-02 T1574.001",
+    "CM-02 T1574.005",
+    "CM-02 T1574.007",
+    "CM-02 T1574.008",
+    "CM-02 T1574.009",
+    "CM-02 T1574.010",
+    "CM-02 T1601",
+    "CM-02 T1601.001",
+    "CM-02 T1601.002",
+    "IA-09 T1036",
+    "SC-08 T1562",
+    "SI-12 T1070.008"
+  ],
+  "familyTitleDifferences": {
+    "CA": {
+      "oscal": "Assessment, Authorization, and Monitoring",
+      "source": "Security Assessment and Authorization"
+    }
+  },
+  "sources": {
+    "HIGH": {
+      "sha256": "d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83",
+      "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_HIGH-baseline_profile.json"
+    },
+    "LOW": {
+      "sha256": "cfd4f5d9a192eb42dc04b745d82f95a85926a2a85a45418034a380a42bda9424",
+      "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_LOW-baseline_profile.json"
+    },
+    "MODERATE": {
+      "sha256": "e3a0f11237cfaac24dfcf1586e07683f17423757fd84208deb33196b12e8f590",
+      "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_MODERATE-baseline_profile.json"
+    },
+    "PRIVACY": {
+      "sha256": "c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc",
+      "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json"
+    },
+    "attack": {
+      "sha256": "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json"
+    },
+    "catalog": {
+      "sha256": "64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb",
+      "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json"
+    },
+    "ctid": {
+      "sha256": "355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8",
+      "url": "https://raw.githubusercontent.com/center-for-threat-informed-defense/mappings-explorer/6bdc3ad33547d5fcb498eede1f07e7db681b00ee/mappings/nist_800_53/attack-16.1/nist_800_53-rev5/enterprise/nist_800_53-rev5_attack-16.1-enterprise.json"
+    }
+  },
+  "techniqueNameDifferences": {},
+  "techniquesNotInAttackEnterprise": [
+    "T1521.003"
+  ]
+}

@@ -1,0 +1,18 @@
+# id: CQ06
+# persona: Threat-informed defence analyst
+# question: For T1078 Valid Accounts, which ATT&CK mitigations apply, next to the NIST controls?
+# decision: How ATT&CK guidance and the control catalogue line up for one technique.
+# evidence: ATT&CK mitigates relationships (STIX), mitigation claims (CTID).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?kind ?id ?label
+WHERE {
+  { ?m :attackMitigationFor data:technique_T1078 ; :mitigationId ?id ; skos:prefLabel ?label . BIND("ATT&CK mitigation" AS ?kind) }
+  UNION
+  { ?c :mitigatesTechnique data:technique_T1078 ; :controlId ?id ; :controlTitle ?label . BIND("NIST control" AS ?kind) }
+}
+ORDER BY ?kind ?id

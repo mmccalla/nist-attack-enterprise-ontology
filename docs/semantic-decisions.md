@@ -1,0 +1,92 @@
+# Scope, semantic inventory and decisions
+
+This file holds the Stage 1 to 3 deliverables of the method in *A Practical Guide to Ontology Engineering*: the scope statement, the semantic inventory, the ambiguity register and the semantic decision log. Vocabulary reuse (Stage 4) is in [vocabulary-alignment.md](vocabulary-alignment.md). Competency questions are in [competency-questions.md](competency-questions.md). Gates and results (Stage 8) are in [evaluation.md](evaluation.md).
+
+## Scope statement
+
+**Purpose.** Answer questions that software engineers, security architects, GRC analysts, threat-informed defence analysts, auditors and data stewards ask about how NIST SP 800-53 Rev. 5 controls relate to MITRE ATT&CK Enterprise techniques, with every answer traceable to a published source.
+
+**In scope.** Base controls and families of SP 800-53 Rev. 5; the SP 800-53B baselines; ATT&CK Enterprise 16.1 techniques, sub-techniques, tactics, platforms and mitigations; the CTID NIST 800-53 Rev. 5 to ATT&CK 16.1 mapping rows; the enterprise claims interpreted from those rows; provenance to the exact source files.
+
+**Out of scope.** Control enhancements (the mapping source has none); implemented controls in a particular system (an SSP or assessment concern, OSCAL SSP and assessment layers); ATT&CK groups, software, campaigns and detections; ATT&CK Mobile and ICS; effectiveness scores. Each would need its own competency questions before it is modelled.
+
+**Users.** Software engineers, security architects, GRC analysts, threat-informed defence analysts, auditors and data stewards. The personas are named on each competency question.
+
+## Source inventory
+
+| Source | Version | Pinned file | Role |
+| --- | --- | --- | --- |
+| CTID Mappings Explorer, NIST 800-53 Rev. 5 to ATT&CK 16.1 Enterprise | last update 04/16/2025 | `mappings-explorer@6bdc3ad` | The mapping rows (source assertions) |
+| MITRE ATT&CK Enterprise STIX 2.1 bundle | 16.1 | `attack-stix-data@7eb3ca5` | Technique identity, names, tactics, platforms, sub-technique links, ATT&CK mitigations |
+| NIST OSCAL SP 800-53 Rev. 5 catalog | 5.2.0 | `oscal-content@5006f18` | Control identity, titles, families |
+| NIST OSCAL SP 800-53B baseline profiles | 5.2.0 | `oscal-content@5006f18` | LOW, MODERATE, HIGH and PRIVACY membership |
+| UCO core | 1.5.0 | `vendor/uco/core.ttl` | Upper alignment for relationships and assertions |
+
+Every file is checked against a SHA-256 digest in `scripts/build_population.py` before use. The digests are also in `data/source-checks.json` and on each dataset node in the graph.
+
+## Semantic inventory
+
+How each source term is interpreted. The guide warns against converting source columns into classes mechanically; the right-hand column records the decision for each.
+
+| Source term | Source | Interpretation | Ontology term |
+| --- | --- | --- | --- |
+| mapping object (row) | CTID | A statement by the publisher, kept as stated | `:SourceAssertion` |
+| `status` = complete | CTID | The row maps a control to a technique | `:assertedStatus :mappingStatus_complete` |
+| `status` = non_mappable | CTID | The publisher found no control for the technique | `:NonMappableAssertion`, `:mappingStatus_nonMappable` |
+| `mapping_type` = mitigates | CTID | The kind of mapping; null on non-mappable rows | `:assertedMappingType :mappingType_mitigates` |
+| `capability_id` | CTID | A base control, zero-padded (AC-02) | `:SecurityControl`, `:controlId` |
+| `capability_description` | CTID | The control **title**, not a description | compared with `:controlTitle`; kept as `:sourceControlTitle` where it differs |
+| `capability_group` | CTID | A control family | `:CapabilityGroup` |
+| `attack_object_id`, `attack_object_name` | CTID | An ATT&CK technique and its name | `:AttackTechnique`, `:techniqueName` |
+| `comments` | CTID | Free-text rationale on 10 rows | `:rationaleText` |
+| `references` | CTID | Citations; empty on every row | `:hasReference` (no data) |
+| `attack-pattern` | STIX | A technique or sub-technique | `:AttackTechnique`, `:stixId` |
+| `x-mitre-tactic`, `kill_chain_phases` | STIX | The tactics a technique serves | `:Tactic`, `:inTactic` |
+| `subtechnique-of` | STIX | Parent technique | `:subTechniqueOf` (a `skos:broader`) |
+| `course-of-action` (Mxxxx), `mitigates` | STIX | ATT&CK's own mitigation guidance | `:AttackMitigation`, `:attackMitigationFor` |
+| `x_mitre_platforms` | STIX | Platforms a technique applies to | `:Platform`, `:targetsPlatform` |
+| catalog `control`, `label` (zero-padded) | OSCAL | Authoritative control identity and title | `:oscalControlId`, `:controlTitle` |
+| catalog `group` (class family) | OSCAL | Authoritative family title | `:oscalFamilyTitle` |
+| profile `include-controls` | OSCAL | Baseline membership | `:ControlBaseline`, `:inBaseline` |
+
+## Ambiguity register
+
+| # | Ambiguity | Resolution |
+| --- | --- | --- |
+| A1 | Is a control a definition in the catalogue or a control implemented in a system? | A definition. Implementation belongs to an SSP or assessment and is out of scope. Recorded in the `:SecurityControl` definition. |
+| A2 | Is "non_mappable" a mapping type or a status? | A status. The source sets `status` to non_mappable and leaves `mapping_type` null. v2 modelled it as a mapping type; 2.0.0 corrects this (D3). |
+| A3 | Does a non-mappable row mean no control exists? | No. It records what the publisher found. Under open-world semantics the graph cannot conclude absence. CQ05 shows that ATT&CK lists substantive mitigations for 3 of the 96 techniques. |
+| A4 | Does `capability_description` describe the control? | No. Its values are titles (Account Management). See D4. |
+| A5 | Are two identical rows one assertion or two? | Two. The source repeats 50 rows exactly. Each row stays a separate assertion with its own record number, and both support one claim. CQ09 lists them. See D5. |
+| A6 | Is a "capability group" the same as a control family? | Yes for this source: the 11 codes are SP 800-53 family codes. The CA family uses the Rev. 4 name; OSCAL Rev. 5 calls it Assessment, Authorization, and Monitoring. Both names are kept (CQ13). |
+| A7 | Is the CTID "mitigates" the same relation as ATT&CK's own "mitigates"? | No. Different publishers, different subjects (NIST controls against ATT&CK mitigations) and different methods. They are separate properties, `:mitigatesTechnique` and `:attackMitigationFor` (D7). |
+| A8 | Should every source row become an enterprise claim? | No. Rule R1 below governs which rows become claims. |
+
+## Interpretation rule R1
+
+A `:MitigationClaim` exists for each distinct control and technique pair that has at least one source row with status complete and mapping type mitigates, **where the technique is an active technique in the pinned ATT&CK Enterprise bundle**. The claim is supported by every such row. The direct relation `:mitigatesTechnique` holds exactly when a claim exists; `core.ttl` states this as an OWL property chain and the population materialises it.
+
+R1 withholds one claim today: row 637 maps SC-12 to T1521.003 SSL Pinning, which is not an Enterprise technique (the source row itself carries `attack_version` `[UNKNOWN_VERSION]`). The row stays in the graph as a source assertion; SHACL reports it as a warning; CQ08 lists it.
+
+## Decision log
+
+| # | Decision | Rejected alternative and reason |
+| --- | --- | --- |
+| D1 | Keep the v2 term namespace `.../ontology/1.0#` and record the release in `owl:versionIRI` (`.../ontology/2.0.0`) with `owl:priorVersion`. | Moving terms to a new namespace per release: every consumer query and every stored triple would break on each release. Term IRIs should be stable; versions belong on the ontology. |
+| D2 | Keep the `w3id.org/example` namespace. | Registering a real w3id: an organisational decision for the owner, not a modelling one. Listed under limitations. |
+| D3 | Add `:MappingStatus` and `:assertedStatus`; deprecate `:mappingType_nonMappable`; relax the mapping type to at most one. Version 2.0.0 because this is not backward compatible. | Keeping non_mappable as a type: contradicts the source (A2). |
+| D4 | Add `:controlTitle` from OSCAL; deprecate `:controlDescription`; keep the source wording as `:sourceControlTitle` only where it differs. | Keeping `:controlDescription`: mislabels the data (A4). |
+| D5 | One assertion per source row, identified by `:sourceRecordNumber`; IRIs from the pair plus an occurrence suffix (`assertion_CM-02_T1021.001_2`). | Merging identical rows: loses what the source said. Row-number IRIs (v2 `assertion_97`): not stable across source releases. |
+| D6 | Build the population from the full source (5410 rows) instead of the v2 sample (250 rows). | Keeping the sample: competency answers over 5 percent of the rows would mislead. The v2 sample stays in `ontology/v2/` unchanged. |
+| D7 | Model ATT&CK mitigations and their links as separate terms from NIST controls and claims. | `owl:equivalentClass` between `:SecurityControl` and ATT&CK mitigations, or one shared mitigates property: different concepts and publishers (A7). |
+| D8 | Model sub-techniques with `:subTechniqueOf`, a sub-property of `skos:broader`, read from STIX `subtechnique-of`. | `rdfs:subClassOf`: techniques are individuals, and the guide warns against treating SKOS broader as subclass. Deriving the parent from the ID pattern (the v1 viewer did): not authoritative. |
+| D9 | Put each external alignment in its own module (`alignment-stix.ttl`, `alignment-oscal.ttl`, `alignment-uco.ttl`). | Folding alignments into `core.ttl`: couples the core to three external release cycles; NeOn favours networked modules. |
+| D10 | Keep readable IRIs (`control_AC-02`) rather than UUID IRIs. UCO's `core:UcoThing-identifier-regex-shape` reports them at severity Info, and that shape's own comment allows deactivation where identifiers are controlled. | UUID IRIs: unreadable in the graph browser and in SPARQL, with no competency question that needs them. |
+| D11 | Remove the per-node SPARQL constraints from class shapes and run them as whole-graph rules targeting the mapping dataset. | Per-node SPARQL: pySHACL runs it once per focus node; validation took 236 seconds against 22 seconds now. |
+| D12 | Deprecate `:KnowledgeGraph`. | Keeping an unused class: the guide lists excessive scope as an anti-pattern. |
+| D13 | Reason over the full population with a profile that drops number restrictions and `owl:hasValue` restrictions; reason with the full TBox on a slice (one claim chain and one non-mappable row) and enforce those restrictions with SHACL on the whole population. | Full TBox on the full population: with thousands of rows pointing at the same few vocabulary individuals, HermiT's tableau grew exponentially (30 subjects in 6 seconds, 120 subjects past 90 seconds). Under open-world semantics these restrictions add almost no detectable inconsistency that SHACL does not already catch. Dropping them altogether: they document intent and are tested on the slice. |
+| D14 | Give the reasoner OWL only: remove SHACL triples and their blank-node structures before HermiT runs. UCO core's shapes are applied by pySHACL in the alignment gate instead. | Reasoning over UCO core as published: UCO puns each class as a SHACL node shape, and HermiT read those structures as anonymous individuals. The full-population check ran for more than 15 minutes; without the shapes it takes under a minute. |
+
+## Deprecations in 2.0.0
+
+`:mappingType_nonMappable` (replaced by `:mappingStatus_nonMappable`), `:controlDescription` (replaced by `:controlTitle`), `:KnowledgeGraph` (unused). Each carries `owl:deprecated true` and, where there is one, `dcterms:isReplacedBy`.

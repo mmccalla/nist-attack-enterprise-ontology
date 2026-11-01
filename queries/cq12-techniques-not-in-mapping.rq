@@ -1,0 +1,17 @@
+# id: CQ12
+# persona: Threat-informed defence analyst
+# question: Which active ATT&CK Enterprise 16.1 techniques does the mapping not address at all, with no row of any status?
+# decision: Where the mapping is silent, so that silence is not read as "no control needed".
+# evidence: ATT&CK Enterprise STIX bundle, source rows (CTID).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?technique ?name
+WHERE {
+  ?t :inAttackEnterprise true ; :techniqueId ?technique ; :techniqueName ?name .
+  FILTER NOT EXISTS { ?row :assertsTechnique ?t }
+}
+ORDER BY ?technique

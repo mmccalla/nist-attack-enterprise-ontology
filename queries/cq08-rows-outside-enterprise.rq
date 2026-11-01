@@ -1,0 +1,18 @@
+# id: CQ08
+# persona: Data steward
+# question: Which source rows name a technique that is not an active technique in ATT&CK Enterprise 16.1?
+# decision: Which rows to raise with the publisher and keep out of enterprise claims.
+# evidence: Source rows (CTID), ATT&CK Enterprise STIX bundle.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?record ?control ?technique ?name
+WHERE {
+  ?row :assertsTechnique ?t ; :sourceRecordNumber ?record .
+  ?t :inAttackEnterprise false ; :techniqueId ?technique ; :techniqueName ?name .
+  OPTIONAL { ?row :assertsControl/:controlId ?control }
+}
+ORDER BY ?record

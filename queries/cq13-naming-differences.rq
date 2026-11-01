@@ -1,0 +1,18 @@
+# id: CQ13
+# persona: GRC analyst
+# question: Where does the mapping name a control or family differently from the OSCAL catalog?
+# decision: Which labels to correct before mapping output goes into an OSCAL-based assessment.
+# evidence: Source titles (CTID), OSCAL SP 800-53 Rev. 5 catalog.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?kind ?id ?source ?oscal
+WHERE {
+  { ?x :controlId ?id ; :sourceControlTitle ?source ; :controlTitle ?oscal . BIND("control" AS ?kind) }
+  UNION
+  { ?x :groupCode ?id ; :groupName ?source ; :oscalFamilyTitle ?oscal . FILTER (?source != ?oscal) BIND("family" AS ?kind) }
+}
+ORDER BY ?kind ?id

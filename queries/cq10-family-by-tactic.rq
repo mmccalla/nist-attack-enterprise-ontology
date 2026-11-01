@@ -1,0 +1,18 @@
+# id: CQ10
+# persona: Security architect
+# question: How many techniques does each control family mitigate in each tactic?
+# decision: Which families carry the defence for each stage of an attack, and where cover is thin.
+# evidence: Mitigation claims and families (CTID), technique tactics (STIX).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?family ?tactic ?order (COUNT(DISTINCT ?t) AS ?techniques)
+WHERE {
+  ?c :mitigatesTechnique ?t ; :inCapabilityGroup/:groupCode ?family .
+  ?t :inTactic ?ta . ?ta skos:prefLabel ?tactic ; :tacticOrder ?order .
+}
+GROUP BY ?family ?tactic ?order
+ORDER BY ?order ?family

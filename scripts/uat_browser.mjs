@@ -43,11 +43,12 @@ if (shots) await page.screenshot({ path: `${shots}/claim.png` });
 
 await page.goto(url.split("#")[0] + "#n/control_AC-02");
 await settle();
-const withProv = await nodes();
+const total = async () => +(await page.locator("#crumb").textContent()).match(/of (\d+) neighbours/)[1];
+const withProv = await total();
 await page.uncheck("#prov");
 await settle();
-const withoutProv = await nodes();
-check(withoutProv < withProv, `hiding source rows and claims shrinks AC-02 from ${withProv} to ${withoutProv} nodes`);
+const withoutProv = await total();
+check(withoutProv < withProv, `hiding source rows and claims shrinks AC-02 from ${withProv} to ${withoutProv} neighbours`);
 await page.check("#prov");
 
 await page.goBack();
@@ -60,8 +61,33 @@ check((await nodes()) >= 11, "schema view draws the OWL classes");
 await page.goto(url.split("#")[0] + "#class/:MitigationClaim");
 await settle();
 const cls = await page.locator("#detail").textContent();
-check(cls.includes("SHACL shape") && cls.includes("same control and technique"), "class view shows its SHACL shape");
+check(cls.includes("SHACL shape") && cls.includes("supportedByAssertion"), "class view shows its SHACL shape");
+check(cls.includes("UCO superclass: core:Relationship") && cls.includes("stixObjectType: relationship"), "class view shows the UCO and STIX alignments");
 if (shots) await page.screenshot({ path: `${shots}/schema.png` });
+
+await page.goto(url.split("#")[0] + "#questions");
+await settle();
+check((await page.locator("#detail .list a").count()) === 13, "questions view lists the 13 competency questions");
+await page.locator("#detail .list a", { hasText: "CQ01" }).click();
+await settle();
+const q1 = await page.locator("#detail").textContent();
+check(q1.includes("Software engineer") && q1.includes("AC-02") && q1.includes("HIGH LOW MODERATE"), "CQ01 shows persona and answer with baselines");
+check((await nodes()) >= 20, "CQ01 draws its answer subgraph");
+if (shots) await page.screenshot({ path: `${shots}/question.png` });
+await page.locator("#detail table a", { hasText: "IA-02" }).first().click();
+await settle();
+check(page.url().endsWith("#n/control_IA-02"), "an answer cell opens the node");
+
+await page.goto(url.split("#")[0] + "#n/technique_T1556.009");
+await settle();
+const t = await page.locator("#detail").textContent();
+check(t.includes("sub-technique of") && t.includes("T1556"), "parent technique comes from the STIX subtechnique-of relation");
+check(t.includes("in tactic") && t.includes("Credential Access"), "technique shows its tactics");
+check((await page.locator('#detail a[href^="https://attack.mitre.org/versions/v16/techniques/T1556/009/"]').count()) === 1, "technique links to ATT&CK version 16");
+
+await page.goto(url.split("#")[0] + "#n/technique_T1521.003");
+await settle();
+check((await page.locator("#detail .warn").textContent()).includes("Not an active technique"), "a technique outside Enterprise is flagged");
 
 await page.goto(url.split("#")[0] + "#n/does_not_exist");
 await settle();

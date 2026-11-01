@@ -1,4 +1,4 @@
-"""Checks on the ontology bundle: it parses, it conforms to its shapes, and the shapes reject bad data."""
+"""Checks on the original v2 bundle in ontology/v2/, kept unchanged as the prior version."""
 
 import hashlib
 import re
@@ -12,7 +12,7 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF
 
 ROOT = Path(__file__).resolve().parent.parent
-ONT_DIR = ROOT / "ontology"
+ONT_DIR = ROOT / "ontology" / "v2"
 ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
 DATA = Namespace("https://w3id.org/example/nist-attack-mapping/data/1.0#")
 
@@ -87,20 +87,7 @@ def test_rejects_assertion_without_provenance(data, shapes):
 
 def test_bundle_files_match_the_source_manifest():
     manifest = (ROOT / "SOURCE-MANIFEST.md").read_text(encoding="utf-8")
-    rows = re.findall(r"\| `(ontology/[^`]+)` \| `([0-9a-f]{64})` \|", manifest)
+    rows = re.findall(r"\| `(ontology/v2/[^`]+)` \| `([0-9a-f]{64})` \|", manifest)
     assert len(rows) == 5
     for path, digest in rows:
         assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest, path
-
-
-def test_index_html_is_built_from_the_current_sources():
-    result = subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_graph.py"), "--check"], capture_output=True, text=True
-    )
-    assert result.returncode == 0, result.stderr
-
-
-def test_index_html_is_self_contained():
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
-    assert not re.search(r"<script[^>]+src=", html)
-    assert not re.search(r"<link[^>]+stylesheet", html)

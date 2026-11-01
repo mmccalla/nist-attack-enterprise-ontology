@@ -1,0 +1,330 @@
+@prefix : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+# Core ontology (TBox, RBox and controlled vocabularies), revised from the v2 bundle in ontology/v2/.
+# Term IRIs keep the v2 namespace so that existing data stays valid (decision D1 in docs/semantic-decisions.md).
+# Alignments to ATT&CK STIX, NIST OSCAL and UCO live in the alignment-*.ttl modules, not here.
+
+<https://w3id.org/example/nist-attack-mapping/ontology/1.0> a owl:Ontology ;
+    dcterms:title "Enterprise ontology for NIST 800-53 Rev.5 to MITRE ATT&CK Enterprise mapping" ;
+    dcterms:description "Schema-first ontology that separates source assertions from interpreted mitigation claims, links controls to OSCAL baselines and techniques to ATT&CK tactics, platforms and mitigations, and supports validation, provenance and controlled vocabularies." ;
+    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.0.0> ;
+    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/1.0> ;
+    owl:versionInfo "2.0.0" ;
+    dcterms:creator "OpenAI" ;
+    dcterms:contributor "Mark McCalla" ;
+    dcterms:created "2026-04-13"^^xsd:date ;
+    dcterms:modified "2026-11-01"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. See docs/semantic-decisions.md." ;
+    dcterms:conformsTo <https://www.w3.org/TR/owl2-syntax/> ,
+        <https://www.w3.org/TR/shacl/> ,
+        <https://www.w3.org/TR/skos-reference/> ,
+        <https://www.w3.org/TR/prov-o/> .
+
+##########
+# Datasets and provenance
+##########
+
+:CybersecurityMappingDataset a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Cybersecurity mapping dataset" ;
+    skos:definition "A dataset containing source mappings between a control framework and adversary techniques." .
+
+:ReferenceDataset a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reference dataset" ;
+    skos:definition "An authoritative published dataset used to identify and describe controls, techniques, tactics, platforms or baselines, such as the ATT&CK STIX bundle or the OSCAL SP 800-53 catalog." .
+
+:DatasetMetadataRecord a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Dataset metadata record" ;
+    skos:definition "The metadata block of a mapping dataset: framework, versions, domain and dates." .
+
+:Reference a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reference" ;
+    skos:definition "A citation given by a source row. The CTID source format has a references field; the current source leaves it empty." .
+
+##########
+# Source assertions and claims
+##########
+
+:SourceAssertion a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Source assertion" ;
+    skos:definition "One row of a mapping dataset, preserved as the source states it. It is not automatically an enterprise claim." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :assertsTechnique ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :AttackTechnique ],
+        [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :MappingStatus ],
+        [ a owl:Restriction ; owl:onProperty :assertedMappingType ; owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :MappingType ] .
+
+:MitigatesAssertion a owl:Class ;
+    rdfs:subClassOf :SourceAssertion ;
+    rdfs:label "Mitigates assertion" ;
+    skos:definition "A source row with mapping type mitigates and status complete." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :assertedMappingType ; owl:hasValue :mappingType_mitigates ],
+        [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:hasValue :mappingStatus_complete ],
+        [ a owl:Restriction ; owl:onProperty :assertsControl ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :SecurityControl ],
+        [ a owl:Restriction ; owl:onProperty :assertsCapabilityGroup ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :CapabilityGroup ] .
+
+:NonMappableAssertion a owl:Class ;
+    rdfs:subClassOf :SourceAssertion ;
+    rdfs:label "Non-mappable assertion" ;
+    skos:definition "A source row with status non_mappable: the source states that it found no control for the technique. Under open-world semantics this records the source's statement, not a proof that no control exists." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:hasValue :mappingStatus_nonMappable ],
+        [ a owl:Restriction ; owl:onProperty :assertsControl ; owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onClass :SecurityControl ],
+        [ a owl:Restriction ; owl:onProperty :assertsCapabilityGroup ; owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onClass :CapabilityGroup ] .
+
+:MitigationClaim a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Mitigation claim" ;
+    skos:definition "An enterprise claim that a control mitigates a technique, interpreted from one or more mitigates assertions under interpretation rule R1 (docs/semantic-decisions.md)." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :claimSubjectControl ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :SecurityControl ],
+        [ a owl:Restriction ; owl:onProperty :claimObjectTechnique ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :AttackTechnique ],
+        [ a owl:Restriction ; owl:onProperty :supportedByAssertion ; owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :MitigatesAssertion ] .
+
+##########
+# Controls, baselines and families
+##########
+
+:SecurityControl a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Security control" ;
+    skos:definition "A base control in the NIST SP 800-53 Rev. 5 catalog, as a definition. It is not a control implemented in a particular system." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :inCapabilityGroup ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :CapabilityGroup ],
+        [ a owl:Restriction ; owl:onProperty :controlId ; owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+
+:CapabilityGroup a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Capability group" ;
+    skos:altLabel "Control family" ;
+    skos:definition "A NIST SP 800-53 control family, called a capability group in the CTID mapping format." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :groupCode ; owl:cardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ; owl:onProperty :groupName ; owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+
+:ControlBaseline a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Control baseline" ;
+    skos:definition "A published selection of controls, such as the SP 800-53B LOW, MODERATE, HIGH and PRIVACY baselines." .
+
+##########
+# ATT&CK
+##########
+
+:AttackTechnique a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "ATT&CK technique" ;
+    skos:definition "An ATT&CK Enterprise technique or sub-technique: how an adversary achieves a tactical goal." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :techniqueId ; owl:cardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ; owl:onProperty :techniqueName ; owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+
+:Tactic a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "ATT&CK tactic" ;
+    skos:definition "An adversary's tactical goal, the reason for performing a technique." .
+
+:Platform a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Platform" ;
+    skos:definition "A technology platform that an ATT&CK technique applies to, such as Windows, IaaS or Identity Provider." .
+
+:AttackMitigation a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "ATT&CK mitigation" ;
+    skos:definition "An ATT&CK mitigation (Mxxxx): a security concept or class of technology that can prevent a technique from succeeding." .
+
+##########
+# Controlled vocabularies
+##########
+
+:MappingType a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Mapping type" .
+
+:MappingStatus a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Mapping status" ;
+    skos:definition "The status of a source row: complete or non_mappable." .
+
+:KnowledgeGraph a owl:Class ;
+    rdfs:label "Knowledge graph" ;
+    owl:deprecated true ;
+    rdfs:comment "Deprecated in 2.0.0: no competency question needs it and no data uses it." .
+
+##########
+# Disjointness
+##########
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :SecurityControl :AttackTechnique :CapabilityGroup :MappingType :MappingStatus :Tactic :Platform :AttackMitigation ) .
+:SecurityControl owl:disjointWith :Reference, :DatasetMetadataRecord, :ControlBaseline .
+:AttackTechnique owl:disjointWith :Reference, :DatasetMetadataRecord .
+:MitigationClaim owl:disjointWith :SourceAssertion .
+:MitigatesAssertion owl:disjointWith :NonMappableAssertion .
+
+##########
+# Concept schemes
+##########
+
+:CapabilityGroupScheme a skos:ConceptScheme ; skos:prefLabel "NIST capability group scheme" .
+:MappingTypeScheme a skos:ConceptScheme ; skos:prefLabel "Mapping type scheme" .
+:MappingStatusScheme a skos:ConceptScheme ; skos:prefLabel "Mapping status scheme" .
+:TacticScheme a skos:ConceptScheme ; skos:prefLabel "ATT&CK Enterprise tactic scheme" .
+:PlatformScheme a skos:ConceptScheme ; skos:prefLabel "ATT&CK platform scheme" .
+:TechniqueScheme a skos:ConceptScheme ; skos:prefLabel "ATT&CK Enterprise technique scheme" .
+
+##########
+# Object properties
+##########
+
+:hasMetadataRecord a owl:ObjectProperty ; rdfs:domain :CybersecurityMappingDataset ; rdfs:range :DatasetMetadataRecord ; rdfs:label "has metadata record" .
+:containsAssertion a owl:ObjectProperty ; rdfs:domain :CybersecurityMappingDataset ; rdfs:range :SourceAssertion ; rdfs:label "contains assertion" .
+:assertsControl a owl:ObjectProperty ; rdfs:domain :SourceAssertion ; rdfs:range :SecurityControl ; rdfs:label "asserts control" .
+:assertsTechnique a owl:ObjectProperty ; rdfs:domain :SourceAssertion ; rdfs:range :AttackTechnique ; rdfs:label "asserts technique" .
+:assertsCapabilityGroup a owl:ObjectProperty ; rdfs:domain :SourceAssertion ; rdfs:range :CapabilityGroup ; rdfs:label "asserts capability group" .
+:assertedMappingType a owl:ObjectProperty ; rdfs:domain :SourceAssertion ; rdfs:range :MappingType ; rdfs:label "asserted mapping type" .
+:assertedStatus a owl:ObjectProperty ; rdfs:domain :SourceAssertion ; rdfs:range :MappingStatus ; rdfs:label "asserted status" .
+:hasReference a owl:ObjectProperty ; rdfs:domain :SourceAssertion ; rdfs:range :Reference ; rdfs:label "has reference" .
+
+:inCapabilityGroup a owl:ObjectProperty ;
+    owl:inverseOf :hasMemberControl ;
+    rdfs:domain :SecurityControl ; rdfs:range :CapabilityGroup ; rdfs:label "in capability group" .
+:hasMemberControl a owl:ObjectProperty ; rdfs:domain :CapabilityGroup ; rdfs:range :SecurityControl ; rdfs:label "has member control" .
+:inBaseline a owl:ObjectProperty ;
+    owl:inverseOf :includesControl ;
+    rdfs:domain :SecurityControl ; rdfs:range :ControlBaseline ; rdfs:label "in baseline" .
+:includesControl a owl:ObjectProperty ; rdfs:domain :ControlBaseline ; rdfs:range :SecurityControl ; rdfs:label "includes control" .
+
+:claimSubjectControl a owl:ObjectProperty ; rdfs:domain :MitigationClaim ; rdfs:range :SecurityControl ; rdfs:label "claim subject control" .
+:claimObjectTechnique a owl:ObjectProperty ; rdfs:domain :MitigationClaim ; rdfs:range :AttackTechnique ; rdfs:label "claim object technique" .
+:supportedByAssertion a owl:ObjectProperty ; rdfs:domain :MitigationClaim ; rdfs:range :MitigatesAssertion ; rdfs:label "supported by assertion" .
+
+:mitigatesTechnique a owl:ObjectProperty ;
+    owl:inverseOf :isMitigatedByControl ;
+    rdfs:domain :SecurityControl ; rdfs:range :AttackTechnique ;
+    rdfs:label "mitigates technique" ;
+    skos:definition "Direct enterprise relation. It holds exactly when a mitigation claim links the control to the technique: the property chain below states the rule and the population materialises it for consumers without a reasoner." ;
+    owl:propertyChainAxiom ( [ owl:inverseOf :claimSubjectControl ] :claimObjectTechnique ) .
+:isMitigatedByControl a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :SecurityControl ; rdfs:label "is mitigated by control" .
+
+:subTechniqueOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf skos:broader ;
+    rdfs:domain :AttackTechnique ; rdfs:range :AttackTechnique ;
+    rdfs:label "sub-technique of" ;
+    skos:definition "Links a sub-technique to its parent technique. A classification relation between individuals (skos:broader), not rdfs:subClassOf." .
+:inTactic a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :Tactic ; rdfs:label "in tactic" .
+:targetsPlatform a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :Platform ; rdfs:label "targets platform" .
+:attackMitigationFor a owl:ObjectProperty ;
+    rdfs:domain :AttackMitigation ; rdfs:range :AttackTechnique ;
+    rdfs:label "ATT&CK mitigation for" ;
+    skos:definition "ATT&CK's own mitigates relationship from a mitigation (Mxxxx) to a technique. Kept apart from mitigatesTechnique because the two come from different sources and different interpretations." .
+
+##########
+# Datatype properties
+##########
+
+:frameworkId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :DatasetMetadataRecord ; rdfs:range xsd:string .
+:frameworkVersion a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :DatasetMetadataRecord ; rdfs:range xsd:string .
+:attackVersion a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :DatasetMetadataRecord ; rdfs:range xsd:string .
+:technologyDomain a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :DatasetMetadataRecord ; rdfs:range xsd:string .
+:sourceCreationDate a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :DatasetMetadataRecord ; rdfs:range xsd:string .
+:sourceLastUpdate a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :DatasetMetadataRecord ; rdfs:range xsd:string .
+:sha256 a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:range xsd:string ; rdfs:label "SHA-256" ;
+    skos:definition "Digest of the exact file that the population was built from." .
+
+:sourceRecordNumber a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :SourceAssertion ; rdfs:range xsd:integer ;
+    rdfs:label "source record number" ; skos:definition "One-based position of the row in the mapping_objects array of the source file." .
+:rationaleText a owl:DatatypeProperty ; rdfs:domain :SourceAssertion ; rdfs:range xsd:string ; rdfs:label "rationale text" .
+:referenceText a owl:DatatypeProperty ; rdfs:domain :Reference ; rdfs:range xsd:string .
+
+:controlId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :SecurityControl ; rdfs:range xsd:string ;
+    skos:definition "Zero-padded control identifier as used by CTID and by the OSCAL zero-padded label, such as AC-02." .
+:controlTitle a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :SecurityControl ; rdfs:range xsd:string ;
+    rdfs:label "control title" ; skos:definition "Control title from the OSCAL SP 800-53 Rev. 5 catalog." .
+:sourceControlTitle a owl:DatatypeProperty ; rdfs:domain :SecurityControl ; rdfs:range xsd:string ;
+    rdfs:label "source control title" ; skos:definition "The control text in the mapping source, recorded only where it differs from controlTitle." .
+:controlDescription a owl:DatatypeProperty ; rdfs:domain :SecurityControl ; rdfs:range xsd:string ;
+    owl:deprecated true ; dcterms:isReplacedBy :controlTitle ;
+    rdfs:comment "Deprecated in 2.0.0: the v2 values were control titles, not descriptions." .
+:oscalControlId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :SecurityControl ; rdfs:range xsd:string ;
+    rdfs:label "OSCAL control id" ; skos:definition "Control id in the OSCAL catalog, such as ac-2." .
+:baselineLevel a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :ControlBaseline ; rdfs:range xsd:string .
+
+:techniqueId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:string .
+:techniqueName a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:string ;
+    skos:definition "Technique name from the ATT&CK STIX bundle, or from the mapping source when the technique is not in the bundle." .
+:sourceTechniqueName a owl:DatatypeProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:string ;
+    skos:definition "The technique name in the mapping source, recorded only where it differs from techniqueName." .
+:isSubTechnique a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:boolean .
+:inAttackEnterprise a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:boolean ;
+    rdfs:label "in ATT&CK Enterprise" ;
+    skos:definition "True when the technique is an active (not revoked, not deprecated) attack-pattern in the pinned ATT&CK Enterprise STIX bundle." .
+:stixId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:range xsd:string ;
+    rdfs:label "STIX id" ; skos:definition "STIX 2.1 identifier of the corresponding object in the ATT&CK bundle, such as attack-pattern--<uuid>." .
+:tacticId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Tactic ; rdfs:range xsd:string .
+:tacticShortName a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Tactic ; rdfs:range xsd:string .
+:tacticOrder a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Tactic ; rdfs:range xsd:integer .
+:mitigationId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackMitigation ; rdfs:range xsd:string .
+
+:groupCode a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :CapabilityGroup ; rdfs:range xsd:string .
+:groupName a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :CapabilityGroup ; rdfs:range xsd:string ;
+    skos:definition "Family name as given in the mapping source." .
+:oscalFamilyTitle a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :CapabilityGroup ; rdfs:range xsd:string ;
+    skos:definition "Family title in the OSCAL catalog. Differs from groupName where the source uses an older name." .
+:mappingTypeCode a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MappingType ; rdfs:range xsd:string .
+:mappingStatusCode a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :MappingStatus ; rdfs:range xsd:string .
+
+##########
+# Keys
+##########
+
+:SecurityControl owl:hasKey ( :controlId ) .
+:AttackTechnique owl:hasKey ( :techniqueId ) .
+:CapabilityGroup owl:hasKey ( :groupCode ) .
+:MappingType owl:hasKey ( :mappingTypeCode ) .
+:MappingStatus owl:hasKey ( :mappingStatusCode ) .
+:Tactic owl:hasKey ( :tacticId ) .
+:AttackMitigation owl:hasKey ( :mitigationId ) .
+
+##########
+# Controlled vocabulary individuals
+##########
+
+:mappingType_mitigates a :MappingType ;
+    skos:inScheme :MappingTypeScheme ; skos:prefLabel "mitigates" ; :mappingTypeCode "mitigates" .
+
+:mappingType_nonMappable a :MappingType ;
+    skos:inScheme :MappingTypeScheme ; skos:prefLabel "non_mappable" ; :mappingTypeCode "non_mappable" ;
+    owl:deprecated true ; dcterms:isReplacedBy :mappingStatus_nonMappable ;
+    rdfs:comment "Deprecated in 2.0.0: in the source, non_mappable is a status and the mapping type is null." .
+
+:mappingStatus_complete a :MappingStatus ;
+    skos:inScheme :MappingStatusScheme ; skos:prefLabel "complete" ; :mappingStatusCode "complete" .
+
+:mappingStatus_nonMappable a :MappingStatus ;
+    skos:inScheme :MappingStatusScheme ; skos:prefLabel "non_mappable" ; :mappingStatusCode "non_mappable" .
+
+:capabilityGroup_AC a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Access Control" ; :groupCode "AC" ; :groupName "Access Control" .
+:capabilityGroup_CA a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Security Assessment and Authorization" ; :groupCode "CA" ; :groupName "Security Assessment and Authorization" .
+:capabilityGroup_CM a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Configuration Management" ; :groupCode "CM" ; :groupName "Configuration Management" .
+:capabilityGroup_CP a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Contingency Planning" ; :groupCode "CP" ; :groupName "Contingency Planning" .
+:capabilityGroup_IA a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Identification and Authentication" ; :groupCode "IA" ; :groupName "Identification and Authentication" .
+:capabilityGroup_MP a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Media Protection" ; :groupCode "MP" ; :groupName "Media Protection" .
+:capabilityGroup_RA a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Risk Assessment" ; :groupCode "RA" ; :groupName "Risk Assessment" .
+:capabilityGroup_SA a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "System and Services Acquisition" ; :groupCode "SA" ; :groupName "System and Services Acquisition" .
+:capabilityGroup_SC a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "System and Communications Protection" ; :groupCode "SC" ; :groupName "System and Communications Protection" .
+:capabilityGroup_SI a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "System and Information Integrity" ; :groupCode "SI" ; :groupName "System and Information Integrity" .
+:capabilityGroup_SR a :CapabilityGroup ; skos:inScheme :CapabilityGroupScheme ; skos:prefLabel "Supply Chain Risk Management" ; :groupCode "SR" ; :groupName "Supply Chain Risk Management" .

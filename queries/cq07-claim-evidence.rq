@@ -1,0 +1,19 @@
+# id: CQ07
+# persona: Auditor
+# question: What source evidence supports the claim that AC-02 mitigates T1556.009, and which exact file is it from?
+# decision: Whether the claim can be traced to its source before it is relied on in an assessment.
+# evidence: Claim, supporting rows, dataset metadata and file digest (provenance).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?row ?record ?rationale ?attackVersion ?lastUpdate ?file ?sha256
+WHERE {
+  data:claim_AC-02_T1556.009 :supportedByAssertion ?row .
+  ?row :sourceRecordNumber ?record ; prov:wasDerivedFrom ?ds .
+  OPTIONAL { ?row :rationaleText ?rationale }
+  ?ds dcterms:source ?file ; :sha256 ?sha256 ; :hasMetadataRecord ?meta .
+  ?meta :attackVersion ?attackVersion ; :sourceLastUpdate ?lastUpdate .
+}

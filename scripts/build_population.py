@@ -1,0 +1,371 @@
+"""Build data/population.ttl and data/source-checks.json from pinned authoritative sources.
+
+Sources are downloaded once into .cache/ and checked against the SHA-256 digests below.
+A digest mismatch stops the build: the population must come from exactly these files.
+
+Usage:
+    python scripts/build_population.py          write the population and the source-check report
+    python scripts/build_population.py --check  fail if either file differs from a fresh build
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import sys
+import urllib.request
+from collections import defaultdict
+from pathlib import Path
+
+from rdflib import XSD, Graph, Literal, Namespace, URIRef
+from rdflib.namespace import DCTERMS, OWL, PROV, RDF, RDFS, SKOS
+
+ROOT = Path(__file__).resolve().parent.parent
+CACHE = ROOT / ".cache"
+POPULATION = ROOT / "data" / "population.ttl"
+CHECKS = ROOT / "data" / "source-checks.json"
+
+ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
+DATA = Namespace("https://w3id.org/example/nist-attack-mapping/data/1.0#")
+
+GH = "https://raw.githubusercontent.com"
+OSCAL = f"{GH}/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json"
+SOURCES = {
+    "ctid": (
+        f"{GH}/center-for-threat-informed-defense/mappings-explorer/6bdc3ad33547d5fcb498eede1f07e7db681b00ee/"
+        "mappings/nist_800_53/attack-16.1/nist_800_53-rev5/enterprise/nist_800_53-rev5_attack-16.1-enterprise.json",
+        "355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8",
+    ),
+    "attack": (
+        f"{GH}/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json",
+        "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
+    ),
+    "catalog": (
+        f"{OSCAL}/NIST_SP-800-53_rev5_catalog.json",
+        "64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb",
+    ),
+    "LOW": (f"{OSCAL}/NIST_SP-800-53_rev5_LOW-baseline_profile.json", "cfd4f5d9a192eb42dc04b745d82f95a85926a2a85a45418034a380a42bda9424"),
+    "MODERATE": (f"{OSCAL}/NIST_SP-800-53_rev5_MODERATE-baseline_profile.json", "e3a0f11237cfaac24dfcf1586e07683f17423757fd84208deb33196b12e8f590"),
+    "HIGH": (f"{OSCAL}/NIST_SP-800-53_rev5_HIGH-baseline_profile.json", "d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83"),
+    "PRIVACY": (f"{OSCAL}/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json", "c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc"),
+}
+BASELINES = ["LOW", "MODERATE", "HIGH", "PRIVACY"]
+
+
+def fetch(key: str) -> dict:
+    url, digest = SOURCES[key]
+    path = CACHE / f"{key}.json"
+    if not path.exists():
+        CACHE.mkdir(exist_ok=True)
+        print(f"downloading {key}", file=sys.stderr)
+        with urllib.request.urlopen(url, timeout=120) as response:  # noqa: S310 - pinned https URL
+            path.write_bytes(response.read())
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != digest:
+        raise SystemExit(f"{key}: SHA-256 {actual} does not match the pinned {digest}; delete .cache/{key}.json")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def slug(text: str) -> str:
+    return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_")
+
+
+def mitre_id(obj: dict) -> str | None:
+    for ref in obj.get("external_references", []):
+        if ref.get("source_name") == "mitre-attack":
+            return ref.get("external_id")
+    return None
+
+
+def active(obj: dict) -> bool:
+    return not obj.get("revoked") and not obj.get("x_mitre_deprecated")
+
+
+def lit(value, datatype=None) -> Literal:
+    return Literal(value, datatype=datatype) if datatype else Literal(value)
+
+
+def build() -> tuple[Graph, dict]:
+    ctid, attack, catalog = fetch("ctid"), fetch("attack"), fetch("catalog")["catalog"]
+    profiles = {name: fetch(name)["profile"] for name in BASELINES}
+    g = Graph()
+    g.bind("", ONT)
+    g.bind("data", DATA)
+    g.bind("skos", SKOS)
+    g.bind("dcterms", DCTERMS)
+    g.bind("prov", PROV)
+    checks: dict = {}
+
+    # Datasets
+    meta = ctid["metadata"]
+    ds, record = DATA.sourceDataset, DATA.datasetMetadataRecord
+    g.add((ds, RDF.type, ONT.CybersecurityMappingDataset))
+    g.add((ds, DCTERMS.title, lit("NIST 800-53 Rev.5 to MITRE ATT&CK Enterprise 16.1 source mapping dataset")))
+    g.add((ds, DCTERMS.publisher, lit("MITRE Center for Threat-Informed Defense")))
+    g.add((ds, DCTERMS.source, URIRef(SOURCES["ctid"][0])))
+    g.add((ds, ONT.sha256, lit(SOURCES["ctid"][1])))
+    g.add((ds, ONT.hasMetadataRecord, record))
+    g.add((record, RDF.type, ONT.DatasetMetadataRecord))
+    for prop, key in (
+        ("frameworkId", "mapping_framework"),
+        ("frameworkVersion", "mapping_framework_version"),
+        ("attackVersion", "attack_version"),
+        ("technologyDomain", "technology_domain"),
+        ("sourceCreationDate", "creation_date"),
+        ("sourceLastUpdate", "last_update"),
+    ):
+        g.add((record, ONT[prop], lit(meta[key])))
+    g.add((record, DCTERMS.source, lit(SOURCES["ctid"][0].rsplit("/", 1)[1])))
+
+    def reference_dataset(node, title, key, version):
+        g.add((node, RDF.type, ONT.ReferenceDataset))
+        g.add((node, DCTERMS.title, lit(title)))
+        g.add((node, OWL.versionInfo, lit(version)))
+        g.add((node, DCTERMS.source, URIRef(SOURCES[key][0])))
+        g.add((node, ONT.sha256, lit(SOURCES[key][1])))
+
+    reference_dataset(DATA.attackEnterpriseStix, "MITRE ATT&CK Enterprise STIX 2.1 bundle", "attack", "16.1")
+    reference_dataset(DATA.oscalCatalog, catalog["metadata"]["title"], "catalog", catalog["metadata"]["version"])
+
+    # OSCAL: families, controls, baselines
+    families, controls_by_label = {}, {}
+    for group in catalog["groups"]:
+        families[group["id"].upper()] = group["title"]
+        for control in group.get("controls", []):
+            for prop in control.get("props", []):
+                if prop["name"] == "label" and prop.get("class") == "zero-padded":
+                    controls_by_label[prop["value"]] = control
+    baseline_members = {}
+    for name, profile in profiles.items():
+        ids = {i for imp in profile["imports"] for inc in imp.get("include-controls", []) for i in inc.get("with-ids", [])}
+        baseline_members[name] = ids
+        node = DATA[f"baseline_{name}"]
+        g.add((node, RDF.type, ONT.ControlBaseline))
+        g.add((node, RDFS.label, lit(f"SP 800-53B {name} baseline")))
+        g.add((node, ONT.baselineLevel, lit(name)))
+        g.add((node, DCTERMS.title, lit(profile["metadata"]["title"])))
+        g.add((node, DCTERMS.source, URIRef(SOURCES[name][0])))
+        g.add((node, ONT.sha256, lit(SOURCES[name][1])))
+        g.add((node, OWL.versionInfo, lit(profile["metadata"]["version"])))
+
+    family_mismatch = {}
+    for code, name in meta["capability_groups"].items():
+        group = ONT[f"capabilityGroup_{code}"]
+        title = families.get(code)
+        if title:
+            g.add((group, ONT.oscalFamilyTitle, lit(title)))
+            if title != name:
+                family_mismatch[code] = {"source": name, "oscal": title}
+    checks["familyTitleDifferences"] = family_mismatch
+
+    # ATT&CK: tactics, platforms, techniques, mitigations
+    objects = attack["objects"]
+    by_stix = {o["id"]: o for o in objects}
+    matrix = next(o for o in objects if o["type"] == "x-mitre-matrix")
+    tactic_by_short = {}
+    for order, ref in enumerate(matrix["tactic_refs"], start=1):
+        tactic = by_stix[ref]
+        tid = mitre_id(tactic)
+        node = DATA[f"tactic_{tid}"]
+        tactic_by_short[tactic["x_mitre_shortname"]] = node
+        g.add((node, RDF.type, ONT.Tactic))
+        g.add((node, SKOS.inScheme, ONT.TacticScheme))
+        g.add((node, SKOS.prefLabel, lit(tactic["name"])))
+        g.add((node, ONT.tacticId, lit(tid)))
+        g.add((node, ONT.tacticShortName, lit(tactic["x_mitre_shortname"])))
+        g.add((node, ONT.tacticOrder, lit(order, XSD.integer)))
+        g.add((node, ONT.stixId, lit(tactic["id"])))
+        g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
+
+    stix_techniques = {}
+    for obj in objects:
+        if obj["type"] == "attack-pattern" and active(obj) and "enterprise-attack" in obj.get("x_mitre_domains", []):
+            stix_techniques[mitre_id(obj)] = obj
+
+    rows = ctid["mapping_objects"]
+    ctid_names = {r["attack_object_id"]: r["attack_object_name"] for r in rows}
+    technique_ids = sorted(set(stix_techniques) | set(ctid_names))
+    platforms = set()
+    name_mismatch = {}
+    not_in_bundle = []
+    for tid in technique_ids:
+        node = DATA[f"technique_{tid}"]
+        obj = stix_techniques.get(tid)
+        g.add((node, RDF.type, ONT.AttackTechnique))
+        g.add((node, SKOS.inScheme, ONT.TechniqueScheme))
+        g.add((node, ONT.techniqueId, lit(tid)))
+        g.add((node, ONT.isSubTechnique, lit("." in tid, XSD.boolean)))
+        g.add((node, ONT.inAttackEnterprise, lit(obj is not None, XSD.boolean)))
+        name = obj["name"] if obj else ctid_names[tid]
+        g.add((node, ONT.techniqueName, lit(name)))
+        g.add((node, SKOS.prefLabel, lit(name)))
+        if tid in ctid_names and ctid_names[tid] != name:
+            g.add((node, ONT.sourceTechniqueName, lit(ctid_names[tid])))
+            name_mismatch[tid] = {"source": ctid_names[tid], "attack": name}
+        if obj is None:
+            not_in_bundle.append(tid)
+            continue
+        g.add((node, ONT.stixId, lit(obj["id"])))
+        g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
+        for phase in obj.get("kill_chain_phases", []):
+            if phase["kill_chain_name"] == "mitre-attack":
+                g.add((node, ONT.inTactic, tactic_by_short[phase["phase_name"]]))
+        for platform in obj.get("x_mitre_platforms", []):
+            platforms.add(platform)
+            g.add((node, ONT.targetsPlatform, DATA[f"platform_{slug(platform)}"]))
+    for platform in sorted(platforms):
+        node = DATA[f"platform_{slug(platform)}"]
+        g.add((node, RDF.type, ONT.Platform))
+        g.add((node, SKOS.inScheme, ONT.PlatformScheme))
+        g.add((node, SKOS.prefLabel, lit(platform)))
+    checks["techniqueNameDifferences"] = name_mismatch
+    checks["techniquesNotInAttackEnterprise"] = not_in_bundle
+
+    tech_by_stix = {o["id"]: tid for tid, o in stix_techniques.items()}
+    mitigations = {}
+    for obj in objects:
+        if obj["type"] == "course-of-action" and active(obj) and (mitre_id(obj) or "").startswith("M"):
+            mid = mitre_id(obj)
+            node = DATA[f"mitigation_{mid}"]
+            mitigations[obj["id"]] = node
+            g.add((node, RDF.type, ONT.AttackMitigation))
+            g.add((node, SKOS.prefLabel, lit(obj["name"])))
+            g.add((node, ONT.mitigationId, lit(mid)))
+            g.add((node, ONT.stixId, lit(obj["id"])))
+            g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
+    for rel in objects:
+        if rel["type"] != "relationship" or not active(rel):
+            continue
+        source, target = rel["source_ref"], rel["target_ref"]
+        if rel["relationship_type"] == "subtechnique-of" and source in tech_by_stix and target in tech_by_stix:
+            g.add((DATA[f"technique_{tech_by_stix[source]}"], ONT.subTechniqueOf, DATA[f"technique_{tech_by_stix[target]}"]))
+        elif rel["relationship_type"] == "mitigates" and source in mitigations and target in tech_by_stix:
+            g.add((mitigations[source], ONT.attackMitigationFor, DATA[f"technique_{tech_by_stix[target]}"]))
+
+    # Controls
+    control_ids = sorted({r["capability_id"] for r in rows if r["capability_id"]})
+    title_mismatch, unresolved = {}, []
+    ctid_titles = {r["capability_id"]: r["capability_description"] for r in rows if r["capability_id"]}
+    ctid_groups = {r["capability_id"]: r["capability_group"] for r in rows if r["capability_id"]}
+    for cid in control_ids:
+        node = DATA[f"control_{cid}"]
+        g.add((node, RDF.type, ONT.SecurityControl))
+        g.add((node, ONT.controlId, lit(cid)))
+        g.add((node, SKOS.prefLabel, lit(cid)))
+        g.add((node, ONT.inCapabilityGroup, ONT[f"capabilityGroup_{ctid_groups[cid]}"]))
+        oscal = controls_by_label.get(cid)
+        if oscal is None:
+            unresolved.append(cid)
+            g.add((node, ONT.controlTitle, lit(ctid_titles[cid])))
+            continue
+        g.add((node, ONT.controlTitle, lit(oscal["title"])))
+        g.add((node, ONT.oscalControlId, lit(oscal["id"])))
+        g.add((node, PROV.wasDerivedFrom, DATA.oscalCatalog))
+        if ctid_titles[cid] != oscal["title"]:
+            g.add((node, ONT.sourceControlTitle, lit(ctid_titles[cid])))
+            title_mismatch[cid] = {"source": ctid_titles[cid], "oscal": oscal["title"]}
+        for name in BASELINES:
+            if oscal["id"] in baseline_members[name]:
+                g.add((node, ONT.inBaseline, DATA[f"baseline_{name}"]))
+    checks["controlTitleDifferences"] = title_mismatch
+    checks["controlsNotInOscalCatalog"] = unresolved
+
+    # Source assertions, one per row
+    seen = defaultdict(int)
+    pairs = defaultdict(list)
+    for number, row in enumerate(rows, start=1):
+        tid, cid = row["attack_object_id"], row["capability_id"]
+        if row["status"] == "complete":
+            key = f"{cid}_{tid}"
+            seen[key] += 1
+            node = DATA[f"assertion_{key}" + (f"_{seen[key]}" if seen[key] > 1 else "")]
+            g.add((node, RDF.type, ONT.MitigatesAssertion))
+            g.add((node, ONT.assertsControl, DATA[f"control_{cid}"]))
+            g.add((node, ONT.assertsCapabilityGroup, ONT[f"capabilityGroup_{row['capability_group']}"]))
+            g.add((node, ONT.assertedMappingType, ONT[f"mappingType_{row['mapping_type']}"]))
+            g.add((node, ONT.assertedStatus, ONT.mappingStatus_complete))
+            pairs[(cid, tid)].append(node)
+        elif row["status"] == "non_mappable":
+            seen[tid] += 1
+            node = DATA[f"nonmappable_{tid}" + (f"_{seen[tid]}" if seen[tid] > 1 else "")]
+            g.add((node, RDF.type, ONT.NonMappableAssertion))
+            g.add((node, ONT.assertedStatus, ONT.mappingStatus_nonMappable))
+        else:
+            raise SystemExit(f"row {number}: unexpected status {row['status']!r}")
+        g.add((node, ONT.assertsTechnique, DATA[f"technique_{tid}"]))
+        g.add((node, ONT.sourceRecordNumber, lit(number, XSD.integer)))
+        g.add((node, PROV.wasDerivedFrom, ds))
+        g.add((ds, ONT.containsAssertion, node))
+        if row.get("comments"):
+            g.add((node, ONT.rationaleText, lit(row["comments"])))
+    checks["duplicateRows"] = sorted(f"{c} {t}" for (c, t), nodes in pairs.items() if len(nodes) > 1)
+
+    # Mitigation claims under interpretation rule R1 (docs/semantic-decisions.md)
+    withheld = []
+    for (cid, tid), support in sorted(pairs.items()):
+        if tid not in stix_techniques:
+            withheld.append(f"{cid} {tid}")
+            continue
+        claim = DATA[f"claim_{cid}_{tid}"]
+        g.add((claim, RDF.type, ONT.MitigationClaim))
+        g.add((claim, ONT.claimSubjectControl, DATA[f"control_{cid}"]))
+        g.add((claim, ONT.claimObjectTechnique, DATA[f"technique_{tid}"]))
+        for node in support:
+            g.add((claim, ONT.supportedByAssertion, node))
+            g.add((claim, PROV.wasDerivedFrom, node))
+        g.add((DATA[f"control_{cid}"], ONT.mitigatesTechnique, DATA[f"technique_{tid}"]))
+    checks["claimsWithheld"] = withheld
+    checks["counts"] = {
+        "sourceRows": len(rows),
+        "mitigatesRows": sum(1 for r in rows if r["status"] == "complete"),
+        "nonMappableRows": sum(1 for r in rows if r["status"] == "non_mappable"),
+        "rowsWithComments": sum(1 for r in rows if r.get("comments")),
+        "claims": len(pairs) - len(withheld),
+        "controls": len(control_ids),
+        "techniquesInMapping": len(ctid_names),
+        "techniquesInAttackEnterprise": len(stix_techniques),
+        "tactics": len(tactic_by_short),
+        "platforms": len(platforms),
+        "attackMitigations": len(mitigations),
+        "triples": len(g),
+    }
+    checks["sources"] = {k: {"url": u, "sha256": d} for k, (u, d) in SOURCES.items()}
+    return g, checks
+
+
+HEADER = (
+    "# Generated by scripts/build_population.py from the pinned sources in data/source-checks.json.\n"
+    "# Do not edit by hand: change the generator and rebuild.\n"
+)
+
+
+def render() -> tuple[str, str]:
+    graph, checks = build()
+    turtle = HEADER + graph.serialize(format="turtle")
+    return turtle, json.dumps(checks, indent=2, sort_keys=True) + "\n"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+    turtle, report = render()
+    if args.check:
+        stale = [p.name for p, text in ((POPULATION, turtle), (CHECKS, report)) if not p.exists() or p.read_text(encoding="utf-8") != text]
+        if stale:
+            print(f"out of date: {', '.join(stale)}; run python scripts/build_population.py", file=sys.stderr)
+            return 1
+        print("population and source checks are up to date")
+        return 0
+    POPULATION.parent.mkdir(exist_ok=True)
+    POPULATION.write_text(turtle, encoding="utf-8")
+    CHECKS.write_text(report, encoding="utf-8")
+    print(f"wrote {POPULATION.relative_to(ROOT)} ({len(turtle) // 1024} KB) and {CHECKS.relative_to(ROOT)}")
+    print(json.dumps(json.loads(report)["counts"]))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

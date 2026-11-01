@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</title>
-<meta name="description" content="Navigable knowledge graph of an enterprise ontology that maps NIST SP 800-53 Rev. 5 controls to MITRE ATT&amp;CK Enterprise techniques, with source assertions, mitigation claims and SHACL shapes.">
+<meta name="description" content="Navigable knowledge graph of an enterprise ontology that maps NIST SP 800-53 Rev. 5 controls to MITRE ATT&amp;CK Enterprise techniques, aligned to ATT&amp;CK STIX, NIST OSCAL and UCO, with competency questions answered from the graph.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='%232457c5'/%3E%3Crect x='19' y='10' width='12' height='12' fill='%23b42318'/%3E%3Cpath d='M15 16h4' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E">
 <style>
 :root {
@@ -12,6 +12,7 @@
   --accent: #2457c5; --focus: #ffbf47; --hover: #eef2fb;
   --control: #2457c5; --technique: #b42318; --group: #6d3fc0; --claim: #0b7a52;
   --assertion: #b45309; --nonmap: #5f6b7a; --vocab: #0e7490; --dataset: #3f4a5a;
+  --tactic: #a3367a; --platform: #0e7490; --mitigation: #6b5a00; --baseline: #1f6f8b;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -19,6 +20,7 @@
     --accent: #8db1ff; --hover: #262c3a;
     --control: #7fa6ff; --technique: #ff8a7a; --group: #b79bff; --claim: #4fd1a1;
     --assertion: #f6b35b; --nonmap: #a9b4c2; --vocab: #5fd0e6; --dataset: #b6c0cf;
+    --tactic: #f08cc8; --platform: #5fd0e6; --mitigation: #e2c94a; --baseline: #7cc6e0;
   }
 }
 * { box-sizing: border-box; }
@@ -65,6 +67,8 @@ details summary { cursor: pointer; font-weight: 600; margin: 8px 0 4px; }
 table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
 th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 code { font-size: 12px; }
+pre { white-space: pre-wrap; font-size: 12px; background: var(--bg); padding: 8px; border-radius: 6px; overflow: auto; }
+.warn { border-left: 3px solid var(--technique); padding: 4px 8px; background: var(--bg); font-size: 13px; }
 #legend { position: absolute; left: 10px; bottom: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: calc(100% - 20px); }
 #legend span { display: inline-flex; align-items: center; gap: 4px; }
 #toolbar { position: absolute; left: 10px; top: 10px; right: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; pointer-events: none; }
@@ -96,6 +100,7 @@ svg .node.dim path { opacity: .35; }
   <p id="subtitle"></p>
   <nav aria-label="Views">
     <a class="btn" href="#overview" data-view="overview">Overview</a>
+    <a class="btn" href="#questions" data-view="questions">Questions</a>
     <a class="btn" href="#schema" data-view="schema">Schema</a>
     <a class="btn" href="#about" data-view="about">About</a>
     <a class="btn" href="https://github.com/mmccalla/nist-attack-enterprise-ontology">Repository</a>
@@ -103,12 +108,13 @@ svg .node.dim path { opacity: .35; }
 </header>
 <main>
   <aside aria-label="Browse">
-    <label class="field" for="q">Search controls, techniques and groups</label>
-    <input id="q" type="search" placeholder="AC-02, T1078, phishing" autocomplete="off">
+    <label class="field" for="q">Search controls, techniques, tactics and mitigations</label>
+    <input id="q" type="search" placeholder="AC-02, T1078, phishing, M1032" autocomplete="off">
     <div class="tabs" role="tablist" aria-label="Browse lists">
       <button role="tab" id="tab-groups" aria-controls="browse" aria-selected="true" data-tab="groups">Groups</button>
       <button role="tab" id="tab-controls" aria-controls="browse" aria-selected="false" data-tab="controls">Controls</button>
       <button role="tab" id="tab-techniques" aria-controls="browse" aria-selected="false" data-tab="techniques">Techniques</button>
+      <button role="tab" id="tab-tactics" aria-controls="browse" aria-selected="false" data-tab="tactics">Tactics</button>
       <button role="tab" id="tab-classes" aria-controls="browse" aria-selected="false" data-tab="classes">Classes</button>
     </div>
     <div id="browse" role="tabpanel" aria-live="polite"></div>
@@ -131,7 +137,8 @@ const NODES = DATA.nodes;
 const BY_ID = new Map(NODES.map(n => [n.id, n]));
 const OUT = new Map(), IN = new Map();
 for (const n of NODES) { OUT.set(n.id, []); IN.set(n.id, []); }
-for (const [s, p, o] of DATA.edges) {
+for (const [s, pi, o] of DATA.edges) {
+  const p = DATA.predicates[pi];
   OUT.get(NODES[s].id).push([p, NODES[o].id]);
   IN.get(NODES[o].id).push([p, NODES[s].id]);
 }
@@ -143,11 +150,13 @@ const TYPES = {
   MitigationClaim: ["Mitigation claim", "claim", d3.symbolDiamond, 150],
   MitigatesAssertion: ["Mitigates assertion (source row)", "assertion", d3.symbolTriangle, 150],
   NonMappableAssertion: ["Non-mappable assertion (source row)", "nonmap", d3.symbolTriangle, 150],
-  MappingType: ["Mapping type", "vocab", d3.symbolWye, 260],
-  ConceptScheme: ["Concept scheme", "vocab", d3.symbolWye, 300],
+  Tactic: ["ATT&CK tactic", "tactic", d3.symbolWye, 360],
+  AttackMitigation: ["ATT&CK mitigation", "mitigation", d3.symbolDiamond, 260],
+  Platform: ["Platform", "platform", d3.symbolSquare, 140],
+  ControlBaseline: ["Control baseline (OSCAL)", "baseline", d3.symbolStar, 360],
   CybersecurityMappingDataset: ["Mapping dataset", "dataset", d3.symbolCross, 360],
+  ReferenceDataset: ["Reference dataset", "dataset", d3.symbolCross, 300],
   DatasetMetadataRecord: ["Dataset metadata record", "dataset", d3.symbolCross, 260],
-  Reference: ["Reference", "dataset", d3.symbolCross, 200],
 };
 const PROVENANCE = new Set(["MitigationClaim", "MitigatesAssertion", "NonMappableAssertion"]);
 const MAX_NEIGHBOURS = 160;
@@ -158,14 +167,17 @@ const ofType = t => NODES.filter(n => n.t === t);
 const mitigated = id => OUT.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
 const mitigatedBy = id => IN.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
 const isNonMappable = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique" && BY_ID.get(s).t === "NonMappableAssertion");
+const hasRow = id => IN.get(id).some(([p]) => p === ":assertsTechnique");
+const QUESTIONS = DATA.questions;
 const byLabel = (a, b) => a.l.localeCompare(b.l, "en", {numeric: true});
 
 /* Header and legend */
 const M = DATA.meta, C = M.counts;
+const SC = M.sourceCounts;
 document.getElementById("subtitle").textContent =
-  `Ontology ${M.version}. ATT&CK ${M.source.attackVersion} ${M.source.domain}. Sample population: ${C.MitigatesAssertion} mitigates rows and ${C.NonMappableAssertion} non-mappable rows, ${C.SecurityControl} controls and ${C.AttackTechnique} techniques.`;
+  `Ontology ${M.version}. Full CTID source: ${SC.sourceRows} rows, ${SC.claims} claims. ATT&CK ${M.source.attackVersion} Enterprise: ${SC.techniquesInAttackEnterprise} techniques. Aligned to ATT&CK STIX, NIST OSCAL and UCO.`;
 document.getElementById("legend").innerHTML = Object.entries(TYPES)
-  .filter(([t]) => t !== "ConceptScheme" && t !== "Reference")
+  .filter(([t]) => !["ReferenceDataset", "DatasetMetadataRecord", "Platform"].includes(t))
   .map(([t, [name, , sym]]) => `<span><svg width="14" height="14" aria-hidden="true"><path transform="translate(7,7)" d="${d3.symbol(sym, 70)()}" fill="${color(t)}"/></svg>${esc(name)}</span>`).join("");
 
 /* Browse lists */
@@ -179,7 +191,7 @@ function renderBrowse() {
   const current = route().id;
   const term = q.value.trim().toLowerCase();
   if (term) {
-    const hits = NODES.filter(n => ["SecurityControl", "AttackTechnique", "CapabilityGroup"].includes(n.t))
+    const hits = NODES.filter(n => ["SecurityControl", "AttackTechnique", "CapabilityGroup", "Tactic", "AttackMitigation"].includes(n.t))
       .filter(n => (n.l + " " + (n.s ?? "")).toLowerCase().includes(term)).sort(byLabel);
     browse.innerHTML = `<p class="note">${hits.length} match${hits.length === 1 ? "" : "es"}${hits.length > 100 ? ", first 100 shown" : ""}.</p>` + listItems(hits.slice(0, 100), current);
     return;
@@ -190,12 +202,18 @@ function renderBrowse() {
   } else if (tab === "controls") {
     browse.innerHTML = `<p class="note">Count: techniques mitigated in the sample.</p>` + listItems(ofType("SecurityControl").sort(byLabel).map(n => ({...n, c: mitigated(n.id)})), current);
   } else if (tab === "techniques") {
-    const onlyMapped = document.getElementById("only-mapped")?.checked ?? true;
-    const items = ofType("AttackTechnique").sort(byLabel).map(n => ({...n, c: mitigatedBy(n.id) || (isNonMappable(n.id) ? "n/m" : "")}))
-      .filter(n => !onlyMapped || n.c !== "");
-    browse.innerHTML = `<label class="note"><input type="checkbox" id="only-mapped"${onlyMapped ? " checked" : ""}> Only techniques with a sample row (${items.length} shown)</label>
-      <p class="note">Count: mitigating controls in the sample. n/m: non-mappable row.</p>` + listItems(items, current);
-    document.getElementById("only-mapped").addEventListener("change", renderBrowse);
+    const filter = document.getElementById("tech-filter")?.value ?? "all";
+    const items = ofType("AttackTechnique").sort(byLabel)
+      .map(n => ({...n, c: n.p[":inAttackEnterprise"] === "false" ? "not in Enterprise" : mitigatedBy(n.id) || (isNonMappable(n.id) ? "n/m" : hasRow(n.id) ? "" : "no row")}))
+      .filter(n => filter === "all" || (filter === "claims" && typeof n.c === "number") || (filter === "nm" && n.c === "n/m") || (filter === "none" && n.c === "no row") || (filter === "outside" && n.c === "not in Enterprise"));
+    browse.innerHTML = `<label class="note" for="tech-filter">Show</label> <select id="tech-filter">
+      ${[["all", "All techniques"], ["claims", "With mitigation claims"], ["nm", "Non-mappable in the source"], ["none", "Not in the mapping (CQ12)"], ["outside", "Not in ATT&CK Enterprise (CQ08)"]].map(([v, l]) => `<option value="${v}"${v === filter ? " selected" : ""}>${l}</option>`).join("")}
+      </select> <span class="note">${items.length} shown</span>
+      <p class="note">Count: mitigating controls. n/m: the source marks it non-mappable. no row: the mapping does not mention it.</p>` + listItems(items, current);
+    document.getElementById("tech-filter").addEventListener("change", renderBrowse);
+  } else if (tab === "tactics") {
+    const items = ofType("Tactic").sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
+    browse.innerHTML = `<p class="note">ATT&amp;CK matrix order. Count: Enterprise techniques in the tactic.</p>` + listItems(items, current);
   } else {
     browse.innerHTML = `<p class="note">Open a class in the schema view.</p><ul class="list">${DATA.schema.classes.map(c =>
       `<li><a href="#class/${encodeURIComponent(c.id)}"${current === c.id ? ' aria-current="true"' : ""}><span class="id">${esc(c.label ?? c.id)}</span><span class="count">${C[c.id.replace(/^:/, "")] ?? ""}</span></a></li>`).join("")}</ul>`;
@@ -259,7 +277,9 @@ function neighbourhood(id) {
   const showProv = document.getElementById("prov").checked || PROVENANCE.has(BY_ID.get(id).t);
   const pairs = [...OUT.get(id).map(([p, o]) => [id, p, o]), ...IN.get(id).map(([p, s]) => [s, p, id])];
   const keep = pairs.filter(([s, , o]) => showProv || !PROVENANCE.has(BY_ID.get(s === id ? o : s).t));
-  const ids = [...new Set(keep.map(([s, , o]) => (s === id ? o : s)))];
+  // Direct neighbours first, then claims and source rows, so a capped view keeps the controls and techniques.
+  const ids = [...new Set(keep.map(([s, , o]) => (s === id ? o : s)))]
+    .sort((a, b) => PROVENANCE.has(BY_ID.get(a).t) - PROVENANCE.has(BY_ID.get(b).t));
   const shown = ids.slice(0, MAX_NEIGHBOURS);
   const set = new Set([id, ...shown]);
   // Add edges among neighbours too, so claim, assertion and technique form visible triangles.
@@ -285,12 +305,12 @@ function overview() {
 
 function schemaGraph(focus) {
   const classes = DATA.schema.classes;
-  const known = new Set(classes.map(c => c.id));
-  const nodes = classes.map(c => ({id: c.id, t: "Class", l: c.label ?? c.id, short: c.label ?? c.id, href: "class/" + encodeURIComponent(c.id), label: true,
+  const known = new Set(classes.filter(c => !c.deprecated).map(c => c.id));
+  const nodes = classes.filter(c => !c.deprecated).map(c => ({id: c.id, t: "Class", l: c.label ?? c.id, short: c.label ?? c.id, href: "class/" + encodeURIComponent(c.id), label: true,
     sym: d3.symbolSquare, size: 420, fill: c.id === focus ? "var(--focus)" : (c.id.startsWith(":") ? "var(--accent)" : "var(--nonmap)")}));
   const add = new Set();
   const links = [];
-  for (const c of classes) for (const s of c.super) {
+  for (const c of classes.filter(c => !c.deprecated)) for (const s of c.super) {
     if (!known.has(s)) { if (!add.has(s)) { add.add(s); nodes.push({id: s, t: "Class", l: s, short: s, href: "schema", label: true, sym: d3.symbolSquare, size: 300, fill: "var(--nonmap)"}); } }
     links.push({source: c.id, target: s, label: "subClassOf"});
   }
@@ -301,7 +321,13 @@ function schemaGraph(focus) {
 
 /* Detail panel */
 const detail = document.getElementById("detail");
-function attackUrl(tid) { return "https://attack.mitre.org/techniques/" + tid.replace(".", "/") + "/"; }
+const ATTACK = "https://attack.mitre.org/versions/v16/";
+function attackUrl(n) {
+  if (n.t === "AttackTechnique") return ATTACK + "techniques/" + n.l.replace(".", "/") + "/";
+  if (n.t === "AttackMitigation") return ATTACK + "mitigations/" + n.l + "/";
+  if (n.t === "Tactic") return ATTACK + "tactics/" + n.l + "/";
+  return null;
+}
 function relations(id) {
   const groups = new Map();
   for (const [p, o] of OUT.get(id)) { const k = propLabel(p); (groups.get(k) ?? groups.set(k, []).get(k)).push(o); }
@@ -326,24 +352,25 @@ function evidence(id) {
   else if (n.t === "AttackTechnique") rows = IN.get(id).filter(([p]) => p === ":assertsTechnique").map(([, s]) => s);
   else if (n.t === "MitigationClaim") rows = OUT.get(id).filter(([p]) => p === ":supportedByAssertion").map(([, o]) => o);
   else if (PROVENANCE.has(n.t)) rows = [id];
+  else return "";
   const withText = rows.map(r => BY_ID.get(r)).filter(r => r.p[":rationaleText"]);
   if (!rows.length) return "";
   return `<h3>Source rationale</h3>` + (withText.length
     ? withText.map(r => `<blockquote>${esc(r.p[":rationaleText"])}<br><span class="note">${link(r.id)}</span></blockquote>`).join("")
-    : `<p class="note">None of the ${rows.length} source row${rows.length === 1 ? "" : "s"} here carries rationale text in the sample (${M.withRationale} of ${C.MitigatesAssertion} do).</p>`);
+    : `<p class="note">None of the ${rows.length} source row${rows.length === 1 ? "" : "s"} here carries rationale text. Only ${SC.rowsWithComments} of the ${SC.sourceRows} source rows do.</p>`);
 }
 function showNode(id) {
   const n = BY_ID.get(id);
   const [typeName] = TYPES[n.t];
   const props = Object.entries(n.p).filter(([k]) => k !== ":rationaleText");
   let extra = "";
+  if (attackUrl(n) && n.p[":inAttackEnterprise"] !== "false") extra += `<p><a href="${attackUrl(n)}" rel="noopener">Open ${esc(n.l)} on attack.mitre.org (version 16)</a></p>`;
   if (n.t === "AttackTechnique") {
-    extra += `<p><a href="${attackUrl(n.l)}" rel="noopener">Open ${esc(n.l)} on attack.mitre.org</a> <span class="note">(current ATT&amp;CK, not pinned to ${esc(M.source.attackVersion)})</span></p>`;
-    const parent = n.l.includes(".") ? BY_ID.get("technique_" + n.l.split(".")[0]) : null;
-    if (parent) extra += `<p class="note">Parent technique, from the ID pattern: ${link(parent.id)}</p>`;
-    if (!mitigatedBy(id) && !isNonMappable(id)) extra += `<p class="note">No source row for this technique is in the sample population. That does not mean the source dataset has none.</p>`;
+    if (n.p[":inAttackEnterprise"] === "false") extra += `<p class="warn">Not an active technique in ATT&amp;CK Enterprise ${esc(M.source.attackVersion)}. Rule R1 keeps the source row but makes no enterprise claim. See CQ08.</p>`;
+    else if (!hasRow(id)) extra += `<p class="note">The mapping has no row for this technique (CQ12). That is silence, not a statement that no control applies.</p>`;
   }
-  if (n.t === "SecurityControl" && !mitigated(id)) extra += `<p class="note">No mitigation claim for this control is in the sample population.</p>`;
+  if (n.p[":sourceControlTitle"]) extra += `<p class="note">The mapping source titles this control "${esc(n.p[":sourceControlTitle"])}". The title above is from the OSCAL catalog (CQ13).</p>`;
+  if (n.t === "CapabilityGroup" && n.p[":groupName"] !== n.p[":oscalFamilyTitle"]) extra += `<p class="note">The mapping source calls this family "${esc(n.p[":groupName"])}". The title above is from the OSCAL catalog (CQ13).</p>`;
   if (n.t === "MitigationClaim") extra += `<p class="note">An enterprise claim interpreted from source rows. It is not the same thing as the source row that supports it.</p>`;
   if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
   const nb = neighbourhood(id);
@@ -351,7 +378,7 @@ function showNode(id) {
     <h2>${esc(n.l)}</h2>${n.s ? `<p>${esc(n.s)}</p>` : ""}${extra}
     ${props.length ? `<h3>Properties</h3><dl>${props.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
     ${evidence(id)}${relations(id)}
-    <h3>IRI</h3><p class="note"><code>${esc((n.id.startsWith("capabilityGroup_") || n.id.startsWith("mappingType_") || n.id.endsWith("Scheme") ? "https://w3id.org/example/nist-attack-mapping/ontology/1.0#" : "https://w3id.org/example/nist-attack-mapping/data/1.0#") + n.id)}</code></p>`;
+    <h3>IRI</h3><p class="note"><code>${esc((n.id.startsWith("capabilityGroup_") ? "https://w3id.org/example/nist-attack-mapping/ontology/1.0#" : "https://w3id.org/example/nist-attack-mapping/data/1.0#") + n.id)}</code></p>`;
   draw(nb.nodes, nb.links, id);
   crumb(`${typeName}: ${n.l}. Showing ${nb.shown} of ${nb.total} neighbours.`);
 }
@@ -359,22 +386,25 @@ function showClass(id) {
   const c = DATA.schema.classes.find(x => x.id === id);
   if (!c) return showSchema();
   const props = DATA.schema.properties.filter(p => p.domain === id || p.range === id);
-  const shapes = DATA.shapes.filter(s => s.target === id);
+  const shapes = DATA.shapes.filter(s => s.targets.includes(id));
   const local = id.replace(/^:/, "");
   const count = C[local];
   detail.innerHTML = `<span class="badge">OWL class</span><h2>${esc(c.label ?? id)}</h2><p class="note"><code>${esc(id)}</code></p>
+    ${c.deprecated ? `<p class="warn">Deprecated in ${esc(M.version)}.</p>` : ""}
     ${c.comment ? `<p>${esc(c.comment)}</p>` : ""}
-    ${count ? `<p>${count} instance${count === 1 ? "" : "s"} in the sample. ${TYPES[local] ? `Browse them from the lists or start at ${link(ofType(local).sort(byLabel)[0].id)}.` : ""}</p>` : ""}
+    ${c.alignments.length ? `<h3>Alignments</h3><ul>${c.alignments.map(a => `<li>${esc(a)}</li>`).join("")}</ul><p class="note">See <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/docs/vocabulary-alignment.md">the alignment register</a>.</p>` : ""}
+    ${count ? `<p>${count} instance${count === 1 ? "" : "s"} in the population. ${TYPES[local] ? `Browse them from the lists or start at ${link(ofType(local).sort(byLabel)[0].id)}.` : ""}</p>` : ""}
     ${c.super.length ? `<h3>Subclass of</h3><ul>${c.super.map(s => `<li><a href="#class/${encodeURIComponent(s)}">${esc(s)}</a></li>`).join("")}</ul>` : ""}
     ${c.restrictions.length ? `<h3>OWL restrictions</h3><ul>${c.restrictions.map(r => `<li><code>${esc(r)}</code></li>`).join("")}</ul>` : ""}
     ${c.disjoint.length ? `<h3>Disjoint with</h3><p>${c.disjoint.map(d => `<a href="#class/${encodeURIComponent(d)}">${esc(d)}</a>`).join(", ")}</p>` : ""}
     ${shapes.length ? `<h3>SHACL shape</h3>${shapes.map(s => `<p class="note"><code>${esc(s.id)}</code></p><ul>${s.rules.map(r => `<li><code>${esc(r)}</code></li>`).join("")}</ul>`).join("")}` : ""}
-    ${props.length ? `<h3>Properties</h3><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>${props.map(p => `<tr><td><code>${esc(p.id)}</code>${p.functional ? " (functional)" : ""}</td><td>${esc(p.domain)}</td><td>${esc(p.range)}</td></tr>`).join("")}</tbody></table>` : ""}`;
+    ${props.length ? `<h3>Properties</h3><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>${props.map(p => `<tr><td><code>${esc(p.id)}</code>${p.functional ? " (functional)" : ""}${p.deprecated ? " (deprecated)" : ""}${p.alignments.length ? `<br><span class="note">${p.alignments.map(esc).join("<br>")}</span>` : ""}</td><td>${esc(p.domain)}</td><td>${esc(p.range)}</td></tr>`).join("")}</tbody></table>` : ""}`;
   schemaGraph(id);
   crumb(`Schema: ${c.label ?? id}`);
 }
 function showSchema() {
   detail.innerHTML = `<h2>Schema</h2><p>${DATA.schema.classes.length} OWL classes and ${DATA.schema.properties.length} properties. Boxes are classes. Lines are <code>rdfs:subClassOf</code> or object properties from domain to range. Select a class for its restrictions and SHACL shape.</p>
+    <p>Alignments to ATT&amp;CK STIX, NIST OSCAL and UCO are in separate modules. UCO superclasses appear as grey boxes. The reasons for each alignment are in <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/docs/vocabulary-alignment.md">the alignment register</a>.</p>
     <h3>Object properties</h3><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>${DATA.schema.properties.filter(p => p.kind === "object").map(p => `<tr><td><code>${esc(p.id)}</code>${p.inverse ? `<br><span class="note">inverse ${esc(p.inverse)}</span>` : ""}</td><td>${esc(p.domain)}</td><td>${esc(p.range)}</td></tr>`).join("")}</tbody></table>
     <h3>Datatype properties</h3><table><thead><tr><th>Property</th><th>Domain</th></tr></thead><tbody>${DATA.schema.properties.filter(p => p.kind === "datatype").map(p => `<tr><td><code>${esc(p.id)}</code>${p.functional ? " (functional)" : ""}</td><td>${esc(p.domain)}</td></tr>`).join("")}</tbody></table>`;
   schemaGraph(null);
@@ -383,34 +413,78 @@ function showSchema() {
 function showOverview() {
   const top = ofType("SecurityControl").map(c => ({...c, c: mitigated(c.id)})).sort((a, b) => b.c - a.c).slice(0, 8);
   detail.innerHTML = `<h2>Overview</h2>
-    <p>${C.SecurityControl} NIST 800-53 controls in their ${C.CapabilityGroup} capability groups (stars). A larger circle means more techniques mitigated in the sample. Faded circles have no claim in the sample.</p>
-    <p class="note">The sample is not spread evenly: ${top[0].l} and ${top[1].l} hold ${top[0].c + top[1].c} of the ${C.MitigationClaim} claims. Read the sizes as a picture of the sample, not of the source dataset.</p>
+    <p>${C.SecurityControl} NIST 800-53 controls in their ${C.CapabilityGroup} families (stars). A larger circle means more techniques mitigated. Faded circles have no claim.</p>
     <p>Select a node, or search on the left, to walk the graph. Each mitigation claim links a control to a technique and points back to the source row that supports it.</p>
-    <h3>Controls with the most claims in the sample</h3><ul>${top.map(c => `<li>${link(c.id)} <span class="count">${c.c}</span></li>`).join("")}</ul>
+    <h3>Controls with the most claims</h3><ul>${top.map(c => `<li>${link(c.id)} <span class="count">${c.c}</span></li>`).join("")}</ul>
     <h3>Try</h3><ul>
       <li><a href="#n/technique_T1078">T1078 Valid Accounts</a>: a technique and its mitigating controls</li>
       <li><a href="#n/claim_AC-02_T1556.009">A claim and its supporting source row</a></li>
-      <li><a href="#n/nonmappable_1">A non-mappable source row</a></li>
+      <li><a href="#n/nonmappable_T1656">A non-mappable row</a> for a technique ATT&amp;CK does mitigate (CQ05)</li>
+      <li><a href="#n/technique_T1521.003">T1521.003</a>: a source row outside ATT&amp;CK Enterprise (CQ08)</li>
+      <li><a href="#questions">The 13 competency questions</a> and their answers</li>
       <li><a href="#class/:MitigationClaim">The MitigationClaim class</a></li></ul>`;
   overview();
   crumb("Overview: capability groups and controls");
 }
 function showAbout() {
-  const s = M.source;
+  const k = M.checks;
+  const fmt = o => Object.entries(o).map(([id, v]) => `<li><b>${esc(id)}</b>: source "${esc(v.source)}", ${esc(v.oscal ? "OSCAL" : "ATT&CK")} "${esc(v.oscal ?? v.attack)}"</li>`).join("");
   detail.innerHTML = `<h2>About</h2><p>${esc(M.description)}</p>
-    <dl><dt>Ontology IRI</dt><dd><code>${esc(M.iri)}</code></dd><dt>Version</dt><dd>${esc(M.version)}, created ${esc(M.created)}</dd>
-    <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a></dd>
-    <dt>Source file</dt><dd><code>${esc(s.file)}</code></dd><dt>Framework</dt><dd>${esc(s.framework)} ${esc(s.frameworkVersion)}</dd>
-    <dt>ATT&amp;CK</dt><dd>${esc(s.attackVersion)} ${esc(s.domain)}</dd><dt>Source last update</dt><dd>${esc(s.lastUpdate)}</dd>
-    <dt>Triples</dt><dd>${M.triples} (ontology and population)</dd></dl>
-    <h3>Sample counts</h3><dl>${Object.entries(C).map(([k, v]) => `<dt>${esc(TYPES[k]?.[0] ?? k)}</dt><dd>${v}</dd>`).join("")}</dl>
+    <dl><dt>Ontology IRI</dt><dd><code>${esc(M.iri)}</code></dd><dt>Version</dt><dd>${esc(M.version)} (<code>${esc(M.versionIri)}</code>), ${esc(M.modified)}</dd>
+    <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a></dd><dt>Triples</dt><dd>${M.triples} (core, alignments and population)</dd></dl>
+    <h3>Pinned sources</h3><table><thead><tr><th>Source</th><th>SHA-256</th></tr></thead><tbody>${Object.entries(M.sources).map(([key, v]) => `<tr><td><a href="${esc(v.url)}">${esc(key)}</a></td><td><code>${esc(v.sha256.slice(0, 16))}</code></td></tr>`).join("")}</tbody></table>
+    <h3>What the cross-checks found</h3><ul>
+      <li>${k.techniquesNotInAttackEnterprise.map(t => link("technique_" + t)).join(", ")}: in the mapping but not an active ATT&amp;CK Enterprise technique. ${k.claimsWithheld.length} claim withheld by rule R1.</li>
+      <li>${k.duplicateRows.length} control and technique pairs appear in two identical rows (CQ09).</li>
+      ${fmt(k.controlTitleDifferences)}${fmt(k.familyTitleDifferences)}
+      <li>${SC.techniquesInAttackEnterprise - SC.techniquesInMapping + k.techniquesNotInAttackEnterprise.length} active Enterprise techniques have no row in the mapping (CQ12).</li></ul>
+    <h3>Counts</h3><dl>${Object.entries(C).map(([key, v]) => `<dt>${esc(TYPES[key]?.[0] ?? key)}</dt><dd>${v}</dd>`).join("")}</dl>
     <h3>Limits</h3><ul>
-      <li>The population is a sample. The source has 5410 mapping objects; the sample holds ${C.MitigatesAssertion + C.NonMappableAssertion} of them. A missing link here is not a missing link in the source.</li>
       <li>The namespace is <code>w3id.org/example</code>. The IRIs do not resolve.</li>
-      <li>A mapping is not evidence that a system has the control in place or that the control stops the technique.</li></ul>
-    <h3>Attribution</h3><p class="note">Mappings derive from the MITRE Center for Threat-Informed Defense <a href="https://ctid.io/mappings-explorer">Mappings Explorer</a> (Apache 2.0). MITRE ATT&amp;CK&reg; is a registered trademark of The MITRE Corporation; ATT&amp;CK content &copy; The MITRE Corporation. NIST SP 800-53 is a NIST publication. Graph browser uses <a href="https://d3js.org">D3</a> (ISC).</p>`;
+      <li>A mapping is not evidence that a system has the control in place or that the control stops the technique.</li>
+      <li>OSCAL titles come from catalog 5.2.0; the mapping was built against an earlier Rev. 5 release.</li></ul>
+    <h3>Attribution</h3><p class="note">Mappings: MITRE Center for Threat-Informed Defense <a href="https://ctid.io/mappings-explorer">Mappings Explorer</a> (Apache 2.0). MITRE ATT&amp;CK&reg; is a registered trademark of The MITRE Corporation; ATT&amp;CK content &copy; The MITRE Corporation. NIST SP 800-53, SP 800-53B and OSCAL content: NIST. UCO: Apache 2.0. Graph browser: <a href="https://d3js.org">D3</a> (ISC).</p>`;
   overview();
   crumb("About");
+}
+
+function questionGraph(q) {
+  const ids = new Set();
+  for (const m of q.sparql.matchAll(/data:([A-Za-z0-9_.-]+)/g)) if (BY_ID.has(m[1])) ids.add(m[1]);
+  for (const row of q.rows.slice(0, 80)) for (const v of row) { const id = cellId(v); if (id) ids.add(id); }
+  const set = new Set([...ids].slice(0, 120));
+  if (set.size < 2) return overview();
+  const links = [];
+  for (const id of set) for (const [p, o] of OUT.get(id)) if (set.has(o)) links.push({source: id, target: o, label: propLabel(p)});
+  draw([...set].map(x => nodeView(BY_ID.get(x))), links, null, {labels: set.size <= 60});
+}
+function cellId(v) {
+  if (v == null) return null;
+  if (BY_ID.has(v)) return v;
+  for (const [re, prefix] of [[/^[A-Z]{2}-[0-9]{2}$/, "control_"], [/^T[0-9]{4}(\.[0-9]{3})?$/, "technique_"], [/^M[0-9]{4}$/, "mitigation_"], [/^TA[0-9]{4}$/, "tactic_"]])
+    if (re.test(v) && BY_ID.has(prefix + v)) return prefix + v;
+  return null;
+}
+function showQuestions() {
+  detail.innerHTML = `<h2>Competency questions</h2>
+    <p>What the graph must be able to answer, following the competency-question method in the ontology engineering guide. Each question is a SPARQL file in <code>queries/</code>; the tests check every answer against the same answer computed from the raw source files.</p>
+    <ul class="list">${QUESTIONS.map(q => `<li><a href="#q/${q.id}"><span class="id">${q.id}</span><span class="sub">${esc(q.question)}</span><span class="count">${q.total}</span></a></li>`).join("")}</ul>`;
+  overview();
+  crumb("Competency questions");
+}
+function showQuestion(id) {
+  const q = QUESTIONS.find(x => x.id === id);
+  if (!q) return showQuestions();
+  const cellHtml = v => { const nid = cellId(v); return nid ? link(nid).split("</a>")[0] + "</a>" : esc(v ?? ""); };
+  detail.innerHTML = `<span class="badge">${esc(q.id)}</span> <span class="note">${esc(q.persona)}</span>
+    <h2>${esc(q.question)}</h2>
+    <dl><dt>Decision</dt><dd>${esc(q.decision)}</dd><dt>Evidence</dt><dd>${esc(q.evidence)}</dd><dt>Answer</dt><dd>${q.total} row${q.total === 1 ? "" : "s"}${q.total > q.rows.length ? `, first ${q.rows.length} shown` : ""}</dd></dl>
+    <h3>Answer</h3><div style="overflow:auto"><table><thead><tr>${q.columns.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead>
+    <tbody>${q.rows.map(r => `<tr>${r.map(v => `<td>${cellHtml(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <details><summary>SPARQL</summary><pre>${esc(q.sparql)}</pre><p class="note"><a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/${esc(q.file)}">${esc(q.file)}</a></p></details>
+    <p><a href="#questions">All questions</a></p>`;
+  questionGraph(q);
+  crumb(`${q.id}: ${q.question}`);
 }
 
 /* Routing */
@@ -418,17 +492,21 @@ function route() {
   const h = decodeURIComponent(location.hash.replace(/^#/, ""));
   if (h.startsWith("n/")) return {view: "node", id: h.slice(2)};
   if (h.startsWith("class/")) return {view: "class", id: h.slice(6)};
-  return {view: ["schema", "about"].includes(h) ? h : "overview"};
+  if (h.startsWith("q/")) return {view: "question", id: h.slice(2)};
+  return {view: ["schema", "about", "questions"].includes(h) ? h : "overview"};
 }
 function crumb(t) { document.getElementById("crumb").textContent = t; }
 function go() {
   const r = route();
-  document.querySelectorAll("header nav a[data-view]").forEach(a => a.toggleAttribute("aria-current", a.dataset.view === (r.view === "class" ? "schema" : r.view)));
+  const navView = {class: "schema", question: "questions"}[r.view] ?? r.view;
+  document.querySelectorAll("header nav a[data-view]").forEach(a => a.toggleAttribute("aria-current", a.dataset.view === navView));
   document.querySelectorAll("header nav a[aria-current]").forEach(a => a.setAttribute("aria-current", "page"));
   if (r.view === "node" && BY_ID.has(r.id)) showNode(r.id);
   else if (r.view === "class") showClass(r.id);
   else if (r.view === "schema") showSchema();
   else if (r.view === "about") showAbout();
+  else if (r.view === "questions") showQuestions();
+  else if (r.view === "question") showQuestion(r.id);
   else showOverview();
   document.title = `${document.getElementById("crumb").textContent.split(".")[0]} | NIST 800-53 to ATT&CK ontology`;
   renderBrowse();

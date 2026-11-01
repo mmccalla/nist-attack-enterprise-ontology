@@ -1,0 +1,22 @@
+# id: CQ05
+# persona: Threat-informed defence analyst
+# question: Which techniques does the source mark non-mappable, and does ATT&CK list a mitigation for any of them?
+# decision: Whether "no NIST control" means no defence at all, or a defence that NIST 800-53 does not express.
+# evidence: Non-mappable rows (CTID), ATT&CK mitigates relationships (STIX).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+# ATT&CK uses two placeholder categories: M1056 Pre-compromise and M1055 Do Not Mitigate. Read them apart from
+# substantive mitigations.
+SELECT ?technique ?name (GROUP_CONCAT(?mid; separator=" ") AS ?attackMitigations) (SAMPLE(?comment) AS ?sourceComment)
+WHERE {
+  ?row a :NonMappableAssertion ; :assertsTechnique ?t .
+  ?t :techniqueId ?technique ; :techniqueName ?name .
+  OPTIONAL { ?row :rationaleText ?comment }
+  OPTIONAL { ?m :attackMitigationFor ?t ; :mitigationId ?mid }
+}
+GROUP BY ?technique ?name
+ORDER BY ?technique

@@ -1,0 +1,19 @@
+# id: CQ03
+# persona: GRC analyst
+# question: Which techniques have mitigating controls in the mapping, but none of them in the LOW baseline?
+# decision: What residual technique exposure a LOW-baseline system accepts, and which controls would close it.
+# evidence: Mitigation claims (CTID), LOW baseline profile (OSCAL).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?technique ?name (COUNT(DISTINCT ?c) AS ?controlsOutsideLow)
+WHERE {
+  ?c :mitigatesTechnique ?t .
+  ?t :techniqueId ?technique ; :techniqueName ?name .
+  FILTER NOT EXISTS { ?low :mitigatesTechnique ?t ; :inBaseline data:baseline_LOW }
+}
+GROUP BY ?technique ?name
+ORDER BY ?technique
