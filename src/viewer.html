@@ -69,6 +69,19 @@ th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line
 code { font-size: 12px; }
 pre { white-space: pre-wrap; font-size: 12px; background: var(--bg); padding: 8px; border-radius: 6px; overflow: auto; }
 .warn { border-left: 3px solid var(--technique); padding: 4px 8px; background: var(--bg); font-size: 13px; }
+:root { --good: #0ca30c; --warning: #fab219; --none: #d5d9df; }
+#report { position: absolute; inset: 0; overflow: auto; padding: 16px 20px; background: var(--bg); }
+#report[hidden] { display: none; }
+textarea { width: 100%; min-height: 110px; font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; align-items: center; }
+.bar { display: flex; height: 16px; border-radius: 4px; overflow: hidden; background: var(--line); min-width: 160px; }
+.bar span { display: block; height: 100%; border-right: 2px solid var(--bg); }
+.bar span:last-child { border-right: 0; }
+.s-good { background: var(--good); } .s-gap { background: var(--warning); } .s-none { background: var(--none); }
+.key { display: inline-flex; align-items: center; gap: 4px; margin-right: 12px; font-size: 12.5px; }
+.key i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.stat { display: inline-block; margin: 0 18px 8px 0; } .stat b { display: block; font-size: 22px; font-variant-numeric: tabular-nums; }
+.cov td { white-space: nowrap; } .cov td.num { text-align: right; font-variant-numeric: tabular-nums; }
 #legend { position: absolute; left: 10px; bottom: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: calc(100% - 20px); }
 #legend span { display: inline-flex; align-items: center; gap: 4px; }
 #toolbar { position: absolute; left: 10px; top: 10px; right: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; pointer-events: none; }
@@ -100,6 +113,7 @@ svg .node.dim path { opacity: .35; }
   <p id="subtitle"></p>
   <nav aria-label="Views">
     <a class="btn" href="#overview" data-view="overview">Overview</a>
+    <a class="btn" href="#gaps" data-view="gaps">Gap analysis</a>
     <a class="btn" href="#questions" data-view="questions">Questions</a>
     <a class="btn" href="#schema" data-view="schema">Schema</a>
     <a class="btn" href="#about" data-view="about">About</a>
@@ -126,6 +140,7 @@ svg .node.dim path { opacity: .35; }
     </div>
     <svg id="graph" role="img" aria-labelledby="graph-desc"><desc id="graph-desc">Graph of the selected node and its neighbours. Use the lists and the details panel for keyboard navigation.</desc></svg>
     <div id="legend" aria-label="Legend"></div>
+    <div id="report" hidden aria-live="polite"></div>
   </section>
   <section id="detail" aria-label="Details" tabindex="-1"></section>
 </main>
@@ -374,12 +389,21 @@ function showNode(id) {
   if (n.t === "MitigationClaim") extra += `<p class="note">An enterprise claim interpreted from source rows. It is not the same thing as the source row that supports it.</p>`;
   if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
   const nb = neighbourhood(id);
+  if (n.t === "SecurityControl" || n.t === "ControlBaseline") {
+    const ids = n.t === "SecurityControl" ? [n.l] : [...CONTROLS].filter(([, c]) => baselinesOf(c.id).includes(n.l)).map(([c]) => c).sort();
+    extra += `<div class="row"><button class="btn" id="node-layer">Navigator layer</button><a class="btn" href="#gaps/${ids.join(",")}">Open in gap analysis</a></div>`;
+  }
   detail.innerHTML = `<span class="badge" style="color:${color(n.t)}">${esc(typeName)}</span>
     <h2>${esc(n.l)}</h2>${n.s ? `<p>${esc(n.s)}</p>` : ""}${extra}
     ${props.length ? `<h3>Properties</h3><dl>${props.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
     ${evidence(id)}${relations(id)}
     <h3>IRI</h3><p class="note"><code>${esc((n.id.startsWith("capabilityGroup_") ? "https://w3id.org/example/nist-attack-mapping/ontology/1.0#" : "https://w3id.org/example/nist-attack-mapping/data/1.0#") + n.id)}</code></p>`;
   draw(nb.nodes, nb.links, id);
+  document.getElementById("node-layer")?.addEventListener("click", () => {
+    const ids = new Set(n.t === "SecurityControl" ? [n.l] : [...CONTROLS].filter(([, c]) => baselinesOf(c.id).includes(n.l)).map(([c]) => c));
+    const title = n.t === "SecurityControl" ? `NIST 800-53 ${n.l} ${n.s}` : `NIST 800-53B ${n.l} baseline coverage`;
+    downloadLayer(`${slugName(title)}.json`, navigatorLayer(title, `ATT&CK Enterprise 16.1 techniques mitigated by ${title}.`, ids));
+  });
   crumb(`${typeName}: ${n.l}. Showing ${nb.shown} of ${nb.total} neighbours.`);
 }
 function showClass(id) {
@@ -422,6 +446,7 @@ function showOverview() {
       <li><a href="#n/nonmappable_T1656">A non-mappable row</a> for a technique ATT&amp;CK does mitigate (CQ05)</li>
       <li><a href="#n/technique_T1521.003">T1521.003</a>: a source row outside ATT&amp;CK Enterprise (CQ08)</li>
       <li><a href="#questions">The 13 competency questions</a> and their answers</li>
+      <li><a href="#gaps">Gap analysis</a>: paste your controls or load an OSCAL SSP and see what is uncovered</li>
       <li><a href="#class/:MitigationClaim">The MitigationClaim class</a></li></ul>`;
   overview();
   crumb("Overview: capability groups and controls");
@@ -432,6 +457,8 @@ function showAbout() {
   detail.innerHTML = `<h2>About</h2><p>${esc(M.description)}</p>
     <dl><dt>Ontology IRI</dt><dd><code>${esc(M.iri)}</code></dd><dt>Version</dt><dd>${esc(M.version)} (<code>${esc(M.versionIri)}</code>), ${esc(M.modified)}</dd>
     <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a></dd><dt>Triples</dt><dd>${M.triples} (core, alignments and population)</dd></dl>
+    <h3>Downloads</h3><p>Stable files, rebuilt with every release: <a href="exports/claims.csv">claims.csv</a> (every control and technique claim with its source rows), <a href="exports/techniques.csv">techniques.csv</a>, <a href="exports/controls.csv">controls.csv</a>, Navigator layers for the <a href="exports/navigator/baseline-LOW.json">LOW</a>, <a href="exports/navigator/baseline-MODERATE.json">MODERATE</a>, <a href="exports/navigator/baseline-HIGH.json">HIGH</a> and <a href="exports/navigator/baseline-PRIVACY.json">PRIVACY</a> baselines and <a href="exports/navigator/all-controls.json">all controls</a>, and every competency answer under <code>exports/questions/</code>. The ontology and population are under <a href="ontology/core.ttl">ontology/</a> and <a href="data/population.ttl">data/</a>.</p>
+    <h3>Cite</h3><p class="note">McCalla, M. (2026). <i>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</i> (version ${esc(M.version)}). https://github.com/mmccalla/nist-attack-enterprise-ontology. See <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/CITATION.cff">CITATION.cff</a>.</p>
     <h3>Pinned sources</h3><table><thead><tr><th>Source</th><th>SHA-256</th></tr></thead><tbody>${Object.entries(M.sources).map(([key, v]) => `<tr><td><a href="${esc(v.url)}">${esc(key)}</a></td><td><code>${esc(v.sha256.slice(0, 16))}</code></td></tr>`).join("")}</tbody></table>
     <h3>What the cross-checks found</h3><ul>
       <li>${k.techniquesNotInAttackEnterprise.map(t => link("technique_" + t)).join(", ")}: in the mapping but not an active ATT&amp;CK Enterprise technique. ${k.claimsWithheld.length} claim withheld by rule R1.</li>
@@ -481,10 +508,217 @@ function showQuestion(id) {
     <dl><dt>Decision</dt><dd>${esc(q.decision)}</dd><dt>Evidence</dt><dd>${esc(q.evidence)}</dd><dt>Answer</dt><dd>${q.total} row${q.total === 1 ? "" : "s"}${q.total > q.rows.length ? `, first ${q.rows.length} shown` : ""}</dd></dl>
     <h3>Answer</h3><div style="overflow:auto"><table><thead><tr>${q.columns.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead>
     <tbody>${q.rows.map(r => `<tr>${r.map(v => `<td>${cellHtml(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <div class="row"><button class="btn" id="q-csv">Download CSV</button> <a class="note" href="exports/questions/${q.id.toLowerCase()}.csv">Stable link to this CSV</a></div>
     <details><summary>SPARQL</summary><pre>${esc(q.sparql)}</pre><p class="note"><a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/${esc(q.file)}">${esc(q.file)}</a></p></details>
     <p><a href="#questions">All questions</a></p>`;
   questionGraph(q);
+  document.getElementById("q-csv").addEventListener("click", () => download(`${q.id.toLowerCase()}.csv`, toCsv(q.columns, q.rows), "text/csv"));
   crumb(`${q.id}: ${q.question}`);
+}
+
+/* Exports: ATT&CK Navigator layers and CSV, built in the browser */
+const SITE = "https://mmccalla.github.io/nist-attack-enterprise-ontology/";
+const STATUS = {covered: "#0ca30c", gap: "#fab219", none: "#d5d9df"};
+const ENTERPRISE = ofType("AttackTechnique").filter(n => n.p[":inAttackEnterprise"] === "true");
+const CONTROLS = new Map(ofType("SecurityControl").map(n => [n.l, n]));
+const tacticsOf = id => OUT.get(id).filter(([p]) => p === ":inTactic").map(([, o]) => BY_ID.get(o));
+const controlsFor = id => IN.get(id).filter(([p]) => p === ":mitigatesTechnique").map(([, s]) => BY_ID.get(s).l).sort();
+const baselinesOf = id => OUT.get(id).filter(([p]) => p === ":inBaseline").map(([, o]) => BY_ID.get(o).l).sort();
+const tnum = t => t.match(/\d+/g).map(Number);
+const byTid = (a, b) => { const x = tnum(a), y = tnum(b); return x[0] - y[0] || (x[1] ?? -1) - (y[1] ?? -1); };
+
+function coverage(selected) {
+  const out = new Map();
+  for (const t of ENTERPRISE) {
+    const all = controlsFor(t.id), covering = all.filter(c => selected.has(c));
+    out.set(t.l, covering.length ? ["covered", covering] : all.length ? ["gap", all] : ["none", []]);
+  }
+  return out;
+}
+function navigatorLayer(name, description, selected) {
+  const cov = coverage(selected);
+  const ids = [...cov.keys()].sort(byTid);
+  const techniques = ids.map(tid => {
+    const [status, controls] = cov.get(tid), e = {techniqueID: tid};
+    if (status === "covered") { e.score = controls.length; e.comment = "Mitigated by " + controls.join(", "); }
+    else if (status === "gap") { e.color = STATUS.gap; e.comment = "Not covered. Controls that would mitigate it: " + controls.join(", "); }
+    else { e.color = STATUS.none; e.comment = "The mapping has no mitigating control for this technique"; }
+    if (!tid.includes(".") && ids.some(t => t.startsWith(tid + "."))) e.showSubtechniques = false;
+    return e;
+  });
+  const top = Math.max(1, ...[...cov.values()].filter(([s]) => s === "covered").map(([, c]) => c.length));
+  return {
+    name, versions: {attack: "16", navigator: "4.9.0", layer: "4.5"}, domain: "enterprise-attack", description,
+    sorting: 3, layout: {layout: "side", showID: true, showName: true, expandedSubtechniques: "none"}, hideDisabled: false,
+    techniques, gradient: {colors: ["#d9f2d9", STATUS.covered], minValue: 1, maxValue: Math.max(top, 2)},
+    legendItems: [
+      {label: "Covered (darker = more controls)", color: STATUS.covered},
+      {label: "Gap: a control exists in the mapping but is not selected", color: STATUS.gap},
+      {label: "No mitigating control in the mapping", color: STATUS.none},
+    ],
+    links: [{label: "NIST 800-53 to ATT&CK ontology", url: SITE}],
+    metadata: [
+      {name: "Source", value: "CTID NIST 800-53 Rev. 5 to ATT&CK 16.1 Enterprise, claims under rule R1"},
+      {name: "Controls selected", value: String(selected.size)},
+    ],
+  };
+}
+const csvCell = v => { const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+const toCsv = (header, rows) => [header, ...rows].map(r => r.map(csvCell).join(",")).join("\n") + "\n";
+function download(filename, text, type) {
+  const url = URL.createObjectURL(new Blob([text], {type}));
+  const a = Object.assign(document.createElement("a"), {href: url, download: filename});
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+const downloadLayer = (filename, layer) => download(filename, JSON.stringify(layer, null, 2) + "\n", "application/json");
+const slugName = s => s.replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
+
+/* Gap analysis: everything runs in this page; nothing is sent anywhere */
+const BASELINE_LEVELS = ["LOW", "MODERATE", "HIGH", "PRIVACY"];
+let gapSelected = new Set();
+let gapIgnored = {unmapped: [], enhancements: 0};
+function parseControls(text) {
+  const found = new Set(), unmapped = new Set();
+  let enhancements = 0;
+  for (const m of text.matchAll(/\b([A-Za-z]{2})[-\s]0*(\d{1,2})(?!\d)(?:\s*(?:\(\s*\d+\s*\)|\.\d+))?/g)) {
+    const id = `${m[1].toUpperCase()}-${m[2].padStart(2, "0")}`;
+    if (/[(.]/.test(m[0])) enhancements++;
+    (CONTROLS.has(id) ? found : unmapped).add(id);
+  }
+  return {found, unmapped: [...unmapped].sort(), enhancements};
+}
+function controlIdsFromOscal(doc) {
+  // SSP, component definition, profile or catalog. Enhancement ids (ac-2.1) count towards their base control.
+  const ids = [];
+  const ssp = doc["system-security-plan"], cd = doc["component-definition"], prof = doc.profile, cat = doc.catalog;
+  if (ssp) for (const r of ssp["control-implementation"]?.["implemented-requirements"] ?? []) ids.push(r["control-id"]);
+  if (cd) for (const c of cd.components ?? []) for (const ci of c["control-implementations"] ?? []) for (const r of ci["implemented-requirements"] ?? []) ids.push(r["control-id"]);
+  if (prof) for (const imp of prof.imports ?? []) for (const inc of imp["include-controls"] ?? []) ids.push(...(inc["with-ids"] ?? []));
+  if (cat) { const walk = g => { for (const c of g.controls ?? []) { ids.push(c.id); walk(c); } for (const x of g.groups ?? []) walk(x); }; walk(cat); }
+  if (!ssp && !cd && !prof && !cat) throw new Error("Not an OSCAL SSP, component definition, profile or catalog");
+  return ids.filter(Boolean);
+}
+function gapRecommendations(selected, cov, limit = 10) {
+  const gaps = new Set([...cov].filter(([, [s]]) => s === "gap").map(([t]) => t));
+  const picked = [], chosen = new Set(selected);
+  while (picked.length < limit && gaps.size) {
+    let best = null, bestGain = 0;
+    for (const [cid, node] of [...CONTROLS].sort()) {
+      if (chosen.has(cid)) continue;
+      const gain = OUT.get(node.id).filter(([p, o]) => p === ":mitigatesTechnique" && gaps.has(BY_ID.get(o).l)).length;
+      if (gain > bestGain) { best = cid; bestGain = gain; }
+    }
+    if (!best) break;
+    picked.push([best, bestGain]); chosen.add(best);
+    for (const [p, o] of OUT.get(CONTROLS.get(best).id)) if (p === ":mitigatesTechnique") gaps.delete(BY_ID.get(o).l);
+  }
+  return picked;
+}
+function gapReport() {
+  const cov = coverage(gapSelected);
+  const counts = {covered: 0, gap: 0, none: 0};
+  for (const [s] of cov.values()) counts[s]++;
+  const total = cov.size;
+  const tactics = ofType("Tactic").sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(ta => {
+    const c = {covered: 0, gap: 0, none: 0};
+    for (const [p, s] of IN.get(ta.id)) if (p === ":inTactic" && BY_ID.get(s).p[":inAttackEnterprise"] === "true") c[cov.get(BY_ID.get(s).l)[0]]++;
+    return [ta, c];
+  });
+  const recs = gapRecommendations(gapSelected, cov);
+  const gaps = [...cov].filter(([, [s]]) => s === "gap").sort(([a], [b]) => byTid(a, b));
+  const pct = (n, d) => d ? Math.round(100 * n / d) : 0;
+  const seg = (cls, n, d, label) => n ? `<span class="${cls}" style="width:${100 * n / d}%" title="${label}: ${n}"></span>` : "";
+  const report = document.getElementById("report");
+  report.innerHTML = `<h2>Coverage of ATT&amp;CK Enterprise ${esc(M.source.attackVersion)} by ${gapSelected.size} selected control${gapSelected.size === 1 ? "" : "s"}</h2>
+    <div><span class="stat"><b>${counts.covered}</b>&#10003; covered (${pct(counts.covered, total)}%)</span>
+      <span class="stat"><b>${counts.gap}</b>! gaps a mapped control would close</span>
+      <span class="stat"><b>${counts.none}</b>&#9675; no control in the mapping</span>
+      <span class="stat"><b>${total}</b>techniques in total</span></div>
+    <p><span class="key"><i class="s-good"></i>&#10003; Covered</span><span class="key"><i class="s-gap"></i>! Gap</span><span class="key"><i class="s-none"></i>&#9675; No mapped control</span></p>
+    <table class="cov"><caption class="note" style="text-align:left">Techniques per tactic. A technique counts in every tactic it serves.</caption>
+      <thead><tr><th>Tactic</th><th>Coverage</th><th class="num">&#10003;</th><th class="num">!</th><th class="num">&#9675;</th><th class="num">%</th></tr></thead>
+      <tbody>${tactics.map(([ta, c]) => { const d = c.covered + c.gap + c.none; return `<tr><td>${link(ta.id).split("</a>")[0]}</a> ${esc(ta.s)}</td>
+        <td style="width:45%"><div class="bar" role="img" aria-label="${esc(ta.s)}: ${c.covered} covered, ${c.gap} gaps, ${c.none} with no mapped control">${seg("s-good", c.covered, d, "Covered")}${seg("s-gap", c.gap, d, "Gap")}${seg("s-none", c.none, d, "No mapped control")}</div></td>
+        <td class="num">${c.covered}</td><td class="num">${c.gap}</td><td class="num">${c.none}</td><td class="num">${pct(c.covered, d)}</td></tr>`; }).join("")}</tbody></table>
+    <h3>Gaps a mapped control would close (${gaps.length})</h3>
+    ${gaps.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>Controls that would mitigate it</th></tr></thead><tbody>${gaps.slice(0, 300).map(([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(c => `<a href="#n/control_${c}">${c}</a>`).join(" ")}</td></tr>`).join("")}</tbody></table>${gaps.length > 300 ? `<p class="note">First 300 shown; the CSV has all ${gaps.length}.</p>` : ""}` : `<p>None: every technique that has a mapped control is covered by your selection.</p>`}
+    <p class="note">${counts.none} techniques have no mitigating control in the mapping (non-mappable rows and techniques the mapping does not mention). Selecting more NIST controls cannot cover them; see <a href="#q/CQ05">CQ05</a> and <a href="#q/CQ12">CQ12</a>.</p>`;
+  return {cov, recs, counts};
+}
+function renderGapPanel(result) {
+  const {recs, counts} = result;
+  const unmapped = gapIgnored.unmapped;
+  document.getElementById("gap-status").innerHTML = `${gapSelected.size} mapped control${gapSelected.size === 1 ? "" : "s"} recognised.`
+    + (unmapped.length ? ` ${unmapped.length} not in the ATT&amp;CK mapping (policy, privacy or out-of-scope controls): <code>${unmapped.slice(0, 20).join(" ")}${unmapped.length > 20 ? " ..." : ""}</code>.` : "")
+    + (gapIgnored.enhancements ? ` ${gapIgnored.enhancements} enhancement id${gapIgnored.enhancements === 1 ? "" : "s"} counted towards the base control.` : "");
+  document.getElementById("gap-recs").innerHTML = counts.gap && recs.length
+    ? `<h3>Controls that would close the most gaps</h3><ol>${recs.map(([c, n]) => `<li><a href="#n/control_${c}">${c}</a> ${esc(CONTROLS.get(c).s)} <span class="count">+${n}</span> <span class="note">${esc(baselinesOf(CONTROLS.get(c).id).join(" ") || "no baseline")}</span></li>`).join("")}</ol><p class="note">Greedy order: each control is ranked by the gaps it closes after the ones above it are added.</p>`
+    : "";
+}
+function runGaps(updateHash = true) {
+  const result = gapReport();
+  renderGapPanel(result);
+  if (updateHash) history.replaceState(null, "", "#gaps/" + [...gapSelected].sort().join(","));
+  crumb(`Gap analysis: ${gapSelected.size} controls, ${result.counts.covered} techniques covered`);
+}
+function setGapText(text) {
+  const parsed = parseControls(text);
+  gapSelected = parsed.found;
+  gapIgnored = {unmapped: parsed.unmapped, enhancements: parsed.enhancements};
+}
+function showGaps(list) {
+  const initial = list ?? (gapSelected.size ? [...gapSelected].sort().join(", ") : "");
+  detail.innerHTML = `<h2>Gap analysis</h2>
+    <p>Which ATT&amp;CK techniques do your NIST 800-53 controls leave uncovered, and which controls would close the most gaps? Paste control ids, start from a baseline, or load an OSCAL file. <b>Everything runs in this page; nothing is uploaded.</b></p>
+    <label class="field" for="gap-input">Your implemented controls</label>
+    <textarea id="gap-input" spellcheck="false" placeholder="AC-2, AC-3, IA-2(1), SI-4 ...">${esc(initial)}</textarea>
+    <div class="row">Start from: ${BASELINE_LEVELS.map(b => `<button class="btn" data-baseline="${b}">${b}</button>`).join("")}
+      <button class="btn" id="gap-clear">Clear</button></div>
+    <div class="row"><label class="btn" for="gap-file">Load OSCAL JSON</label><input id="gap-file" type="file" accept=".json,application/json" hidden>
+      <span class="note">SSP, component definition, profile or catalog</span></div>
+    <p class="note" id="gap-status" aria-live="polite"></p>
+    <h3>Download</h3><div class="row">
+      <button class="btn" id="gap-layer">ATT&amp;CK Navigator layer</button>
+      <button class="btn" id="gap-csv">Techniques CSV</button>
+      <button class="btn" id="gap-recs-csv">Recommendations CSV</button></div>
+    <p class="note">Open the layer in the <a href="https://mitre-attack.github.io/attack-navigator/" rel="noopener">ATT&amp;CK Navigator</a> (Open Existing Layer, Upload from local). The address bar now holds your selection, so you can bookmark or share it.</p>
+    <div id="gap-recs"></div>
+    <p class="note">A mapping says a control can mitigate a technique. It does not show the control is implemented well or that it stops the technique.</p>`;
+  const input = document.getElementById("gap-input");
+  let timer;
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => { setGapText(input.value); runGaps(); }, 250); });
+  detail.querySelectorAll("[data-baseline]").forEach(b => b.addEventListener("click", () => {
+    const ids = [...CONTROLS].filter(([, n]) => baselinesOf(n.id).includes(b.dataset.baseline)).map(([c]) => c).sort();
+    input.value = ids.join(", "); setGapText(input.value); runGaps();
+  }));
+  document.getElementById("gap-clear").addEventListener("click", () => { input.value = ""; setGapText(""); runGaps(); });
+  document.getElementById("gap-file").addEventListener("change", async e => {
+    const file = e.target.files[0]; if (!file) return;
+    try {
+      const ids = controlIdsFromOscal(JSON.parse(await file.text()));
+      input.value = ids.join(", "); setGapText(input.value); runGaps();
+    } catch (err) {
+      document.getElementById("gap-status").textContent = `Could not read ${file.name}: ${err.message}`;
+    }
+  });
+  document.getElementById("gap-layer").addEventListener("click", () => downloadLayer("nist-800-53-coverage-layer.json",
+    navigatorLayer("NIST 800-53 coverage: my controls", `ATT&CK Enterprise 16.1 techniques mitigated by ${gapSelected.size} selected NIST 800-53 Rev. 5 controls.`, gapSelected)));
+  document.getElementById("gap-csv").addEventListener("click", () => {
+    const cov = coverage(gapSelected);
+    download("nist-800-53-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "tactics", "status", "controls"],
+      [...cov].sort(([a], [b]) => byTid(a, b)).map(([tid, [status, cs]]) => {
+        const n = BY_ID.get("technique_" + tid);
+        return [tid, n.s, tacticsOf(n.id).map(t => t.p[":tacticShortName"]).join(" "), status, cs.join(" ")];
+      })), "text/csv");
+  });
+  document.getElementById("gap-recs-csv").addEventListener("click", () => {
+    const cov = coverage(gapSelected);
+    download("nist-800-53-recommended-controls.csv", toCsv(["rank", "control_id", "control_title", "gaps_closed", "baselines"],
+      gapRecommendations(gapSelected, cov, 50).map(([c, n], i) => [i + 1, c, CONTROLS.get(c).s, n, baselinesOf(CONTROLS.get(c).id).join(" ")])), "text/csv");
+  });
+  setGapText(input.value);
+  runGaps(list != null);
 }
 
 /* Routing */
@@ -493,11 +727,15 @@ function route() {
   if (h.startsWith("n/")) return {view: "node", id: h.slice(2)};
   if (h.startsWith("class/")) return {view: "class", id: h.slice(6)};
   if (h.startsWith("q/")) return {view: "question", id: h.slice(2)};
+  if (h === "gaps" || h.startsWith("gaps/")) return {view: "gaps", list: h.startsWith("gaps/") ? h.slice(5) : null};
   return {view: ["schema", "about", "questions"].includes(h) ? h : "overview"};
 }
 function crumb(t) { document.getElementById("crumb").textContent = t; }
 function go() {
   const r = route();
+  const gapsView = r.view === "gaps";
+  document.getElementById("report").hidden = !gapsView;
+  for (const id of ["graph", "legend", "toolbar"]) document.getElementById(id).style.visibility = gapsView ? "hidden" : "";
   const navView = {class: "schema", question: "questions"}[r.view] ?? r.view;
   document.querySelectorAll("header nav a[data-view]").forEach(a => a.toggleAttribute("aria-current", a.dataset.view === navView));
   document.querySelectorAll("header nav a[aria-current]").forEach(a => a.setAttribute("aria-current", "page"));
@@ -506,6 +744,7 @@ function go() {
   else if (r.view === "schema") showSchema();
   else if (r.view === "about") showAbout();
   else if (r.view === "questions") showQuestions();
+  else if (r.view === "gaps") showGaps(r.list);
   else if (r.view === "question") showQuestion(r.id);
   else showOverview();
   document.title = `${document.getElementById("crumb").textContent.split(".")[0]} | NIST 800-53 to ATT&CK ontology`;

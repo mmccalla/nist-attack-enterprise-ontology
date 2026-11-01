@@ -1,0 +1,4 @@
+kind,id,source,oscal
+control,IA-08,Identification and Authentication (Non-Organizational Users),Identification and Authentication (Non-organizational Users)
+control,SC-32,Information System Partitioning,System Partitioning
+family,CA,Security Assessment and Authorization,"Assessment, Authorization, and Monitoring"

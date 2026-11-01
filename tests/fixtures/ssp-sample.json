@@ -1,0 +1,18 @@
+{
+  "system-security-plan": {
+    "uuid": "d8a5b3a2-0c1e-4f6e-9a36-1b2c3d4e5f60",
+    "metadata": {"title": "Sample SSP for the gap analysis test", "last-modified": "2026-11-01T00:00:00Z", "version": "1.0", "oscal-version": "1.1.3"},
+    "import-profile": {"href": "https://example.org/profile.json"},
+    "system-characteristics": {},
+    "system-implementation": {},
+    "control-implementation": {
+      "description": "Minimal fixture: only the fields the gap analysis reads.",
+      "implemented-requirements": [
+        {"uuid": "0b1a2c3d-0000-4000-8000-000000000001", "control-id": "ac-2"},
+        {"uuid": "0b1a2c3d-0000-4000-8000-000000000002", "control-id": "ac-2.1"},
+        {"uuid": "0b1a2c3d-0000-4000-8000-000000000003", "control-id": "si-4"},
+        {"uuid": "0b1a2c3d-0000-4000-8000-000000000004", "control-id": "pm-1"}
+      ]
+    }
+  }
+}

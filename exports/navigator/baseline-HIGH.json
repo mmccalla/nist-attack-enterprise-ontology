@@ -1,0 +1,3434 @@
+{
+  "name": "NIST 800-53B HIGH baseline coverage",
+  "versions": {
+    "attack": "16",
+    "navigator": "4.9.0",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "ATT&CK Enterprise techniques mitigated by the mapped controls in the SP 800-53B HIGH baseline. Orange: a mapped control outside the baseline would mitigate it. Grey: no mapped control.",
+  "sorting": 3,
+  "layout": {
+    "layout": "side",
+    "showID": true,
+    "showName": true,
+    "expandedSubtechniques": "none"
+  },
+  "hideDisabled": false,
+  "techniques": [
+    {
+      "techniqueID": "T1001",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1001.001",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1001.002",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1001.003",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1003",
+      "score": 21,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CP-09, IA-02, IA-04, IA-05, SC-28, SC-39, SI-02, SI-03, SI-04, SI-07, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1003.001",
+      "score": 19,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-05, SC-03, SC-28, SC-39, SI-02, SI-03, SI-04, SI-16"
+    },
+    {
+      "techniqueID": "T1003.002",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-05, SC-28, SC-39, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1003.003",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CP-09, IA-02, IA-05, SC-28, SC-39, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1003.004",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SC-28, SC-39, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1003.005",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-04, IA-05, SC-28, SC-39, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1003.006",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, IA-02, IA-04, IA-05, SC-28, SC-39, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1003.007",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SC-28, SC-39, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1003.008",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SC-28, SC-39, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1005",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-12, CP-09, SA-08, SC-13, SC-28, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1007",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1008",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1010",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1011",
+      "score": 4,
+      "comment": "Mitigated by AC-18, CM-06, CM-07, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1011.001",
+      "score": 8,
+      "comment": "Mitigated by AC-18, CM-02, CM-06, CM-07, CM-08, RA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1012",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1014",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1016",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1016.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1016.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1018",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1020",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1020.001",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-17, AC-18, AC-19, AC-20, CA-03, CM-02, CM-05, CM-06, CM-07, CM-08, SC-04, SC-07, SC-08, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1021",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-17, AC-20, CM-02, CM-05, CM-06, CM-07, IA-02, IA-05, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1021.001",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-07, AC-11, AC-12, AC-17, AC-20, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-05, IA-06, RA-05, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1021.002",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1021.003",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, RA-05, SC-03, SC-07, SC-18, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1021.004",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-17, AC-20, CM-02, CM-05, CM-06, CM-08, IA-02, IA-05, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1021.005",
+      "score": 21,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-17, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, CM-11, IA-02, IA-04, IA-06, RA-05, SC-07, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1021.006",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, RA-05, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1021.007",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-20, IA-02, IA-05"
+    },
+    {
+      "techniqueID": "T1021.008",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, AC-20, CM-05, CM-06, CM-07, IA-02, IA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1025",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-12, CP-09, MP-07, SA-08, SC-13, SC-28, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1027",
+      "score": 8,
+      "comment": "Mitigated by AC-03, CM-02, CM-06, CM-07, SI-02, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1027.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1027.002",
+      "score": 4,
+      "comment": "Mitigated by SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1027.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1027.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1027.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1027.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1027.007",
+      "score": 4,
+      "comment": "Mitigated by SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1027.008",
+      "score": 4,
+      "comment": "Mitigated by SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1027.009",
+      "score": 4,
+      "comment": "Mitigated by SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1027.010",
+      "score": 4,
+      "comment": "Mitigated by CM-06, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1027.011",
+      "score": 1,
+      "comment": "Mitigated by SI-04"
+    },
+    {
+      "techniqueID": "T1027.012",
+      "score": 2,
+      "comment": "Mitigated by SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1027.013",
+      "score": 1,
+      "comment": "Mitigated by SI-03"
+    },
+    {
+      "techniqueID": "T1027.014",
+      "score": 1,
+      "comment": "Mitigated by SI-03"
+    },
+    {
+      "techniqueID": "T1029",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1030",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1033",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1036",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CA-07, CM-02, CM-06, CM-07, SI-03, SI-04, SI-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1036.001",
+      "score": 4,
+      "comment": "Mitigated by CM-02, CM-06, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1036.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1036.003",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CA-07, CM-02, CM-06, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1036.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1036.005",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CA-07, CM-02, CM-06, CM-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1036.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1036.007",
+      "score": 6,
+      "comment": "Mitigated by CA-07, CM-02, CM-06, CM-07, IA-02, SI-04"
+    },
+    {
+      "techniqueID": "T1036.008",
+      "score": 5,
+      "comment": "Mitigated by CM-07, SC-07, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1036.009",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1036.010",
+      "score": 5,
+      "comment": "Mitigated by AC-02, AC-03, CM-06, IA-02, SI-04"
+    },
+    {
+      "techniqueID": "T1037",
+      "score": 9,
+      "comment": "Mitigated by AC-03, AC-17, CA-07, CM-02, CM-06, CM-07, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1037.001",
+      "score": 2,
+      "comment": "Mitigated by AC-17, CM-07"
+    },
+    {
+      "techniqueID": "T1037.002",
+      "score": 7,
+      "comment": "Mitigated by AC-03, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1037.003",
+      "score": 7,
+      "comment": "Mitigated by AC-03, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1037.004",
+      "score": 7,
+      "comment": "Mitigated by AC-03, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1037.005",
+      "score": 7,
+      "comment": "Mitigated by AC-03, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1039",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1040",
+      "score": 11,
+      "comment": "Mitigated by AC-17, AC-18, AC-19, CM-07, IA-02, IA-05, SC-04, SC-08, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1041",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-20, CA-03, CA-07, SA-08, SA-09, SC-07, SC-13, SC-28, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1046",
+      "score": 10,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1047",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-02, CM-05, CM-06, CM-07, IA-02, RA-05, SC-03, SI-02, SI-03, SI-04, SI-07, SI-16"
+    },
+    {
+      "techniqueID": "T1048",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-20, CA-03, CA-07, CM-02, CM-06, CM-07, SA-08, SA-09, SC-07, SC-28, SI-03, SI-04, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1048.001",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1048.002",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-20, CA-03, CA-07, CM-02, CM-06, CM-07, SA-08, SA-09, SC-07, SC-28, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1048.003",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-20, CA-03, CA-07, CM-02, CM-06, CM-07, SA-08, SA-09, SC-07, SC-13, SC-28, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1049",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1052",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, MP-07, RA-05, SA-08, SC-28, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1052.001",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, MP-07, RA-05, SA-08, SC-28, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1053",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-08, RA-05, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1053.002",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1053.003",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, IA-02, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1053.005",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1053.006",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-05, CM-06, IA-02, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1053.007",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, IA-02, IA-08"
+    },
+    {
+      "techniqueID": "T1055",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02, SC-07, SC-18, SI-02, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1055.001",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.002",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.003",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.004",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.005",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.008",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.009",
+      "score": 9,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, SC-07, SC-18, SI-02, SI-03, SI-04, SI-16"
+    },
+    {
+      "techniqueID": "T1055.011",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.012",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.013",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.014",
+      "score": 6,
+      "comment": "Mitigated by AC-06, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1055.015",
+      "score": 1,
+      "comment": "Mitigated by SI-03"
+    },
+    {
+      "techniqueID": "T1056",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1056.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1056.002",
+      "score": 4,
+      "comment": "Mitigated by CA-07, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1056.003",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02"
+    },
+    {
+      "techniqueID": "T1056.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1057",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1059",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, CM-11, IA-02, IA-08, RA-05, SC-18, SI-02, SI-03, SI-04, SI-07, SI-10, SI-16",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-02, CM-05, CM-06, CM-08, IA-02, IA-08, RA-05, SI-02, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.002",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-02, CM-06, SI-03, SI-04, SI-07, SI-10, SI-16, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1059.003",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-02, CM-06, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.004",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-02, CM-06, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.005",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SC-18, SI-02, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.006",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-02, CM-03, CM-05, CM-06, CM-11, SI-02, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.007",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SC-18, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.008",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-02, CM-05, CM-06, IA-02, IA-08, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1059.009",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-07, IA-02, SI-04"
+    },
+    {
+      "techniqueID": "T1059.010",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CA-07, CM-02, CM-06, CM-07, CM-08, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1059.011",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-02, CM-06, SI-03, SI-04, SI-07, SI-16"
+    },
+    {
+      "techniqueID": "T1068",
+      "score": 19,
+      "comment": "Mitigated by AC-02, AC-04, AC-06, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-05, SI-07"
+    },
+    {
+      "techniqueID": "T1069",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1069.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1069.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1069.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1070",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, AC-18, CA-07, CM-02, CM-06, CP-06, CP-07, CP-09, SC-04, SI-03, SI-04, SI-07, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1070.001",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, AC-18, AC-19, CA-07, CM-02, CM-06, CP-06, CP-07, CP-09, SC-04, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1070.002",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, AC-18, AC-19, CA-07, CM-02, CM-06, CP-06, CP-07, CP-09, SC-04, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1070.003",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1070.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1070.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1070.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1070.007",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1070.008",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CP-06, CP-07, CP-09, SC-04, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1070.009",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1070.010",
+      "score": 3,
+      "comment": "Mitigated by SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1071",
+      "score": 13,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-10, SC-20, SC-21, SC-22, SC-23, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1071.001",
+      "score": 13,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-10, SC-20, SC-21, SC-22, SC-23, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1071.002",
+      "score": 13,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-10, SC-20, SC-21, SC-22, SC-23, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1071.003",
+      "score": 13,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-10, SC-20, SC-21, SC-22, SC-23, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1071.004",
+      "score": 15,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-10, SC-20, SC-21, SC-22, SC-23, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1071.005",
+      "score": 3,
+      "comment": "Mitigated by AC-04, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1072",
+      "score": 25,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-12, AC-20, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, CM-11, IA-02, IA-05, SA-09, SA-10, SC-07, SC-12, SC-17, SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1074",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1074.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1074.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1078",
+      "score": 23,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-03, CA-07, CM-05, CM-06, CM-07, IA-02, IA-05, IA-12, RA-05, SA-03, SA-04, SA-08, SA-10, SA-11, SA-15, SA-17, SC-07, SC-28, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1078.001",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-05, AC-06, CA-07, SA-03, SA-04, SA-08, SA-10, SA-11, SA-15, SA-16, SA-17, SC-28, SI-04"
+    },
+    {
+      "techniqueID": "T1078.002",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CM-05, CM-06, IA-02, IA-05, IA-12, SI-04"
+    },
+    {
+      "techniqueID": "T1078.003",
+      "score": 19,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-05, CM-06, IA-02, IA-12, SA-03, SA-04, SA-08, SA-10, SA-11, SA-15, SA-16, SA-17, SC-28, SI-04"
+    },
+    {
+      "techniqueID": "T1078.004",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-05, CM-06, CM-07, IA-02, IA-05, IA-12, SA-03, SA-04, SA-08, SA-10, SA-11, SA-15, SA-17, SC-28, SI-04"
+    },
+    {
+      "techniqueID": "T1080",
+      "score": 10,
+      "comment": "Mitigated by AC-03, CA-07, CM-02, CM-07, SC-04, SC-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1082",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1083",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1087",
+      "score": 4,
+      "comment": "Mitigated by AC-02, CM-06, CM-07, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1087.001",
+      "score": 3,
+      "comment": "Mitigated by CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1087.002",
+      "score": 3,
+      "comment": "Mitigated by CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1087.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1087.004",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, IA-02, IA-08"
+    },
+    {
+      "techniqueID": "T1090",
+      "score": 11,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-08, SI-03, SI-04, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1090.001",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1090.002",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1090.003",
+      "score": 7,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-10"
+    },
+    {
+      "techniqueID": "T1090.004",
+      "score": 1,
+      "comment": "Mitigated by SC-08"
+    },
+    {
+      "techniqueID": "T1091",
+      "score": 9,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CM-06, CM-08, MP-07, RA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1092",
+      "score": 8,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, MP-07, RA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1095",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1098",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-05, CM-06, CM-07, IA-02, SC-07, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1098.001",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-20, CM-05, CM-06, CM-07, IA-02, IA-05, SC-07, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1098.002",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-20, CM-05, CM-06, IA-02, IA-05, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1098.003",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-20, CM-05, CM-06, IA-02, IA-05, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1098.004",
+      "score": 15,
+      "comment": "Mitigated by AC-03, AC-05, AC-06, AC-20, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-05, RA-05, SC-12, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1098.005",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-20, CM-05, CM-06"
+    },
+    {
+      "techniqueID": "T1098.006",
+      "score": 4,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, IA-05"
+    },
+    {
+      "techniqueID": "T1098.007",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-05, CM-06, CM-07, IA-02, IA-04, SI-04"
+    },
+    {
+      "techniqueID": "T1102",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1102.001",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1102.002",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1102.003",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1104",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1105",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1106",
+      "score": 7,
+      "comment": "Mitigated by AC-06, CM-02, CM-06, CM-07, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1110",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-02, CM-06, IA-02, IA-04, IA-05, IA-11, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1110.001",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-02, CM-06, IA-02, IA-04, IA-05, IA-11, SI-04"
+    },
+    {
+      "techniqueID": "T1110.002",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-02, CM-06, IA-02, IA-04, IA-05, IA-11, SI-04"
+    },
+    {
+      "techniqueID": "T1110.003",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-02, CM-06, IA-02, IA-04, IA-05, IA-11, SI-04"
+    },
+    {
+      "techniqueID": "T1110.004",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-02, CM-06, IA-02, IA-04, IA-05, IA-11, SI-04"
+    },
+    {
+      "techniqueID": "T1111",
+      "score": 8,
+      "comment": "Mitigated by AC-20, CA-07, CM-02, CM-06, IA-02, IA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1112",
+      "score": 3,
+      "comment": "Mitigated by AC-06, CM-07, SI-07"
+    },
+    {
+      "techniqueID": "T1113",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1114",
+      "score": 13,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-19, AC-20, CM-02, CM-06, IA-02, IA-05, SC-07, SI-04, SI-07, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1114.001",
+      "score": 7,
+      "comment": "Mitigated by AC-04, AC-17, AC-19, AC-20, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1114.002",
+      "score": 12,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-19, AC-20, CM-02, CM-06, IA-02, IA-05, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1114.003",
+      "score": 9,
+      "comment": "Mitigated by AC-04, AC-17, AC-19, AC-20, CM-06, SC-07, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1115",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1119",
+      "score": 14,
+      "comment": "Mitigated by AC-17, AC-18, AC-19, AC-20, CM-02, CM-06, CM-08, CP-06, CP-07, CP-09, SC-04, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1120",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1123",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1124",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1125",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1127",
+      "score": 8,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, RA-05, SI-04, SI-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1127.001",
+      "score": 5,
+      "comment": "Mitigated by CM-02, CM-06, CM-08, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1127.002",
+      "score": 10,
+      "comment": "Mitigated by AC-17, CM-02, CM-06, CM-07, CM-08, RA-05, SC-18, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1129",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1132",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1132.001",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1132.002",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1133",
+      "score": 16,
+      "comment": "Mitigated by AC-03, AC-04, AC-06, AC-07, AC-17, AC-20, CM-02, CM-06, CM-07, CM-08, IA-02, IA-05, RA-05, SC-07, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1134",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1134.001",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02"
+    },
+    {
+      "techniqueID": "T1134.002",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02"
+    },
+    {
+      "techniqueID": "T1134.003",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02"
+    },
+    {
+      "techniqueID": "T1134.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1134.005",
+      "score": 12,
+      "comment": "Mitigated by AC-03, AC-04, AC-05, AC-06, AC-20, CM-02, CM-06, SA-04, SA-08, SA-11, SA-17, SC-03"
+    },
+    {
+      "techniqueID": "T1135",
+      "score": 3,
+      "comment": "Mitigated by CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1136",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-20, CM-05, CM-06, CM-07, IA-02, IA-05, SC-07, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1136.001",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-20, CM-05, CM-06, IA-02, IA-05, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1136.002",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-20, CM-05, CM-06, CM-07, IA-02, IA-05, SC-07, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1136.003",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-20, CM-05, CM-06, CM-07, IA-02, IA-05, SC-07, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1137",
+      "score": 12,
+      "comment": "Mitigated by AC-06, AC-10, AC-17, CM-02, CM-06, CM-08, RA-05, SC-18, SI-02, SI-03, SI-04, SI-08",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1137.001",
+      "score": 9,
+      "comment": "Mitigated by AC-06, CM-02, CM-06, CM-08, RA-05, SC-18, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1137.002",
+      "score": 9,
+      "comment": "Mitigated by AC-06, AC-10, AC-14, AC-17, CM-02, CM-05, CM-06, SC-18, SI-08"
+    },
+    {
+      "techniqueID": "T1137.003",
+      "score": 6,
+      "comment": "Mitigated by AC-06, CM-02, CM-06, SC-18, SI-02, SI-08"
+    },
+    {
+      "techniqueID": "T1137.004",
+      "score": 6,
+      "comment": "Mitigated by AC-06, CM-02, CM-06, SC-18, SI-02, SI-08"
+    },
+    {
+      "techniqueID": "T1137.005",
+      "score": 6,
+      "comment": "Mitigated by AC-06, CM-02, CM-06, SC-18, SI-02, SI-08"
+    },
+    {
+      "techniqueID": "T1137.006",
+      "score": 5,
+      "comment": "Mitigated by AC-06, CM-02, CM-06, SC-18, SI-08"
+    },
+    {
+      "techniqueID": "T1140",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1176",
+      "score": 14,
+      "comment": "Mitigated by AC-06, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-11, RA-05, SC-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1185",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-10, AC-12, CA-07, CM-02, CM-05, IA-02, SC-23, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1187",
+      "score": 9,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1189",
+      "score": 16,
+      "comment": "Mitigated by AC-04, AC-06, CA-07, CM-02, CM-06, CM-08, SA-22, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1190",
+      "score": 25,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-02, CA-07, CM-05, CM-06, CM-07, CM-08, IA-02, IA-08, RA-05, SA-08, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1195",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CA-02, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, CM-11, RA-05, SA-22, SI-02, SI-03, SI-04, SI-07, SR-05, SR-11",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1195.001",
+      "score": 16,
+      "comment": "Mitigated by CA-02, CA-07, CM-05, CM-06, CM-07, CM-11, RA-05, SA-10, SA-11, SA-15, SA-22, SI-02, SI-04, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1195.002",
+      "score": 9,
+      "comment": "Mitigated by CA-02, CA-07, CM-07, CM-11, RA-05, SA-22, SI-02, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1195.003",
+      "score": 12,
+      "comment": "Mitigated by CM-02, CM-03, CM-05, CM-08, IA-07, RA-09, SA-10, SA-11, SI-02, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1197",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-05, CM-06, CM-07, IA-02, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1199",
+      "score": 7,
+      "comment": "Mitigated by AC-03, AC-04, AC-06, AC-08, CM-06, CM-07, SC-07"
+    },
+    {
+      "techniqueID": "T1200",
+      "score": 4,
+      "comment": "Mitigated by AC-03, AC-06, AC-20, MP-07"
+    },
+    {
+      "techniqueID": "T1201",
+      "score": 5,
+      "comment": "Mitigated by CA-07, CM-02, CM-06, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1202",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1203",
+      "score": 13,
+      "comment": "Mitigated by AC-04, AC-06, CA-07, CM-08, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1204",
+      "score": 12,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-02, SI-03, SI-04, SI-07, SI-08, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1204.001",
+      "score": 10,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-02, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1204.002",
+      "score": 11,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04, SI-07, SI-08, SI-10"
+    },
+    {
+      "techniqueID": "T1204.003",
+      "score": 14,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, RA-05, SC-07, SI-02, SI-03, SI-04, SI-07, SI-08, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1205",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1205.001",
+      "score": 7,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1205.002",
+      "score": 2,
+      "comment": "Mitigated by AC-04, SI-04"
+    },
+    {
+      "techniqueID": "T1207",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1210",
+      "score": 25,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-02, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-08, RA-05, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-05, SI-07"
+    },
+    {
+      "techniqueID": "T1211",
+      "score": 17,
+      "comment": "Mitigated by AC-04, AC-06, CA-07, CM-02, CM-06, CM-08, RA-05, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-05, SI-07"
+    },
+    {
+      "techniqueID": "T1212",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-04, AC-06, CA-07, CM-02, CM-06, CM-08, IA-02, IA-05, RA-05, SC-02, SC-03, SC-07, SC-18, SC-39, SI-02, SI-03, SI-04, SI-05, SI-07"
+    },
+    {
+      "techniqueID": "T1213",
+      "score": 21,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, AC-21, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-08, RA-05, SC-28, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1213.001",
+      "score": 21,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, AC-21, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-08, RA-05, SC-28, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1213.002",
+      "score": 21,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, AC-21, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-08, RA-05, SC-28, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1213.003",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, IA-02, RA-05, SA-03, SA-08, SA-10, SA-11, SA-15, SI-02"
+    },
+    {
+      "techniqueID": "T1213.004",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-21, CA-07, CM-06, CM-07, IA-02, IA-04, IA-08, SC-28, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1213.005",
+      "score": 21,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-17, AC-21, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-08, RA-05, SC-28, SI-02, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1216",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-04, SI-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1216.001",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1216.002",
+      "score": 4,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-07"
+    },
+    {
+      "techniqueID": "T1217",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1218",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, CM-11, IA-02, RA-05, SC-07, SI-03, SI-04, SI-07, SI-10, SI-16",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1218.001",
+      "score": 10,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-11, SC-18, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.002",
+      "score": 11,
+      "comment": "Mitigated by AC-03, CA-07, CM-02, CM-06, CM-07, CM-11, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.003",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.004",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.005",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.007",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, IA-02"
+    },
+    {
+      "techniqueID": "T1218.008",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.009",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.010",
+      "score": 4,
+      "comment": "Mitigated by CA-07, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1218.011",
+      "score": 4,
+      "comment": "Mitigated by CA-07, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1218.012",
+      "score": 15,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SC-07, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.013",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.014",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, CM-11, RA-05, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1218.015",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, RA-05, SC-07, SC-18, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1219",
+      "score": 12,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1220",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1221",
+      "score": 13,
+      "comment": "Mitigated by CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SC-07, SI-02, SI-03, SI-04, SI-07, SI-08, SI-10"
+    },
+    {
+      "techniqueID": "T1222",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-05, CM-06, IA-02, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1222.001",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-05, CM-06, IA-02, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1222.002",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-05, CM-06, IA-02, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1480",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1480.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1480.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1482",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CM-02, CM-06, CM-07, RA-05, SA-08, SA-17, SC-07"
+    },
+    {
+      "techniqueID": "T1484",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, IA-02, RA-05, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1484.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1484.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1485",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1485.001",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CP-09, CP-10, SI-07"
+    },
+    {
+      "techniqueID": "T1486",
+      "score": 11,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-06, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1489",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-05, CM-06, CM-07, IA-02, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1490",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-02, CM-06, CM-07, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1491",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1491.001",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1491.002",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1495",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-03, CM-05, CM-06, CM-08, IA-02, IA-07, RA-09, SA-10, SA-11, SI-02, SI-07"
+    },
+    {
+      "techniqueID": "T1496",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1496.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1496.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1496.003",
+      "score": 1,
+      "comment": "Mitigated by SC-05"
+    },
+    {
+      "techniqueID": "T1496.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1497",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1497.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1497.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1497.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1498",
+      "score": 7,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1498.001",
+      "score": 7,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-10"
+    },
+    {
+      "techniqueID": "T1498.002",
+      "score": 7,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-10"
+    },
+    {
+      "techniqueID": "T1499",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-04, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1499.001",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1499.002",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1499.003",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1499.004",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1505",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-08, CM-11, IA-02, RA-05, SA-10, SA-11, SI-04, SI-07, SR-05, SR-11",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1505.001",
+      "score": 10,
+      "comment": "Mitigated by CM-02, CM-06, CM-08, CM-11, RA-05, SA-10, SA-11, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1505.002",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-08, CM-11, IA-02, RA-05, SA-10, SA-11, SI-04, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1505.003",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-06, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1505.004",
+      "score": 20,
+      "comment": "Mitigated by AC-03, AC-04, AC-06, AC-17, CM-02, CM-06, CM-07, CM-08, CM-11, IA-02, RA-05, SA-10, SA-11, SC-07, SI-03, SI-04, SI-07, SI-16, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1505.005",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-12, AC-17, AC-20, CM-02, CM-06, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1518",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1518.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1525",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, IA-02, RA-05, SI-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1526",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1528",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-10, CA-07, CM-02, CM-05, CM-06, IA-02, IA-04, IA-05, IA-08, RA-05, SA-11, SA-15, SI-04"
+    },
+    {
+      "techniqueID": "T1529",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1530",
+      "score": 30,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-07, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-03, IA-04, IA-05, IA-06, IA-08, RA-05, SC-04, SC-07, SC-28, SI-04, SI-07, SI-10, SI-12"
+    },
+    {
+      "techniqueID": "T1531",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1534",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1535",
+      "score": 1,
+      "comment": "Mitigated by SC-23"
+    },
+    {
+      "techniqueID": "T1537",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, AC-20, CA-07, CM-05, CM-06, CM-07, IA-02, IA-03, IA-04, IA-08, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1538",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, IA-02, IA-08"
+    },
+    {
+      "techniqueID": "T1539",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, AC-20, CA-07, CM-02, CM-06, IA-02, IA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1542",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-03, CM-05, CM-06, CM-08, IA-02, IA-07, IA-08, RA-09, SA-10, SA-11, SC-07, SI-02, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1542.001",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-03, CM-05, CM-06, CM-08, IA-02, IA-07, IA-08, RA-09, SA-10, SA-11, SI-02, SI-07"
+    },
+    {
+      "techniqueID": "T1542.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1542.003",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-03, CM-05, CM-06, CM-08, IA-02, IA-07, IA-08, RA-09, SA-10, SA-11, SI-02, SI-07"
+    },
+    {
+      "techniqueID": "T1542.004",
+      "score": 18,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-07, RA-05, RA-09, SA-10, SA-11, SC-07, SI-02, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1542.005",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-07, IA-08, RA-05, RA-09, SA-10, SA-11, SC-07, SI-02, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1543",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-11, IA-02, IA-04, RA-05, SA-22, SI-03, SI-04, SI-07, SI-16",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1543.001",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-11, IA-02"
+    },
+    {
+      "techniqueID": "T1543.002",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-03, CM-05, CM-06, CM-11, IA-02, SA-22, SI-03, SI-04, SI-07, SI-16"
+    },
+    {
+      "techniqueID": "T1543.003",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-11, IA-02"
+    },
+    {
+      "techniqueID": "T1543.004",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-11, IA-02"
+    },
+    {
+      "techniqueID": "T1543.005",
+      "score": 5,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, IA-02"
+    },
+    {
+      "techniqueID": "T1546",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-02, CM-03, CM-06, SI-02, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1546.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1546.002",
+      "score": 9,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, RA-05, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1546.003",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, IA-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1546.004",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, CM-02, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1546.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1546.006",
+      "score": 11,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, SI-02, SI-03, SI-04, SI-07, SI-10, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1546.007",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1546.008",
+      "score": 6,
+      "comment": "Mitigated by CM-06, CM-07, CM-10, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1546.009",
+      "score": 3,
+      "comment": "Mitigated by CM-07, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1546.010",
+      "score": 5,
+      "comment": "Mitigated by CM-02, CM-07, SI-02, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1546.011",
+      "score": 2,
+      "comment": "Mitigated by AC-06, SI-02"
+    },
+    {
+      "techniqueID": "T1546.012",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1546.013",
+      "score": 9,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, CM-02, CM-06, CM-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1546.014",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-06, CM-08, RA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1546.015",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1546.016",
+      "score": 7,
+      "comment": "Mitigated by AC-06, CA-07, CM-05, CM-06, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1546.017",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1547",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1547.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1547.002",
+      "score": 5,
+      "comment": "Mitigated by CM-06, SC-39, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1547.003",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-04, AC-06, AC-17, CA-07, CM-02, CM-05, CM-06, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1547.004",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-05, CM-07, IA-02, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1547.005",
+      "score": 5,
+      "comment": "Mitigated by CM-06, SC-39, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1547.006",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, CM-07, IA-02, IA-04, IA-08, RA-05, SI-02, SI-03, SI-04, SI-07, SI-10, SI-16"
+    },
+    {
+      "techniqueID": "T1547.007",
+      "score": 10,
+      "comment": "Mitigated by AC-03, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, RA-05, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1547.008",
+      "score": 7,
+      "comment": "Mitigated by CM-02, CM-06, RA-05, SC-39, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1547.009",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-05, CM-06, CM-07, IA-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1547.010",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1547.012",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-05, IA-02, SI-04"
+    },
+    {
+      "techniqueID": "T1547.013",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CA-07, CM-02, CM-03, CM-05, CM-06, CM-11, IA-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1547.014",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1547.015",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1548",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, RA-05, SC-18, SI-02, SI-03, SI-04, SI-07, SI-12, SI-16",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1548.001",
+      "score": 3,
+      "comment": "Mitigated by CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1548.002",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, IA-02, RA-05, SI-02, SI-04"
+    },
+    {
+      "techniqueID": "T1548.003",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1548.004",
+      "score": 10,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, SC-18, SI-03, SI-04, SI-07, SI-12, SI-16"
+    },
+    {
+      "techniqueID": "T1548.005",
+      "score": 4,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-05"
+    },
+    {
+      "techniqueID": "T1548.006",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, RA-05, SI-02, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1550",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1550.001",
+      "score": 14,
+      "comment": "Mitigated by AC-17, AC-19, AC-20, CM-02, CM-06, CM-10, CM-11, IA-02, IA-04, SC-08, SC-28, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1550.002",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, IA-02, SI-02"
+    },
+    {
+      "techniqueID": "T1550.003",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1550.004",
+      "score": 3,
+      "comment": "Mitigated by SC-08, SC-23, SI-07"
+    },
+    {
+      "techniqueID": "T1552",
+      "score": 30,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-03, IA-04, IA-05, RA-05, SA-11, SA-15, SC-04, SC-07, SC-12, SC-28, SI-02, SI-04, SI-07, SI-10, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1552.001",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-04, AC-05, AC-06, CA-07, CM-02, CM-06, IA-02, IA-05, RA-05, SA-11, SA-15, SC-04, SC-07, SC-12, SC-28, SI-04"
+    },
+    {
+      "techniqueID": "T1552.002",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, RA-05, SA-11, SA-15, SC-04, SC-12, SC-28, SI-04"
+    },
+    {
+      "techniqueID": "T1552.003",
+      "score": 4,
+      "comment": "Mitigated by CM-06, CM-07, SC-28, SI-04"
+    },
+    {
+      "techniqueID": "T1552.004",
+      "score": 20,
+      "comment": "Mitigated by AC-02, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, IA-02, IA-05, RA-05, SA-11, SA-15, SC-04, SC-07, SC-12, SC-28, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1552.005",
+      "score": 12,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-20, CA-07, CM-06, CM-07, IA-03, IA-04, SC-07, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1552.006",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-05, AC-06, CM-02, CM-06, IA-02, IA-05, RA-05, SA-11, SA-15, SI-02, SI-04"
+    },
+    {
+      "techniqueID": "T1552.007",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, CM-05, CM-06, CM-07, IA-02, SC-07, SC-08"
+    },
+    {
+      "techniqueID": "T1552.008",
+      "score": 2,
+      "comment": "Mitigated by AC-04, SI-04"
+    },
+    {
+      "techniqueID": "T1553",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, CM-10, IA-07, RA-09, SA-10, SA-11, SI-02, SI-04, SI-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1553.001",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1553.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1553.003",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, CM-02, CM-06, CM-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1553.004",
+      "score": 5,
+      "comment": "Mitigated by CM-06, CM-07, CM-10, SC-20, SI-04"
+    },
+    {
+      "techniqueID": "T1553.005",
+      "score": 6,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1553.006",
+      "score": 12,
+      "comment": "Mitigated by AC-06, CM-02, CM-03, CM-05, CM-07, CM-08, IA-07, RA-09, SA-10, SA-11, SI-02, SI-07"
+    },
+    {
+      "techniqueID": "T1554",
+      "score": 7,
+      "comment": "Mitigated by CM-02, CM-05, CM-06, SI-03, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1555",
+      "score": 8,
+      "comment": "Mitigated by AC-03, AC-06, AC-20, CA-07, CM-03, IA-05, SI-02, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1555.001",
+      "score": 3,
+      "comment": "Mitigated by CA-07, IA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1555.002",
+      "score": 5,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, IA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1555.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1555.004",
+      "score": 5,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, IA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1555.005",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, CM-02, CM-06, IA-02, IA-05, SI-02, SI-04"
+    },
+    {
+      "techniqueID": "T1555.006",
+      "score": 4,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-07"
+    },
+    {
+      "techniqueID": "T1556",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-05, SC-39, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1556.001",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CA-07, CM-05, CM-06, IA-02, IA-05, SC-39, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1556.002",
+      "score": 3,
+      "comment": "Mitigated by CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1556.003",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CM-05, CM-06, IA-02, IA-05, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1556.004",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-07, AC-20, CM-02, CM-05, CM-06, IA-02, IA-05, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1556.005",
+      "score": 4,
+      "comment": "Mitigated by AC-02, AC-05, AC-06, IA-05"
+    },
+    {
+      "techniqueID": "T1556.006",
+      "score": 5,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, IA-02, IA-11"
+    },
+    {
+      "techniqueID": "T1556.007",
+      "score": 5,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, IA-02, IA-11"
+    },
+    {
+      "techniqueID": "T1556.008",
+      "score": 9,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CM-03, CM-05, CM-06, CM-07, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1556.009",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, CM-07, CM-08, IA-02, IA-05, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1557",
+      "score": 21,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SC-04, SC-07, SC-08, SC-23, SI-03, SI-04, SI-07, SI-10, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1557.001",
+      "score": 13,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, CM-08, SC-07, SC-08, SC-23, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1557.002",
+      "score": 20,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, SC-04, SC-07, SC-08, SC-23, SI-03, SI-04, SI-07, SI-10, SI-12"
+    },
+    {
+      "techniqueID": "T1557.003",
+      "score": 13,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, CM-08, SC-07, SC-08, SC-23, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1557.004",
+      "score": 14,
+      "comment": "Mitigated by AC-03, AC-04, AC-18, AC-19, CA-07, CM-02, CM-06, SC-07, SC-08, SC-13, SC-23, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1558",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, AC-18, AC-19, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SC-04, SI-03, SI-04, SI-07, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1558.001",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, CM-06, IA-02, IA-05"
+    },
+    {
+      "techniqueID": "T1558.002",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, AC-18, AC-19, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SC-04, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1558.003",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, AC-18, AC-19, CA-07, CM-02, CM-05, CM-06, IA-02, IA-05, SC-04, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1558.004",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-17, AC-18, AC-19, CA-07, CM-02, CM-06, IA-02, IA-05, RA-05, SA-11, SA-15, SC-04, SI-03, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1558.005",
+      "score": 10,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CA-07, IA-02, IA-05, SC-04, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1559",
+      "score": 19,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-05, CM-06, CM-07, CM-08, CM-10, IA-02, RA-05, SC-03, SC-07, SC-18, SI-02, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1559.001",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-05, CM-06, IA-02, SC-03, SC-07, SC-18, SI-03"
+    },
+    {
+      "techniqueID": "T1559.002",
+      "score": 14,
+      "comment": "Mitigated by AC-04, AC-06, CM-02, CM-06, CM-07, CM-08, CM-10, RA-05, SC-03, SC-07, SC-18, SI-02, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1559.003",
+      "score": 7,
+      "comment": "Mitigated by CM-05, CM-06, CM-07, SA-08, SA-10, SA-11, SI-04"
+    },
+    {
+      "techniqueID": "T1560",
+      "score": 5,
+      "comment": "Mitigated by CM-02, RA-05, SC-07, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1560.001",
+      "score": 5,
+      "comment": "Mitigated by CM-02, RA-05, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1560.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1560.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1561",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1561.001",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1561.002",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CM-02, CP-02, CP-07, CP-09, CP-10, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-04, RA-05, SC-08, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1562.001",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562.002",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562.003",
+      "score": 4,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1562.004",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562.006",
+      "score": 16,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CM-10, IA-02, SC-08, SC-23, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562.007",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, IA-02"
+    },
+    {
+      "techniqueID": "T1562.008",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-03, CM-05, IA-02"
+    },
+    {
+      "techniqueID": "T1562.009",
+      "score": 12,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-06, CM-07, CM-10, IA-02, SC-08, SC-23, SI-07"
+    },
+    {
+      "techniqueID": "T1562.010",
+      "score": 7,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, RA-05, SC-08, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562.011",
+      "score": 5,
+      "comment": "Mitigated by CM-05, CM-06, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1562.012",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-03, CM-05, CM-06, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1563",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-12, AC-17, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-04, IA-06, RA-05, SC-07, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1563.001",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, IA-05, RA-05, SC-12, SC-23, SI-04"
+    },
+    {
+      "techniqueID": "T1563.002",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-11, AC-12, AC-17, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, RA-05, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1564",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1564.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1564.002",
+      "score": 3,
+      "comment": "Mitigated by CM-06, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1564.003",
+      "score": 3,
+      "comment": "Mitigated by CM-07, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1564.004",
+      "score": 5,
+      "comment": "Mitigated by AC-03, CA-07, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1564.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1564.006",
+      "score": 7,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-08, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1564.007",
+      "score": 4,
+      "comment": "Mitigated by CM-02, CM-06, CM-08, SI-04"
+    },
+    {
+      "techniqueID": "T1564.008",
+      "score": 7,
+      "comment": "Mitigated by AC-04, CM-03, CM-05, CM-07, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1564.009",
+      "score": 10,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, CM-11, SA-10, SC-04, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1564.010",
+      "score": 3,
+      "comment": "Mitigated by CA-07, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1564.011",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1564.012",
+      "score": 1,
+      "comment": "Mitigated by SI-03"
+    },
+    {
+      "techniqueID": "T1565",
+      "score": 22,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, CP-06, CP-07, CP-09, CP-10, SC-04, SC-07, SC-28, SI-04, SI-07, SI-12, SI-16",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1565.001",
+      "score": 20,
+      "comment": "Mitigated by AC-03, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-08, CP-06, CP-07, CP-09, CP-10, SC-04, SC-07, SC-28, SI-04, SI-07, SI-12, SI-16"
+    },
+    {
+      "techniqueID": "T1565.002",
+      "score": 11,
+      "comment": "Mitigated by AC-17, AC-18, AC-19, AC-20, CM-02, CM-06, CM-08, SC-04, SI-04, SI-07, SI-12"
+    },
+    {
+      "techniqueID": "T1565.003",
+      "score": 12,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-06, CM-07, CP-09, SC-04, SC-07, SC-28, SI-04, SI-07, SI-16"
+    },
+    {
+      "techniqueID": "T1566",
+      "score": 11,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, RA-05, SC-07, SC-20, SI-02, SI-03, SI-04, SI-08",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1566.001",
+      "score": 10,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SC-20, SI-02, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1566.002",
+      "score": 9,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SC-20, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1566.003",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-04, AC-06, CA-07, SC-07, SI-02, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1566.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1567",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06, AC-20, CA-03, CA-07, SA-08, SA-09, SC-07, SC-28, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1567.001",
+      "score": 3,
+      "comment": "Mitigated by AC-04, AC-20, SC-07"
+    },
+    {
+      "techniqueID": "T1567.002",
+      "score": 3,
+      "comment": "Mitigated by AC-04, AC-20, SC-07"
+    },
+    {
+      "techniqueID": "T1567.003",
+      "score": 3,
+      "comment": "Mitigated by AC-04, AC-17, SC-07"
+    },
+    {
+      "techniqueID": "T1567.004",
+      "score": 3,
+      "comment": "Mitigated by AC-04, AC-17, SC-07"
+    },
+    {
+      "techniqueID": "T1568",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, SC-07, SC-20, SC-21, SC-22, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1568.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1568.002",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, SC-07, SC-20, SC-21, SC-22, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1568.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1569",
+      "score": 14,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CM-11, IA-02, SI-03, SI-04, SI-07",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1569.001",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-11, IA-02"
+    },
+    {
+      "techniqueID": "T1569.002",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1570",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1571",
+      "score": 8,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1572",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1573",
+      "score": 10,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-12, SC-23, SI-03, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1573.001",
+      "score": 10,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-12, SC-23, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1573.002",
+      "score": 10,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, CM-07, SC-07, SC-12, SC-23, SI-03, SI-04"
+    },
+    {
+      "techniqueID": "T1574",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, CM-08, IA-02, RA-05, SI-02, SI-03, SI-04, SI-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1574.001",
+      "score": 8,
+      "comment": "Mitigated by CM-02, CM-06, CM-07, RA-05, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.002",
+      "score": 9,
+      "comment": "Mitigated by SA-03, SA-04, SA-08, SA-10, SA-11, SA-15, SA-16, SA-17, SI-02"
+    },
+    {
+      "techniqueID": "T1574.004",
+      "score": 13,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-06, CM-08, RA-05, SI-03, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1574.005",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-05, CM-06, IA-02, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1574.006",
+      "score": 4,
+      "comment": "Mitigated by CM-06, CM-07, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.007",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.008",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.009",
+      "score": 15,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-06, CM-07, CM-08, RA-05, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.010",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-05, CM-06, IA-02, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1574.011",
+      "score": 2,
+      "comment": "Mitigated by AC-06, CM-05"
+    },
+    {
+      "techniqueID": "T1574.012",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-05, CM-07, IA-02, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.013",
+      "score": 7,
+      "comment": "Mitigated by CA-07, CM-02, SI-02, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1574.014",
+      "score": 10,
+      "comment": "Mitigated by AC-03, AC-06, CA-07, CM-05, CM-06, CM-07, SI-03, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1578",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, IA-02, IA-04, IA-06, RA-05, SI-04",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1578.001",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, IA-02, IA-04, IA-06, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1578.002",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, IA-02, IA-04, IA-06, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1578.003",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, CM-02, CM-05, IA-02, IA-04, IA-06, RA-05, SI-04"
+    },
+    {
+      "techniqueID": "T1578.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1578.005",
+      "score": 5,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-20, CM-03"
+    },
+    {
+      "techniqueID": "T1580",
+      "score": 5,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, IA-02"
+    },
+    {
+      "techniqueID": "T1583",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1583.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.007",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1583.008",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1584.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.007",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1584.008",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1585",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1585.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1585.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1585.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1586",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1586.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1586.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1586.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1587",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1587.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1587.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1587.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1587.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1588.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1588.007",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1589",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1589.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1589.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1589.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1590",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1590.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1590.002",
+      "score": 4,
+      "comment": "Mitigated by AC-04, CM-06, CM-07, SC-07"
+    },
+    {
+      "techniqueID": "T1590.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1590.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1590.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1590.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1591",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1591.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1591.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1591.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1591.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1592",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1592.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1592.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1592.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1592.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1593",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1593.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1593.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1593.003",
+      "score": 1,
+      "comment": "Mitigated by CM-08"
+    },
+    {
+      "techniqueID": "T1594",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1595",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1595.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1595.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1595.003",
+      "score": 1,
+      "comment": "Mitigated by SC-04"
+    },
+    {
+      "techniqueID": "T1596",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1596.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1596.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1596.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1596.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1596.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1597",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1597.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1597.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1598",
+      "score": 9,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SC-20, SI-03, SI-04, SI-08",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1598.001",
+      "score": 6,
+      "comment": "Mitigated by AC-04, CA-07, SC-07, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1598.002",
+      "score": 9,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SC-20, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1598.003",
+      "score": 9,
+      "comment": "Mitigated by AC-04, CA-07, CM-02, CM-06, SC-07, SC-20, SI-03, SI-04, SI-08"
+    },
+    {
+      "techniqueID": "T1598.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1599",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-05, SC-07, SC-28, SI-04, SI-07, SI-10",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1599.001",
+      "score": 17,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CA-07, CM-02, CM-05, CM-06, CM-07, IA-02, IA-05, SC-07, SC-28, SI-04, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1600",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1600.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1600.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1601",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-05, IA-07, RA-09, SA-10, SA-11, SI-02, SI-04, SI-07, SR-05, SR-11",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1601.001",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-05, IA-07, RA-09, SA-10, SA-11, SI-02, SI-04, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1601.002",
+      "score": 22,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-02, CM-03, CM-05, CM-06, CM-07, CM-08, IA-02, IA-05, IA-07, RA-09, SA-10, SA-11, SI-02, SI-04, SI-07, SR-05, SR-11"
+    },
+    {
+      "techniqueID": "T1602",
+      "score": 23,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, IA-03, IA-04, SC-03, SC-04, SC-07, SC-08, SC-28, SI-03, SI-04, SI-07, SI-10, SI-12",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1602.001",
+      "score": 23,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, IA-03, IA-04, SC-03, SC-04, SC-07, SC-08, SC-28, SI-03, SI-04, SI-07, SI-10, SI-12"
+    },
+    {
+      "techniqueID": "T1602.002",
+      "score": 23,
+      "comment": "Mitigated by AC-03, AC-04, AC-17, AC-18, AC-19, AC-20, CA-07, CM-02, CM-06, CM-07, CM-08, IA-03, IA-04, SC-03, SC-04, SC-07, SC-08, SC-28, SI-03, SI-04, SI-07, SI-10, SI-12"
+    },
+    {
+      "techniqueID": "T1606",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, SC-17, SI-02",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1606.001",
+      "score": 4,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, SI-02"
+    },
+    {
+      "techniqueID": "T1606.002",
+      "score": 3,
+      "comment": "Mitigated by AC-02, AC-03, AC-06"
+    },
+    {
+      "techniqueID": "T1608",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1608.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1608.002",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1608.003",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1608.004",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1608.005",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1608.006",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1609",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, AC-17, CM-06, CM-07, SC-07, SI-07, SI-10"
+    },
+    {
+      "techniqueID": "T1610",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-06, CM-07, IA-02, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1611",
+      "score": 18,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-05, AC-06, CM-05, CM-06, CM-07, IA-02, SC-02, SC-03, SC-07, SC-39, SI-02, SI-03, SI-04, SI-07, SI-16"
+    },
+    {
+      "techniqueID": "T1612",
+      "score": 11,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-02, CM-06, CM-07, RA-05, SA-11, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1613",
+      "score": 9,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, CM-06, CM-07, IA-02, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1614",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique",
+      "showSubtechniques": false
+    },
+    {
+      "techniqueID": "T1614.001",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1615",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1619",
+      "score": 7,
+      "comment": "Mitigated by AC-02, AC-03, AC-05, AC-06, AC-17, CM-05, IA-02"
+    },
+    {
+      "techniqueID": "T1620",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1621",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-06, CM-05, IA-02, IA-03, IA-05"
+    },
+    {
+      "techniqueID": "T1622",
+      "score": 13,
+      "comment": "Mitigated by AC-03, AC-04, CA-07, CM-02, CM-06, CM-07, CM-08, SC-07, SC-08, SC-23, SI-03, SI-04, SI-10"
+    },
+    {
+      "techniqueID": "T1647",
+      "score": 14,
+      "comment": "Mitigated by AC-03, AC-06, AC-17, CA-07, CM-02, CM-03, CM-05, CM-06, CM-07, SA-08, SA-10, SA-11, SI-04, SI-07"
+    },
+    {
+      "techniqueID": "T1648",
+      "score": 8,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, CM-06, CM-07, IA-02, SC-07, SI-04"
+    },
+    {
+      "techniqueID": "T1649",
+      "score": 2,
+      "comment": "Mitigated by IA-02, IA-05"
+    },
+    {
+      "techniqueID": "T1650",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1651",
+      "score": 6,
+      "comment": "Mitigated by AC-02, AC-03, AC-06, AC-17, IA-02, SI-04"
+    },
+    {
+      "techniqueID": "T1652",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1653",
+      "score": 4,
+      "comment": "Mitigated by CM-02, CM-03, CM-07, SI-04"
+    },
+    {
+      "techniqueID": "T1654",
+      "score": 4,
+      "comment": "Mitigated by AC-02, AC-03, AC-04, AC-06"
+    },
+    {
+      "techniqueID": "T1656",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1657",
+      "score": 2,
+      "comment": "Mitigated by AC-05, AC-06"
+    },
+    {
+      "techniqueID": "T1659",
+      "score": 3,
+      "comment": "Mitigated by AC-04, AC-17, SC-07"
+    },
+    {
+      "techniqueID": "T1665",
+      "color": "#d5d9df",
+      "comment": "The mapping has no mitigating control for this technique"
+    },
+    {
+      "techniqueID": "T1666",
+      "score": 1,
+      "comment": "Mitigated by CM-03"
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#d9f2d9",
+      "#0ca30c"
+    ],
+    "minValue": 1,
+    "maxValue": 30
+  },
+  "legendItems": [
+    {
+      "label": "Covered (darker = more controls)",
+      "color": "#0ca30c"
+    },
+    {
+      "label": "Gap: a control exists in the mapping but is not selected",
+      "color": "#fab219"
+    },
+    {
+      "label": "No mitigating control in the mapping",
+      "color": "#d5d9df"
+    }
+  ],
+  "links": [
+    {
+      "label": "NIST 800-53 to ATT&CK ontology",
+      "url": "https://mmccalla.github.io/nist-attack-enterprise-ontology/"
+    }
+  ],
+  "metadata": [
+    {
+      "name": "Source",
+      "value": "CTID NIST 800-53 Rev. 5 to ATT&CK 16.1 Enterprise, claims under rule R1"
+    },
+    {
+      "name": "Controls selected",
+      "value": "83"
+    }
+  ]
+}

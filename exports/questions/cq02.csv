@@ -1,0 +1,11 @@
+control,title,techniques
+SI-04,System Monitoring,15
+CM-06,Configuration Settings,14
+AC-06,Least Privilege,13
+CA-07,Continuous Monitoring,13
+AC-03,Access Enforcement,10
+SC-07,Boundary Protection,10
+AC-04,Information Flow Enforcement,9
+SI-02,Flaw Remediation,9
+AC-02,Account Management,8
+CM-02,Baseline Configuration,8

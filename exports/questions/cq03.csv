@@ -1,0 +1,7 @@
+technique,name,controlsOutsideLow
+T1090.004,Domain Fronting,1
+T1535,Unused/Unsupported Cloud Regions,1
+T1550.004,Web Session Cookie,3
+T1595.003,Wordlist Scanning,1
+T1657,Financial Theft,2
+T1666,Modify Cloud Resource Hierarchy,1

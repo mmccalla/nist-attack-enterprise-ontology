@@ -1,0 +1,657 @@
+technique_id,technique_name,tactics,control_count,controls,mapping_status
+T1001,Data Obfuscation,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1001.001,Junk Data,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1001.002,Steganography,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1001.003,Protocol or Service Impersonation,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1003,OS Credential Dumping,credential-access,22,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 CA-07 CM-02 CM-05 CM-06 CM-07 CP-09 IA-02 IA-04 IA-05 SC-28 SC-39 SI-02 SI-03 SI-04 SI-07 SI-12,claims
+T1003.001,LSASS Memory,credential-access,19,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-05 SC-03 SC-28 SC-39 SI-02 SI-03 SI-04 SI-16,claims
+T1003.002,Security Account Manager,credential-access,15,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-05 SC-28 SC-39 SI-03 SI-04,claims
+T1003.003,NTDS,credential-access,18,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-02 CM-05 CM-06 CP-09 IA-02 IA-05 SC-28 SC-39 SI-03 SI-04 SI-07 SI-12,claims
+T1003.004,LSA Secrets,credential-access,14,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SC-28 SC-39 SI-03 SI-04,claims
+T1003.005,Cached Domain Credentials,credential-access,17,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-04 IA-05 SC-28 SC-39 SI-03 SI-04,claims
+T1003.006,DCSync,credential-access,16,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 IA-02 IA-04 IA-05 SC-28 SC-39 SI-03 SI-04,claims
+T1003.007,Proc Filesystem,credential-access,14,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SC-28 SC-39 SI-03 SI-04,claims
+T1003.008,/etc/passwd and /etc/shadow,credential-access,14,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SC-28 SC-39 SI-03 SI-04,claims
+T1005,Data from Local System,collection,13,AC-02 AC-03 AC-06 AC-16 AC-23 CM-12 CP-09 SA-08 SC-13 SC-28 SC-38 SI-03 SI-04,claims
+T1006,Direct Volume Access,defense-evasion,0,,no_row
+T1007,System Service Discovery,discovery,0,,no_row
+T1008,Fallback Channels,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1010,Application Window Discovery,discovery,0,,no_row
+T1011,Exfiltration Over Other Network Medium,exfiltration,5,AC-18 CM-06 CM-07 SC-43 SI-04,claims
+T1011.001,Exfiltration Over Bluetooth,exfiltration,8,AC-18 CM-02 CM-06 CM-07 CM-08 RA-05 SI-03 SI-04,claims
+T1012,Query Registry,discovery,0,,no_row
+T1014,Rootkit,defense-evasion,0,,no_row
+T1016,System Network Configuration Discovery,discovery,0,,no_row
+T1016.001,Internet Connection Discovery,discovery,0,,no_row
+T1016.002,Wi-Fi Discovery,discovery,0,,non_mappable
+T1018,Remote System Discovery,discovery,0,,no_row
+T1020,Automated Exfiltration,exfiltration,0,,no_row
+T1020.001,Traffic Duplication,exfiltration,21,AC-02 AC-03 AC-04 AC-06 AC-16 AC-17 AC-18 AC-19 AC-20 CA-03 CM-02 CM-05 CM-06 CM-07 CM-08 SC-04 SC-07 SC-08 SI-04 SI-07 SI-12,claims
+T1021,Remote Services,lateral-movement,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-17 AC-20 CM-02 CM-05 CM-06 CM-07 IA-02 IA-05 SI-04,claims
+T1021.001,Remote Desktop Protocol,lateral-movement,23,AC-02 AC-03 AC-04 AC-05 AC-06 AC-07 AC-11 AC-12 AC-17 AC-20 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-05 IA-06 RA-05 SC-07 SC-46 SI-04,claims
+T1021.002,SMB/Windows Admin Shares,lateral-movement,16,AC-02 AC-03 AC-04 AC-05 AC-06 AC-17 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 SC-07 SI-04 SI-10 SI-15,claims
+T1021.003,Distributed Component Object Model,lateral-movement,19,AC-02 AC-03 AC-04 AC-05 AC-06 AC-17 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 RA-05 SC-03 SC-07 SC-18 SC-46 SI-03 SI-04,claims
+T1021.004,SSH,lateral-movement,15,AC-02 AC-03 AC-05 AC-06 AC-07 AC-17 AC-20 CM-02 CM-05 CM-06 CM-08 IA-02 IA-05 RA-05 SI-04,claims
+T1021.005,VNC,lateral-movement,22,AC-02 AC-03 AC-04 AC-06 AC-17 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 CM-11 IA-02 IA-04 IA-06 RA-05 SC-07 SI-03 SI-04 SI-10 SI-15,claims
+T1021.006,Windows Remote Management,lateral-movement,16,AC-02 AC-03 AC-04 AC-05 AC-06 AC-17 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 RA-05 SC-07 SC-46 SI-04,claims
+T1021.007,Cloud Services,lateral-movement,7,AC-02 AC-03 AC-05 AC-06 AC-20 IA-02 IA-05,claims
+T1021.008,Direct Cloud VM Connections,lateral-movement,11,AC-02 AC-03 AC-06 AC-17 AC-20 CM-05 CM-06 CM-07 IA-02 IA-05 SI-04,claims
+T1025,Data from Removable Media,collection,15,AC-02 AC-03 AC-06 AC-16 AC-23 CM-12 CP-09 MP-07 SA-08 SC-13 SC-28 SC-38 SC-41 SI-03 SI-04,claims
+T1027,Obfuscated Files or Information,defense-evasion,8,AC-03 CM-02 CM-06 CM-07 SI-02 SI-03 SI-04 SI-07,claims
+T1027.001,Binary Padding,defense-evasion,0,,no_row
+T1027.002,Software Packing,defense-evasion,4,SI-02 SI-03 SI-04 SI-07,claims
+T1027.003,Steganography,defense-evasion,0,,no_row
+T1027.004,Compile After Delivery,defense-evasion,0,,no_row
+T1027.005,Indicator Removal from Tools,defense-evasion,0,,no_row
+T1027.006,HTML Smuggling,defense-evasion,0,,no_row
+T1027.007,Dynamic API Resolution,defense-evasion,4,SI-02 SI-03 SI-04 SI-07,claims
+T1027.008,Stripped Payloads,defense-evasion,4,SI-02 SI-03 SI-04 SI-07,claims
+T1027.009,Embedded Payloads,defense-evasion,4,SI-02 SI-03 SI-04 SI-07,claims
+T1027.010,Command Obfuscation,defense-evasion,4,CM-06 SI-03 SI-04 SI-10,claims
+T1027.011,Fileless Storage,defense-evasion,1,SI-04,claims
+T1027.012,LNK Icon Smuggling,defense-evasion,2,SI-03 SI-04,claims
+T1027.013,Encrypted/Encoded File,defense-evasion,1,SI-03,claims
+T1027.014,Polymorphic Code,defense-evasion,1,SI-03,claims
+T1029,Scheduled Transfer,exfiltration,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1030,Data Transfer Size Limits,exfiltration,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1033,System Owner/User Discovery,discovery,0,,no_row
+T1036,Masquerading,defense-evasion,12,AC-02 AC-03 AC-06 CA-07 CM-02 CM-06 CM-07 IA-09 SI-03 SI-04 SI-07 SI-10,claims
+T1036.001,Invalid Code Signature,defense-evasion,5,CM-02 CM-06 IA-09 SI-04 SI-07,claims
+T1036.002,Right-to-Left Override,defense-evasion,0,,no_row
+T1036.003,Rename System Utilities,defense-evasion,8,AC-02 AC-03 AC-06 CA-07 CM-02 CM-06 SI-03 SI-04,claims
+T1036.004,Masquerade Task or Service,defense-evasion,0,,no_row
+T1036.005,Match Legitimate Name or Location,defense-evasion,12,AC-02 AC-03 AC-06 CA-07 CM-02 CM-06 CM-07 IA-09 SI-03 SI-04 SI-07 SI-10,claims
+T1036.006,Space after Filename,defense-evasion,0,,no_row
+T1036.007,Double File Extension,defense-evasion,6,CA-07 CM-02 CM-06 CM-07 IA-02 SI-04,claims
+T1036.008,Masquerade File Type,defense-evasion,5,CM-07 SC-07 SI-03 SI-04 SI-10,claims
+T1036.009,Break Process Trees,defense-evasion,0,,non_mappable
+T1036.010,Masquerade Account Name,defense-evasion,5,AC-02 AC-03 CM-06 IA-02 SI-04,claims
+T1037,Boot or Logon Initialization Scripts,persistence privilege-escalation,9,AC-03 AC-17 CA-07 CM-02 CM-06 CM-07 SI-03 SI-04 SI-07,claims
+T1037.001,Logon Script (Windows),persistence privilege-escalation,2,AC-17 CM-07,claims
+T1037.002,Login Hook,persistence privilege-escalation,7,AC-03 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1037.003,Network Logon Script,persistence privilege-escalation,7,AC-03 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1037.004,RC Scripts,persistence privilege-escalation,7,AC-03 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1037.005,Startup Items,persistence privilege-escalation,7,AC-03 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1039,Data from Network Shared Drive,collection,0,,no_row
+T1040,Network Sniffing,credential-access discovery,12,AC-16 AC-17 AC-18 AC-19 CM-07 IA-02 IA-05 SC-04 SC-08 SI-04 SI-07 SI-12,claims
+T1041,Exfiltration Over C2 Channel,exfiltration,18,AC-02 AC-03 AC-04 AC-06 AC-16 AC-20 AC-23 CA-03 CA-07 SA-08 SA-09 SC-07 SC-13 SC-28 SC-31 SI-03 SI-04 SR-04,claims
+T1046,Network Service Discovery,discovery,11,AC-04 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SC-07 SC-46 SI-03 SI-04,claims
+T1047,Windows Management Instrumentation,execution,17,AC-02 AC-03 AC-05 AC-06 AC-17 CM-02 CM-05 CM-06 CM-07 IA-02 RA-05 SC-03 SI-02 SI-03 SI-04 SI-07 SI-16,claims
+T1048,Exfiltration Over Alternative Protocol,exfiltration,23,AC-02 AC-03 AC-04 AC-06 AC-16 AC-20 AC-23 CA-03 CA-07 CM-02 CM-06 CM-07 SA-08 SA-09 SC-07 SC-28 SC-31 SC-46 SI-03 SI-04 SI-10 SI-15 SR-04,claims
+T1048.001,Exfiltration Over Symmetric Encrypted Non-C2 Protocol,exfiltration,12,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-46 SI-03 SI-04 SI-10 SI-15,claims
+T1048.002,Exfiltration Over Asymmetric Encrypted Non-C2 Protocol,exfiltration,23,AC-02 AC-03 AC-04 AC-06 AC-16 AC-20 AC-23 CA-03 CA-07 CM-02 CM-06 CM-07 SA-08 SA-09 SC-07 SC-28 SC-31 SC-46 SI-03 SI-04 SI-10 SI-15 SR-04,claims
+T1048.003,Exfiltration Over Unencrypted Non-C2 Protocol,exfiltration,23,AC-02 AC-03 AC-04 AC-06 AC-16 AC-20 AC-23 CA-03 CA-07 CM-02 CM-06 CM-07 SA-08 SA-09 SC-07 SC-13 SC-28 SC-31 SI-03 SI-04 SI-10 SI-15 SR-04,claims
+T1049,System Network Connections Discovery,discovery,0,,no_row
+T1052,Exfiltration Over Physical Medium,exfiltration,19,AC-02 AC-03 AC-06 AC-16 AC-20 AC-23 CA-07 CM-02 CM-06 CM-07 CM-08 MP-07 RA-05 SA-08 SC-28 SC-41 SI-03 SI-04 SR-04,claims
+T1052.001,Exfiltration over USB,exfiltration,19,AC-02 AC-03 AC-06 AC-16 AC-20 AC-23 CA-07 CM-02 CM-06 CM-07 CM-08 MP-07 RA-05 SA-08 SC-28 SC-41 SI-03 SI-04 SR-04,claims
+T1053,Scheduled Task/Job,execution persistence privilege-escalation,14,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-08 RA-05 SI-04,claims
+T1053.002,At,execution persistence privilege-escalation,13,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 RA-05 SI-04,claims
+T1053.003,Cron,execution persistence privilege-escalation,9,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 IA-02 RA-05 SI-04,claims
+T1053.005,Scheduled Task,execution persistence privilege-escalation,13,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 RA-05 SI-04,claims
+T1053.006,Systemd Timers,execution persistence privilege-escalation,10,AC-02 AC-03 AC-05 AC-06 CA-07 CM-05 CM-06 IA-02 SI-04 SI-07,claims
+T1053.007,Container Orchestration Job,execution persistence privilege-escalation,7,AC-02 AC-03 AC-05 AC-06 CM-05 IA-02 IA-08,claims
+T1055,Process Injection,defense-evasion privilege-escalation,12,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.001,Dynamic-link Library Injection,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.002,Portable Executable Injection,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.003,Thread Execution Hijacking,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.004,Asynchronous Procedure Call,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.005,Thread Local Storage,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.008,Ptrace System Calls,defense-evasion privilege-escalation,12,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.009,Proc Memory,defense-evasion privilege-escalation,9,AC-03 AC-06 CA-07 SC-07 SC-18 SI-02 SI-03 SI-04 SI-16,claims
+T1055.011,Extra Window Memory Injection,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.012,Process Hollowing,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.013,Process Doppelgänging,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.014,VDSO Hijacking,defense-evasion privilege-escalation,6,AC-06 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1055.015,ListPlanting,defense-evasion privilege-escalation,1,SI-03,claims
+T1056,Input Capture,collection credential-access,0,,no_row
+T1056.001,Keylogging,collection credential-access,0,,no_row
+T1056.002,GUI Input Capture,collection credential-access,4,CA-07 SI-03 SI-04 SI-07,claims
+T1056.003,Web Portal Capture,collection credential-access,7,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02,claims
+T1056.004,Credential API Hooking,collection credential-access,0,,no_row
+T1057,Process Discovery,discovery,0,,no_row
+T1059,Command and Scripting Interpreter,execution,23,AC-02 AC-03 AC-05 AC-06 AC-17 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 CM-11 IA-02 IA-08 IA-09 RA-05 SC-18 SI-02 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.001,PowerShell,execution,19,AC-02 AC-03 AC-05 AC-06 AC-17 CM-02 CM-05 CM-06 CM-08 IA-02 IA-08 IA-09 RA-05 SI-02 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.002,AppleScript,execution,15,AC-02 AC-03 AC-06 AC-17 CM-02 CM-06 IA-09 SI-03 SI-04 SI-07 SI-10 SI-16 SR-04 SR-05 SR-11,claims
+T1059.003,Windows Command Shell,execution,11,AC-02 AC-03 AC-06 AC-17 CM-02 CM-06 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.004,Unix Shell,execution,11,AC-02 AC-03 AC-06 AC-17 CM-02 CM-06 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.005,Visual Basic,execution,17,AC-02 AC-03 AC-06 AC-17 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SC-18 SI-02 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.006,Python,execution,15,AC-02 AC-03 AC-06 AC-17 CM-02 CM-03 CM-05 CM-06 CM-11 SI-02 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.007,JavaScript,execution,16,AC-02 AC-03 AC-06 AC-17 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SC-18 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.008,Network Device CLI,execution,15,AC-02 AC-03 AC-05 AC-06 AC-17 CM-02 CM-05 CM-06 IA-02 IA-08 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1059.009,Cloud API,execution,6,AC-02 AC-03 AC-06 CM-07 IA-02 SI-04,claims
+T1059.010,AutoHotKey & AutoIT,execution,11,AC-02 AC-03 AC-06 CA-07 CM-02 CM-06 CM-07 CM-08 SI-03 SI-04 SI-07,claims
+T1059.011,Lua,execution,9,AC-02 AC-03 AC-06 CM-02 CM-06 SI-03 SI-04 SI-07 SI-16,claims
+T1068,Exploitation for Privilege Escalation,privilege-escalation,21,AC-02 AC-04 AC-06 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 RA-10 SC-02 SC-03 SC-07 SC-18 SC-30 SC-39 SI-02 SI-03 SI-04 SI-05 SI-07,claims
+T1069,Permission Groups Discovery,discovery,0,,no_row
+T1069.001,Local Groups,discovery,0,,no_row
+T1069.002,Domain Groups,discovery,0,,no_row
+T1069.003,Cloud Groups,discovery,0,,no_row
+T1070,Indicator Removal,defense-evasion,20,AC-02 AC-03 AC-05 AC-06 AC-16 AC-17 AC-18 CA-07 CM-02 CM-06 CP-06 CP-07 CP-09 SC-04 SC-36 SI-03 SI-04 SI-07 SI-12 SI-23,claims
+T1070.001,Clear Windows Event Logs,defense-evasion,21,AC-02 AC-03 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 CA-07 CM-02 CM-06 CP-06 CP-07 CP-09 SC-04 SC-36 SI-03 SI-04 SI-07 SI-12 SI-23,claims
+T1070.002,Clear Linux or Mac System Logs,defense-evasion,21,AC-02 AC-03 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 CA-07 CM-02 CM-06 CP-06 CP-07 CP-09 SC-04 SC-36 SI-03 SI-04 SI-07 SI-12 SI-23,claims
+T1070.003,Clear Command History,defense-evasion,10,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1070.004,File Deletion,defense-evasion,0,,no_row
+T1070.005,Network Share Connection Removal,defense-evasion,0,,no_row
+T1070.006,Timestomp,defense-evasion,0,,no_row
+T1070.007,Clear Network Connection History and Configurations,defense-evasion,10,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1070.008,Clear Mailbox Data,defense-evasion,22,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CP-06 CP-07 CP-09 SC-04 SC-36 SI-03 SI-04 SI-07 SI-12,claims
+T1070.009,Clear Persistence,defense-evasion,10,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1070.010,Relocate Malware,defense-evasion,3,SI-03 SI-04 SI-07,claims
+T1071,Application Layer Protocol,command-and-control,15,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-10 SC-20 SC-21 SC-22 SC-23 SC-31 SC-37 SI-03 SI-04,claims
+T1071.001,Web Protocols,command-and-control,15,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-10 SC-20 SC-21 SC-22 SC-23 SC-31 SC-37 SI-03 SI-04,claims
+T1071.002,File Transfer Protocols,command-and-control,15,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-10 SC-20 SC-21 SC-22 SC-23 SC-31 SC-37 SI-03 SI-04,claims
+T1071.003,Mail Protocols,command-and-control,15,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-10 SC-20 SC-21 SC-22 SC-23 SC-31 SC-37 SI-03 SI-04,claims
+T1071.004,DNS,command-and-control,18,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-10 SC-20 SC-21 SC-22 SC-23 SC-31 SC-37 SI-03 SI-04 SI-10 SI-15,claims
+T1071.005,Publish/Subscribe Protocols,command-and-control,4,AC-04 SC-07 SC-31 SI-04,claims
+T1072,Software Deployment Tools,execution lateral-movement,27,AC-02 AC-03 AC-04 AC-05 AC-06 AC-12 AC-20 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 CM-11 IA-02 IA-05 SA-09 SA-10 SC-07 SC-12 SC-17 SC-46 SI-02 SI-03 SI-04 SI-07 SI-23,claims
+T1074,Data Staged,collection,0,,no_row
+T1074.001,Local Data Staging,collection,0,,no_row
+T1074.002,Remote Data Staging,collection,0,,no_row
+T1078,Valid Accounts,defense-evasion initial-access persistence privilege-escalation,25,AC-02 AC-03 AC-05 AC-06 CA-03 CA-07 CM-05 CM-06 CM-07 IA-02 IA-05 IA-12 IA-13 RA-05 SA-03 SA-04 SA-08 SA-10 SA-11 SA-15 SA-17 SC-07 SC-28 SC-43 SI-04,claims
+T1078.001,Default Accounts,defense-evasion initial-access persistence privilege-escalation,14,AC-02 AC-05 AC-06 CA-07 SA-03 SA-04 SA-08 SA-10 SA-11 SA-15 SA-16 SA-17 SC-28 SI-04,claims
+T1078.002,Domain Accounts,defense-evasion initial-access persistence privilege-escalation,13,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CM-05 CM-06 IA-02 IA-05 IA-12 IA-13 SI-04,claims
+T1078.003,Local Accounts,defense-evasion initial-access persistence privilege-escalation,19,AC-02 AC-03 AC-05 AC-06 CA-07 CM-05 CM-06 IA-02 IA-12 SA-03 SA-04 SA-08 SA-10 SA-11 SA-15 SA-16 SA-17 SC-28 SI-04,claims
+T1078.004,Cloud Accounts,defense-evasion initial-access persistence privilege-escalation,24,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-05 CM-06 CM-07 IA-02 IA-05 IA-12 IA-13 SA-03 SA-04 SA-08 SA-10 SA-11 SA-15 SA-17 SC-28 SC-43 SI-04,claims
+T1080,Taint Shared Content,lateral-movement,10,AC-03 CA-07 CM-02 CM-07 SC-04 SC-07 SI-03 SI-04 SI-07 SI-10,claims
+T1082,System Information Discovery,discovery,0,,no_row
+T1083,File and Directory Discovery,discovery,0,,no_row
+T1087,Account Discovery,discovery,4,AC-02 CM-06 CM-07 SI-04,claims
+T1087.001,Local Account,discovery,3,CM-06 CM-07 SI-04,claims
+T1087.002,Domain Account,discovery,3,CM-06 CM-07 SI-04,claims
+T1087.003,Email Account,discovery,0,,no_row
+T1087.004,Cloud Account,discovery,6,AC-02 AC-03 AC-05 AC-06 IA-02 IA-08,claims
+T1090,Proxy,command-and-control,12,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-08 SI-03 SI-04 SI-10 SI-15,claims
+T1090.001,Internal Proxy,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1090.002,External Proxy,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1090.003,Multi-hop Proxy,command-and-control,8,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-10 SI-15,claims
+T1090.004,Domain Fronting,command-and-control,1,SC-08,claims
+T1091,Replication Through Removable Media,initial-access lateral-movement,10,AC-03 AC-06 CM-02 CM-06 CM-08 MP-07 RA-05 SC-41 SI-03 SI-04,claims
+T1092,Communication Through Removable Media,command-and-control,8,CM-02 CM-06 CM-07 CM-08 MP-07 RA-05 SI-03 SI-04,claims
+T1095,Non-Application Layer Protocol,command-and-control,11,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04 SI-10 SI-15,claims
+T1098,Account Manipulation,persistence privilege-escalation,11,AC-02 AC-03 AC-04 AC-05 AC-06 CM-05 CM-06 CM-07 IA-02 SC-07 SI-04,claims
+T1098.001,Additional Cloud Credentials,persistence privilege-escalation,15,AC-02 AC-03 AC-04 AC-05 AC-06 AC-20 CM-05 CM-06 CM-07 IA-02 IA-05 SC-07 SC-46 SI-04 SI-07,claims
+T1098.002,Additional Email Delegate Permissions,persistence privilege-escalation,11,AC-02 AC-03 AC-05 AC-06 AC-20 CM-05 CM-06 IA-02 IA-05 SI-04 SI-07,claims
+T1098.003,Additional Cloud Roles,persistence privilege-escalation,11,AC-02 AC-03 AC-05 AC-06 AC-20 CM-05 CM-06 IA-02 IA-05 SI-04 SI-07,claims
+T1098.004,SSH Authorized Keys,persistence privilege-escalation,15,AC-03 AC-05 AC-06 AC-20 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-05 RA-05 SC-12 SI-03 SI-04,claims
+T1098.005,Device Registration,persistence privilege-escalation,7,AC-02 AC-03 AC-05 AC-06 AC-20 CM-05 CM-06,claims
+T1098.006,Additional Container Cluster Roles,persistence privilege-escalation,4,AC-02 AC-03 AC-06 IA-05,claims
+T1098.007,Additional Local or Domain Groups,persistence privilege-escalation,11,AC-02 AC-03 AC-04 AC-05 AC-06 CM-05 CM-06 CM-07 IA-02 IA-04 SI-04,claims
+T1102,Web Service,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1102.001,Dead Drop Resolver,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1102.002,Bidirectional Communication,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1102.003,One-Way Communication,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1104,Multi-Stage Channels,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1105,Ingress Tool Transfer,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1106,Native API,execution,7,AC-06 CM-02 CM-06 CM-07 SI-02 SI-03 SI-04,claims
+T1110,Brute Force,credential-access,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-02 CM-06 IA-02 IA-04 IA-05 IA-11 SI-04,claims
+T1110.001,Password Guessing,credential-access,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-02 CM-06 IA-02 IA-04 IA-05 IA-11 SI-04,claims
+T1110.002,Password Cracking,credential-access,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-02 CM-06 IA-02 IA-04 IA-05 IA-11 SI-04,claims
+T1110.003,Password Spraying,credential-access,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-02 CM-06 IA-02 IA-04 IA-05 IA-11 SI-04,claims
+T1110.004,Credential Stuffing,credential-access,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-02 CM-06 IA-02 IA-04 IA-05 IA-11 SI-04,claims
+T1111,Multi-Factor Authentication Interception,credential-access,9,AC-20 CA-07 CM-02 CM-06 IA-02 IA-05 IA-13 SI-03 SI-04,claims
+T1112,Modify Registry,defense-evasion,3,AC-06 CM-07 SI-07,claims
+T1113,Screen Capture,collection,0,,no_row
+T1114,Email Collection,collection,15,AC-03 AC-04 AC-16 AC-17 AC-19 AC-20 CM-02 CM-06 IA-02 IA-05 SC-07 SC-37 SI-04 SI-07 SI-12,claims
+T1114.001,Local Email Collection,collection,9,AC-04 AC-16 AC-17 AC-19 AC-20 SC-37 SI-04 SI-07 SI-12,claims
+T1114.002,Remote Email Collection,collection,14,AC-03 AC-04 AC-16 AC-17 AC-19 AC-20 CM-02 CM-06 IA-02 IA-05 SC-37 SI-04 SI-07 SI-12,claims
+T1114.003,Email Forwarding Rule,collection,12,AC-04 AC-16 AC-17 AC-19 AC-20 CM-06 SC-07 SC-37 SC-43 SI-04 SI-07 SI-12,claims
+T1115,Clipboard Data,collection,0,,no_row
+T1119,Automated Collection,collection,17,AC-16 AC-17 AC-18 AC-19 AC-20 CM-02 CM-06 CM-08 CP-06 CP-07 CP-09 SC-04 SC-36 SI-04 SI-07 SI-12 SI-23,claims
+T1120,Peripheral Device Discovery,discovery,0,,no_row
+T1123,Audio Capture,collection,0,,no_row
+T1124,System Time Discovery,discovery,0,,no_row
+T1125,Video Capture,collection,0,,no_row
+T1127,Trusted Developer Utilities Proxy Execution,defense-evasion,8,CM-02 CM-06 CM-07 CM-08 RA-05 SI-04 SI-07 SI-10,claims
+T1127.001,MSBuild,defense-evasion,5,CM-02 CM-06 CM-08 RA-05 SI-04,claims
+T1127.002,ClickOnce,defense-evasion,10,AC-17 CM-02 CM-06 CM-07 CM-08 RA-05 SC-18 SI-04 SI-07 SI-10,claims
+T1129,Shared Modules,execution,6,CM-02 CM-07 SI-03 SI-04 SI-07 SI-10,claims
+T1132,Data Encoding,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1132.001,Standard Encoding,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1132.002,Non-Standard Encoding,command-and-control,7,AC-04 CA-07 CM-02 CM-06 SC-07 SI-03 SI-04,claims
+T1133,External Remote Services,initial-access persistence,17,AC-03 AC-04 AC-06 AC-07 AC-17 AC-20 CM-02 CM-06 CM-07 CM-08 IA-02 IA-05 RA-05 SC-07 SC-46 SI-04 SI-07,claims
+T1134,Access Token Manipulation,defense-evasion privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02 IA-13,claims
+T1134.001,Token Impersonation/Theft,defense-evasion privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02 IA-13,claims
+T1134.002,Create Process with Token,defense-evasion privilege-escalation,7,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02,claims
+T1134.003,Make and Impersonate Token,defense-evasion privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02 IA-13,claims
+T1134.004,Parent PID Spoofing,defense-evasion privilege-escalation,0,,no_row
+T1134.005,SID-History Injection,defense-evasion privilege-escalation,13,AC-03 AC-04 AC-05 AC-06 AC-20 CM-02 CM-06 IA-13 SA-04 SA-08 SA-11 SA-17 SC-03,claims
+T1135,Network Share Discovery,discovery,3,CM-06 CM-07 SI-04,claims
+T1136,Create Account,persistence,15,AC-02 AC-03 AC-04 AC-05 AC-06 AC-20 CM-05 CM-06 CM-07 IA-02 IA-05 SC-07 SC-46 SI-04 SI-07,claims
+T1136.001,Local Account,persistence,11,AC-02 AC-03 AC-05 AC-06 AC-20 CM-05 CM-06 IA-02 IA-05 SI-04 SI-07,claims
+T1136.002,Domain Account,persistence,15,AC-02 AC-03 AC-04 AC-05 AC-06 AC-20 CM-05 CM-06 CM-07 IA-02 IA-05 SC-07 SC-46 SI-04 SI-07,claims
+T1136.003,Cloud Account,persistence,14,AC-02 AC-03 AC-04 AC-05 AC-06 AC-20 CM-05 CM-06 CM-07 IA-02 IA-05 SC-07 SI-04 SI-07,claims
+T1137,Office Application Startup,persistence,13,AC-06 AC-10 AC-17 CM-02 CM-06 CM-08 RA-05 SC-18 SC-44 SI-02 SI-03 SI-04 SI-08,claims
+T1137.001,Office Template Macros,persistence,10,AC-06 CM-02 CM-06 CM-08 RA-05 SC-18 SC-44 SI-03 SI-04 SI-08,claims
+T1137.002,Office Test,persistence,10,AC-06 AC-10 AC-14 AC-17 CM-02 CM-05 CM-06 SC-18 SC-44 SI-08,claims
+T1137.003,Outlook Forms,persistence,7,AC-06 CM-02 CM-06 SC-18 SC-44 SI-02 SI-08,claims
+T1137.004,Outlook Home Page,persistence,7,AC-06 CM-02 CM-06 SC-18 SC-44 SI-02 SI-08,claims
+T1137.005,Outlook Rules,persistence,7,AC-06 CM-02 CM-06 SC-18 SC-44 SI-02 SI-08,claims
+T1137.006,Add-ins,persistence,6,AC-06 CM-02 CM-06 SC-18 SC-44 SI-08,claims
+T1140,Deobfuscate/Decode Files or Information,defense-evasion,0,,no_row
+T1176,Browser Extensions,persistence,14,AC-06 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-11 RA-05 SC-07 SI-03 SI-04 SI-07 SI-10,claims
+T1185,Browser Session Hijacking,collection,14,AC-02 AC-03 AC-05 AC-06 AC-10 AC-12 CA-07 CM-02 CM-05 IA-02 SC-23 SI-03 SI-04 SI-07,claims
+T1187,Forced Authentication,credential-access,10,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-04 SI-10 SI-15,claims
+T1189,Drive-by Compromise,initial-access,18,AC-04 AC-06 CA-07 CM-02 CM-06 CM-08 SA-22 SC-02 SC-03 SC-07 SC-18 SC-29 SC-30 SC-39 SI-02 SI-03 SI-04 SI-07,claims
+T1190,Exploit Public-Facing Application,initial-access,29,AC-02 AC-03 AC-04 AC-05 AC-06 CA-02 CA-07 CM-05 CM-06 CM-07 CM-08 IA-02 IA-08 RA-05 RA-10 SA-08 SC-02 SC-03 SC-07 SC-18 SC-29 SC-30 SC-39 SC-46 SI-02 SI-03 SI-04 SI-07 SI-10,claims
+T1195,Supply Chain Compromise,initial-access,22,AC-02 AC-03 AC-06 CA-02 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 CM-11 RA-05 RA-10 SA-22 SI-02 SI-03 SI-04 SI-07 SR-04 SR-05 SR-11,claims
+T1195.001,Compromise Software Dependencies and Development Tools,initial-access,18,CA-02 CA-07 CM-05 CM-06 CM-07 CM-11 RA-05 RA-10 SA-10 SA-11 SA-15 SA-22 SI-02 SI-04 SI-07 SR-04 SR-05 SR-11,claims
+T1195.002,Compromise Software Supply Chain,initial-access,11,CA-02 CA-07 CM-07 CM-11 RA-05 RA-10 SA-22 SI-02 SR-04 SR-05 SR-11,claims
+T1195.003,Compromise Hardware Supply Chain,initial-access,14,CM-02 CM-03 CM-05 CM-08 IA-07 RA-09 SA-10 SA-11 SC-34 SI-02 SI-07 SR-04 SR-05 SR-11,claims
+T1197,BITS Jobs,defense-evasion persistence,14,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-05 CM-06 CM-07 IA-02 SC-07 SI-04 SI-10 SI-15,claims
+T1199,Trusted Relationship,initial-access,8,AC-03 AC-04 AC-06 AC-08 CM-06 CM-07 SC-07 SC-46,claims
+T1200,Hardware Additions,initial-access,5,AC-03 AC-06 AC-20 MP-07 SC-41,claims
+T1201,Password Policy Discovery,discovery,5,CA-07 CM-02 CM-06 SI-03 SI-04,claims
+T1202,Indirect Command Execution,defense-evasion,0,,no_row
+T1203,Exploitation for Client Execution,execution,16,AC-04 AC-06 CA-07 CM-08 SC-02 SC-03 SC-07 SC-18 SC-29 SC-30 SC-39 SC-44 SI-02 SI-03 SI-04 SI-07,claims
+T1204,User Execution,execution,13,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-44 SI-02 SI-03 SI-04 SI-07 SI-08 SI-10,claims
+T1204.001,Malicious Link,execution,11,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-44 SI-02 SI-03 SI-04 SI-08,claims
+T1204.002,Malicious File,execution,12,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-44 SI-03 SI-04 SI-07 SI-08 SI-10,claims
+T1204.003,Malicious Image,execution,16,AC-04 CA-07 CM-02 CM-06 CM-07 RA-05 SC-07 SC-44 SI-02 SI-03 SI-04 SI-07 SI-08 SR-04 SR-05 SR-11,claims
+T1205,Traffic Signaling,command-and-control defense-evasion persistence,9,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-04 SI-15,claims
+T1205.001,Port Knocking,command-and-control defense-evasion persistence,8,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-04 SI-15,claims
+T1205.002,Socket Filters,command-and-control defense-evasion persistence,2,AC-04 SI-04,claims
+T1207,Rogue Domain Controller,defense-evasion,0,,no_row
+T1210,Exploitation of Remote Services,lateral-movement,31,AC-02 AC-03 AC-04 AC-05 AC-06 CA-02 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-08 RA-05 RA-10 SC-02 SC-03 SC-07 SC-18 SC-26 SC-29 SC-30 SC-35 SC-39 SC-46 SI-02 SI-03 SI-04 SI-05 SI-07,claims
+T1211,Exploitation for Defense Evasion,defense-evasion,22,AC-04 AC-06 CA-07 CM-02 CM-06 CM-08 RA-05 RA-10 SC-02 SC-03 SC-07 SC-18 SC-26 SC-29 SC-30 SC-35 SC-39 SI-02 SI-03 SI-04 SI-05 SI-07,claims
+T1212,Exploitation for Credential Access,credential-access,24,AC-02 AC-04 AC-06 CA-07 CM-02 CM-06 CM-08 IA-02 IA-05 RA-05 RA-10 SC-02 SC-03 SC-07 SC-18 SC-26 SC-30 SC-35 SC-39 SI-02 SI-03 SI-04 SI-05 SI-07,claims
+T1213,Data from Information Repositories,collection,24,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-17 AC-21 AC-23 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-08 RA-05 SC-28 SC-37 SI-04 SI-07,claims
+T1213.001,Confluence,collection,23,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-17 AC-21 AC-23 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-08 RA-05 SC-28 SI-04 SI-07,claims
+T1213.002,Sharepoint,collection,23,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-17 AC-21 AC-23 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-08 RA-05 SC-28 SI-04 SI-07,claims
+T1213.003,Code Repositories,collection,14,AC-02 AC-03 AC-05 AC-06 CA-07 IA-02 IA-09 RA-05 SA-03 SA-08 SA-10 SA-11 SA-15 SI-02,claims
+T1213.004,Customer Relationship Management Software,collection,18,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-21 AC-23 CA-07 CM-06 CM-07 IA-02 IA-04 IA-08 SC-28 SI-04 SI-07 SI-12,claims
+T1213.005,Messaging Applications,collection,24,AC-02 AC-03 AC-04 AC-06 AC-16 AC-17 AC-21 AC-23 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-08 RA-05 SC-28 SC-37 SI-02 SI-04 SI-07,claims
+T1216,System Script Proxy Execution,defense-evasion,6,CM-02 CM-06 CM-07 SI-04 SI-07 SI-10,claims
+T1216.001,PubPrn,defense-evasion,6,CM-02 CM-06 CM-07 SI-04 SI-07 SI-10,claims
+T1216.002,SyncAppvPublishingServer,defense-evasion,4,CM-02 CM-06 CM-07 SI-07,claims
+T1217,Browser Information Discovery,discovery,0,,no_row
+T1218,System Binary Proxy Execution,defense-evasion,20,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 CM-11 IA-02 RA-05 SC-07 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.001,Compiled HTML File,defense-evasion,10,CM-02 CM-06 CM-07 CM-11 SC-18 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.002,Control Panel,defense-evasion,11,AC-03 CA-07 CM-02 CM-06 CM-07 CM-11 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.003,CMSTP,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.004,InstallUtil,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.005,Mshta,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.007,Msiexec,defense-evasion,9,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 IA-02,claims
+T1218.008,Odbcconf,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.009,Regsvcs/Regasm,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.010,Regsvr32,defense-evasion,4,CA-07 SI-04 SI-07 SI-10,claims
+T1218.011,Rundll32,defense-evasion,4,CA-07 SI-04 SI-07 SI-10,claims
+T1218.012,Verclsid,defense-evasion,16,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SC-07 SI-03 SI-04 SI-07 SI-10 SI-15 SI-16,claims
+T1218.013,Mavinject,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.014,MMC,defense-evasion,11,CM-02 CM-06 CM-07 CM-08 CM-11 RA-05 SI-03 SI-04 SI-07 SI-10 SI-16,claims
+T1218.015,Electron Applications,defense-evasion,18,AC-02 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 RA-05 SC-07 SC-18 SC-34 SI-03 SI-04 SI-07 SI-10 SI-15 SI-16,claims
+T1219,Remote Access Software,command-and-control,13,AC-03 AC-04 AC-17 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04 SI-07 SI-10 SI-15,claims
+T1220,XSL Script Processing,defense-evasion,6,CM-02 CM-06 CM-07 SI-04 SI-07 SI-10,claims
+T1221,Template Injection,defense-evasion,14,CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SC-07 SC-44 SI-02 SI-03 SI-04 SI-07 SI-08 SI-10,claims
+T1222,File and Directory Permissions Modification,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-05 CM-06 IA-02 SI-04 SI-07,claims
+T1222.001,Windows File and Directory Permissions Modification,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-05 CM-06 IA-02 SI-04 SI-07,claims
+T1222.002,Linux and Mac File and Directory Permissions Modification,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-05 CM-06 IA-02 SI-04 SI-07,claims
+T1480,Execution Guardrails,defense-evasion,0,,no_row
+T1480.001,Environmental Keying,defense-evasion,0,,no_row
+T1480.002,Mutual Exclusion,defense-evasion,0,,non_mappable
+T1482,Domain Trust Discovery,discovery,9,AC-04 CM-02 CM-06 CM-07 RA-05 SA-08 SA-17 SC-07 SC-46,claims
+T1484,Domain or Tenant Policy Modification,defense-evasion privilege-escalation,12,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 IA-02 RA-05 SI-04,claims
+T1484.001,Group Policy Modification,defense-evasion privilege-escalation,0,,no_row
+T1484.002,Trust Modification,defense-evasion privilege-escalation,0,,no_row
+T1485,Data Destruction,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1485.001,Lifecycle-Triggered Deletion,impact,6,AC-02 AC-03 AC-06 CP-09 CP-10 SI-07,claims
+T1486,Data Encrypted for Impact,impact,11,AC-03 AC-06 CM-02 CP-02 CP-06 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1489,Service Stop,impact,14,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-05 CM-06 CM-07 IA-02 SC-07 SC-37 SC-46 SI-04,claims
+T1490,Inhibit System Recovery,impact,13,AC-02 AC-03 AC-06 CM-02 CM-06 CM-07 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1491,Defacement,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1491.001,Internal Defacement,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1491.002,External Defacement,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1495,Firmware Corruption,impact,16,AC-02 AC-03 AC-05 AC-06 CM-02 CM-03 CM-05 CM-06 CM-08 IA-02 IA-07 RA-09 SA-10 SA-11 SI-02 SI-07,claims
+T1496,Resource Hijacking,impact,0,,non_mappable
+T1496.001,Compute Hijacking,impact,0,,non_mappable
+T1496.002,Bandwidth Hijacking,impact,0,,non_mappable
+T1496.003,SMS Pumping,impact,1,SC-05,claims
+T1496.004,Cloud Service Hijacking,impact,0,,non_mappable
+T1497,Virtualization/Sandbox Evasion,defense-evasion discovery,0,,no_row
+T1497.001,System Checks,defense-evasion discovery,0,,no_row
+T1497.002,User Activity Based Checks,defense-evasion discovery,0,,no_row
+T1497.003,Time Based Evasion,defense-evasion discovery,0,,no_row
+T1498,Network Denial of Service,impact,8,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-10 SI-15,claims
+T1498.001,Direct Network Flood,impact,8,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-10 SI-15,claims
+T1498.002,Reflection Amplification,impact,8,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-10 SI-15,claims
+T1499,Endpoint Denial of Service,impact,9,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-04 SI-10 SI-15,claims
+T1499.001,OS Exhaustion Flood,impact,9,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-04 SI-10 SI-15,claims
+T1499.002,Service Exhaustion Flood,impact,9,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-04 SI-10 SI-15,claims
+T1499.003,Application Exhaustion Flood,impact,9,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-04 SI-10 SI-15,claims
+T1499.004,Application or System Exploitation,impact,9,AC-03 AC-04 CA-07 CM-06 CM-07 SC-07 SI-04 SI-10 SI-15,claims
+T1505,Server Software Component,persistence,21,AC-02 AC-03 AC-05 AC-06 AC-16 CM-02 CM-05 CM-06 CM-08 CM-11 IA-02 RA-05 SA-10 SA-11 SC-16 SI-04 SI-07 SI-14 SR-04 SR-05 SR-11,claims
+T1505.001,SQL Stored Procedures,persistence,12,CM-02 CM-06 CM-08 CM-11 RA-05 SA-10 SA-11 SI-07 SI-14 SR-04 SR-05 SR-11,claims
+T1505.002,Transport Agent,persistence,21,AC-02 AC-03 AC-05 AC-06 AC-16 CM-02 CM-05 CM-06 CM-08 CM-11 IA-02 RA-05 SA-10 SA-11 SC-16 SI-04 SI-07 SI-14 SR-04 SR-05 SR-11,claims
+T1505.003,Web Shell,persistence,8,AC-02 AC-03 AC-05 AC-06 CM-02 CM-06 RA-05 SI-04,claims
+T1505.004,IIS Components,persistence,22,AC-03 AC-04 AC-06 AC-17 CM-02 CM-06 CM-07 CM-08 CM-11 IA-02 RA-05 SA-10 SA-11 SC-07 SI-03 SI-04 SI-07 SI-14 SI-16 SR-04 SR-05 SR-11,claims
+T1505.005,Terminal Services DLL,persistence,11,AC-02 AC-03 AC-05 AC-06 AC-12 AC-17 AC-20 CM-02 CM-06 RA-05 SI-04,claims
+T1518,Software Discovery,discovery,0,,no_row
+T1518.001,Security Software Discovery,discovery,0,,no_row
+T1525,Implant Internal Image,persistence,15,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 IA-02 IA-09 RA-05 SI-02 SI-03 SI-04 SI-07,claims
+T1526,Cloud Service Discovery,discovery,0,,no_row
+T1528,Steal Application Access Token,credential-access,19,AC-02 AC-03 AC-04 AC-05 AC-06 AC-10 CA-07 CM-02 CM-05 CM-06 IA-02 IA-04 IA-05 IA-08 IA-13 RA-05 SA-11 SA-15 SI-04,claims
+T1529,System Shutdown/Reboot,impact,0,,no_row
+T1530,Data from Cloud Storage,collection,32,AC-02 AC-03 AC-04 AC-05 AC-06 AC-07 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-03 IA-04 IA-05 IA-06 IA-08 RA-05 SC-04 SC-07 SC-28 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1531,Account Access Removal,impact,0,,no_row
+T1534,Internal Spearphishing,lateral-movement,0,,no_row
+T1535,Unused/Unsupported Cloud Regions,defense-evasion,1,SC-23,claims
+T1537,Transfer Data to Cloud Account,exfiltration,20,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-17 AC-20 CA-07 CM-05 CM-06 CM-07 IA-02 IA-03 IA-04 IA-08 SC-07 SI-04 SI-10 SI-15,claims
+T1538,Cloud Service Dashboard,discovery,6,AC-02 AC-03 AC-05 AC-06 IA-02 IA-08,claims
+T1539,Steal Web Session Cookie,credential-access,10,AC-03 AC-06 AC-20 CA-07 CM-02 CM-06 IA-02 IA-05 SI-03 SI-04,claims
+T1542,Pre-OS Boot,defense-evasion persistence,19,AC-02 AC-03 AC-05 AC-06 CM-02 CM-03 CM-05 CM-06 CM-08 IA-02 IA-07 IA-08 RA-09 SA-10 SA-11 SC-07 SC-34 SI-02 SI-07,claims
+T1542.001,System Firmware,defense-evasion persistence,17,AC-02 AC-03 AC-05 AC-06 CM-03 CM-05 CM-06 CM-08 IA-02 IA-07 IA-08 RA-09 SA-10 SA-11 SC-34 SI-02 SI-07,claims
+T1542.002,Component Firmware,defense-evasion persistence,0,,no_row
+T1542.003,Bootkit,defense-evasion persistence,18,AC-02 AC-03 AC-05 AC-06 CM-02 CM-03 CM-05 CM-06 CM-08 IA-02 IA-07 IA-08 RA-09 SA-10 SA-11 SC-34 SI-02 SI-07,claims
+T1542.004,ROMMONkit,defense-evasion persistence,19,AC-03 AC-06 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-07 RA-05 RA-09 SA-10 SA-11 SC-07 SC-34 SI-02 SI-04 SI-07,claims
+T1542.005,TFTP Boot,defense-evasion persistence,23,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-07 IA-08 RA-05 RA-09 SA-10 SA-11 SC-07 SC-34 SI-02 SI-04 SI-07,claims
+T1543,Create or Modify System Process,persistence privilege-escalation,20,AC-02 AC-03 AC-05 AC-06 AC-17 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-11 IA-02 IA-04 RA-05 SA-22 SI-03 SI-04 SI-07 SI-16,claims
+T1543.001,Launch Agent,persistence privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-11 IA-02,claims
+T1543.002,Systemd Service,persistence privilege-escalation,16,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-03 CM-05 CM-06 CM-11 IA-02 SA-22 SI-03 SI-04 SI-07 SI-16,claims
+T1543.003,Windows Service,persistence privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-11 IA-02,claims
+T1543.004,Launch Daemon,persistence privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-11 IA-02,claims
+T1543.005,Container Service,persistence privilege-escalation,5,AC-02 AC-03 AC-05 AC-06 IA-02,claims
+T1546,Event Triggered Execution,persistence privilege-escalation,9,AC-02 AC-03 AC-06 CM-02 CM-03 CM-06 IA-09 SI-02 SI-07,claims
+T1546.001,Change Default File Association,persistence privilege-escalation,0,,no_row
+T1546.002,Screensaver,persistence privilege-escalation,9,CM-02 CM-06 CM-07 CM-08 RA-05 SI-03 SI-04 SI-07 SI-10,claims
+T1546.003,Windows Management Instrumentation Event Subscription,persistence privilege-escalation,12,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 IA-02 SI-03 SI-04 SI-14,claims
+T1546.004,Unix Shell Configuration Modification,persistence privilege-escalation,8,AC-03 AC-06 CA-07 CM-02 CM-06 SI-03 SI-04 SI-07,claims
+T1546.005,Trap,persistence privilege-escalation,0,,no_row
+T1546.006,LC_LOAD_DYLIB Addition,persistence privilege-escalation,13,CM-02 CM-06 CM-07 CM-08 IA-09 SI-02 SI-03 SI-04 SI-07 SI-10 SR-04 SR-05 SR-11,claims
+T1546.007,Netsh Helper DLL,persistence privilege-escalation,0,,no_row
+T1546.008,Accessibility Features,persistence privilege-escalation,6,CM-06 CM-07 CM-10 SI-04 SI-07 SI-10,claims
+T1546.009,AppCert DLLs,persistence privilege-escalation,3,CM-07 SI-07 SI-10,claims
+T1546.010,AppInit DLLs,persistence privilege-escalation,5,CM-02 CM-07 SI-02 SI-07 SI-10,claims
+T1546.011,Application Shimming,persistence privilege-escalation,2,AC-06 SI-02,claims
+T1546.012,Image File Execution Options Injection,persistence privilege-escalation,0,,no_row
+T1546.013,PowerShell Profile,persistence privilege-escalation,10,AC-03 AC-06 CA-07 CM-02 CM-06 CM-10 IA-09 SI-03 SI-04 SI-07,claims
+T1546.014,Emond,persistence privilege-escalation,6,CM-02 CM-06 CM-08 RA-05 SI-03 SI-04,claims
+T1546.015,Component Object Model Hijacking,persistence privilege-escalation,0,,no_row
+T1546.016,Installer Packages,persistence privilege-escalation,7,AC-06 CA-07 CM-05 CM-06 SI-02 SI-03 SI-04,claims
+T1546.017,Udev Rules,persistence privilege-escalation,0,,non_mappable
+T1547,Boot or Logon Autostart Execution,persistence privilege-escalation,0,,no_row
+T1547.001,Registry Run Keys / Startup Folder,persistence privilege-escalation,0,,no_row
+T1547.002,Authentication Package,persistence privilege-escalation,5,CM-06 SC-39 SI-03 SI-04 SI-07,claims
+T1547.003,Time Providers,persistence privilege-escalation,10,AC-03 AC-04 AC-06 AC-17 CA-07 CM-02 CM-05 CM-06 SI-04 SI-07,claims
+T1547.004,Winlogon Helper DLL,persistence privilege-escalation,13,AC-02 AC-03 AC-05 AC-06 AC-17 CM-05 CM-07 IA-02 SI-04 SI-07 SI-10 SI-14 SI-16,claims
+T1547.005,Security Support Provider,persistence privilege-escalation,5,CM-06 SC-39 SI-03 SI-04 SI-07,claims
+T1547.006,Kernel Modules and Extensions,persistence privilege-escalation,18,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 CM-07 IA-02 IA-04 IA-08 RA-05 SI-02 SI-03 SI-04 SI-07 SI-10 SI-14 SI-16,claims
+T1547.007,Re-opened Applications,persistence privilege-escalation,11,AC-03 AC-16 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 RA-05 SI-03 SI-04,claims
+T1547.008,LSASS Driver,persistence privilege-escalation,7,CM-02 CM-06 RA-05 SC-39 SI-03 SI-04 SI-07,claims
+T1547.009,Shortcut Modification,persistence privilege-escalation,11,AC-02 AC-03 AC-05 AC-06 AC-17 CM-05 CM-06 CM-07 IA-02 SI-03 SI-04,claims
+T1547.010,Port Monitors,persistence privilege-escalation,0,,no_row
+T1547.012,Print Processors,persistence privilege-escalation,8,AC-02 AC-03 AC-05 AC-06 AC-17 CM-05 IA-02 SI-04,claims
+T1547.013,XDG Autostart Entries,persistence privilege-escalation,15,AC-02 AC-03 AC-05 AC-06 AC-17 CA-07 CM-02 CM-03 CM-05 CM-06 CM-11 IA-02 SI-03 SI-04 SI-07,claims
+T1547.014,Active Setup,persistence privilege-escalation,0,,no_row
+T1547.015,Login Items,persistence privilege-escalation,0,,no_row
+T1548,Abuse Elevation Control Mechanism,defense-evasion privilege-escalation,22,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 RA-05 SC-18 SC-34 SI-02 SI-03 SI-04 SI-07 SI-12 SI-16,claims
+T1548.001,Setuid and Setgid,defense-evasion privilege-escalation,3,CM-06 CM-07 SI-04,claims
+T1548.002,Bypass User Account Control,defense-evasion privilege-escalation,11,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 IA-02 RA-05 SI-02 SI-04,claims
+T1548.003,Sudo and Sudo Caching,defense-evasion privilege-escalation,13,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 RA-05 SI-04,claims
+T1548.004,Elevated Execution with Prompt,defense-evasion privilege-escalation,11,CM-02 CM-06 CM-07 CM-08 SC-18 SC-34 SI-03 SI-04 SI-07 SI-12 SI-16,claims
+T1548.005,Temporary Elevated Cloud Access,defense-evasion privilege-escalation,4,AC-02 AC-03 AC-06 CM-05,claims
+T1548.006,TCC Manipulation,defense-evasion privilege-escalation,17,AC-02 AC-03 AC-05 AC-06 AC-16 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 RA-05 SI-02 SI-03 SI-04 SI-07 SI-10,claims
+T1550,Use Alternate Authentication Material,defense-evasion lateral-movement,7,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02,claims
+T1550.001,Application Access Token,defense-evasion lateral-movement,15,AC-16 AC-17 AC-19 AC-20 CM-02 CM-06 CM-10 CM-11 IA-02 IA-04 SC-08 SC-28 SI-04 SI-07 SI-12,claims
+T1550.002,Pass the Hash,defense-evasion lateral-movement,8,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 IA-02 SI-02,claims
+T1550.003,Pass the Ticket,defense-evasion lateral-movement,11,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SI-04,claims
+T1550.004,Web Session Cookie,defense-evasion lateral-movement,3,SC-08 SC-23 SI-07,claims
+T1552,Unsecured Credentials,credential-access,32,AC-02 AC-03 AC-04 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-03 IA-04 IA-05 RA-05 SA-11 SA-15 SC-04 SC-07 SC-12 SC-28 SI-02 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1552.001,Credentials In Files,credential-access,17,AC-02 AC-04 AC-05 AC-06 CA-07 CM-02 CM-06 IA-02 IA-05 RA-05 SA-11 SA-15 SC-04 SC-07 SC-12 SC-28 SI-04,claims
+T1552.002,Credentials in Registry,credential-access,18,AC-02 AC-03 AC-05 AC-06 AC-17 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 RA-05 SA-11 SA-15 SC-04 SC-12 SC-28 SI-04,claims
+T1552.003,Bash History,credential-access,4,CM-06 CM-07 SC-28 SI-04,claims
+T1552.004,Private Keys,credential-access,21,AC-02 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 IA-02 IA-05 RA-05 SA-11 SA-15 SC-04 SC-07 SC-12 SC-28 SI-04 SI-07 SI-12,claims
+T1552.005,Cloud Instance Metadata API,credential-access,14,AC-03 AC-04 AC-16 AC-17 AC-20 CA-07 CM-06 CM-07 IA-03 IA-04 SC-07 SI-04 SI-10 SI-15,claims
+T1552.006,Group Policy Preferences,credential-access,12,AC-02 AC-05 AC-06 CM-02 CM-06 IA-02 IA-05 RA-05 SA-11 SA-15 SI-02 SI-04,claims
+T1552.007,Container API,credential-access,14,AC-02 AC-03 AC-04 AC-05 AC-06 AC-17 AC-23 CM-05 CM-06 CM-07 IA-02 SC-07 SC-08 SC-46,claims
+T1552.008,Chat Messages,credential-access,2,AC-04 SI-04,claims
+T1553,Subvert Trust Controls,defense-evasion,20,AC-02 AC-03 AC-06 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 CM-10 IA-07 IA-09 RA-09 SA-10 SA-11 SC-34 SI-02 SI-04 SI-07 SI-10,claims
+T1553.001,Gatekeeper Bypass,defense-evasion,6,CM-02 CM-06 CM-07 SI-04 SI-07 SI-10,claims
+T1553.002,Code Signing,defense-evasion,0,,no_row
+T1553.003,SIP and Trust Provider Hijacking,defense-evasion,10,AC-03 AC-06 CA-07 CM-02 CM-06 CM-07 SI-03 SI-04 SI-07 SI-10,claims
+T1553.004,Install Root Certificate,defense-evasion,6,CM-06 CM-07 CM-10 IA-09 SC-20 SI-04,claims
+T1553.005,Mark-of-the-Web Bypass,defense-evasion,6,CM-02 CM-06 CM-07 SI-04 SI-07 SI-10,claims
+T1553.006,Code Signing Policy Modification,defense-evasion,13,AC-06 CM-02 CM-03 CM-05 CM-07 CM-08 IA-07 RA-09 SA-10 SA-11 SC-34 SI-02 SI-07,claims
+T1554,Compromise Host Software Binary,persistence,9,CM-02 CM-05 CM-06 IA-09 SI-03 SI-07 SR-04 SR-05 SR-11,claims
+T1555,Credentials from Password Stores,credential-access,8,AC-03 AC-06 AC-20 CA-07 CM-03 IA-05 SI-02 SI-04,claims
+T1555.001,Keychain,credential-access,3,CA-07 IA-05 SI-04,claims
+T1555.002,Securityd Memory,credential-access,5,AC-03 AC-06 CA-07 IA-05 SI-04,claims
+T1555.003,Credentials from Web Browsers,credential-access,0,,no_row
+T1555.004,Windows Credential Manager,credential-access,5,CM-02 CM-06 CM-07 IA-05 SI-04,claims
+T1555.005,Password Managers,credential-access,8,AC-02 AC-03 CM-02 CM-06 IA-02 IA-05 SI-02 SI-04,claims
+T1555.006,Cloud Secrets Management Stores,credential-access,4,AC-02 AC-03 AC-06 CM-07,claims
+T1556,Modify Authentication Process,credential-access defense-evasion persistence,17,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-05 IA-13 SC-39 SI-04 SI-07,claims
+T1556.001,Domain Controller Authentication,credential-access defense-evasion persistence,14,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CA-07 CM-05 CM-06 IA-02 IA-05 SC-39 SI-04 SI-07,claims
+T1556.002,Password Filter DLL,credential-access defense-evasion persistence,3,CM-06 CM-07 SI-04,claims
+T1556.003,Pluggable Authentication Modules,credential-access defense-evasion persistence,12,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CM-05 CM-06 IA-02 IA-05 SI-04 SI-07,claims
+T1556.004,Network Device Authentication,credential-access defense-evasion persistence,13,AC-02 AC-03 AC-05 AC-06 AC-07 AC-20 CM-02 CM-05 CM-06 IA-02 IA-05 SI-04 SI-07,claims
+T1556.005,Reversible Encryption,credential-access defense-evasion persistence,4,AC-02 AC-05 AC-06 IA-05,claims
+T1556.006,Multi-Factor Authentication,credential-access defense-evasion persistence,6,AC-02 AC-03 AC-06 IA-02 IA-11 IA-13,claims
+T1556.007,Hybrid Identity,credential-access defense-evasion persistence,6,AC-02 AC-03 AC-06 IA-02 IA-11 IA-13,claims
+T1556.008,Network Provider DLL,credential-access defense-evasion persistence,9,AC-03 AC-06 CM-02 CM-03 CM-05 CM-06 CM-07 SI-04 SI-07,claims
+T1556.009,Conditional Access Policies,credential-access defense-evasion persistence,14,AC-02 AC-03 AC-05 AC-06 AC-16 CM-05 CM-06 CM-07 CM-08 IA-02 IA-05 IA-13 SI-04 SI-07,claims
+T1557,Adversary-in-the-Middle,collection credential-access,24,AC-03 AC-04 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SC-04 SC-07 SC-08 SC-23 SC-46 SI-03 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1557.001,LLMNR/NBT-NS Poisoning and SMB Relay,collection credential-access,15,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 CM-08 SC-07 SC-08 SC-23 SC-46 SI-03 SI-04 SI-10 SI-15,claims
+T1557.002,ARP Cache Poisoning,collection credential-access,22,AC-03 AC-04 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-07 CM-08 SC-04 SC-07 SC-08 SC-23 SI-03 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1557.003,DHCP Spoofing,collection credential-access,15,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 CM-08 SC-07 SC-08 SC-23 SC-46 SI-03 SI-04 SI-10 SI-15,claims
+T1557.004,Evil Twin,collection credential-access,16,AC-03 AC-04 AC-18 AC-19 CA-07 CM-02 CM-06 SC-07 SC-08 SC-13 SC-23 SC-40 SC-46 SI-04 SI-07 SI-12,claims
+T1558,Steal or Forge Kerberos Tickets,credential-access,19,AC-02 AC-03 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SC-04 SI-03 SI-04 SI-07 SI-12,claims
+T1558.001,Golden Ticket,credential-access,9,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 CM-06 IA-02 IA-05,claims
+T1558.002,Silver Ticket,credential-access,19,AC-02 AC-03 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SC-04 SI-03 SI-04 SI-07 SI-12,claims
+T1558.003,Kerberoasting,credential-access,19,AC-02 AC-03 AC-05 AC-06 AC-16 AC-17 AC-18 AC-19 CA-07 CM-02 CM-05 CM-06 IA-02 IA-05 SC-04 SI-03 SI-04 SI-07 SI-12,claims
+T1558.004,AS-REP Roasting,credential-access,19,AC-02 AC-03 AC-16 AC-17 AC-18 AC-19 CA-07 CM-02 CM-06 IA-02 IA-05 RA-05 SA-11 SA-15 SC-04 SI-03 SI-04 SI-07 SI-12,claims
+T1558.005,Ccache Files,credential-access,10,AC-02 AC-03 AC-06 CA-07 IA-02 IA-05 SC-04 SI-04 SI-07 SI-12,claims
+T1559,Inter-Process Communication,execution,19,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-05 CM-06 CM-07 CM-08 CM-10 IA-02 RA-05 SC-03 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1559.001,Component Object Model,execution,13,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-05 CM-06 IA-02 SC-03 SC-07 SC-18 SI-03,claims
+T1559.002,Dynamic Data Exchange,execution,14,AC-04 AC-06 CM-02 CM-06 CM-07 CM-08 CM-10 RA-05 SC-03 SC-07 SC-18 SI-02 SI-03 SI-04,claims
+T1559.003,XPC Services,execution,7,CM-05 CM-06 CM-07 SA-08 SA-10 SA-11 SI-04,claims
+T1560,Archive Collected Data,collection,5,CM-02 RA-05 SC-07 SI-03 SI-04,claims
+T1560.001,Archive via Utility,collection,5,CM-02 RA-05 SC-07 SI-03 SI-04,claims
+T1560.002,Archive via Library,collection,0,,no_row
+T1560.003,Archive via Custom Method,collection,0,,no_row
+T1561,Disk Wipe,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1561.001,Disk Content Wipe,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1561.002,Disk Structure Wipe,impact,10,AC-03 AC-06 CM-02 CP-02 CP-07 CP-09 CP-10 SI-03 SI-04 SI-07,claims
+T1562,Impair Defenses,defense-evasion,16,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-04 RA-05 SC-08 SI-03 SI-04 SI-07,claims
+T1562.001,Disable or Modify Tools,defense-evasion,13,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 SI-03 SI-04 SI-07,claims
+T1562.002,Disable Windows Event Logging,defense-evasion,13,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 SI-03 SI-04 SI-07,claims
+T1562.003,Impair Command History Logging,defense-evasion,4,CM-02 CM-06 CM-07 SI-04,claims
+T1562.004,Disable or Modify System Firewall,defense-evasion,13,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 SI-03 SI-04 SI-07,claims
+T1562.006,Indicator Blocking,defense-evasion,17,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 CM-10 IA-02 IA-09 SC-08 SC-23 SI-03 SI-04 SI-07,claims
+T1562.007,Disable or Modify Cloud Firewall,defense-evasion,6,AC-02 AC-03 AC-05 AC-06 CM-05 IA-02,claims
+T1562.008,Disable or Modify Cloud Logs,defense-evasion,7,AC-02 AC-03 AC-05 AC-06 CM-03 CM-05 IA-02,claims
+T1562.009,Safe Mode Boot,defense-evasion,13,AC-02 AC-03 AC-05 AC-06 CM-05 CM-06 CM-07 CM-10 IA-02 IA-09 SC-08 SC-23 SI-07,claims
+T1562.010,Downgrade Attack,defense-evasion,7,CM-02 CM-06 CM-07 RA-05 SC-08 SI-04 SI-07,claims
+T1562.011,Spoof Security Alerting,defense-evasion,5,CM-05 CM-06 SI-03 SI-04 SI-07,claims
+T1562.012,Disable or Modify Linux Audit System,defense-evasion,8,AC-02 AC-03 AC-06 CM-03 CM-05 CM-06 SI-04 SI-07,claims
+T1563,Remote Service Session Hijacking,lateral-movement,19,AC-02 AC-03 AC-04 AC-05 AC-06 AC-12 AC-17 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-04 IA-06 RA-05 SC-07 SC-46 SI-04,claims
+T1563.001,SSH Hijacking,lateral-movement,17,AC-02 AC-03 AC-05 AC-06 AC-17 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 IA-05 RA-05 SC-12 SC-23 SI-04,claims
+T1563.002,RDP Hijacking,lateral-movement,18,AC-02 AC-03 AC-04 AC-05 AC-06 AC-11 AC-12 AC-17 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 RA-05 SC-07 SC-46 SI-04,claims
+T1564,Hide Artifacts,defense-evasion,0,,no_row
+T1564.001,Hidden Files and Directories,defense-evasion,0,,no_row
+T1564.002,Hidden Users,defense-evasion,3,CM-06 CM-07 SI-04,claims
+T1564.003,Hidden Window,defense-evasion,3,CM-07 SI-07 SI-10,claims
+T1564.004,NTFS File Attributes,defense-evasion,6,AC-03 AC-16 CA-07 SI-03 SI-04 SI-07,claims
+T1564.005,Hidden File System,defense-evasion,0,,no_row
+T1564.006,Run Virtual Instance,defense-evasion,7,CM-02 CM-06 CM-07 CM-08 SI-04 SI-07 SI-10,claims
+T1564.007,VBA Stomping,defense-evasion,4,CM-02 CM-06 CM-08 SI-04,claims
+T1564.008,Email Hiding Rules,defense-evasion,7,AC-04 CM-03 CM-05 CM-07 SI-03 SI-04 SI-07,claims
+T1564.009,Resource Forking,defense-evasion,13,CM-02 CM-06 CM-07 CM-11 SA-10 SC-04 SC-06 SC-44 SI-03 SI-04 SI-07 SI-10 SI-15,claims
+T1564.010,Process Argument Spoofing,defense-evasion,3,CA-07 SI-04 SI-07,claims
+T1564.011,Ignore Process Interrupts,defense-evasion,0,,non_mappable
+T1564.012,File/Path Exclusions,defense-evasion,1,SI-03,claims
+T1565,Data Manipulation,impact,26,AC-03 AC-04 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-07 CM-08 CP-06 CP-07 CP-09 CP-10 SC-04 SC-07 SC-28 SC-36 SC-46 SI-04 SI-07 SI-12 SI-16 SI-23,claims
+T1565.001,Stored Data Manipulation,impact,23,AC-03 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-08 CP-06 CP-07 CP-09 CP-10 SC-04 SC-07 SC-28 SC-36 SI-04 SI-07 SI-12 SI-16 SI-23,claims
+T1565.002,Transmitted Data Manipulation,impact,12,AC-16 AC-17 AC-18 AC-19 AC-20 CM-02 CM-06 CM-08 SC-04 SI-04 SI-07 SI-12,claims
+T1565.003,Runtime Data Manipulation,impact,13,AC-03 AC-04 CA-07 CM-06 CM-07 CP-09 SC-04 SC-07 SC-28 SC-46 SI-04 SI-07 SI-16,claims
+T1566,Phishing,initial-access,13,AC-04 CA-07 CM-02 CM-06 IA-09 RA-05 SC-07 SC-20 SC-44 SI-02 SI-03 SI-04 SI-08,claims
+T1566.001,Spearphishing Attachment,initial-access,12,AC-04 CA-07 CM-02 CM-06 IA-09 SC-07 SC-20 SC-44 SI-02 SI-03 SI-04 SI-08,claims
+T1566.002,Spearphishing Link,initial-access,11,AC-04 CA-07 CM-02 CM-06 IA-09 SC-07 SC-20 SC-44 SI-03 SI-04 SI-08,claims
+T1566.003,Spearphishing via Service,initial-access,10,AC-02 AC-04 AC-06 CA-07 SC-07 SC-44 SI-02 SI-03 SI-04 SI-08,claims
+T1566.004,Spearphishing Voice,initial-access,0,,non_mappable
+T1567,Exfiltration Over Web Service,exfiltration,17,AC-02 AC-03 AC-04 AC-06 AC-16 AC-20 AC-23 CA-03 CA-07 SA-08 SA-09 SC-07 SC-28 SC-31 SI-03 SI-04 SR-04,claims
+T1567.001,Exfiltration to Code Repository,exfiltration,3,AC-04 AC-20 SC-07,claims
+T1567.002,Exfiltration to Cloud Storage,exfiltration,3,AC-04 AC-20 SC-07,claims
+T1567.003,Exfiltration to Text Storage Sites,exfiltration,3,AC-04 AC-17 SC-07,claims
+T1567.004,Exfiltration Over Webhook,exfiltration,3,AC-04 AC-17 SC-07,claims
+T1568,Dynamic Resolution,command-and-control,8,AC-04 CA-07 SC-07 SC-20 SC-21 SC-22 SI-03 SI-04,claims
+T1568.001,Fast Flux DNS,command-and-control,0,,no_row
+T1568.002,Domain Generation Algorithms,command-and-control,8,AC-04 CA-07 SC-07 SC-20 SC-21 SC-22 SI-03 SI-04,claims
+T1568.003,DNS Calculation,command-and-control,0,,no_row
+T1569,System Services,execution,14,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 CM-11 IA-02 SI-03 SI-04 SI-07,claims
+T1569.001,Launchctl,execution,7,AC-02 AC-03 AC-05 AC-06 CM-05 CM-11 IA-02,claims
+T1569.002,Service Execution,execution,13,AC-02 AC-03 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 SI-03 SI-04 SI-07,claims
+T1570,Lateral Tool Transfer,lateral-movement,11,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04 SI-10 SI-15,claims
+T1571,Non-Standard Port,command-and-control,8,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04,claims
+T1572,Protocol Tunneling,command-and-control,11,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SI-03 SI-04 SI-10 SI-15,claims
+T1573,Encrypted Channel,command-and-control,11,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-12 SC-16 SC-23 SI-03 SI-04,claims
+T1573.001,Symmetric Cryptography,command-and-control,11,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-12 SC-16 SC-23 SI-03 SI-04,claims
+T1573.002,Asymmetric Cryptography,command-and-control,11,AC-04 CA-07 CM-02 CM-06 CM-07 SC-07 SC-12 SC-16 SC-23 SI-03 SI-04,claims
+T1574,Hijack Execution Flow,defense-evasion persistence privilege-escalation,18,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 CM-08 IA-02 RA-05 SI-02 SI-03 SI-04 SI-07 SI-10,claims
+T1574.001,DLL Search Order Hijacking,defense-evasion persistence privilege-escalation,8,CM-02 CM-06 CM-07 RA-05 SI-03 SI-04 SI-07 SI-10,claims
+T1574.002,DLL Side-Loading,defense-evasion persistence privilege-escalation,9,SA-03 SA-04 SA-08 SA-10 SA-11 SA-15 SA-16 SA-17 SI-02,claims
+T1574.004,Dylib Hijacking,defense-evasion persistence privilege-escalation,13,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-06 CM-08 RA-05 SI-03 SI-04 SI-07,claims
+T1574.005,Executable Installer File Permissions Weakness,defense-evasion persistence privilege-escalation,11,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-05 CM-06 IA-02 RA-05 SI-04,claims
+T1574.006,Dynamic Linker Hijacking,defense-evasion persistence privilege-escalation,4,CM-06 CM-07 SI-07 SI-10,claims
+T1574.007,Path Interception by PATH Environment Variable,defense-evasion persistence privilege-escalation,15,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SI-03 SI-04 SI-07 SI-10,claims
+T1574.008,Path Interception by Search Order Hijacking,defense-evasion persistence privilege-escalation,15,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SI-03 SI-04 SI-07 SI-10,claims
+T1574.009,Path Interception by Unquoted Path,defense-evasion persistence privilege-escalation,15,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-06 CM-07 CM-08 RA-05 SI-03 SI-04 SI-07 SI-10,claims
+T1574.010,Services File Permissions Weakness,defense-evasion persistence privilege-escalation,11,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-05 CM-06 IA-02 RA-05 SI-04,claims
+T1574.011,Services Registry Permissions Weakness,defense-evasion persistence privilege-escalation,2,AC-06 CM-05,claims
+T1574.012,COR_PROFILER,defense-evasion persistence privilege-escalation,9,AC-02 AC-03 AC-05 AC-06 CM-05 CM-07 IA-02 SI-07 SI-10,claims
+T1574.013,KernelCallbackTable,defense-evasion persistence privilege-escalation,7,CA-07 CM-02 SI-02 SI-03 SI-04 SI-07 SI-10,claims
+T1574.014,AppDomainManager,defense-evasion persistence privilege-escalation,10,AC-03 AC-06 CA-07 CM-05 CM-06 CM-07 SI-03 SI-04 SI-07 SI-10,claims
+T1578,Modify Cloud Compute Infrastructure,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 IA-02 IA-04 IA-06 RA-05 SI-04,claims
+T1578.001,Create Snapshot,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 IA-02 IA-04 IA-06 RA-05 SI-04,claims
+T1578.002,Create Cloud Instance,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 IA-02 IA-04 IA-06 RA-05 SI-04,claims
+T1578.003,Delete Cloud Instance,defense-evasion,11,AC-02 AC-03 AC-05 AC-06 CM-02 CM-05 IA-02 IA-04 IA-06 RA-05 SI-04,claims
+T1578.004,Revert Cloud Instance,defense-evasion,0,,no_row
+T1578.005,Modify Cloud Compute Configurations,defense-evasion,5,AC-02 AC-03 AC-06 AC-20 CM-03,claims
+T1580,Cloud Infrastructure Discovery,discovery,5,AC-02 AC-03 AC-05 AC-06 IA-02,claims
+T1583,Acquire Infrastructure,resource-development,0,,non_mappable
+T1583.001,Domains,resource-development,0,,non_mappable
+T1583.002,DNS Server,resource-development,0,,non_mappable
+T1583.003,Virtual Private Server,resource-development,0,,non_mappable
+T1583.004,Server,resource-development,0,,non_mappable
+T1583.005,Botnet,resource-development,0,,non_mappable
+T1583.006,Web Services,resource-development,0,,non_mappable
+T1583.007,Serverless,resource-development,0,,non_mappable
+T1583.008,Malvertising,resource-development,0,,non_mappable
+T1584,Compromise Infrastructure,resource-development,0,,non_mappable
+T1584.001,Domains,resource-development,0,,non_mappable
+T1584.002,DNS Server,resource-development,0,,non_mappable
+T1584.003,Virtual Private Server,resource-development,0,,non_mappable
+T1584.004,Server,resource-development,0,,non_mappable
+T1584.005,Botnet,resource-development,0,,non_mappable
+T1584.006,Web Services,resource-development,0,,non_mappable
+T1584.007,Serverless,resource-development,0,,non_mappable
+T1584.008,Network Devices,resource-development,0,,non_mappable
+T1585,Establish Accounts,resource-development,0,,non_mappable
+T1585.001,Social Media Accounts,resource-development,0,,non_mappable
+T1585.002,Email Accounts,resource-development,0,,non_mappable
+T1585.003,Cloud Accounts,resource-development,0,,non_mappable
+T1586,Compromise Accounts,resource-development,0,,non_mappable
+T1586.001,Social Media Accounts,resource-development,0,,non_mappable
+T1586.002,Email Accounts,resource-development,0,,non_mappable
+T1586.003,Cloud Accounts,resource-development,0,,non_mappable
+T1587,Develop Capabilities,resource-development,0,,non_mappable
+T1587.001,Malware,resource-development,0,,non_mappable
+T1587.002,Code Signing Certificates,resource-development,0,,non_mappable
+T1587.003,Digital Certificates,resource-development,0,,non_mappable
+T1587.004,Exploits,resource-development,0,,non_mappable
+T1588,Obtain Capabilities,resource-development,0,,non_mappable
+T1588.001,Malware,resource-development,0,,non_mappable
+T1588.002,Tool,resource-development,0,,non_mappable
+T1588.003,Code Signing Certificates,resource-development,0,,non_mappable
+T1588.004,Digital Certificates,resource-development,0,,non_mappable
+T1588.005,Exploits,resource-development,0,,non_mappable
+T1588.006,Vulnerabilities,resource-development,0,,non_mappable
+T1588.007,Artificial Intelligence,resource-development,0,,non_mappable
+T1589,Gather Victim Identity Information,reconnaissance,0,,non_mappable
+T1589.001,Credentials,reconnaissance,0,,non_mappable
+T1589.002,Email Addresses,reconnaissance,0,,non_mappable
+T1589.003,Employee Names,reconnaissance,0,,non_mappable
+T1590,Gather Victim Network Information,reconnaissance,0,,non_mappable
+T1590.001,Domain Properties,reconnaissance,0,,non_mappable
+T1590.002,DNS,reconnaissance,5,AC-04 CM-06 CM-07 SC-07 SC-32,claims
+T1590.003,Network Trust Dependencies,reconnaissance,0,,non_mappable
+T1590.004,Network Topology,reconnaissance,0,,non_mappable
+T1590.005,IP Addresses,reconnaissance,0,,non_mappable
+T1590.006,Network Security Appliances,reconnaissance,0,,non_mappable
+T1591,Gather Victim Org Information,reconnaissance,0,,non_mappable
+T1591.001,Determine Physical Locations,reconnaissance,0,,non_mappable
+T1591.002,Business Relationships,reconnaissance,0,,non_mappable
+T1591.003,Identify Business Tempo,reconnaissance,0,,non_mappable
+T1591.004,Identify Roles,reconnaissance,0,,non_mappable
+T1592,Gather Victim Host Information,reconnaissance,0,,non_mappable
+T1592.001,Hardware,reconnaissance,0,,non_mappable
+T1592.002,Software,reconnaissance,0,,non_mappable
+T1592.003,Firmware,reconnaissance,0,,non_mappable
+T1592.004,Client Configurations,reconnaissance,0,,non_mappable
+T1593,Search Open Websites/Domains,reconnaissance,0,,no_row
+T1593.001,Social Media,reconnaissance,0,,non_mappable
+T1593.002,Search Engines,reconnaissance,0,,non_mappable
+T1593.003,Code Repositories,reconnaissance,1,CM-08,claims
+T1594,Search Victim-Owned Websites,reconnaissance,0,,non_mappable
+T1595,Active Scanning,reconnaissance,0,,non_mappable
+T1595.001,Scanning IP Blocks,reconnaissance,0,,non_mappable
+T1595.002,Vulnerability Scanning,reconnaissance,0,,non_mappable
+T1595.003,Wordlist Scanning,reconnaissance,1,SC-04,claims
+T1596,Search Open Technical Databases,reconnaissance,0,,non_mappable
+T1596.001,DNS/Passive DNS,reconnaissance,0,,non_mappable
+T1596.002,WHOIS,reconnaissance,0,,non_mappable
+T1596.003,Digital Certificates,reconnaissance,0,,non_mappable
+T1596.004,CDNs,reconnaissance,0,,non_mappable
+T1596.005,Scan Databases,reconnaissance,0,,non_mappable
+T1597,Search Closed Sources,reconnaissance,0,,non_mappable
+T1597.001,Threat Intel Vendors,reconnaissance,0,,non_mappable
+T1597.002,Purchase Technical Data,reconnaissance,0,,non_mappable
+T1598,Phishing for Information,reconnaissance,11,AC-04 CA-07 CM-02 CM-06 IA-09 SC-07 SC-20 SC-44 SI-03 SI-04 SI-08,claims
+T1598.001,Spearphishing Service,reconnaissance,7,AC-04 CA-07 SC-07 SC-44 SI-03 SI-04 SI-08,claims
+T1598.002,Spearphishing Attachment,reconnaissance,11,AC-04 CA-07 CM-02 CM-06 IA-09 SC-07 SC-20 SC-44 SI-03 SI-04 SI-08,claims
+T1598.003,Spearphishing Link,reconnaissance,11,AC-04 CA-07 CM-02 CM-06 IA-09 SC-07 SC-20 SC-44 SI-03 SI-04 SI-08,claims
+T1598.004,Spearphishing Voice,reconnaissance,0,,non_mappable
+T1599,Network Boundary Bridging,defense-evasion,18,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-05 SC-07 SC-28 SI-04 SI-07 SI-10 SI-15,claims
+T1599.001,Network Address Translation Traversal,defense-evasion,18,AC-02 AC-03 AC-04 AC-05 AC-06 CA-07 CM-02 CM-05 CM-06 CM-07 IA-02 IA-05 SC-07 SC-28 SI-04 SI-07 SI-10 SI-15,claims
+T1600,Weaken Encryption,defense-evasion,0,,no_row
+T1600.001,Reduce Key Space,defense-evasion,0,,no_row
+T1600.002,Disable Crypto Hardware,defense-evasion,0,,no_row
+T1601,Modify System Image,defense-evasion,24,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-05 IA-07 RA-09 SA-10 SA-11 SC-34 SI-02 SI-04 SI-07 SR-04 SR-05 SR-11,claims
+T1601.001,Patch System Image,defense-evasion,24,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-05 IA-07 RA-09 SA-10 SA-11 SC-34 SI-02 SI-04 SI-07 SR-04 SR-05 SR-11,claims
+T1601.002,Downgrade System Image,defense-evasion,24,AC-02 AC-03 AC-04 AC-05 AC-06 CM-02 CM-03 CM-05 CM-06 CM-07 CM-08 IA-02 IA-05 IA-07 RA-09 SA-10 SA-11 SC-34 SI-02 SI-04 SI-07 SR-04 SR-05 SR-11,claims
+T1602,Data from Configuration Repository,collection,25,AC-03 AC-04 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-07 CM-08 IA-03 IA-04 SC-03 SC-04 SC-07 SC-08 SC-28 SI-03 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1602.001,SNMP (MIB Dump),collection,25,AC-03 AC-04 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-07 CM-08 IA-03 IA-04 SC-03 SC-04 SC-07 SC-08 SC-28 SI-03 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1602.002,Network Device Configuration Dump,collection,25,AC-03 AC-04 AC-16 AC-17 AC-18 AC-19 AC-20 CA-07 CM-02 CM-06 CM-07 CM-08 IA-03 IA-04 SC-03 SC-04 SC-07 SC-08 SC-28 SI-03 SI-04 SI-07 SI-10 SI-12 SI-15,claims
+T1606,Forge Web Credentials,credential-access,7,AC-02 AC-03 AC-05 AC-06 IA-13 SC-17 SI-02,claims
+T1606.001,Web Cookies,credential-access,4,AC-02 AC-03 AC-06 SI-02,claims
+T1606.002,SAML Tokens,credential-access,4,AC-02 AC-03 AC-06 IA-13,claims
+T1608,Stage Capabilities,resource-development,0,,non_mappable
+T1608.001,Upload Malware,resource-development,0,,non_mappable
+T1608.002,Upload Tool,resource-development,0,,non_mappable
+T1608.003,Install Digital Certificate,resource-development,0,,non_mappable
+T1608.004,Drive-by Target,resource-development,0,,non_mappable
+T1608.005,Link Target,resource-development,0,,non_mappable
+T1608.006,SEO Poisoning,resource-development,0,,non_mappable
+T1609,Container Administration Command,execution,11,AC-02 AC-03 AC-04 AC-05 AC-06 AC-17 CM-06 CM-07 SC-07 SI-07 SI-10,claims
+T1610,Deploy Container,defense-evasion execution,9,AC-02 AC-03 AC-06 AC-17 CM-06 CM-07 IA-02 SC-07 SI-04,claims
+T1611,Escape to Host,privilege-escalation,19,AC-02 AC-03 AC-04 AC-05 AC-06 CM-05 CM-06 CM-07 IA-02 SC-02 SC-03 SC-07 SC-34 SC-39 SI-02 SI-03 SI-04 SI-07 SI-16,claims
+T1612,Build Image on Host,defense-evasion,11,AC-02 AC-03 AC-06 AC-17 CM-02 CM-06 CM-07 RA-05 SA-11 SC-07 SI-04,claims
+T1613,Container and Resource Discovery,discovery,10,AC-02 AC-03 AC-06 AC-17 CM-06 CM-07 IA-02 SC-07 SC-43 SI-04,claims
+T1614,System Location Discovery,discovery,0,,no_row
+T1614.001,System Language Discovery,discovery,0,,no_row
+T1615,Group Policy Discovery,discovery,0,,no_row
+T1619,Cloud Storage Object Discovery,discovery,7,AC-02 AC-03 AC-05 AC-06 AC-17 CM-05 IA-02,claims
+T1620,Reflective Code Loading,defense-evasion,0,,no_row
+T1621,Multi-Factor Authentication Request Generation,credential-access,7,AC-02 AC-06 CM-05 IA-02 IA-03 IA-05 IA-13,claims
+T1622,Debugger Evasion,defense-evasion discovery,15,AC-03 AC-04 CA-07 CM-02 CM-06 CM-07 CM-08 SC-07 SC-08 SC-23 SC-46 SI-03 SI-04 SI-10 SI-15,claims
+T1647,Plist File Modification,defense-evasion,15,AC-03 AC-06 AC-16 AC-17 CA-07 CM-02 CM-03 CM-05 CM-06 CM-07 SA-08 SA-10 SA-11 SI-04 SI-07,claims
+T1648,Serverless Execution,execution,8,AC-02 AC-03 AC-06 CM-06 CM-07 IA-02 SC-07 SI-04,claims
+T1649,Steal or Forge Authentication Certificates,credential-access,3,IA-02 IA-05 IA-13,claims
+T1650,Acquire Access,resource-development,0,,non_mappable
+T1651,Cloud Administration Command,execution,6,AC-02 AC-03 AC-06 AC-17 IA-02 SI-04,claims
+T1652,Device Driver Discovery,discovery,0,,non_mappable
+T1653,Power Settings,persistence,4,CM-02 CM-03 CM-07 SI-04,claims
+T1654,Log Enumeration,discovery,4,AC-02 AC-03 AC-04 AC-06,claims
+T1656,Impersonation,defense-evasion,0,,non_mappable
+T1657,Financial Theft,impact,2,AC-05 AC-06,claims
+T1659,Content Injection,command-and-control initial-access,3,AC-04 AC-17 SC-07,claims
+T1665,Hide Infrastructure,command-and-control,0,,non_mappable
+T1666,Modify Cloud Resource Hierarchy,defense-evasion,1,CM-03,claims

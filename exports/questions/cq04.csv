@@ -1,0 +1,12 @@
+technique,name,onlyControl
+T1027.011,Fileless Storage,SI-04
+T1027.013,Encrypted/Encoded File,SI-03
+T1027.014,Polymorphic Code,SI-03
+T1055.015,ListPlanting,SI-03
+T1090.004,Domain Fronting,SC-08
+T1496.003,SMS Pumping,SC-05
+T1535,Unused/Unsupported Cloud Regions,SC-23
+T1564.012,File/Path Exclusions,SI-03
+T1593.003,Code Repositories,CM-08
+T1595.003,Wordlist Scanning,SC-04
+T1666,Modify Cloud Resource Hierarchy,CM-03

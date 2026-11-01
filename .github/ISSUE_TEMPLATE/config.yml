@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Upstream mapping source (CTID Mappings Explorer)
+    url: https://github.com/center-for-threat-informed-defense/mappings-explorer/issues
+    about: Problems in the source mapping rows themselves can also be reported to the Center for Threat-Informed Defense.

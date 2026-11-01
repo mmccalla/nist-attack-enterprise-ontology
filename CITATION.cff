@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this ontology, its data or its exports, please cite it as below."
+title: "NIST 800-53 to MITRE ATT&CK enterprise ontology"
+abstract: "An enterprise ontology and knowledge graph mapping NIST SP 800-53 Rev. 5 controls to MITRE ATT&CK Enterprise 16.1 techniques, aligned to ATT&CK STIX, NIST OSCAL and UCO, with a browser-based gap analysis, ATT&CK Navigator exports and tested competency questions."
+type: dataset
+authors:
+  - family-names: McCalla
+    given-names: Mark
+version: 2.1.0
+date-released: 2026-11-01
+license: CC-BY-4.0
+repository-code: "https://github.com/mmccalla/nist-attack-enterprise-ontology"
+url: "https://mmccalla.github.io/nist-attack-enterprise-ontology/"
+keywords:
+  - NIST SP 800-53
+  - MITRE ATT&CK
+  - OSCAL
+  - STIX
+  - UCO
+  - ontology
+  - knowledge graph
+  - threat-informed defense
+references:
+  - type: dataset
+    title: "Mappings Explorer: NIST 800-53 Rev. 5 to ATT&CK 16.1 Enterprise"
+    authors:
+      - name: "MITRE Center for Threat-Informed Defense"
+    url: "https://ctid.mitre.org/mappings/"

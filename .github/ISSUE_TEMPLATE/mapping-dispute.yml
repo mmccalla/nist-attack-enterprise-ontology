@@ -1,0 +1,22 @@
+name: Mapping or claim dispute
+description: A control and technique pair that looks wrong or missing
+labels: [mapping]
+body:
+  - type: input
+    id: control
+    attributes: {label: Control, placeholder: "AC-02"}
+    validations: {required: true}
+  - type: input
+    id: technique
+    attributes: {label: ATT&CK technique, placeholder: "T1078"}
+    validations: {required: true}
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong?
+      options: [The claim should not exist, A claim is missing, Wrong title or name, Other]
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes: {label: Evidence, description: "Source row numbers, ATT&CK or NIST text, references"}
+    validations: {required: true}

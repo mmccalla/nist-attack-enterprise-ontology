@@ -10,7 +10,7 @@ const shots = process.argv[3];
 const url = /^https?:/.test(target) ? target : pathToFileURL(resolve(target)).href;
 const launch = process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {};
 const browser = await chromium.launch(launch);
-const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, acceptDownloads: true });
 const errors = [];
 page.on("pageerror", e => errors.push(`pageerror: ${e.message}`));
 page.on("console", m => { if (m.type() === "error") errors.push(`console: ${m.text()}`); });
@@ -88,6 +88,60 @@ check((await page.locator('#detail a[href^="https://attack.mitre.org/versions/v1
 await page.goto(url.split("#")[0] + "#n/technique_T1521.003");
 await settle();
 check((await page.locator("#detail .warn").textContent()).includes("Not an active technique"), "a technique outside Enterprise is flagged");
+
+// Gap analysis
+import { readFileSync } from "node:fs";
+const fixtures = new URL("../tests/fixtures/", import.meta.url);
+const exported = name => JSON.parse(readFileSync(new URL(`../exports/navigator/${name}.json`, import.meta.url), "utf8"));
+const stats = async () => (await page.locator("#report .stat b").allTextContents()).map(Number);
+await page.goto(url.split("#")[0] + "#gaps");
+await settle();
+await page.locator('[data-baseline="MODERATE"]').click();
+await settle();
+const [covM, gapM, noneM, totalM] = await stats();
+const moderate = exported("baseline-MODERATE");
+const expectedCovered = moderate.techniques.filter(t => "score" in t).length;
+check(covM === expectedCovered && totalM === moderate.techniques.length, `MODERATE preset covers ${covM} of ${totalM} techniques, as in the static layer`);
+check(page.url().includes("#gaps/AC-02,"), "the selection is kept in the address bar");
+const clientLayer = await page.evaluate(() => navigatorLayer("x", "x", gapSelected));
+const strip = l => JSON.stringify(l.techniques);
+check(strip(clientLayer) === strip(moderate), "the browser's layer matches the static MODERATE layer technique for technique");
+const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#gap-layer").click()]);
+check(download.suggestedFilename() === "nist-800-53-coverage-layer.json", "the Navigator layer downloads");
+
+await page.locator('[data-baseline="LOW"]').click();
+await settle();
+const [, gapL] = await stats();
+const firstRec = page.locator("#gap-recs li").first();
+const recControl = (await firstRec.locator("a").textContent()).trim();
+const recGain = +(await firstRec.locator(".count").textContent()).replace("+", "");
+check(gapL > 0 && recGain > 0, `LOW leaves ${gapL} gaps; top recommendation ${recControl} closes ${recGain}`);
+const input = page.locator("#gap-input");
+await input.fill((await input.inputValue()) + ", " + recControl);
+await page.waitForTimeout(800);
+const [, gapAfter] = await stats();
+check(gapAfter === gapL - recGain, `adding ${recControl} closes exactly ${recGain} gaps (${gapL} to ${gapAfter})`);
+
+await page.locator("#gap-file").setInputFiles(new URL("ssp-sample.json", fixtures).pathname);
+await page.waitForTimeout(800);
+const status = await page.locator("#gap-status").textContent();
+check(status.startsWith("2 mapped controls recognised") && status.includes("PM-01") && status.includes("1 enhancement"), "an OSCAL SSP loads: AC-02 and SI-04 mapped, PM-01 reported, the enhancement counted");
+check((await input.inputValue()).includes("ac-2.1"), "the SSP control ids appear in the input");
+if (shots) await page.screenshot({ path: `${shots}/gaps.png` });
+
+await page.goto(url.split("#")[0] + "#gaps/AC-02");
+await settle();
+const ac02 = await page.evaluate(() => [...coverage(new Set(["AC-02"])).values()].filter(([st]) => st === "covered").length);
+check((await page.locator("#gap-input").inputValue()) === "AC-02" && (await stats())[0] === ac02, `a shared link restores the selection (AC-02 covers ${ac02})`);
+
+await page.goto(url.split("#")[0] + "#q/CQ01");
+await settle();
+const [csv] = await Promise.all([page.waitForEvent("download"), page.locator("#q-csv").click()]);
+check(csv.suggestedFilename() === "cq01.csv", "a question answer downloads as CSV");
+await page.goto(url.split("#")[0] + "#n/control_AC-02");
+await settle();
+const [ctl] = await Promise.all([page.waitForEvent("download"), page.locator("#node-layer").click()]);
+check(ctl.suggestedFilename().startsWith("nist-800-53-ac-02"), "a control page downloads its Navigator layer");
 
 await page.goto(url.split("#")[0] + "#n/does_not_exist");
 await settle();

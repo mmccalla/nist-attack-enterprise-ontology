@@ -13,7 +13,8 @@ The Stage 8 deliverable of *A Practical Guide to Ontology Engineering*. The guid
 | Competency coverage | Each of the 13 questions answered by SPARQL over the graph and, separately, from the raw JSON; the two must agree | `tests/test_competency.py` | the independent path is the probe: any modelling or population error shows up as disagreement |
 | Provenance | Every row links to its dataset; every claim to its rows; every dataset to a pinned URL and digest (CQ07) | `tests/test_conformance.py`, CQ07 | row without provenance |
 | Prior version | The original v2 bundle still parses, conforms to its own shapes and matches its digests | `tests/test_v2_bundle.py` | five probes from the first release |
-| Published browser | `index.html` is rebuilt from the current sources, is reproducible across hash seeds and loads nothing from the network; 22 browser checks | `tests/test_browser_build.py`, `scripts/uat_browser.mjs` | unknown node falls back to the overview |
+| Published browser | `index.html` is rebuilt from the current sources, is reproducible across hash seeds and loads nothing from the network; 33 browser checks, including the gap analysis, OSCAL SSP import and downloads | `tests/test_browser_build.py`, `scripts/uat_browser.mjs` | unknown node falls back to the overview; a recommended control must close exactly the gaps it claims |
+| Exports | CSVs and Navigator layers are current, follow layer format 4.5, name only ATT&CK 16.1 techniques, and the baseline layers agree with an independent computation from the raw sources; the browser's layer equals the static one | `tests/test_exports.py`, `scripts/uat_browser.mjs` | the independent path |
 
 ## Results on 2026-11-01
 

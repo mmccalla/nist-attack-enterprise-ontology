@@ -1,0 +1,34 @@
+kind,id,label
+ATT&CK mitigation,M1013,Application Developer Guidance
+ATT&CK mitigation,M1015,Active Directory Configuration
+ATT&CK mitigation,M1017,User Training
+ATT&CK mitigation,M1018,User Account Management
+ATT&CK mitigation,M1026,Privileged Account Management
+ATT&CK mitigation,M1027,Password Policies
+ATT&CK mitigation,M1032,Multi-factor Authentication
+ATT&CK mitigation,M1036,Account Use Policies
+NIST control,AC-02,Account Management
+NIST control,AC-03,Access Enforcement
+NIST control,AC-05,Separation of Duties
+NIST control,AC-06,Least Privilege
+NIST control,CA-03,Information Exchange
+NIST control,CA-07,Continuous Monitoring
+NIST control,CM-05,Access Restrictions for Change
+NIST control,CM-06,Configuration Settings
+NIST control,CM-07,Least Functionality
+NIST control,IA-02,Identification and Authentication (Organizational Users)
+NIST control,IA-05,Authenticator Management
+NIST control,IA-12,Identity Proofing
+NIST control,IA-13,Identity Providers and Authorization Servers
+NIST control,RA-05,Vulnerability Monitoring and Scanning
+NIST control,SA-03,System Development Life Cycle
+NIST control,SA-04,Acquisition Process
+NIST control,SA-08,Security and Privacy Engineering Principles
+NIST control,SA-10,Developer Configuration Management
+NIST control,SA-11,Developer Testing and Evaluation
+NIST control,SA-15,"Development Process, Standards, and Tools"
+NIST control,SA-17,Developer Security and Privacy Architecture and Design
+NIST control,SC-07,Boundary Protection
+NIST control,SC-28,Protection of Information at Rest
+NIST control,SC-43,Usage Restrictions
+NIST control,SI-04,System Monitoring

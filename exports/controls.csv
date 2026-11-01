@@ -1,0 +1,110 @@
+control_id,control_title,oscal_id,baselines,techniques_mitigated
+AC-02,Account Management,ac-2,HIGH LOW MODERATE,220
+AC-03,Access Enforcement,ac-3,HIGH LOW MODERATE,281
+AC-04,Information Flow Enforcement,ac-4,HIGH MODERATE,158
+AC-05,Separation of Duties,ac-5,HIGH MODERATE,167
+AC-06,Least Privilege,ac-6,HIGH MODERATE,270
+AC-07,Unsuccessful Logon Attempts,ac-7,HIGH LOW MODERATE,16
+AC-08,System Use Notification,ac-8,HIGH LOW MODERATE,1
+AC-10,Concurrent Session Control,ac-10,HIGH,4
+AC-11,Device Lock,ac-11,HIGH MODERATE,2
+AC-12,Session Termination,ac-12,HIGH MODERATE,6
+AC-14,Permitted Actions Without Identification or Authentication,ac-14,HIGH LOW MODERATE,1
+AC-16,Security and Privacy Attributes,ac-16,,57
+AC-17,Remote Access,ac-17,HIGH LOW MODERATE,81
+AC-18,Wireless Access,ac-18,HIGH LOW MODERATE,25
+AC-19,Access Control for Mobile Devices,ac-19,HIGH LOW MODERATE,27
+AC-20,Use of External Systems,ac-20,HIGH LOW MODERATE,64
+AC-21,Information Sharing,ac-21,HIGH MODERATE,5
+AC-23,Data Mining Protection,ac-23,,15
+CA-02,Control Assessments,ca-2,HIGH LOW MODERATE PRIVACY,5
+CA-03,Information Exchange,ca-3,HIGH LOW MODERATE,7
+CA-07,Continuous Monitoring,ca-7,HIGH LOW MODERATE PRIVACY,210
+CM-02,Baseline Configuration,cm-2,HIGH LOW MODERATE,287
+CM-03,Configuration Change Control,cm-3,HIGH MODERATE,35
+CM-05,Access Restrictions for Change,cm-5,HIGH LOW MODERATE,162
+CM-06,Configuration Settings,cm-6,HIGH LOW MODERATE,344
+CM-07,Least Functionality,cm-7,HIGH LOW MODERATE,225
+CM-08,System Component Inventory,cm-8,HIGH LOW MODERATE,101
+CM-10,Software Usage Restrictions,cm-10,HIGH LOW MODERATE,9
+CM-11,User-installed Software,cm-11,HIGH LOW MODERATE,33
+CM-12,Information Location,cm-12,HIGH MODERATE,2
+CP-02,Contingency Plan,cp-2,HIGH LOW MODERATE,9
+CP-06,Alternate Storage Site,cp-6,HIGH MODERATE,8
+CP-07,Alternate Processing Site,cp-7,HIGH MODERATE,16
+CP-09,System Backup,cp-9,HIGH LOW MODERATE,22
+CP-10,System Recovery and Reconstitution,cp-10,HIGH LOW MODERATE,12
+IA-02,Identification and Authentication (Organizational Users),ia-2,HIGH LOW MODERATE,173
+IA-03,Device Identification and Authentication,ia-3,HIGH MODERATE,8
+IA-04,Identifier Management,ia-4,HIGH LOW MODERATE,36
+IA-05,Authenticator Management,ia-5,HIGH LOW MODERATE,72
+IA-06,Authentication Feedback,ia-6,HIGH LOW MODERATE,8
+IA-07,Cryptographic Module Authentication,ia-7,HIGH LOW MODERATE,12
+IA-08,Identification and Authentication (Non-organizational Users),ia-8,HIGH LOW MODERATE,22
+IA-09,Service Identification and Authentication,ia-9,,22
+IA-11,Re-authentication,ia-11,HIGH LOW MODERATE,7
+IA-12,Identity Proofing,ia-12,HIGH MODERATE,4
+IA-13,Identity Providers and Authorization Servers,ia-13,,17
+MP-07,Media Use,mp-7,HIGH LOW MODERATE,6
+RA-05,Vulnerability Monitoring and Scanning,ra-5,HIGH LOW MODERATE,107
+RA-09,Criticality Analysis,ra-9,HIGH MODERATE,12
+RA-10,Threat Hunting,ra-10,,8
+SA-03,System Development Life Cycle,sa-3,HIGH LOW MODERATE PRIVACY,6
+SA-04,Acquisition Process,sa-4,HIGH LOW MODERATE PRIVACY,6
+SA-08,Security and Privacy Engineering Principles,sa-8,HIGH LOW MODERATE,20
+SA-09,External System Services,sa-9,HIGH LOW MODERATE PRIVACY,6
+SA-10,Developer Configuration Management,sa-10,HIGH MODERATE,27
+SA-11,Developer Testing and Evaluation,sa-11,HIGH MODERATE PRIVACY,34
+SA-15,"Development Process, Standards, and Tools",sa-15,HIGH MODERATE,14
+SA-16,Developer-provided Training,sa-16,HIGH,3
+SA-17,Developer Security and Privacy Architecture and Design,sa-17,HIGH,7
+SA-22,Unsupported System Components,sa-22,HIGH LOW MODERATE,6
+SC-02,Separation of System and User Functionality,sc-2,HIGH MODERATE,8
+SC-03,Security Function Isolation,sc-3,HIGH,18
+SC-04,Information in Shared System Resources,sc-4,HIGH MODERATE,29
+SC-05,Denial-of-service Protection,sc-5,HIGH LOW MODERATE,1
+SC-06,Resource Availability,sc-6,,1
+SC-07,Boundary Protection,sc-7,HIGH LOW MODERATE,156
+SC-08,Transmission Confidentiality and Integrity,sc-8,HIGH MODERATE,20
+SC-10,Network Disconnect,sc-10,HIGH MODERATE,5
+SC-12,Cryptographic Key Establishment and Management,sc-12,HIGH LOW MODERATE,10
+SC-13,Cryptographic Protection,sc-13,HIGH LOW MODERATE,5
+SC-16,Transmission of Security and Privacy Attributes,sc-16,,5
+SC-17,Public Key Infrastructure Certificates,sc-17,HIGH MODERATE,2
+SC-18,Mobile Code,sc-18,HIGH MODERATE,38
+SC-20,Secure Name/Address Resolution Service (Authoritative Source),sc-20,HIGH LOW MODERATE,14
+SC-21,Secure Name/Address Resolution Service (Recursive or Caching Resolver),sc-21,HIGH LOW MODERATE,7
+SC-22,Architecture and Provisioning for Name/Address Resolution Service,sc-22,HIGH LOW MODERATE,7
+SC-23,Session Authenticity,sc-23,HIGH MODERATE,20
+SC-26,Decoys,sc-26,,3
+SC-28,Protection of Information at Rest,sc-28,HIGH MODERATE,42
+SC-29,Heterogeneity,sc-29,,5
+SC-30,Concealment and Misdirection,sc-30,,7
+SC-31,Covert Channel Analysis,sc-31,,11
+SC-32,System Partitioning,sc-32,,1
+SC-34,Non-modifiable Executable Programs,sc-34,,15
+SC-35,External Malicious Code Identification,sc-35,,3
+SC-36,Distributed Processing and Storage,sc-36,,7
+SC-37,Out-of-band Channels,sc-37,,12
+SC-38,Operations Security,sc-38,,2
+SC-39,Process Isolation,sc-39,HIGH LOW MODERATE,22
+SC-40,Wireless Link Protection,sc-40,,1
+SC-41,Port and I/O Device Access,sc-41,,5
+SC-43,Usage Restrictions,sc-43,,5
+SC-44,Detonation Chambers,sc-44,,22
+SC-46,Cross Domain Policy Enforcement,sc-46,,27
+SI-02,Flaw Remediation,si-2,HIGH LOW MODERATE,84
+SI-03,Malicious Code Protection,si-3,HIGH LOW MODERATE,226
+SI-04,System Monitoring,si-4,HIGH LOW MODERATE,375
+SI-05,"Security Alerts, Advisories, and Directives",si-5,HIGH LOW MODERATE,4
+SI-07,"Software, Firmware, and Information Integrity",si-7,HIGH MODERATE,209
+SI-08,Spam Protection,si-8,HIGH MODERATE,20
+SI-10,Information Input Validation,si-10,HIGH MODERATE,101
+SI-12,Information Management and Retention,si-12,HIGH LOW MODERATE PRIVACY,34
+SI-14,Non-persistence,si-14,,7
+SI-15,Information Output Filtering,si-15,,42
+SI-16,Memory Protection,si-16,HIGH MODERATE,36
+SI-23,Information Fragmentation,si-23,,7
+SR-04,Provenance,sr-4,,22
+SR-05,"Acquisition Strategies, Tools, and Methods",sr-5,HIGH LOW MODERATE,15
+SR-11,Component Authenticity,sr-11,HIGH LOW MODERATE,15
