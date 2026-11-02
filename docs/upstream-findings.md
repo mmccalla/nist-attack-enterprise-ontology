@@ -1,14 +1,14 @@
-# Findings to report upstream (draft)
+# Potential gaps in the NIST 800-53 to ATT&CK 16.1 mapping
 
-**Status: draft, not yet filed.** These are findings about the source file, not about this project. They are written so that they can be posted as one issue on the [Mappings Explorer repository](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues) after review.
+**Status: ready to file. Verified on 2026-11-02 by `scripts/verify_upstream_findings.py`.** These are potential gaps in the source file that need investigation by CTID. They are not errors in this project. Each item gives the facts and asks CTID to examine them. CTID can find a reason for some items that the file does not show.
 
 **File:** `mappings/nist_800_53/attack-16.1/nist_800_53-rev5/enterprise/nist_800_53-rev5_attack-16.1-enterprise.json`, commit `6bdc3ad`, SHA-256 `355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8`. Record numbers below are one-based positions in `mapping_objects`.
 
-## 1. A Mobile technique in the Enterprise mapping
+## 1. Potential gap: a Mobile technique in the Enterprise mapping
 
-Record 637 maps SC-12 to T1521.003 SSL Pinning. T1521.003 is not an attack-pattern in ATT&CK Enterprise 16.1 (it is in the Mobile domain). The row also carries `attack_version` `[UNKNOWN_VERSION]`, the only row with that field.
+Record 637 maps SC-12 to T1521.003 SSL Pinning. T1521.003 is not an attack-pattern in ATT&CK Enterprise 16.1, in any state. It is an active technique in ATT&CK Mobile 16.1. The row also carries `attack_version` `[UNKNOWN_VERSION]`, the only row with that field.
 
-## 2. Fifty duplicate rows
+## 2. Potential gap: fifty duplicate rows
 
 These control and technique pairs each appear in two identical rows (every field the same):
 
@@ -65,7 +65,9 @@ These control and technique pairs each appear in two identical rows (every field
 | SC-08 T1562 | 937 and 938 |
 | SI-12 T1070.008 | 3047 and 3048 |
 
-## 3. Titles that differ from the SP 800-53 Rev. 5 OSCAL catalog (5.2.0)
+## 3. Potential gap: titles that differ from the SP 800-53 Rev. 5 OSCAL catalog
+
+The file was last updated on 16 April 2025. The differences are the same in the catalog that was current then (version 5.1.1+u4, oscal-content commit `941c978` of 13 February 2024) and in version 5.2.0. The IA-08 difference is letter case only.
 
 | Item | Mapping | OSCAL catalog |
 | --- | --- | --- |
@@ -73,27 +75,26 @@ These control and technique pairs each appear in two identical rows (every field
 | SC-32 | Information System Partitioning | System Partitioning |
 | IA-08 | Identification and Authentication (Non-Organizational Users) | Identification and Authentication (Non-organizational Users) |
 
-## 4. Techniques with ATT&CK mitigations but no row
+## 4. Potential gap: techniques with ATT&CK mitigations but no row
 
-91 active ATT&CK Enterprise 16.1 techniques have no row in the file, of any status. 81 of them have no mitigation in ATT&CK, which agrees with the mapping definition ("the control can prevent the technique"). But the file is not consistent: other techniques with no ATT&CK mitigation have a `non_mappable` row with the comment "no mitigations in ATT&CK", and these 91 have nothing.
+Issue [#130](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/130) already reported that some techniques have no row and some have a `non_mappable` row. CTID answered that techniques that "cannot be easily mitigated with preventive controls" are not mapped. This finding does not repeat that point.
 
-Eight of the 91 have substantive ATT&CK mitigations. They look like omissions:
+The question is narrower. These seven active ATT&CK Enterprise 16.1 techniques have no row, but ATT&CK 16.1 itself lists substantive mitigations for them. Substantive means a mitigation other than M1055 Do Not Mitigate and M1056 Pre-compromise. None of them is in the list in #130. (T1006 Direct Volume Access, with M1018 and M1040, is also in this group, but #130 already lists it.)
 
 | Technique | Tactics | ATT&CK mitigations (16.1) |
 | --- | --- | --- |
 | T1555.003 Credentials from Web Browsers | Credential Access | M1017 User Training; M1018 User Account Management; M1021 Restrict Web-Based Content; M1027 Password Policies; M1051 Update Software |
 | T1484.001 Group Policy Modification | Defense Evasion, Privilege Escalation | M1018 User Account Management; M1047 Audit |
 | T1484.002 Trust Modification | Defense Evasion, Privilege Escalation | M1018 User Account Management; M1026 Privileged Account Management |
-| T1006 Direct Volume Access | Defense Evasion | M1018 User Account Management; M1040 Behavior Prevention on Endpoint |
 | T1542.002 Component Firmware | Defense Evasion, Persistence | M1051 Update Software |
 | T1564 Hide Artifacts | Defense Evasion | M1013 Application Developer Guidance; M1033 Limit Software Installation; M1049 Antivirus/Antimalware |
 | T1027.006 HTML Smuggling | Defense Evasion | M1048 Application Isolation and Sandboxing |
 | T1593 Search Open Websites/Domains | Reconnaissance | M1013 Application Developer Guidance; M1047 Audit |
 
-Two more (T1480 Execution Guardrails and T1480.001 Environmental Keying) have only M1055 Do Not Mitigate. A `non_mappable` row would make the file consistent for those two and for the other 81.
+Is the absence of a row intended for these techniques? If it is, a `non_mappable` row would make the reason visible to users.
 
-## 5. Observation, not an error
+## 5. Observation, not an error (no action needed)
 
-ATT&CK lists a substantive mitigation for 3 of the 96 techniques marked non_mappable: T1566.004 and T1598.004 Spearphishing Voice (M1017 User Training) and T1656 Impersonation (M1017, M1019 Threat Intelligence Program). User training maps naturally to the SP 800-53 AT family, which is outside the mapping's scope. It may help readers if the scope note says so.
+ATT&CK lists a substantive mitigation for 3 of the 96 techniques marked non_mappable: T1566.004 and T1598.004 Spearphishing Voice (M1017 User Training) and T1656 Impersonation (M1017, M1019 Threat Intelligence Program). The SP 800-53 controls for user training are in the AT (Awareness and Training) family. The file has no AT family in its capability groups. It may help readers if the scope note says so.
 
-All five findings are reproducible with `python scripts/build_population.py` in [this repository](https://github.com/mmccalla/nist-attack-enterprise-ontology); see `data/source-checks.json` and competency questions CQ05, CQ08, CQ09, CQ12 and CQ13.
+All findings are reproducible with `python scripts/verify_upstream_findings.py`, and with `python scripts/build_population.py` in [this repository](https://github.com/mmccalla/nist-attack-enterprise-ontology); see `data/source-checks.json` and competency questions CQ05, CQ08, CQ09, CQ12 and CQ13.
