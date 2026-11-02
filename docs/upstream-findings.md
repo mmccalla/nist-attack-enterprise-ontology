@@ -1,6 +1,6 @@
 # Potential gaps in the NIST 800-53 to ATT&CK 16.1 mapping
 
-**Status: ready to file. Verified on 2026-11-02 by `scripts/verify_upstream_findings.py`.** These are potential gaps in the source file that need investigation by CTID. They are not errors in this project. Each item gives the facts and asks CTID to examine them. CTID can find a reason for some items that the file does not show.
+**Status: filed on 2026-11-02 as [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151). Verified on 2026-11-02 by `scripts/verify_upstream_findings.py`.** These are potential gaps in the source file that need investigation by CTID. They are not errors in this project. Each item gives the facts and asks CTID to examine them. CTID can find a reason for some items that the file does not show.
 
 **File:** `mappings/nist_800_53/attack-16.1/nist_800_53-rev5/enterprise/nist_800_53-rev5_attack-16.1-enterprise.json`, commit `6bdc3ad`, SHA-256 `355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8`. Record numbers below are one-based positions in `mapping_objects`.
 

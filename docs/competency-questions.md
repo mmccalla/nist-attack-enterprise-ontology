@@ -28,6 +28,9 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 | CQ17 | AI agent builder | Which ATLAS mitigations address the most techniques against AI agents? | Which safeguards to build first into an agent with tools, MCP servers or other agents | MITRE ATLAS 5.6.0 |
 | CQ18 | Security architect for AI systems | Which ATLAS techniques adapt an ATT&CK technique, and how many NIST controls does CTID map to that ATT&CK technique? | Where existing NIST controls give a start for AI threats (indirect link) | ATLAS ATT&CK-reference; CTID claims |
 | CQ19 | LLM application developer | Which OWASP LLM Top 10 (2025) risks does OWASP link to ATLAS techniques, and which ATLAS mitigations address them? | Which safeguards apply to a named OWASP risk | OWASP pages (CC BY-SA 4.0); MITRE ATLAS |
+| CQ20 | GRC analyst | Which NIST 800-53 controls share the most ATT&CK techniques with CIS Safeguard 13.7? | Which NIST evidence a CIS-based programme can reuse | CTID CIS 8.1.2 and NIST claims, joined by STIX id |
+| CQ21 | Security architect | For each ATT&CK 16.1 tactic, how many techniques do CIS 8.1.2 and NIST 800-53 both cover, how many only CIS and how many only NIST? | Where a programme that uses one framework has gaps that the other covers | CTID claims for both frameworks |
+| CQ22 | Threat-informed defence analyst | Which techniques that CIS 8.1.2 maps exist only in ATT&CK 19.1, and which ATT&CK 16.1 techniques do they replace? | Which CIS claims have no NIST counterpart only because of the ATT&CK version | CTID CIS claims; ATT&CK 19.1 STIX |
 | CQ15 | Security architect | Which ATT&CK 16.1 tactics lose techniques in ATT&CK 20.0, to which tactics, and how many? | Which coverage reports by tactic break on the move to the current version | ATT&CK 16.1 and 20.0 STIX |
 
 ## What the answers show
@@ -69,6 +72,12 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 **CQ18** (added 2026-11-02). 34 ATLAS techniques adapt an ATT&CK technique. For 18 of them, CTID maps NIST controls to the ATT&CK technique, for example 32 controls for T1552 Unsecured Credentials behind AML.T0055. The link is indirect: the claims stay on the ATT&CK technique.
 
 **CQ19** (added 2026-11-02). OWASP links 7 of the 10 LLM risks to 13 ATLAS techniques. ATLAS gives mitigations for 12 of them. AML.T0048.002 Societal Harm (from LLM09 Misinformation) has none.
+
+**CQ20** (added 2026-11-02). SI-03 Malicious Code Protection shares 45 techniques with CIS-13.7, SI-04 System Monitoring 43 and AC-06 Least Privilege 40. The tenth control, SI-07, shares 20. A shared technique is an overlap. It does not make two controls equivalent.
+
+**CQ21** (added 2026-11-02). Over the 14 tactics, 503 technique and tactic pairs have claims from both frameworks, 16 only from CIS and 123 only from NIST. It counts only techniques that are active in both ATT&CK versions. Defense Evasion has the most in each group: 110 both, 7 only CIS and 40 only NIST. The CIS mapping has 1140 claims and the NIST mapping 5263, so this result is about mapping depth, not only about control content.
+
+**CQ22** (added 2026-11-02). CIS maps 29 techniques that are active in ATT&CK 19.1 but not in 16.1. ATT&CK 19.1 says that 8 of them replace 16.1 techniques, for example T1685 Disable or Modify Tools replaces T1562, T1562.001 and T1562.006. The NIST mapping cannot have a claim on these 29 techniques because it uses 16.1.
 
 ## Open-world caution
 

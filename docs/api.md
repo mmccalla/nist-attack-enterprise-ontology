@@ -15,7 +15,7 @@ The API gives the knowledge graph as small JSON files. AI agents, scripts and ot
 
 | Endpoint | Content |
 | --- | --- |
-| `techniques/{id}.json` | An ATT&CK technique: tactics, platforms, ATT&CK mitigations, NIST claims with evidence, changes in ATT&CK 20.0 |
+| `techniques/{id}.json` | An ATT&CK technique: tactics, platforms, ATT&CK mitigations, NIST claims with evidence, CIS claims with evidence, changes in ATT&CK 20.0 |
 | `controls/{id}.json` | A NIST SP 800-53 control: OSCAL ID, family, baselines, the techniques that it mitigates, with evidence |
 | `tactics/{id}.json` | An ATT&CK 16.1 tactic and its techniques |
 | `mitigations/{id}.json` | An ATT&CK mitigation and its techniques |
@@ -24,6 +24,7 @@ The API gives the knowledge graph as small JSON files. AI agents, scripts and ot
 | `atlas/techniques/{id}.json` | A MITRE ATLAS technique: agent flag (derived), maturity, mitigations, the ATT&CK technique it adapts, OWASP risks |
 | `atlas/mitigations/{id}.json` | A MITRE ATLAS mitigation and its techniques |
 | `owasp/{key}.json` | An OWASP GenAI risk and the ATLAS techniques that OWASP links to it. The key replaces the colon with an underscore, for example `LLM01_2025`. |
+| `cis/safeguards/{id}.json` | A CIS Controls 8.1.2 Safeguard ID and its ATT&CK 19.1 techniques, with evidence. The ID has the form `CIS-6.3`. The file has no CIS title or text (see `rights`). |
 | `version.json` | Versions, pinned sources, SHA-256 digests and counts |
 
 Technique IDs use the ATT&CK form (`T1078`, `T1556.009`). Control IDs use the zero-padded form (`AC-02`).
@@ -45,6 +46,9 @@ Technique IDs use the ATT&CK form (`T1078`, `T1556.009`). Control IDs use the ze
 - The status `none`, `no_row` or `non_mappable` does not mean that no defence exists.
 - Use `evidence[].source_record` to cite the source row behind a claim.
 - Examine `later_version` before you compare with a newer ATT&CK version. In ATT&CK 20.0, TA0005 is Stealth, not Defense Evasion.
+- CIS claims use ATT&CK 19.1 (`versions.attack_cis`). NIST claims use ATT&CK 16.1. A technique with `mapping_status` `not_in_attack_16_1` is only in 19.1, so it cannot have a NIST claim.
+- Do not add CIS titles or text to an answer from this API. CIS licenses them under CC BY-NC-ND 4.0. Give the link in `cis_url`.
+- `references` in CIS evidence are upstream URLs. Do not follow them automatically.
 
 ## Security
 

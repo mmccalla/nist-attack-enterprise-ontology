@@ -2,6 +2,23 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.5.0 (2026-11-02)
+
+Ontology 2.3.0. Read the compatibility notes.
+
+- **CIS Controls 8.1.2**: the CTID mapping to ATT&CK Enterprise 19.1, with 1140 claims on 404 techniques from 70 Safeguards. The file marks the other 82 Safeguards as non_mappable. Techniques in both ATT&CK versions share one node (by STIX id). The 57 techniques that are only in 19.1 have their own nodes, with the 16.1 techniques that they replace.
+- **Licence rule for CIS**: CIS licenses the CIS Controls under CC BY-NC-ND 4.0. The graph, API, exports and page keep only Safeguard and Control IDs, links and the CTID rationale. They do not copy CIS titles or text. SHACL and a test enforce this.
+- **Gap analysis for CIS**: paste Safeguard numbers and see which ATT&CK 19.1 techniques stay open, with recommendations, a Navigator layer (ATT&CK 19) and CSV files.
+- Questions CQ20 to CQ22 compare CIS and NIST. New export `cis-claims.csv` and layer `navigator/cis-all-safeguards.json`. New API endpoint `cis/safeguards/{id}.json`. Technique files have `cis_claims`, `in_attack_19_1` and `replaces`.
+- `scripts/verify_upstream_findings.py` verifies each fact in `docs/upstream-findings.md` from the raw sources. The findings are filed as [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).
+- Fixed: the export check compared text, so CRLF in source fields made it fail. It now compares bytes.
+
+**Compatibility notes**
+
+- `:SecurityControl` now has two subclasses, `:Nist80053Control` and `:CisSafeguard`. A SPARQL query that selects `:SecurityControl` now also gets CIS Safeguards. Select `:Nist80053Control` to get only NIST controls.
+- `:SourceAssertion` no longer requires one technique. `:MitigatesAssertion` and `:NonMappableAssertion` require it. `:NonMappableControlAssertion` (CIS) has no technique.
+- API: `mapping_status` has the new value `not_in_attack_16_1`, and `versions` has the new field `attack_cis`. A client that rejects unknown enum values must accept the new value. The NIST claims and their counts are the same.
+
 ## 2.4.0 (2026-11-02)
 
 Ontology 2.2.0 (backward compatible).

@@ -43,6 +43,14 @@ Strength: **exact** means the formal meanings match and an OWL axiom or an ident
 | `:derivedFromAttack` | ATLAS `ATT&CK-reference` | object property to the ATT&CK technique | exact (published) | ATLAS states which ATT&CK technique it adapts. It is not an equivalence. |
 | `:OwaspRisk`, `:relatedAtlasTechnique` | OWASP LLM Top 10 2025 "Related Frameworks and Taxonomies" | object property to the ATLAS technique | exact (published) | OWASP lists these ATLAS IDs on each risk page. |
 
+## CIS Controls (release 2.5.0)
+
+| Local term | External term | Relation used | Strength | Reason |
+| --- | --- | --- | --- | --- |
+| `:CisSafeguard` | CIS Controls 8.1.2 Safeguard | ID (`CIS-6.3`) from the CTID mapping file | exact | The CTID file uses the CIS Safeguard numbers. Titles are not copied (D25). |
+| `:CapabilityGroup` (CIS) | CIS Control (`CIS-6`) | ID from the CTID mapping file | exact | The CTID file groups Safeguards by CIS Control. |
+| `:replacesTechnique` | STIX relationship `revoked-by` (ATT&CK 19.1) | object property from the 19.1 technique to the 16.1 technique | exact (published) | ATT&CK publishes the revocation. The direction is reversed for a query from the 19.1 side. |
+
 ## Considered and rejected
 
 | Candidate | Why rejected |

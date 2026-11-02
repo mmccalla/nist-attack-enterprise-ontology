@@ -14,11 +14,12 @@ You do not need an account, an installation or a server. The tool runs in your b
 | --- | --- |
 | Find the ATT&CK techniques that your controls do not cover | [Gap analysis](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps) |
 | Find the controls that close the most gaps | [Gap analysis](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps) |
+| Find the ATT&CK techniques that your CIS Safeguards do not cover | [Gap analysis for CIS](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps-cis) |
 | Find the AI agent techniques that your AI safeguards do not cover | [Gap analysis for AI](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps-atlas) |
 | Find the controls that mitigate one technique | Search, then open the technique |
 | Find the techniques that one control mitigates | Search, then open the control |
 | See the source row and the rationale for each claim | Open a claim |
-| Get answers to 19 common questions | [Questions](https://mmccalla.github.io/nist-attack-enterprise-ontology/#questions) |
+| Get answers to 22 common questions | [Questions](https://mmccalla.github.io/nist-attack-enterprise-ontology/#questions) |
 | Use the data in ATT&CK Navigator, a spreadsheet or a script | [Downloads](#downloads) |
 
 ## Find your gaps
@@ -59,14 +60,29 @@ All files are free. Each file has a stable address. Thus, a script can get the m
 | [`claims.csv`](exports/claims.csv) | Each control and technique claim, with tactics, baselines and source row numbers |
 | [`techniques.csv`](exports/techniques.csv) | Each ATT&CK Enterprise technique, with its controls and mapping status |
 | [`controls.csv`](exports/controls.csv) | Each mapped control, with its OSCAL ID and baselines |
-| [`navigator/`](exports/navigator) | Navigator layers for each baseline and for all controls |
-| [`questions/`](exports/questions) | The answer to each of the 19 questions |
+| [`navigator/`](exports/navigator) | Navigator layers for each baseline, for all controls and for all CIS Safeguards (ATT&CK 19) |
+| [`cis-claims.csv`](exports/cis-claims.csv) | Each CIS Safeguard and ATT&CK 19.1 technique claim, with source row numbers and the CTID rationale |
+| [`questions/`](exports/questions) | The answer to each of the 22 questions |
 | [`attack-16.1-to-20.0.csv`](exports/attack-16.1-to-20.0.csv) | Each technique that ATT&CK 20.0 changes, with its replacement and its new tactics |
 | [`atlas-techniques.csv`](exports/atlas-techniques.csv), [`atlas-mitigations.csv`](exports/atlas-mitigations.csv) | MITRE ATLAS techniques and mitigations |
 | [`owasp-llm-atlas-links.csv`](exports/owasp-llm-atlas-links.csv) | The ATLAS techniques that OWASP links to each LLM Top 10 risk (CC BY-SA 4.0) |
 | [`ontology/core.ttl`](ontology/core.ttl), [`data/population.ttl`](data/population.ttl) | The full knowledge graph in RDF, for a graph database or SPARQL |
 
 For a file address, add the path to `https://mmccalla.github.io/nist-attack-enterprise-ontology/`. For example: `https://mmccalla.github.io/nist-attack-enterprise-ontology/exports/claims.csv`.
+
+## Coverage for CIS Controls
+
+The tool also includes the CTID mapping of CIS Controls 8.1.2 to ATT&CK Enterprise 19.1: 1,140 claims from 70 Safeguards on 404 techniques. The file marks the other 82 Safeguards as non_mappable.
+
+1. Open [Gap analysis for CIS](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps-cis).
+2. Type or paste your Safeguard numbers, for example `4.1, 6.3, 10.1`.
+3. Read the gaps and the Safeguards that close the most gaps.
+
+Read these limits for CIS coverage:
+
+- The CIS mapping uses ATT&CK 19.1. The NIST mapping uses ATT&CK 16.1. The tool joins the two by STIX id. 29 techniques that CIS maps are only in 19.1, so they cannot have a NIST claim (CQ22).
+- CIS licenses the titles and text of the CIS Controls under CC BY-NC-ND 4.0. Thus, the tool shows only Safeguard IDs. Read the titles on [cisecurity.org](https://www.cisecurity.org/controls/cis-controls-list).
+- The mapping file has no Implementation Groups. Thus, the tool cannot filter by them.
 
 ## Coverage for AI systems and AI agents
 
@@ -85,7 +101,7 @@ Read these limits for AI coverage:
 
 ## Use with AI agents and scripts
 
-The tool has a static JSON API with one small file for each technique, control, tactic, mitigation, baseline and question.
+The tool has a static JSON API with one small file for each technique, control, CIS Safeguard, tactic, mitigation, baseline and question.
 
 1. Start at [`api/v1/index.json`](https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/index.json).
 2. Get one file, for example [`api/v1/techniques/T1078.json`](https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/techniques/T1078.json).
@@ -98,15 +114,15 @@ The tool joins five public sources. The build downloads exact versions of each s
 
 | Source | Version | Gives |
 | --- | --- | --- |
-| [MITRE CTID Mappings Explorer](https://ctid.mitre.org/mappings/) | NIST 800-53 Rev. 5 to ATT&CK 16.1, updated 16 April 2025 | 5,410 mapping rows |
-| [MITRE ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data) | Enterprise 16.1 and 20.0 | 656 techniques, 14 tactics, platforms, ATT&CK mitigations and later-version changes |
+| [MITRE CTID Mappings Explorer](https://ctid.mitre.org/mappings/) | NIST 800-53 Rev. 5 to ATT&CK 16.1, updated 16 April 2025. CIS Controls 8.1.2 to ATT&CK 19.1, updated 25 September 2026 | 5,410 NIST mapping rows and 1,225 CIS mapping rows |
+| [MITRE ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data) | Enterprise 16.1, 19.1 and 20.0 | 656 techniques, 14 tactics, platforms, ATT&CK mitigations and later-version changes |
 | [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) | 5.6.0 | 170 techniques, 35 mitigations and 16 tactics for AI systems |
 | [OWASP GenAI Security Project](https://genai.owasp.org/) | Retrieved 2 November 2026 | LLM Top 10 risks and their ATLAS links (CC BY-SA 4.0) |
 | [NIST OSCAL content](https://github.com/usnistgov/oscal-content) | SP 800-53 Rev. 5 catalog 5.2.0 | Control titles, families and the SP 800-53B baselines |
 
 The tool keeps each source row separate from the claim that it supports. A claim is a statement that a control mitigates a technique. Each claim shows the source rows behind it.
 
-The build found some errors in the source. For example, one row names a Mobile technique (T1521.003). The tool keeps that row but does not make a claim from it. The full list is in [`docs/upstream-findings.md`](docs/upstream-findings.md).
+The build found some possible errors in the NIST source. For example, one row names a Mobile technique (T1521.003). The tool keeps that row but does not make a claim from it. The full list is in [`docs/upstream-findings.md`](docs/upstream-findings.md). It is filed as [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).
 
 ## Limits
 
@@ -162,6 +178,7 @@ The original ontology bundle is in [`ontology/v2/`](ontology/v2). It has no chan
 - The ontology files have the CC BY 4.0 licence.
 - The mappings come from the MITRE Center for Threat-Informed Defense (Apache 2.0).
 - MITRE ATT&CK® is a registered trademark of The MITRE Corporation.
+- CIS Controls® is a registered trademark of the Center for Internet Security. CIS licenses the CIS Controls under CC BY-NC-ND 4.0. The tool keeps only IDs and links, not CIS text.
 - The UCO core file has the Apache 2.0 licence.
 
 The full attribution is in [`ATTRIBUTION.md`](ATTRIBUTION.md).

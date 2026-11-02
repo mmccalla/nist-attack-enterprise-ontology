@@ -146,3 +146,33 @@ Phase 3 added MITRE ATLAS, the OWASP GenAI lists, a gap analysis for AI systems 
 | --- | --- |
 | Label derived classifications as derived at each place where users see them. | The "AI agent" flag is useful, but ATLAS does not publish it. |
 | Ask the owner for official documents that sit behind forms. | The Agentic Top 10 item titles can be added from the official document. |
+
+# Retrospective, phase 4a (2026-11-02)
+
+Phase 4a added the CTID mapping of CIS Controls 8.1.2 on ATT&CK 19.1, three competency questions, a CIS gap analysis, API files and exports. It also filed the upstream findings as CTID issue #151, after an independent verification.
+
+## Keep doing
+
+| Practice | Evidence |
+| --- | --- |
+| Verify a public report with a separate script that reads only the raw sources. | The script found that the list of IDs from issue #130 in the first draft had 27 of the 44 IDs. |
+| Make the script compare the report text with the data, then damage the report on purpose. | Ten damaged copies, and the script stopped on each. |
+| Join catalogue versions by STIX id. | The 57 techniques that are only in ATT&CK 19.1 got their own nodes. No ID collision occurred, and the build stops if one does. |
+| Test licence rules on every output. | The new test searches the page, API, exports and graph for each CIS title. It failed on the first build and passes now. |
+
+## Stop doing
+
+| Practice | Evidence | Better practice |
+| --- | --- | --- |
+| Examine the licence of a source after the import. | The CIS titles were in every output before the licence check. CIS licenses them under CC BY-NC-ND 4.0. | Examine the licence before the first line of import code. Record it as a decision. |
+| A negative probe that does not examine its own change. | A probe used a pattern that did not match, so it changed nothing and the check passed. | Make each probe assert that the input changed before it runs the check. |
+| Compare generated files in text mode. | Six CRLF sequences in CIS fields made the export check fail on identical files. | Compare bytes. |
+| Fixed counts in page text. | The overview said "13 competency questions". There are 22. | Take each count from the data. |
+| A new variable with the name of a variable that is in use (second time). | `label` in a new branch replaced each node label, and search found no technique. The browser checks found it. No unit test did. | Read the enclosing function before an insertion. A test now compares each node label with the entity identifier. |
+
+## Start doing
+
+| Practice | Reason |
+| --- | --- |
+| Give the page a size budget. | The page grew from 3.4 MB to 4.4 MB with CIS. More frameworks will make it larger. |
+| Ask the owner about restrictive licences before work starts. | CSA CCM terms do not permit redistribution. Phase 4b waits for an owner decision. |

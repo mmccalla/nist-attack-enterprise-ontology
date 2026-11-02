@@ -8,6 +8,12 @@ The files in `ontology/v2/` are the uploaded `nist_attack_enterprise_ontology_v2
 
 The sample population derives from `nist_800_53-rev5_attack-16.1-enterprise_json.json`. That file name and its fields match the NIST 800-53 Rev. 5 to ATT&CK Enterprise 16.1 mappings published by the MITRE Center for Threat-Informed Defense in [Mappings Explorer](https://ctid.io/mappings-explorer) ([repository](https://github.com/center-for-threat-informed-defense/mappings-explorer), Apache 2.0).
 
+## CIS Controls
+
+The population reads the CTID mapping of CIS Controls 8.1.2 to ATT&CK Enterprise 19.1 (`mappings/cis/attack-19.1/cis-8.1.2/enterprise/`, Mappings Explorer, Apache 2.0). The graph keeps the Safeguard and Control IDs, the ATT&CK technique IDs, the CTID rationale (`comments`) and the reference URLs.
+
+CIS Controls® is a registered trademark of the Center for Internet Security, Inc. CIS licenses the CIS Controls under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) ([CIS terms of use](https://cas.docs.cisecurity.org/en/latest/source/terms-of-use/)). That licence does not permit modified copies, and this project uses CC BY 4.0. Thus, the graph, API, exports and page do not copy CIS Safeguard or Control titles or other CIS text (decision D25). Read the CIS Controls at [cisecurity.org/controls](https://www.cisecurity.org/controls). This project is not affiliated with or endorsed by CIS.
+
 ## NIST OSCAL content
 
 The 2.0.0 population reads control titles, families and SP 800-53B baseline membership from NIST's OSCAL content (`usnistgov/oscal-content`), a work of the US government.
@@ -32,7 +38,7 @@ Changes: extraction of IDs, titles and links. No OWASP text is copied beyond tit
 
 ## MITRE ATT&CK
 
-MITRE ATT&CK® is a registered trademark of The MITRE Corporation. The 2.0.0 population reads technique, tactic, platform and mitigation data from the ATT&CK Enterprise 16.1 STIX bundle (`mitre-attack/attack-stix-data`). ATT&CK content is © The MITRE Corporation and is used under the [ATT&CK terms of use](https://attack.mitre.org/resources/legal-and-branding/terms-of-use/).
+MITRE ATT&CK® is a registered trademark of The MITRE Corporation. The 2.0.0 population reads technique, tactic, platform and mitigation data from the ATT&CK Enterprise 16.1 STIX bundle (`mitre-attack/attack-stix-data`), and technique IDs, names and revocations from the 19.1 bundle for the CIS mapping. ATT&CK content is © The MITRE Corporation and is used under the [ATT&CK terms of use](https://attack.mitre.org/resources/legal-and-branding/terms-of-use/).
 
 ## NIST SP 800-53
 
