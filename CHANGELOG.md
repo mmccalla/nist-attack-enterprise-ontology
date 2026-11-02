@@ -2,6 +2,16 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.2.0 (2026-11-02)
+
+Ontology 2.1.0 (backward compatible with 2.0.0).
+
+- **ATT&CK version reconciliation.** Each technique that ATT&CK 20.0 revokes, renames or moves to other tactics has a later-version record, matched by STIX id. Technique pages show the change. New questions CQ14 and CQ15 and the export `exports/attack-16.1-to-20.0.csv`.
+- **Catalogues and frameworks** in the model, ready for ATLAS and CIS.
+- **One gap-analysis implementation** in `lib/coverage.cjs`, used by the browser and the exports, with unit tests.
+- **Security baseline**: threat model and controls in `docs/security.md`, `SECURITY.md`, a Content Security Policy that blocks all network access from the page, XSS probes with poisoned data, hash-locked dependencies, Dependabot and supply-chain tests.
+- Roadmap in `docs/roadmap.md`.
+
 ## 2.1.0 (2026-11-01)
 
 Ontology 2.0.0, unchanged.

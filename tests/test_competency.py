@@ -131,3 +131,32 @@ def test_cq13_naming_differences_from_oscal(graph, src):
     }
     expected |= {("family", code): (name, src.families[code]) for code, name in src.family_names.items() if name != src.families[code]}
     assert {(k, i): (s, o) for k, i, s, o in ask(graph, "cq13")} == expected
+
+
+def test_cq14_claims_on_techniques_revoked_or_renamed_in_20_0(graph, src):
+    expected = {
+        t: len(src.controls_for[t])
+        for t, v in src.later.items()
+        if (v["revoked"] or v["renamed"]) and src.controls_for.get(t)
+    }
+    rows = ask(graph, "cq14")
+    assert {t: n for t, _, _, _, _, n in rows} == expected
+    assert len(rows) == 25  # quoted in docs/competency-questions.md
+    for t, _, statuses, later_id, _, _ in rows:
+        if "revoked" in statuses:
+            assert later_id in src.later[t]["replacement"]
+
+
+def test_cq15_tactic_moves_from_16_1_to_20_0(graph, src):
+    pairs = defaultdict(set)
+    for t, v in src.later.items():
+        if not v["tacticsChanged"]:
+            continue
+        lost = {x for x in v["oldTactics"] if not any(n.startswith(x + " (") for n in v["newTactics"])}
+        gained = {n for n in v["newTactics"] if not any(n.startswith(x + " (") for x in v["oldTactics"])}
+        for a in lost:
+            for b in gained:
+                pairs[(a, b)].add(t)
+    assert {(a, b): n for a, b, n in ask(graph, "cq15")} == {k: len(v) for k, v in pairs.items()}
+    top = {(f, t): n for f, t, n in ask(graph, "cq15")}
+    assert top[("Defense Evasion", "Stealth (TA0005)")] == 134 and top[("Defense Evasion", "Defense Impairment (TA0112)")] == 41

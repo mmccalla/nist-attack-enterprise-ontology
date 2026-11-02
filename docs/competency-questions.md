@@ -23,6 +23,8 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 | CQ11 | Cloud platform engineer | Which IaaS techniques are mitigated by fewer than three controls? | Where a cloud landing zone needs guardrails beyond the catalogue mapping | Platforms (STIX); claims (CTID) |
 | CQ12 | Threat-informed defence analyst | Which active ATT&CK Enterprise 16.1 techniques does the mapping not address at all? | Where the mapping is silent, so silence is not read as "no control needed" | STIX bundle; rows (CTID) |
 | CQ13 | GRC analyst | Where does the mapping name a control or family differently from the OSCAL catalog? | Which labels to correct before output goes into an OSCAL-based assessment | Rows (CTID); OSCAL catalog |
+| CQ14 | GRC analyst | Which claimed techniques did ATT&CK 20.0 revoke or rename, what replaces them and how many claims does each carry? | Which claims to review before reports move to the current ATT&CK version | Claims (CTID); ATT&CK 16.1 and 20.0 STIX |
+| CQ15 | Security architect | Which ATT&CK 16.1 tactics lose techniques in ATT&CK 20.0, to which tactics, and how many? | Which coverage reports by tactic break on the move to the current version | ATT&CK 16.1 and 20.0 STIX |
 
 ## What the answers show
 
@@ -51,6 +53,10 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 **CQ12.** 91 active Enterprise techniques have no row in the mapping at all, including T1014 Rootkit and T1020 Automated Exfiltration. The graph records this as silence, not as a non-mappable statement.
 
 **CQ13.** Three names differ from OSCAL: IA-08 (letter case only), SC-32 (the source uses the Rev. 4 title "Information System Partitioning") and the CA family (the source uses the Rev. 4 name; Rev. 5 calls it "Assessment, Authorization, and Monitoring").
+
+**CQ14** (added 2026-11-02). 25 claimed techniques were revoked or renamed in ATT&CK 20.0. For example, T1070.001 Clear Windows Event Logs (21 claims) is replaced by T1685.005, and T1211 is renamed "Exploitation for Stealth".
+
+**CQ15** (added 2026-11-02). ATT&CK 20.0 divides Defense Evasion. 134 of its techniques move to Stealth, which now has the ID TA0005, and 41 move to Defense Impairment (TA0112). A report that joins on tactic IDs across the two versions gives wrong results.
 
 ## Open-world caution
 

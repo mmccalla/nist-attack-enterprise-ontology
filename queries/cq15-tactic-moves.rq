@@ -1,0 +1,24 @@
+# id: CQ15
+# persona: Security architect
+# question: Which ATT&CK 16.1 tactics lose techniques in ATT&CK 20.0, to which tactics, and how many?
+# decision: Which coverage reports and dashboards by tactic break when they move to the current ATT&CK version.
+# evidence: ATT&CK 16.1 and 20.0 STIX bundles (kill chain phases, matched by STIX id).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+# A technique that loses two tactics and gains two counts once in each lost and gained pair.
+SELECT ?fromTactic ?toTactic (COUNT(DISTINCT ?t) AS ?techniques)
+WHERE {
+  ?record :describesEntity ?t ; :versionStatus "tactics changed" .
+  ?t :inTactic ?from . ?from skos:prefLabel ?fromTactic .
+  # a tactic the technique no longer has ...
+  FILTER NOT EXISTS { ?record :laterTactic ?kept . FILTER (STRSTARTS(?kept, CONCAT(?fromTactic, " ("))) }
+  # ... paired with a tactic it did not have before
+  ?record :laterTactic ?toTactic .
+  FILTER NOT EXISTS { ?t :inTactic ?had . ?had skos:prefLabel ?hadName . FILTER (STRSTARTS(?toTactic, CONCAT(?hadName, " ("))) }
+}
+GROUP BY ?fromTactic ?toTactic
+ORDER BY DESC(?techniques) ?fromTactic ?toTactic

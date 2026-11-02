@@ -1,0 +1,9 @@
+fromTactic,toTactic,techniques
+Defense Evasion,Stealth (TA0005),134
+Defense Evasion,Defense Impairment (TA0112),41
+Defense Evasion,Execution (TA0002),17
+Persistence,Execution (TA0002),13
+Persistence,Stealth (TA0005),13
+Privilege Escalation,Execution (TA0002),13
+Privilege Escalation,Stealth (TA0005),13
+Defense Evasion,Persistence (TA0003),1

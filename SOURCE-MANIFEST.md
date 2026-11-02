@@ -18,13 +18,14 @@ The five files in `ontology/v2/` are the uploaded bundle `nist_attack_enterprise
 
 | Key | URL | SHA-256 |
 | --- | --- | --- |
-| HIGH | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_HIGH-baseline_profile.json> | `d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83` |
+| ctid | <https://raw.githubusercontent.com/center-for-threat-informed-defense/mappings-explorer/6bdc3ad33547d5fcb498eede1f07e7db681b00ee/mappings/nist_800_53/attack-16.1/nist_800_53-rev5/enterprise/nist_800_53-rev5_attack-16.1-enterprise.json> | `355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8` |
+| attack | <https://raw.githubusercontent.com/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json> | `8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813` |
+| attack_latest | <https://raw.githubusercontent.com/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json> | `81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352` |
+| catalog | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json> | `64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb` |
 | LOW | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_LOW-baseline_profile.json> | `cfd4f5d9a192eb42dc04b745d82f95a85926a2a85a45418034a380a42bda9424` |
 | MODERATE | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_MODERATE-baseline_profile.json> | `e3a0f11237cfaac24dfcf1586e07683f17423757fd84208deb33196b12e8f590` |
+| HIGH | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_HIGH-baseline_profile.json> | `d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83` |
 | PRIVACY | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json> | `c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc` |
-| attack | <https://raw.githubusercontent.com/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json> | `8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813` |
-| catalog | <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json> | `64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb` |
-| ctid | <https://raw.githubusercontent.com/center-for-threat-informed-defense/mappings-explorer/6bdc3ad33547d5fcb498eede1f07e7db681b00ee/mappings/nist_800_53/attack-16.1/nist_800_53-rev5/enterprise/nist_800_53-rev5_attack-16.1-enterprise.json> | `355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8` |
 
 ## Vendored files
 

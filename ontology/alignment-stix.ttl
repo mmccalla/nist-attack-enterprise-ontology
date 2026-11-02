@@ -48,3 +48,8 @@
 :tacticOrder :stixProperty "position in x-mitre-matrix tactic_refs" .
 :subTechniqueOf :stixRelationshipType "subtechnique-of" .
 :attackMitigationFor :stixRelationshipType "mitigates" .
+:ThreatCatalogue :stixObjectType "x-mitre-collection" ;
+    :stixAlignmentNote "ATT&CK publishes each domain version as an x-mitre-collection. The catalogue individual corresponds to that collection version." .
+:LaterVersionRecord :stixAlignmentNote "Built by matching the STIX id of each technique across two ATT&CK versions. STIX ids stay stable; ATT&CK IDs and tactic IDs can change." .
+:laterId :stixRelationshipType "revoked-by" .
+:catalogueVersion :stixProperty "x_mitre_version of the x-mitre-collection" .

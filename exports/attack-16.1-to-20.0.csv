@@ -1,0 +1,209 @@
+technique_id,technique_name,change_in_20_0,replacement_ids,name_in_20_0,tactics_in_20_0,claims
+T1006,Direct Volume Access,tactics changed,,,Stealth (TA0005),0
+T1014,Rootkit,tactics changed,,,Stealth (TA0005),0
+T1027,Obfuscated Files or Information,tactics changed,,,Stealth (TA0005),8
+T1027.001,Binary Padding,tactics changed,,,Stealth (TA0005),0
+T1027.002,Software Packing,tactics changed,,,Stealth (TA0005),4
+T1027.003,Steganography,tactics changed,,,Stealth (TA0005),0
+T1027.004,Compile After Delivery,tactics changed,,,Stealth (TA0005),0
+T1027.005,Indicator Removal from Tools,tactics changed,,,Stealth (TA0005),0
+T1027.006,HTML Smuggling,tactics changed,,,Stealth (TA0005),0
+T1027.007,Dynamic API Resolution,tactics changed,,,Stealth (TA0005),4
+T1027.008,Stripped Payloads,tactics changed,,,Stealth (TA0005),4
+T1027.009,Embedded Payloads,tactics changed,,,Stealth (TA0005),4
+T1027.010,Command Obfuscation,tactics changed,,,Stealth (TA0005),4
+T1027.011,Fileless Storage,tactics changed,,,Stealth (TA0005),1
+T1027.012,LNK Icon Smuggling,tactics changed,,,Stealth (TA0005),2
+T1027.013,Encrypted/Encoded File,tactics changed,,,Stealth (TA0005),1
+T1027.014,Polymorphic Code,tactics changed,,,Stealth (TA0005),1
+T1036,Masquerading,tactics changed,,,Stealth (TA0005),12
+T1036.001,Invalid Code Signature,tactics changed,,,Stealth (TA0005),5
+T1036.002,Right-to-Left Override,tactics changed,,,Stealth (TA0005),0
+T1036.003,Rename System Utilities,renamed tactics changed,,Rename Legitimate Utilities,Stealth (TA0005),8
+T1036.004,Masquerade Task or Service,tactics changed,,,Stealth (TA0005),0
+T1036.005,Match Legitimate Name or Location,renamed tactics changed,,Match Legitimate Resource Name or Location,Stealth (TA0005),12
+T1036.006,Space after Filename,tactics changed,,,Stealth (TA0005),0
+T1036.007,Double File Extension,tactics changed,,,Stealth (TA0005),6
+T1036.008,Masquerade File Type,tactics changed,,,Stealth (TA0005),5
+T1036.009,Break Process Trees,tactics changed,,,Stealth (TA0005),0
+T1036.010,Masquerade Account Name,tactics changed,,,Stealth (TA0005),5
+T1055,Process Injection,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),12
+T1055.001,Dynamic-link Library Injection,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.002,Portable Executable Injection,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.003,Thread Execution Hijacking,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.004,Asynchronous Procedure Call,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.005,Thread Local Storage,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.008,Ptrace System Calls,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),12
+T1055.009,Proc Memory,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),9
+T1055.011,Extra Window Memory Injection,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.012,Process Hollowing,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.013,Process Doppelgänging,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.014,VDSO Hijacking,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),6
+T1055.015,ListPlanting,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),1
+T1070,Indicator Removal,tactics changed,,,Stealth (TA0005),20
+T1070.001,Clear Windows Event Logs,revoked,T1685.005,Clear Windows Event Logs,,21
+T1070.002,Clear Linux or Mac System Logs,revoked,T1685.006,Clear Linux or Mac System Logs,,21
+T1070.003,Clear Command History,tactics changed,,,Stealth (TA0005),10
+T1070.004,File Deletion,tactics changed,,,Stealth (TA0005),0
+T1070.005,Network Share Connection Removal,tactics changed,,,Stealth (TA0005),0
+T1070.006,Timestomp,tactics changed,,,Stealth (TA0005),0
+T1070.007,Clear Network Connection History and Configurations,tactics changed,,,Stealth (TA0005),10
+T1070.008,Clear Mailbox Data,tactics changed,,,Stealth (TA0005),22
+T1070.009,Clear Persistence,tactics changed,,,Stealth (TA0005),10
+T1070.010,Relocate Malware,tactics changed,,,Stealth (TA0005),3
+T1078,Valid Accounts,tactics changed,,,Initial Access (TA0001) | Persistence (TA0003) | Privilege Escalation (TA0004) | Stealth (TA0005),25
+T1078.001,Default Accounts,tactics changed,,,Initial Access (TA0001) | Persistence (TA0003) | Privilege Escalation (TA0004) | Stealth (TA0005),14
+T1078.002,Domain Accounts,tactics changed,,,Initial Access (TA0001) | Persistence (TA0003) | Privilege Escalation (TA0004) | Stealth (TA0005),13
+T1078.003,Local Accounts,tactics changed,,,Initial Access (TA0001) | Persistence (TA0003) | Privilege Escalation (TA0004) | Stealth (TA0005),19
+T1078.004,Cloud Accounts,tactics changed,,,Initial Access (TA0001) | Persistence (TA0003) | Privilege Escalation (TA0004) | Stealth (TA0005),24
+T1112,Modify Registry,tactics changed,,,Defense Impairment (TA0112) | Persistence (TA0003),3
+T1127,Trusted Developer Utilities Proxy Execution,tactics changed,,,Execution (TA0002) | Stealth (TA0005),8
+T1127.001,MSBuild,tactics changed,,,Execution (TA0002) | Stealth (TA0005),5
+T1127.002,ClickOnce,tactics changed,,,Execution (TA0002) | Stealth (TA0005),10
+T1134,Access Token Manipulation,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),8
+T1134.001,Token Impersonation/Theft,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),8
+T1134.002,Create Process with Token,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),7
+T1134.003,Make and Impersonate Token,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),8
+T1134.004,Parent PID Spoofing,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),0
+T1134.005,SID-History Injection,tactics changed,,,Privilege Escalation (TA0004) | Stealth (TA0005),13
+T1140,Deobfuscate/Decode Files or Information,tactics changed,,,Stealth (TA0005),0
+T1176,Browser Extensions,renamed,,Software Extensions,,14
+T1197,BITS Jobs,tactics changed,,,Execution (TA0002) | Persistence (TA0003) | Stealth (TA0005),14
+T1202,Indirect Command Execution,tactics changed,,,Stealth (TA0005),0
+T1205,Traffic Signaling,tactics changed,,,Command and Control (TA0011) | Persistence (TA0003) | Stealth (TA0005),9
+T1205.001,Port Knocking,tactics changed,,,Command and Control (TA0011) | Persistence (TA0003) | Stealth (TA0005),8
+T1205.002,Socket Filters,tactics changed,,,Command and Control (TA0011) | Persistence (TA0003) | Stealth (TA0005),2
+T1207,Rogue Domain Controller,tactics changed,,,Defense Impairment (TA0112),0
+T1211,Exploitation for Defense Evasion,renamed tactics changed,,Exploitation for Stealth,Stealth (TA0005),22
+T1216,System Script Proxy Execution,tactics changed,,,Stealth (TA0005),6
+T1216.001,PubPrn,tactics changed,,,Stealth (TA0005),6
+T1216.002,SyncAppvPublishingServer,tactics changed,,,Stealth (TA0005),4
+T1218,System Binary Proxy Execution,tactics changed,,,Stealth (TA0005),20
+T1218.001,Compiled HTML File,tactics changed,,,Stealth (TA0005),10
+T1218.002,Control Panel,tactics changed,,,Stealth (TA0005),11
+T1218.003,CMSTP,tactics changed,,,Stealth (TA0005),11
+T1218.004,InstallUtil,tactics changed,,,Stealth (TA0005),11
+T1218.005,Mshta,tactics changed,,,Stealth (TA0005),11
+T1218.007,Msiexec,tactics changed,,,Stealth (TA0005),9
+T1218.008,Odbcconf,tactics changed,,,Stealth (TA0005),11
+T1218.009,Regsvcs/Regasm,tactics changed,,,Stealth (TA0005),11
+T1218.010,Regsvr32,tactics changed,,,Stealth (TA0005),4
+T1218.011,Rundll32,tactics changed,,,Stealth (TA0005),4
+T1218.012,Verclsid,tactics changed,,,Stealth (TA0005),16
+T1218.013,Mavinject,tactics changed,,,Stealth (TA0005),11
+T1218.014,MMC,tactics changed,,,Stealth (TA0005),11
+T1218.015,Electron Applications,tactics changed,,,Stealth (TA0005),18
+T1219,Remote Access Software,renamed,,Remote Access Tools,,13
+T1220,XSL Script Processing,tactics changed,,,Stealth (TA0005),6
+T1221,Template Injection,tactics changed,,,Stealth (TA0005),14
+T1222,File and Directory Permissions Modification,tactics changed,,,Defense Impairment (TA0112),11
+T1222.001,Windows File and Directory Permissions Modification,renamed tactics changed,,Windows Permissions,Defense Impairment (TA0112),11
+T1222.002,Linux and Mac File and Directory Permissions Modification,renamed tactics changed,,Linux and Mac Permissions,Defense Impairment (TA0112),11
+T1480,Execution Guardrails,tactics changed,,,Stealth (TA0005),0
+T1480.001,Environmental Keying,tactics changed,,,Stealth (TA0005),0
+T1480.002,Mutual Exclusion,tactics changed,,,Stealth (TA0005),0
+T1484,Domain or Tenant Policy Modification,tactics changed,,,Defense Impairment (TA0112) | Privilege Escalation (TA0004),12
+T1484.001,Group Policy Modification,tactics changed,,,Defense Impairment (TA0112) | Privilege Escalation (TA0004),0
+T1484.002,Trust Modification,tactics changed,,,Defense Impairment (TA0112) | Privilege Escalation (TA0004),0
+T1497,Virtualization/Sandbox Evasion,tactics changed,,,Discovery (TA0007) | Stealth (TA0005),0
+T1497.001,System Checks,tactics changed,,,Discovery (TA0007) | Stealth (TA0005),0
+T1497.002,User Activity Based Checks,tactics changed,,,Discovery (TA0007) | Stealth (TA0005),0
+T1497.003,Time Based Evasion,renamed tactics changed,,Time Based Checks,Discovery (TA0007) | Stealth (TA0005),0
+T1535,Unused/Unsupported Cloud Regions,tactics changed,,,Stealth (TA0005),1
+T1542,Pre-OS Boot,tactics changed,,,Persistence (TA0003) | Stealth (TA0005),19
+T1542.001,System Firmware,tactics changed,,,Persistence (TA0003) | Stealth (TA0005),17
+T1542.002,Component Firmware,tactics changed,,,Persistence (TA0003) | Stealth (TA0005),0
+T1542.003,Bootkit,tactics changed,,,Persistence (TA0003) | Stealth (TA0005),18
+T1542.004,ROMMONkit,tactics changed,,,Persistence (TA0003) | Stealth (TA0005),19
+T1542.005,TFTP Boot,tactics changed,,,Persistence (TA0003) | Stealth (TA0005),23
+T1548,Abuse Elevation Control Mechanism,tactics changed,,,Privilege Escalation (TA0004),22
+T1548.001,Setuid and Setgid,tactics changed,,,Privilege Escalation (TA0004),3
+T1548.002,Bypass User Account Control,tactics changed,,,Privilege Escalation (TA0004),11
+T1548.003,Sudo and Sudo Caching,tactics changed,,,Privilege Escalation (TA0004),13
+T1548.004,Elevated Execution with Prompt,tactics changed,,,Privilege Escalation (TA0004),11
+T1548.005,Temporary Elevated Cloud Access,tactics changed,,,Privilege Escalation (TA0004),4
+T1548.006,TCC Manipulation,tactics changed,,,Privilege Escalation (TA0004),17
+T1550,Use Alternate Authentication Material,tactics changed,,,Lateral Movement (TA0008),7
+T1550.001,Application Access Token,tactics changed,,,Lateral Movement (TA0008),15
+T1550.002,Pass the Hash,tactics changed,,,Lateral Movement (TA0008),8
+T1550.003,Pass the Ticket,tactics changed,,,Lateral Movement (TA0008),11
+T1550.004,Web Session Cookie,tactics changed,,,Lateral Movement (TA0008),3
+T1552.003,Bash History,renamed,,Shell History,,4
+T1553,Subvert Trust Controls,tactics changed,,,Defense Impairment (TA0112),20
+T1553.001,Gatekeeper Bypass,tactics changed,,,Defense Impairment (TA0112),6
+T1553.002,Code Signing,tactics changed,,,Defense Impairment (TA0112),0
+T1553.003,SIP and Trust Provider Hijacking,tactics changed,,,Defense Impairment (TA0112),10
+T1553.004,Install Root Certificate,tactics changed,,,Defense Impairment (TA0112),6
+T1553.005,Mark-of-the-Web Bypass,tactics changed,,,Defense Impairment (TA0112),6
+T1553.006,Code Signing Policy Modification,tactics changed,,,Defense Impairment (TA0112),13
+T1556,Modify Authentication Process,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),17
+T1556.001,Domain Controller Authentication,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),14
+T1556.002,Password Filter DLL,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),3
+T1556.003,Pluggable Authentication Modules,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),12
+T1556.004,Network Device Authentication,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),13
+T1556.005,Reversible Encryption,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),4
+T1556.006,Multi-Factor Authentication,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),6
+T1556.007,Hybrid Identity,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),6
+T1556.008,Network Provider DLL,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),9
+T1556.009,Conditional Access Policies,tactics changed,,,Credential Access (TA0006) | Defense Impairment (TA0112) | Persistence (TA0003),14
+T1557.001,LLMNR/NBT-NS Poisoning and SMB Relay,renamed,,Name Resolution Poisoning and SMB Relay,,15
+T1562,Impair Defenses,revoked,T1685,Disable or Modify Tools,,16
+T1562.001,Disable or Modify Tools,revoked,T1685,Disable or Modify Tools,,13
+T1562.002,Disable Windows Event Logging,revoked,T1685.001,Disable or Modify Windows Event Log,,13
+T1562.003,Impair Command History Logging,revoked,T1690,Prevent Command History Logging,,4
+T1562.004,Disable or Modify System Firewall,revoked,T1686,Disable or Modify System Firewall,,13
+T1562.006,Indicator Blocking,revoked,T1685,Disable or Modify Tools,,17
+T1562.007,Disable or Modify Cloud Firewall,revoked,T1686.001,Cloud Firewall,,6
+T1562.008,Disable or Modify Cloud Logs,revoked,T1685.002,Disable or Modify Cloud Log,,7
+T1562.009,Safe Mode Boot,revoked,T1688,Safe Mode Boot,,13
+T1562.010,Downgrade Attack,revoked,T1689,Downgrade Attack,,7
+T1562.011,Spoof Security Alerting,revoked,T1685.003,Modify or Spoof Tool UI,,5
+T1562.012,Disable or Modify Linux Audit System,revoked,T1685.004,Disable or Modify Linux Audit System Log,,8
+T1564,Hide Artifacts,tactics changed,,,Stealth (TA0005),0
+T1564.001,Hidden Files and Directories,tactics changed,,,Stealth (TA0005),0
+T1564.002,Hidden Users,tactics changed,,,Stealth (TA0005),3
+T1564.003,Hidden Window,tactics changed,,,Stealth (TA0005),3
+T1564.004,NTFS File Attributes,tactics changed,,,Stealth (TA0005),6
+T1564.005,Hidden File System,tactics changed,,,Stealth (TA0005),0
+T1564.006,Run Virtual Instance,tactics changed,,,Stealth (TA0005),7
+T1564.007,VBA Stomping,tactics changed,,,Stealth (TA0005),4
+T1564.008,Email Hiding Rules,tactics changed,,,Stealth (TA0005),7
+T1564.009,Resource Forking,tactics changed,,,Stealth (TA0005),13
+T1564.010,Process Argument Spoofing,tactics changed,,,Stealth (TA0005),3
+T1564.011,Ignore Process Interrupts,tactics changed,,,Stealth (TA0005),0
+T1564.012,File/Path Exclusions,tactics changed,,,Stealth (TA0005),1
+T1574,Hijack Execution Flow,tactics changed,,,Execution (TA0002) | Stealth (TA0005),18
+T1574.001,DLL Search Order Hijacking,renamed tactics changed,,DLL,Execution (TA0002) | Stealth (TA0005),8
+T1574.002,DLL Side-Loading,revoked,T1574.001,DLL,,9
+T1574.004,Dylib Hijacking,tactics changed,,,Execution (TA0002) | Stealth (TA0005),13
+T1574.005,Executable Installer File Permissions Weakness,tactics changed,,,Execution (TA0002) | Stealth (TA0005),11
+T1574.006,Dynamic Linker Hijacking,tactics changed,,,Execution (TA0002) | Stealth (TA0005),4
+T1574.007,Path Interception by PATH Environment Variable,tactics changed,,,Execution (TA0002) | Stealth (TA0005),15
+T1574.008,Path Interception by Search Order Hijacking,tactics changed,,,Execution (TA0002) | Stealth (TA0005),15
+T1574.009,Path Interception by Unquoted Path,tactics changed,,,Execution (TA0002) | Stealth (TA0005),15
+T1574.010,Services File Permissions Weakness,tactics changed,,,Execution (TA0002) | Stealth (TA0005),11
+T1574.011,Services Registry Permissions Weakness,tactics changed,,,Execution (TA0002) | Stealth (TA0005),2
+T1574.012,COR_PROFILER,tactics changed,,,Execution (TA0002) | Stealth (TA0005),9
+T1574.013,KernelCallbackTable,tactics changed,,,Execution (TA0002) | Stealth (TA0005),7
+T1574.014,AppDomainManager,tactics changed,,,Execution (TA0002) | Stealth (TA0005),10
+T1578,Modify Cloud Compute Infrastructure,tactics changed,,,Defense Impairment (TA0112),11
+T1578.001,Create Snapshot,tactics changed,,,Defense Impairment (TA0112),11
+T1578.002,Create Cloud Instance,tactics changed,,,Defense Impairment (TA0112),11
+T1578.003,Delete Cloud Instance,tactics changed,,,Defense Impairment (TA0112),11
+T1578.004,Revert Cloud Instance,tactics changed,,,Defense Impairment (TA0112),0
+T1578.005,Modify Cloud Compute Configurations,tactics changed,,,Defense Impairment (TA0112),5
+T1599,Network Boundary Bridging,tactics changed,,,Defense Impairment (TA0112),18
+T1599.001,Network Address Translation Traversal,tactics changed,,,Defense Impairment (TA0112),18
+T1600,Weaken Encryption,tactics changed,,,Defense Impairment (TA0112),0
+T1600.001,Reduce Key Space,tactics changed,,,Defense Impairment (TA0112),0
+T1600.002,Disable Crypto Hardware,tactics changed,,,Defense Impairment (TA0112),0
+T1601,Modify System Image,tactics changed,,,Defense Impairment (TA0112),24
+T1601.001,Patch System Image,tactics changed,,,Defense Impairment (TA0112),24
+T1601.002,Downgrade System Image,tactics changed,,,Defense Impairment (TA0112),24
+T1610,Deploy Container,tactics changed,,,Execution (TA0002),9
+T1612,Build Image on Host,tactics changed,,,Stealth (TA0005),11
+T1620,Reflective Code Loading,tactics changed,,,Stealth (TA0005),0
+T1622,Debugger Evasion,tactics changed,,,Discovery (TA0007) | Stealth (TA0005),15
+T1647,Plist File Modification,tactics changed,,,Defense Impairment (TA0112),15
+T1656,Impersonation,revoked,T1684.001,Impersonation,,0
+T1666,Modify Cloud Resource Hierarchy,tactics changed,,,Defense Impairment (TA0112),1

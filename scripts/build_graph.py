@@ -28,6 +28,7 @@ CHECKS = ROOT / "data" / "source-checks.json"
 MAX_CQ_ROWS = 200
 TEMPLATE = ROOT / "src" / "viewer.html"
 D3 = ROOT / "vendor" / "d3.v7.min.js"
+COVERAGE = ROOT / "lib" / "coverage.cjs"
 OUTPUT = ROOT / "index.html"
 
 ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
@@ -51,11 +52,15 @@ NODE_TYPES = [
     "CybersecurityMappingDataset",
     "ReferenceDataset",
     "DatasetMetadataRecord",
+    "LaterVersionRecord",
 ]
 # Edges left out of the browser: they point at hub nodes (vocabularies, datasets) or restate another edge.
 # Their values appear as properties instead.
-SKIP_EDGES = {ONT.containsAssertion, ONT.assertsCapabilityGroup, PROV.wasDerivedFrom, SKOS.inScheme}
-AS_PROPERTY = {ONT.assertedMappingType: "mapping type", ONT.assertedStatus: "status", PROV.wasDerivedFrom: "derived from"}
+SKIP_EDGES = {ONT.containsAssertion, ONT.assertsCapabilityGroup, PROV.wasDerivedFrom, SKOS.inScheme, ONT.inCatalogue, ONT.inFramework}
+AS_PROPERTY = {
+    ONT.assertedMappingType: "mapping type", ONT.assertedStatus: "status", PROV.wasDerivedFrom: "derived from",
+    ONT.inCatalogue: "catalogue", ONT.inFramework: "framework",
+}
 SKIP_LITERALS = {SKOS.prefLabel}
 ALIGNMENT_ANNOTATIONS = ["stixObjectType", "stixRelationshipType", "stixProperty", "stixAlignmentNote", "oscalAssembly", "oscalPath"]
 
@@ -110,6 +115,10 @@ def node_label(graph: Graph, subject, kind: str) -> tuple[str, str | None]:
         control = graph.value(subject, ONT.claimSubjectControl)
         technique = graph.value(subject, ONT.claimObjectTechnique)
         return f"Claim {text(graph, control, ONT.controlId)} mitigates {text(graph, technique, ONT.techniqueId)}", None
+    if kind == "LaterVersionRecord":
+        catalogue = graph.value(subject, ONT.inCatalogue)
+        statuses = ", ".join(sorted(str(x) for x in graph.objects(subject, ONT.versionStatus)))
+        return f"{graph.value(catalogue, RDFS.label)}: {statuses}", None
     if kind in ("MitigatesAssertion", "NonMappableAssertion"):
         technique = graph.value(subject, ONT.assertsTechnique)
         control = graph.value(subject, ONT.assertsControl)
@@ -134,8 +143,12 @@ def build_instances(graph: Graph) -> tuple[list, list]:
             props = {}
             for predicate, value in sorted(graph.predicate_objects(subject)):
                 if isinstance(value, Literal) and predicate not in SKIP_LITERALS:
-                    props[curie(graph, predicate)] = str(value)
+                    key = curie(graph, predicate)
+                    props[key] = f"{props[key]} | {value}" if key in props else str(value)
                 elif predicate in AS_PROPERTY and isinstance(value, URIRef):
+                    if predicate in (ONT.inCatalogue, ONT.inFramework):
+                        props[AS_PROPERTY[predicate]] = str(graph.value(value, RDFS.label))
+                        continue
                     if predicate == PROV.wasDerivedFrom and not (
                         (value, RDF.type, ONT.ReferenceDataset) in graph or (value, RDF.type, ONT.CybersecurityMappingDataset) in graph
                     ):
@@ -324,7 +337,23 @@ def build_meta(graph: Graph, nodes: list) -> dict:
     }
 
 
-def render() -> str:
+POISON = '<img src=x onerror="window.__xss=1"><script>window.__xss=2</script>'
+
+
+def poison(payload: dict) -> None:
+    """Test only: put HTML and script payloads into the data, as a compromised source would."""
+    for node in payload["nodes"]:
+        if node["id"] in ("technique_T1078", "control_AC-02", "claim_AC-02_T1556.009", "tactic_TA0001"):
+            node["l"] = POISON + node["l"]
+            node["s"] = POISON + node.get("s", "")
+            node["p"] = {k: POISON + v for k, v in node["p"].items()}
+    for q in payload["questions"]:
+        q["question"] = POISON + q["question"]
+        q["rows"] = [[POISON + str(v) if i == 1 else v for i, v in enumerate(r)] for r in q["rows"]]
+    payload["meta"]["description"] = POISON + payload["meta"]["description"]
+
+
+def render(poisoned: bool = False) -> str:
     graph = load()
     nodes, edges = build_instances(graph)
     index = {n["id"]: i for i, n in enumerate(nodes)}
@@ -339,20 +368,48 @@ def render() -> str:
         "shapes": build_shapes(),
         "questions": build_questions(graph),
     }
+    if poisoned:
+        poison(payload)
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
     data = data.replace("</", "<\\/")
     d3 = D3.read_text(encoding="utf-8").replace("</script", "<\\/script")
     html = TEMPLATE.read_text(encoding="utf-8")
-    for marker in ("/*__GRAPH_DATA__*/", "/*__D3__*/"):
+    coverage = COVERAGE.read_text(encoding="utf-8").replace("</script", "<\\/script")
+    for marker in ("/*__GRAPH_DATA__*/", "/*__D3__*/", "/*__COVERAGE__*/"):
         if html.count(marker) != 1:
             raise SystemExit(f"template must contain {marker} exactly once")
-    return html.replace("/*__GRAPH_DATA__*/", data).replace("/*__D3__*/", d3)
+    html = html.replace("/*__GRAPH_DATA__*/", data).replace("/*__D3__*/", d3).replace("/*__COVERAGE__*/", coverage)
+    return html.replace("/*__CSP__*/", content_security_policy(html))
+
+
+def content_security_policy(html: str) -> str:
+    """Allow only the page's own inline scripts (by SHA-256) and no network access at all.
+
+    connect-src 'none' is what makes "nothing is uploaded" a browser-enforced fact. style-src keeps
+    'unsafe-inline' because the page sets style attributes; scripts cannot run from injected markup.
+    frame-ancestors cannot be set from a meta element (see docs/security.md).
+    """
+    import base64
+    import hashlib
+
+    scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.S)
+    hashes = " ".join(f"'sha256-{base64.b64encode(hashlib.sha256(s.encode('utf-8')).digest()).decode()}'" for s in scripts)
+    return (
+        f"default-src 'none'; script-src {hashes}; style-src 'unsafe-inline'; img-src data: blob:; "
+        "connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; "
+        "worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'"
+    )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="fail if index.html is out of date")
+    parser.add_argument("--poisoned", metavar="PATH", help="test only: write a page built from poisoned data to PATH")
     args = parser.parse_args()
+    if args.poisoned:
+        Path(args.poisoned).write_text(render(poisoned=True), encoding="utf-8")
+        print(f"wrote poisoned test page to {args.poisoned}")
+        return 0
     html = render()
     if args.check:
         if not OUTPUT.exists() or OUTPUT.read_text(encoding="utf-8") != html:

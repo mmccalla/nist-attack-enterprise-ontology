@@ -15,7 +15,7 @@ Open an issue with the **Competency question** template: who asks it, what decis
 ## Change code or data
 
 ```sh
-python -m pip install -r requirements-dev.txt     # needs Java 11+ for the HermiT consistency gate
+python -m pip install --require-hashes -r requirements-dev.txt   # needs Java 11+ (HermiT) and Node.js 20+
 python scripts/build_population.py --check        # downloads the pinned sources once
 python scripts/build_graph.py && python scripts/build_exports.py
 python -m pytest -q tests
@@ -24,4 +24,6 @@ npm ci && npx playwright install chromium && npm run uat
 
 - Never edit `data/population.ttl`, `index.html` or `exports/` by hand; change the generator and rebuild.
 - Every rule needs a negative probe: a change that breaks it and a test that shows the gate fails.
+- Gap analysis logic lives only in `lib/coverage.cjs`; the browser, the exports and the tests all use it.
+- Security rules are in `docs/security.md`. Do not add a network call, an external script or an unpinned dependency. To add a dependency, add it to `requirements-dev.in` and lock it with hashes.
 - Writing style for docs: plain sentences, no Oxford comma, no em dashes.

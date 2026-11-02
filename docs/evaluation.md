@@ -14,21 +14,22 @@ The Stage 8 deliverable of *A Practical Guide to Ontology Engineering*. The guid
 | Provenance | Every row links to its dataset; every claim to its rows; every dataset to a pinned URL and digest (CQ07) | `tests/test_conformance.py`, CQ07 | row without provenance |
 | Prior version | The original v2 bundle still parses, conforms to its own shapes and matches its digests | `tests/test_v2_bundle.py` | five probes from the first release |
 | Published browser | `index.html` is rebuilt from the current sources, is reproducible across hash seeds and loads nothing from the network; 33 browser checks, including the gap analysis, OSCAL SSP import and downloads | `tests/test_browser_build.py`, `scripts/uat_browser.mjs` | unknown node falls back to the overview; a recommended control must close exactly the gaps it claims |
+| Security | The page blocks network requests, runs only hashed scripts and shows poisoned data as text; dependencies are hash-locked and sources pinned; `docs/security.md` agrees with the shared gap logic | `scripts/uat_browser.mjs`, `tests/test_supply_chain.py`, `tests/test_security_doc.py`, `tests/js/coverage.test.cjs` | poisoned data and address-bar payloads; an unhashed pin; escaping and policy removed |
 | Exports | CSVs and Navigator layers are current, follow layer format 4.5, name only ATT&CK 16.1 techniques, and the baseline layers agree with an independent computation from the raw sources; the browser's layer equals the static one | `tests/test_exports.py`, `scripts/uat_browser.mjs` | the independent path |
 
-## Results on 2026-11-01
+## Results on 2026-11-02 (release 2.2.0, ontology 2.1.0)
 
-Run on an Apple M4 Mac with Python 3.14, rdflib 7.6.0, pySHACL 0.40.1, owlready2 0.51 (HermiT) and OpenJDK 17.
+Run on an Apple M4 Mac with Python 3.14, rdflib 7.6.0, pySHACL 0.40.1, owlready2 0.51 (HermiT), OpenJDK 17 and Node.js 26.
 
-- `python -m pytest -q tests`: **61 passed** in 181 seconds.
-- Logical consistency: TBox with UCO core and all three alignments consistent, no unsatisfiable class (0.7 s). Full population (92,500 triples) consistent under the reasoning profile (55 s). Chain slice consistent with the full TBox; the property chain infers `control_AC-02 mitigatesTechnique technique_T1556.009` after the materialised triple is removed. All 4 inconsistency probes detected.
-- Data conformance: full population conforms with 0 violations and 1 warning (T1521.003), in 22 s. All 14 probes rejected with the expected message.
-- Alignment conformance: aligned slice conforms to UCO 1.5.0 core shapes; the only results are 1925 advisories from `core:UcoThing-identifier-regex-shape` (severity Info, decision D10). Both probes rejected.
-- Competency coverage: all 13 questions agree with the independent computation from the raw sources.
-- Reproducibility: `build_population.py --check` and `build_graph.py --check` pass, and three builds with different `PYTHONHASHSEED` values give identical files.
-- Browser: 22 checks pass in Chromium; the page makes no network requests.
-
-Two engineering findings shaped the gates. HermiT's tableau grew exponentially with number restrictions over thousands of individuals (decision D13), and UCO's punned SHACL shapes made full reasoning run past 15 minutes until the reasoner was given OWL only (decision D14).
+- `python -m pytest -q tests`: **84 passed** in 196 seconds.
+- `npm run uat` with the poisoned page: **39 browser checks** pass.
+- Data conformance: the full population (93,945 triples) conforms with 0 violations and 1 warning (T1521.003). 18 probes are rejected with the expected message.
+- Logical consistency: HermiT finds the TBox, the full population (reasoning profile) and the chain slice consistent. The four inconsistency probes are detected.
+- Competency coverage: all 15 questions agree with the independent computation from the raw sources, including ATT&CK 20.0 for CQ14 and CQ15.
+- Shared logic: 8 unit tests for `lib/coverage.cjs` pass, with probes for prompt injection and HTML in OSCAL fields.
+- Security: the page blocks a network request; script in the address bar and in poisoned data does not run. With escaping removed, the Content Security Policy alone stops the payloads. With escaping and the policy removed, the payload runs, which proves the checks can fail.
+- Supply chain: 7 tests pass. An unhashed pin makes the hash test fail. `pip-audit` and `npm audit` find no known vulnerability.
+- Reproducibility: builds with `PYTHONHASHSEED` 3 and 11 give identical files.
 
 ## Semantic correctness
 

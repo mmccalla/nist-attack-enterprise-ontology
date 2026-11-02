@@ -6,7 +6,7 @@
     "layer": "4.5"
   },
   "domain": "enterprise-attack",
-  "description": "ATT&CK Enterprise techniques mitigated by the mapped controls in the SP 800-53B LOW baseline. Orange: a mapped control outside the baseline would mitigate it. Grey: no mapped control.",
+  "description": "ATT&CK Enterprise techniques mitigated by the mapped controls in the SP 800-53B LOW baseline. Amber: a mapped control outside the baseline would mitigate it. Grey: no mapped control.",
   "sorting": 3,
   "layout": {
     "layout": "side",

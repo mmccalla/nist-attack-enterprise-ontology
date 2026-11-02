@@ -25,7 +25,7 @@
     "tactics": 14,
     "techniquesInAttackEnterprise": 656,
     "techniquesInMapping": 566,
-    "triples": 91717
+    "triples": 93945
   },
   "duplicateRows": [
     "CM-02 T1021.001",
@@ -85,6 +85,16 @@
       "source": "Security Assessment and Authorization"
     }
   },
+  "laterVersion": {
+    "statusCounts": {
+      "renamed": 11,
+      "revoked": 16,
+      "tactics changed": 188,
+      "unchanged": 448
+    },
+    "techniquesOnlyInLaterVersion": 66,
+    "version": "20.0"
+  },
   "sources": {
     "HIGH": {
       "sha256": "d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83",
@@ -105,6 +115,10 @@
     "attack": {
       "sha256": "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
       "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json"
+    },
+    "attack_latest": {
+      "sha256": "81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352",
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json"
     },
     "catalog": {
       "sha256": "64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb",

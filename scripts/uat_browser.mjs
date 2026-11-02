@@ -4,6 +4,7 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
+import { readdirSync, readFileSync } from "node:fs";
 
 const target = process.argv[2] ?? "index.html";
 const shots = process.argv[3];
@@ -13,8 +14,10 @@ const browser = await chromium.launch(launch);
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, acceptDownloads: true });
 const errors = [];
 page.on("pageerror", e => errors.push(`pageerror: ${e.message}`));
-page.on("console", m => { if (m.type() === "error") errors.push(`console: ${m.text()}`); });
-page.on("request", r => { if (!r.url().startsWith("file:") && !r.url().startsWith("data:") && !r.url().startsWith(url.split("#")[0])) errors.push(`external request: ${r.url()}`); });
+const PROBE_HOST = "csp-probe.invalid";
+page.on("console", m => { if (m.type() === "error" && !m.text().includes(PROBE_HOST)) errors.push(`console: ${m.text()}`); });
+page.on("request", r => { const u = r.url(); if (!u.startsWith("file:") && !u.startsWith("data:") && !u.startsWith("blob:") && !u.includes(PROBE_HOST) && !u.startsWith(url.split("#")[0])) errors.push(`external request: ${u}`); });
+page.on("dialog", d => { errors.push(`dialog opened: ${d.message()}`); d.dismiss(); });
 
 const failures = [];
 const check = (ok, message) => { if (!ok) failures.push(message); else console.log(`ok  ${message}`); };
@@ -67,7 +70,8 @@ if (shots) await page.screenshot({ path: `${shots}/schema.png` });
 
 await page.goto(url.split("#")[0] + "#questions");
 await settle();
-check((await page.locator("#detail .list a").count()) === 13, "questions view lists the 13 competency questions");
+const cqCount = readdirSync(new URL("../queries/", import.meta.url)).filter(f => /^cq\d+-.*\.rq$/.test(f)).length;
+check((await page.locator("#detail .list a").count()) === cqCount, `questions view lists all ${cqCount} competency questions`);
 await page.locator("#detail .list a", { hasText: "CQ01" }).click();
 await settle();
 const q1 = await page.locator("#detail").textContent();
@@ -85,12 +89,15 @@ check(t.includes("sub-technique of") && t.includes("T1556"), "parent technique c
 check(t.includes("in tactic") && t.includes("Credential Access"), "technique shows its tactics");
 check((await page.locator('#detail a[href^="https://attack.mitre.org/versions/v16/techniques/T1556/009/"]').count()) === 1, "technique links to ATT&CK version 16");
 
+await page.goto(url.split("#")[0] + "#n/technique_T1070.001");
+await settle();
+check((await page.locator("#detail").textContent()).includes("Replaced by T1685.005"), "a technique revoked in ATT&CK 20.0 shows its replacement");
+
 await page.goto(url.split("#")[0] + "#n/technique_T1521.003");
 await settle();
 check((await page.locator("#detail .warn").textContent()).includes("Not an active technique"), "a technique outside Enterprise is flagged");
 
 // Gap analysis
-import { readFileSync } from "node:fs";
 const fixtures = new URL("../tests/fixtures/", import.meta.url);
 const exported = name => JSON.parse(readFileSync(new URL(`../exports/navigator/${name}.json`, import.meta.url), "utf8"));
 const stats = async () => (await page.locator("#report .stat b").allTextContents()).map(Number);
@@ -142,6 +149,32 @@ await page.goto(url.split("#")[0] + "#n/control_AC-02");
 await settle();
 const [ctl] = await Promise.all([page.waitForEvent("download"), page.locator("#node-layer").click()]);
 check(ctl.suggestedFilename().startsWith("nist-800-53-ac-02"), "a control page downloads its Navigator layer");
+
+// Security probes (docs/security.md)
+const base = url.split("#")[0];
+const blocked = await page.evaluate(h => fetch(`https://${h}/x`).then(() => "sent", () => "blocked"), PROBE_HOST);
+check(blocked === "blocked", "the Content Security Policy blocks all network requests from the page");
+const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
+check(/connect-src 'none'/.test(csp) && !/unsafe-eval/.test(csp) && /script-src 'sha256-/.test(csp), "the policy allows only hashed scripts and no connections");
+for (const payload of ['n/<img src=x onerror="window.__xss=1">', 'q/<svg onload="window.__xss=2">', 'gaps/"><img src=x onerror="window.__xss=3">', "class/<img src=x onerror=window.__xss=4>"]) {
+  await page.goto(base + "#" + encodeURIComponent(payload).replace(/%2F/, "/"));
+  await settle();
+}
+check(await page.evaluate(() => window.__xss === undefined), "script in the address bar does not run (four payloads)");
+const poisoned = process.env.POISONED_PAGE;
+if (poisoned) {
+  const probe = await browser.newPage();
+  probe.on("dialog", d => { errors.push(`dialog in poisoned page: ${d.message()}`); d.dismiss(); });
+  const pageUrl = pathToFileURL(resolve(poisoned)).href;
+  for (const h of ["#overview", "#n/technique_T1078", "#n/control_AC-02", "#q/CQ01", "#gaps/AC-02,SI-04", "#n/claim_AC-02_T1556.009", "#about"]) {
+    await probe.goto(pageUrl + h);
+    await probe.waitForTimeout(700);
+  }
+  const visible = await probe.locator("#detail").textContent();
+  check(await probe.evaluate(() => window.__xss === undefined), "script in poisoned source data does not run");
+  check(/<img src=x/.test(visible) || /onerror/.test(visible), "poisoned data shows as text, not as markup");
+  await probe.close();
+}
 
 await page.goto(url.split("#")[0] + "#n/does_not_exist");
 await settle();

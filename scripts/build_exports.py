@@ -12,6 +12,7 @@ import csv
 import io
 import json
 import re
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -27,13 +28,6 @@ OUT = ROOT / "exports"
 SITE = "https://mmccalla.github.io/nist-attack-enterprise-ontology/"
 ATTACK_VERSION = "16"
 BASELINES = ["LOW", "MODERATE", "HIGH", "PRIVACY"]
-
-# Status colours (good, warning, neutral), the same as the browser's gap analysis. Covered techniques use a
-# one-hue green gradient by number of controls; every cell also carries a comment, so colour is never alone.
-GRADIENT = ["#d9f2d9", "#0ca30c"]
-GAP = "#fab219"
-SILENT = "#d5d9df"
-
 
 def load() -> Graph:
     g = Graph()
@@ -71,63 +65,18 @@ def model(g: Graph) -> dict:
     return {"techniques": techniques, "controls": controls, "mitigates": mitigates, "rows": rows}
 
 
-def coverage(m: dict, selected: set[str]) -> dict:
-    by = defaultdict(set)
-    for cid, tids in m["mitigates"].items():
-        for tid in tids:
-            by[tid].add(cid)
-    out = {}
-    for tid in m["techniques"]:
-        covering = sorted(by[tid] & selected)
-        if covering:
-            out[tid] = ("covered", covering)
-        elif by[tid]:
-            out[tid] = ("gap", sorted(by[tid]))
-        else:
-            out[tid] = ("silent", [])
-    return out
-
-
-def layer(m: dict, name: str, description: str, selected: set[str]) -> dict:
-    cov = coverage(m, selected)
-    techniques = []
-    for tid in sorted(cov, key=lambda t: [int(x) for x in re.findall(r"\d+", t)]):
-        status, controls = cov[tid]
-        entry = {"techniqueID": tid}
-        if status == "covered":
-            entry["score"] = len(controls)
-            entry["comment"] = "Mitigated by " + ", ".join(controls)
-        elif status == "gap":
-            entry["color"] = GAP
-            entry["comment"] = "Not covered. Controls that would mitigate it: " + ", ".join(controls)
-        else:
-            entry["color"] = SILENT
-            entry["comment"] = "The mapping has no mitigating control for this technique"
-        if "." not in tid and any(t.startswith(tid + ".") for t in cov):
-            entry["showSubtechniques"] = False
-        techniques.append(entry)
-    top = max([len(c) for s, c in cov.values() if s == "covered"] or [1])
-    return {
-        "name": name,
-        "versions": {"attack": ATTACK_VERSION, "navigator": "4.9.0", "layer": "4.5"},
-        "domain": "enterprise-attack",
-        "description": description,
-        "sorting": 3,
-        "layout": {"layout": "side", "showID": True, "showName": True, "expandedSubtechniques": "none"},
-        "hideDisabled": False,
-        "techniques": techniques,
-        "gradient": {"colors": GRADIENT, "minValue": 1, "maxValue": max(top, 2)},
-        "legendItems": [
-            {"label": "Covered (darker = more controls)", "color": GRADIENT[1]},
-            {"label": "Gap: a control exists in the mapping but is not selected", "color": GAP},
-            {"label": "No mitigating control in the mapping", "color": SILENT},
-        ],
-        "links": [{"label": "NIST 800-53 to ATT&CK ontology", "url": SITE}],
-        "metadata": [
-            {"name": "Source", "value": "CTID NIST 800-53 Rev. 5 to ATT&CK 16.1 Enterprise, claims under rule R1"},
-            {"name": "Controls selected", "value": str(len(selected))},
-        ],
+def layers(m: dict, specs: list[dict]) -> dict:
+    """Navigator layers from the shared logic in lib/coverage.cjs, so the browser and the exports agree."""
+    model = {
+        "techniques": [{"id": tid, "name": t["name"], "tactics": t["tactics"]} for tid, t in m["techniques"].items()],
+        "controls": {cid: {"title": c["title"], "baselines": c["baselines"]} for cid, c in m["controls"].items()},
+        "mitigates": {cid: sorted(m["mitigates"][cid]) for cid in m["controls"]},
     }
+    result = subprocess.run(
+        ["node", str(ROOT / "scripts" / "build_layers.cjs")],
+        input=json.dumps({"model": model, "layers": specs}), capture_output=True, text=True, check=True,
+    )
+    return json.loads(result.stdout)
 
 
 def write_csv(rows: list[list], header: list[str]) -> str:
@@ -168,16 +117,31 @@ def build() -> dict[str, str]:
         ],
         ["technique_id", "technique_name", "tactics", "control_count", "controls", "mapping_status"],
     )
-    files["navigator/all-controls.json"] = json.dumps(
-        layer(m, "NIST 800-53: all mapped controls", "Techniques mitigated by any NIST 800-53 Rev. 5 control in the CTID mapping. Score is the number of controls.", set(m["controls"])),
-        indent=2,
-    ) + "\n"
+    later_rows = []
+    for record in g.subjects(RDF.type, ONT.LaterVersionRecord):
+        t = g.value(record, ONT.describesEntity)
+        tid = str(g.value(t, ONT.techniqueId))
+        later_rows.append([
+            tid, str(g.value(t, ONT.techniqueName)),
+            " ".join(sorted(str(x) for x in g.objects(record, ONT.versionStatus))),
+            " ".join(sorted(str(x) for x in g.objects(record, ONT.laterId))),
+            " | ".join(sorted(str(x) for x in g.objects(record, ONT.laterName))),
+            " | ".join(sorted(str(x) for x in g.objects(record, ONT.laterTactic))),
+            len(by[tid]),
+        ])
+    files["attack-16.1-to-20.0.csv"] = write_csv(
+        sorted(later_rows, key=lambda r: tkey(r[0])),
+        ["technique_id", "technique_name", "change_in_20_0", "replacement_ids", "name_in_20_0", "tactics_in_20_0", "claims"],
+    )
+    specs = [{"file": "navigator/all-controls.json", "name": "NIST 800-53: all mapped controls",
+              "description": "Techniques mitigated by any NIST 800-53 Rev. 5 control in the CTID mapping. Score is the number of controls.",
+              "selected": sorted(m["controls"])}]
     for level in BASELINES:
-        selected = {cid for cid, c in m["controls"].items() if level in c["baselines"]}
-        files[f"navigator/baseline-{level}.json"] = json.dumps(
-            layer(m, f"NIST 800-53B {level} baseline coverage", f"ATT&CK Enterprise techniques mitigated by the mapped controls in the SP 800-53B {level} baseline. Orange: a mapped control outside the baseline would mitigate it. Grey: no mapped control.", selected),
-            indent=2,
-        ) + "\n"
+        specs.append({"file": f"navigator/baseline-{level}.json", "name": f"NIST 800-53B {level} baseline coverage",
+                      "description": f"ATT&CK Enterprise techniques mitigated by the mapped controls in the SP 800-53B {level} baseline. Amber: a mapped control outside the baseline would mitigate it. Grey: no mapped control.",
+                      "selected": sorted(cid for cid, c in m["controls"].items() if level in c["baselines"])})
+    for name, layer in layers(m, specs).items():
+        files[name] = json.dumps(layer, indent=2) + "\n"
 
     # Competency question answers, as computed for the browser.
     sys.path.insert(0, str(ROOT / "scripts"))

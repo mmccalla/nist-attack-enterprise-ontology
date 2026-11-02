@@ -57,3 +57,38 @@ The results are good. But the work used more time than necessary on three proble
 - Decide whether to send `docs/upstream-findings.md` to MITRE CTID.
 - Add ATT&CK version reconciliation, then the CIS Controls 8.1.2 mapping.
 - Register a w3id namespace and get a DOI for each release.
+
+# Retrospective, phase 1 (2026-11-02)
+
+Phase 1 added catalogues and frameworks, ATT&CK version reconciliation, one shared gap-analysis module and a security baseline. The results: 84 tests and 39 browser checks pass, and the project applies its own controls to itself.
+
+## Keep doing
+
+| Practice | Evidence |
+| --- | --- |
+| Reconcile versions before a join. | The reconciliation found that ATT&CK 20.0 gives TA0005 to Stealth. A join on tactic IDs between CIS (ATT&CK 19.1) and NIST (16.1) would give wrong results without a warning. |
+| Prove that each probe can fail. | A probe showed that the first hash test passed with a hash missing. The rewritten test fails correctly. |
+| Test each defence layer alone. | With escaping removed, the policy alone stopped the payloads. With both removed, the payload ran. |
+| Run the project's own tool on the project. | The self-assessment forced a list of controls with evidence. |
+
+## Stop doing
+
+| Practice | Evidence | Better practice |
+| --- | --- | --- |
+| Parse CSV with a split on commas. | The first self-assessment lost rows for titles with commas, for example SI-07. | Use a CSV parser, also in a short script. |
+| Claim a control before you have its evidence. | The first list of implemented controls had SI-03 and CM-11, which the project does not implement. | Classify each control as implemented, partial, inherited or owner action. Link each to its evidence first. |
+| Hard-code counts in tests. | A browser check expected 13 questions after the project had 15. | Count from the source, for example the files in `queries/`. |
+| Long command chains. | An unrelated command failed at the start of a chain and stopped all later steps. | Keep each chain short. Run steps that do not depend on each other separately. |
+| A second monitor for a job that has one. | This happened again in phase 1, after the first retrospective said to stop. | Before a new monitor, examine whether one already watches the job. |
+
+## Start doing
+
+| Practice | Reason |
+| --- | --- |
+| Examine the module system before you add shared code. | The repository declares ES modules, so the first shared file failed in Node. The `.cjs` extension solved it. |
+| Use the reconciliation for each new catalogue. | ATLAS, CIS and the cloud sets use different ATT&CK versions. |
+| Read the security exit criteria at the start of each phase. | `docs/roadmap.md` now gives them. |
+
+## Owner actions found in this phase
+
+Branch protection, private vulnerability reporting and Dependabot security updates are off. `docs/security.md` lists them with the CI workflow push.

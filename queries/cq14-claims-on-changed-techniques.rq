@@ -1,0 +1,22 @@
+# id: CQ14
+# persona: GRC analyst
+# question: Which claimed techniques did ATT&CK 20.0 revoke or rename, what replaces them and how many claims does each carry?
+# decision: Which claims to review before reports move from ATT&CK 16.1 to the current version.
+# evidence: Mitigation claims (CTID), ATT&CK 16.1 and 20.0 STIX bundles (revoked-by relationships).
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?technique ?name (GROUP_CONCAT(DISTINCT ?status; separator=" ") AS ?statuses) (SAMPLE(?later) AS ?laterId) (SAMPLE(?laterName0) AS ?laterName) (COUNT(DISTINCT ?claim) AS ?claims)
+WHERE {
+  ?record :describesEntity ?t ; :versionStatus ?status .
+  FILTER (?status IN ("revoked", "renamed", "deprecated"))
+  ?t :techniqueId ?technique ; :techniqueName ?name .
+  ?claim :claimObjectTechnique ?t .
+  OPTIONAL { ?record :laterId ?later }
+  OPTIONAL { ?record :laterName ?laterName0 }
+}
+GROUP BY ?technique ?name
+ORDER BY ?technique

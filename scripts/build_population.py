@@ -42,6 +42,10 @@ SOURCES = {
         f"{GH}/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json",
         "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
     ),
+    "attack_latest": (
+        f"{GH}/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json",
+        "81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352",
+    ),
     "catalog": (
         f"{OSCAL}/NIST_SP-800-53_rev5_catalog.json",
         "64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb",
@@ -52,16 +56,23 @@ SOURCES = {
     "PRIVACY": (f"{OSCAL}/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json", "c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc"),
 }
 BASELINES = ["LOW", "MODERATE", "HIGH", "PRIVACY"]
+LATER_ATTACK = "20.0"
+MAX_SOURCE_BYTES = 200 * 1024 * 1024  # refuse anything larger than any expected source
 
 
 def fetch(key: str) -> dict:
     url, digest = SOURCES[key]
     path = CACHE / f"{key}.json"
     if not path.exists():
+        if not url.startswith("https://raw.githubusercontent.com/"):
+            raise SystemExit(f"{key}: refusing a source outside the pinned host: {url}")
         CACHE.mkdir(exist_ok=True)
         print(f"downloading {key}", file=sys.stderr)
         with urllib.request.urlopen(url, timeout=120) as response:  # noqa: S310 - pinned https URL
-            path.write_bytes(response.read())
+            body = response.read(MAX_SOURCE_BYTES + 1)
+        if len(body) > MAX_SOURCE_BYTES:
+            raise SystemExit(f"{key}: source is larger than {MAX_SOURCE_BYTES} bytes")
+        path.write_bytes(body)
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
     if actual != digest:
         raise SystemExit(f"{key}: SHA-256 {actual} does not match the pinned {digest}; delete .cache/{key}.json")
@@ -89,6 +100,7 @@ def lit(value, datatype=None) -> Literal:
 
 def build() -> tuple[Graph, dict]:
     ctid, attack, catalog = fetch("ctid"), fetch("attack"), fetch("catalog")["catalog"]
+    attack_later = fetch("attack_latest")
     profiles = {name: fetch(name)["profile"] for name in BASELINES}
     g = Graph()
     g.bind("", ONT)
@@ -128,6 +140,22 @@ def build() -> tuple[Graph, dict]:
 
     reference_dataset(DATA.attackEnterpriseStix, "MITRE ATT&CK Enterprise STIX 2.1 bundle", "attack", "16.1")
     reference_dataset(DATA.oscalCatalog, catalog["metadata"]["title"], "catalog", catalog["metadata"]["version"])
+    reference_dataset(DATA.attackEnterpriseStixLatest, f"MITRE ATT&CK Enterprise STIX 2.1 bundle {LATER_ATTACK}", "attack_latest", LATER_ATTACK)
+
+    # Catalogues and frameworks
+    catalogue = DATA["catalogue_attack-enterprise-16.1"]
+    later_catalogue = DATA[f"catalogue_attack-enterprise-{LATER_ATTACK}"]
+    for node, version, dataset in ((catalogue, "16.1", DATA.attackEnterpriseStix), (later_catalogue, LATER_ATTACK, DATA.attackEnterpriseStixLatest)):
+        g.add((node, RDF.type, ONT.ThreatCatalogue))
+        g.add((node, RDFS.label, lit(f"ATT&CK Enterprise {version}")))
+        g.add((node, ONT.catalogueVersion, lit(version)))
+        g.add((node, ONT.catalogueDomain, lit("enterprise-attack")))
+        g.add((node, PROV.wasDerivedFrom, dataset))
+    framework = DATA["framework_nist-800-53-rev5"]
+    g.add((framework, RDF.type, ONT.ControlFramework))
+    g.add((framework, RDFS.label, lit("NIST SP 800-53 Rev. 5")))
+    g.add((framework, ONT.catalogueVersion, lit(catalog["metadata"]["version"])))
+    g.add((framework, PROV.wasDerivedFrom, DATA.oscalCatalog))
 
     # OSCAL: families, controls, baselines
     families, controls_by_label = {}, {}
@@ -149,10 +177,12 @@ def build() -> tuple[Graph, dict]:
         g.add((node, DCTERMS.source, URIRef(SOURCES[name][0])))
         g.add((node, ONT.sha256, lit(SOURCES[name][1])))
         g.add((node, OWL.versionInfo, lit(profile["metadata"]["version"])))
+        g.add((node, ONT.inFramework, framework))
 
     family_mismatch = {}
     for code, name in meta["capability_groups"].items():
         group = ONT[f"capabilityGroup_{code}"]
+        g.add((group, ONT.inFramework, framework))
         title = families.get(code)
         if title:
             g.add((group, ONT.oscalFamilyTitle, lit(title)))
@@ -178,6 +208,7 @@ def build() -> tuple[Graph, dict]:
         g.add((node, ONT.tacticOrder, lit(order, XSD.integer)))
         g.add((node, ONT.stixId, lit(tactic["id"])))
         g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
+        g.add((node, ONT.inCatalogue, catalogue))
 
     stix_techniques = {}
     for obj in objects:
@@ -209,6 +240,7 @@ def build() -> tuple[Graph, dict]:
             continue
         g.add((node, ONT.stixId, lit(obj["id"])))
         g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
+        g.add((node, ONT.inCatalogue, catalogue))
         for phase in obj.get("kill_chain_phases", []):
             if phase["kill_chain_name"] == "mitre-attack":
                 g.add((node, ONT.inTactic, tactic_by_short[phase["phase_name"]]))
@@ -221,6 +253,7 @@ def build() -> tuple[Graph, dict]:
         g.add((node, SKOS.inScheme, ONT.PlatformScheme))
         g.add((node, SKOS.prefLabel, lit(platform)))
     checks["techniqueNameDifferences"] = name_mismatch
+    checks["laterVersion"] = reconcile(g, stix_techniques, attack_later, later_catalogue)
     checks["techniquesNotInAttackEnterprise"] = not_in_bundle
 
     tech_by_stix = {o["id"]: tid for tid, o in stix_techniques.items()}
@@ -235,6 +268,7 @@ def build() -> tuple[Graph, dict]:
             g.add((node, ONT.mitigationId, lit(mid)))
             g.add((node, ONT.stixId, lit(obj["id"])))
             g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
+            g.add((node, ONT.inCatalogue, catalogue))
     for rel in objects:
         if rel["type"] != "relationship" or not active(rel):
             continue
@@ -252,6 +286,7 @@ def build() -> tuple[Graph, dict]:
     for cid in control_ids:
         node = DATA[f"control_{cid}"]
         g.add((node, RDF.type, ONT.SecurityControl))
+        g.add((node, ONT.inFramework, framework))
         g.add((node, ONT.controlId, lit(cid)))
         g.add((node, SKOS.prefLabel, lit(cid)))
         g.add((node, ONT.inCapabilityGroup, ONT[f"capabilityGroup_{ctid_groups[cid]}"]))
@@ -333,6 +368,63 @@ def build() -> tuple[Graph, dict]:
     }
     checks["sources"] = {k: {"url": u, "sha256": d} for k, (u, d) in SOURCES.items()}
     return g, checks
+
+
+def reconcile(g: Graph, techniques: dict, later: dict, later_catalogue) -> dict:
+    """Record what the later ATT&CK version changed for each technique of the pinned version.
+
+    The match uses the STIX id, which ATT&CK keeps stable across versions; the ATT&CK ID and the tactic IDs
+    can change meaning (in 20.0, TA0005 is Stealth, not Defense Evasion).
+    """
+    objects = later["objects"]
+    by_stix = {o["id"]: o for o in objects if o["type"] == "attack-pattern"}
+    revoked_by = defaultdict(list)
+    for rel in objects:
+        if rel["type"] == "relationship" and rel["relationship_type"] == "revoked-by":
+            revoked_by[rel["source_ref"]].append(rel["target_ref"])
+    tactics = {o["x_mitre_shortname"]: f"{o['name']} ({mitre_id(o)})" for o in objects if o["type"] == "x-mitre-tactic"}
+    old_tactics = lambda o: sorted(p["phase_name"] for p in o.get("kill_chain_phases", []) if p["kill_chain_name"] == "mitre-attack")  # noqa: E731
+    counts = defaultdict(int)
+    for tid, obj in sorted(techniques.items()):
+        new = by_stix.get(obj["id"])
+        statuses = []
+        if new is None:
+            statuses = ["missing"]
+        elif new.get("revoked"):
+            statuses = ["revoked"]
+        elif new.get("x_mitre_deprecated"):
+            statuses = ["deprecated"]
+        else:
+            if new["name"] != obj["name"]:
+                statuses.append("renamed")
+            if old_tactics(new) != old_tactics(obj):
+                statuses.append("tactics changed")
+        if not statuses:
+            counts["unchanged"] += 1
+            continue
+        record = DATA[f"laterversion_{tid}_{LATER_ATTACK}"]
+        g.add((record, RDF.type, ONT.LaterVersionRecord))
+        g.add((record, ONT.describesEntity, DATA[f"technique_{tid}"]))
+        g.add((record, ONT.inCatalogue, later_catalogue))
+        g.add((record, PROV.wasDerivedFrom, DATA.attackEnterpriseStixLatest))
+        for status in statuses:
+            counts[status] += 1
+            g.add((record, ONT.versionStatus, lit(status)))
+        if new is not None:
+            if "renamed" in statuses:
+                g.add((record, ONT.laterName, lit(new["name"])))
+            if "tactics changed" in statuses:
+                for t in old_tactics(new):
+                    g.add((record, ONT.laterTactic, lit(tactics[t])))
+            for target in revoked_by.get(obj["id"], []):
+                g.add((record, ONT.laterId, lit(mitre_id(by_stix[target]))))
+                g.add((record, ONT.laterName, lit(by_stix[target]["name"])))
+    later_ids = {mitre_id(o) for o in by_stix.values() if active(o) and "enterprise-attack" in o.get("x_mitre_domains", [])}
+    return {
+        "version": LATER_ATTACK,
+        "statusCounts": dict(sorted(counts.items())),
+        "techniquesOnlyInLaterVersion": len(later_ids - set(techniques)),
+    }
 
 
 HEADER = (

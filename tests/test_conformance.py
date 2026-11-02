@@ -108,6 +108,22 @@ PROBES = {
         lambda g: g.remove((DATA["technique_T1078"], ONT.inTactic, None)),
         "at least one tactic",
     ),
+    "Enterprise technique without its catalogue": (
+        lambda g: g.remove((DATA["technique_T1078"], ONT.inCatalogue, None)),
+        "and its catalogue",
+    ),
+    "control without its framework": (
+        lambda g: g.remove((DATA["control_AC-02"], ONT.inFramework, None)),
+        "Result Path: :inFramework",
+    ),
+    "revoked technique record without a replacement": (
+        lambda g: g.remove((DATA["laterversion_T1070.001_20.0"], ONT.laterId, None)),
+        "replacement of a revoked technique",
+    ),
+    "later-version record in the same catalogue as its technique": (
+        lambda g: g.set((DATA["laterversion_T1070.001_20.0"], ONT.inCatalogue, DATA["catalogue_attack-enterprise-16.1"])),
+        "different catalogue",
+    ),
     "sub-technique whose parent is not its ID prefix": (
         lambda g: g.set((DATA["technique_T1556.009"], ONT.subTechniqueOf, DATA["technique_T1078"])),
         "parent whose id is the prefix",

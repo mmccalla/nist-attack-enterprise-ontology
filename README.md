@@ -17,7 +17,7 @@ You do not need an account, an installation or a server. The tool runs in your b
 | Find the controls that mitigate one technique | Search, then open the technique |
 | Find the techniques that one control mitigates | Search, then open the control |
 | See the source row and the rationale for each claim | Open a claim |
-| Get answers to 13 common questions | [Questions](https://mmccalla.github.io/nist-attack-enterprise-ontology/#questions) |
+| Get answers to 15 common questions | [Questions](https://mmccalla.github.io/nist-attack-enterprise-ontology/#questions) |
 | Use the data in ATT&CK Navigator, a spreadsheet or a script | [Downloads](#downloads) |
 
 ## Find your gaps
@@ -59,7 +59,8 @@ All files are free. Each file has a stable address. Thus, a script can get the m
 | [`techniques.csv`](exports/techniques.csv) | Each ATT&CK Enterprise technique, with its controls and mapping status |
 | [`controls.csv`](exports/controls.csv) | Each mapped control, with its OSCAL ID and baselines |
 | [`navigator/`](exports/navigator) | Navigator layers for each baseline and for all controls |
-| [`questions/`](exports/questions) | The answer to each of the 13 questions |
+| [`questions/`](exports/questions) | The answer to each of the 15 questions |
+| [`attack-16.1-to-20.0.csv`](exports/attack-16.1-to-20.0.csv) | Each technique that ATT&CK 20.0 changes, with its replacement and its new tactics |
 | [`ontology/core.ttl`](ontology/core.ttl), [`data/population.ttl`](data/population.ttl) | The full knowledge graph in RDF, for a graph database or SPARQL |
 
 For a file address, add the path to `https://mmccalla.github.io/nist-attack-enterprise-ontology/`. For example: `https://mmccalla.github.io/nist-attack-enterprise-ontology/exports/claims.csv`.
@@ -85,10 +86,17 @@ Read these limits before you use a result in a decision.
 - A claim shows that a control **can** mitigate a technique. It does not show that your implementation is effective.
 - The mapping covers 109 technical base controls in 11 families. It does not include policy controls or control enhancements.
 - Some control families are not in the mapping, for example Awareness and Training.
-- The mapping uses ATT&CK 16.1. The current ATT&CK version is more recent.
+- The mapping uses ATT&CK 16.1. ATT&CK 20.0 revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.0.csv`](exports/attack-16.1-to-20.0.csv) lists them.
 - 91 ATT&CK Enterprise techniques do not have a row in the mapping. The tool shows these techniques as "no mapped control". That result does not mean that no defence exists.
 - The control titles come from the OSCAL catalog 5.2.0. The mapping uses an older Rev. 5 release. Three titles are different.
 - The IRIs in the knowledge graph use the `w3id.org/example` namespace. These IRIs do not resolve.
+
+## Security and privacy
+
+- The page cannot send data anywhere. Its Content Security Policy blocks all network requests.
+- The page runs only its own scripts. It shows all source data as text.
+- To report a vulnerability, read [`SECURITY.md`](SECURITY.md).
+- The threat model and the controls are in [`docs/security.md`](docs/security.md).
 
 ## Get help or report a problem
 
@@ -113,6 +121,8 @@ These documents give the design and the tests:
 | [`docs/semantic-decisions.md`](docs/semantic-decisions.md) | Scope, source terms, ambiguities and design decisions |
 | [`docs/vocabulary-alignment.md`](docs/vocabulary-alignment.md) | The alignment to ATT&CK STIX, NIST OSCAL and UCO |
 | [`docs/evaluation.md`](docs/evaluation.md) | The test gates and their most recent results |
+| [`docs/security.md`](docs/security.md) | Threat model, controls and evidence |
+| [`docs/roadmap.md`](docs/roadmap.md) | Planned work |
 
 The original ontology bundle is in [`ontology/v2/`](ontology/v2). It has no changes.
 

@@ -65,6 +65,27 @@ class Sources:
                 for prop in control.get("props", []):
                     if prop["name"] == "label" and prop.get("class") == "zero-padded":
                         self.oscal[prop["value"]] = control
+        # ATT&CK 20.0, matched by STIX id (independent of the build's reconcile()).
+        later = build_population.fetch("attack_latest")["objects"]
+        later_by_stix = {o["id"]: o for o in later if o["type"] == "attack-pattern"}
+        later_tactics = {o["x_mitre_shortname"]: f"{o['name']} ({_mitre_id(o)})" for o in later if o["type"] == "x-mitre-tactic"}
+        revoked_by = defaultdict(list)
+        for r in later:
+            if r["type"] == "relationship" and r["relationship_type"] == "revoked-by" and r["target_ref"] in later_by_stix:
+                revoked_by[r["source_ref"]].append(_mitre_id(later_by_stix[r["target_ref"]]))
+        phases = lambda o: {p["phase_name"] for p in o.get("kill_chain_phases", []) if p["kill_chain_name"] == "mitre-attack"}  # noqa: E731
+        self.later = {}
+        for tid, o in self.techniques.items():
+            n = later_by_stix[o["id"]]
+            self.later[tid] = {
+                "revoked": bool(n.get("revoked")),
+                "replacement": revoked_by.get(o["id"], []),
+                "renamed": not n.get("revoked") and n["name"] != o["name"],
+                "laterName": n["name"],
+                "oldTactics": {self.tactic_names[tactics[x]] for x in phases(o)},
+                "newTactics": {later_tactics[x] for x in phases(n)} if not n.get("revoked") else set(),
+                "tacticsChanged": not n.get("revoked") and phases(n) != phases(o),
+            }
         # Rule R1: claims exist for distinct pairs whose technique is active in ATT&CK Enterprise.
         self.controls_for = defaultdict(set)
         for r in self.rows:

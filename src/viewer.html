@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="/*__CSP__*/">
+<meta name="referrer" content="no-referrer">
 <title>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</title>
 <meta name="description" content="Navigable knowledge graph of an enterprise ontology that maps NIST SP 800-53 Rev. 5 controls to MITRE ATT&amp;CK Enterprise techniques, aligned to ATT&amp;CK STIX, NIST OSCAL and UCO, with competency questions answered from the graph.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='9' cy='16' r='6' fill='%232457c5'/%3E%3Crect x='19' y='10' width='12' height='12' fill='%23b42318'/%3E%3Cpath d='M15 16h4' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E">
@@ -145,6 +147,7 @@ svg .node.dim path { opacity: .35; }
   <section id="detail" aria-label="Details" tabindex="-1"></section>
 </main>
 <script>/*__D3__*/</script>
+<script>/*__COVERAGE__*/</script>
 <script>
 "use strict";
 const DATA = /*__GRAPH_DATA__*/;
@@ -172,6 +175,7 @@ const TYPES = {
   CybersecurityMappingDataset: ["Mapping dataset", "dataset", d3.symbolCross, 360],
   ReferenceDataset: ["Reference dataset", "dataset", d3.symbolCross, 300],
   DatasetMetadataRecord: ["Dataset metadata record", "dataset", d3.symbolCross, 260],
+  LaterVersionRecord: ["Change in a later ATT&CK version", "vocab", d3.symbolTriangle, 200],
 };
 const PROVENANCE = new Set(["MitigationClaim", "MitigatesAssertion", "NonMappableAssertion"]);
 const MAX_NEIGHBOURS = 160;
@@ -383,6 +387,10 @@ function showNode(id) {
   if (n.t === "AttackTechnique") {
     if (n.p[":inAttackEnterprise"] === "false") extra += `<p class="warn">Not an active technique in ATT&amp;CK Enterprise ${esc(M.source.attackVersion)}. Rule R1 keeps the source row but makes no enterprise claim. See CQ08.</p>`;
     else if (!hasRow(id)) extra += `<p class="note">The mapping has no row for this technique (CQ12). That is silence, not a statement that no control applies.</p>`;
+    for (const [p, rid] of IN.get(id)) if (p === ":describesEntity") {
+      const r = BY_ID.get(rid).p, st = r[":versionStatus"] ?? "";
+      extra += `<p class="warn">${esc(BY_ID.get(rid).l)}.${r[":laterId"] ? ` Replaced by ${esc(r[":laterId"])} ${esc(r[":laterName"] ?? "")}.` : r[":laterName"] ? ` New name: ${esc(r[":laterName"])}.` : ""}${r[":laterTactic"] ? ` Tactics in the later version include ${esc(r[":laterTactic"])}.` : ""} The claims here use ATT&amp;CK ${esc(M.source.attackVersion)} (CQ14, CQ15).</p>`;
+    }
   }
   if (n.p[":sourceControlTitle"]) extra += `<p class="note">The mapping source titles this control "${esc(n.p[":sourceControlTitle"])}". The title above is from the OSCAL catalog (CQ13).</p>`;
   if (n.t === "CapabilityGroup" && n.p[":groupName"] !== n.p[":oscalFamilyTitle"]) extra += `<p class="note">The mapping source calls this family "${esc(n.p[":groupName"])}". The title above is from the OSCAL catalog (CQ13).</p>`;
@@ -518,51 +526,21 @@ function showQuestion(id) {
 
 /* Exports: ATT&CK Navigator layers and CSV, built in the browser */
 const SITE = "https://mmccalla.github.io/nist-attack-enterprise-ontology/";
-const STATUS = {covered: "#0ca30c", gap: "#fab219", none: "#d5d9df"};
+const C2 = NistAttackCoverage;  // shared logic: lib/coverage.cjs
+const STATUS = C2.STATUS_COLOURS;
 const ENTERPRISE = ofType("AttackTechnique").filter(n => n.p[":inAttackEnterprise"] === "true");
 const CONTROLS = new Map(ofType("SecurityControl").map(n => [n.l, n]));
 const tacticsOf = id => OUT.get(id).filter(([p]) => p === ":inTactic").map(([, o]) => BY_ID.get(o));
 const controlsFor = id => IN.get(id).filter(([p]) => p === ":mitigatesTechnique").map(([, s]) => BY_ID.get(s).l).sort();
 const baselinesOf = id => OUT.get(id).filter(([p]) => p === ":inBaseline").map(([, o]) => BY_ID.get(o).l).sort();
-const tnum = t => t.match(/\d+/g).map(Number);
-const byTid = (a, b) => { const x = tnum(a), y = tnum(b); return x[0] - y[0] || (x[1] ?? -1) - (y[1] ?? -1); };
-
-function coverage(selected) {
-  const out = new Map();
-  for (const t of ENTERPRISE) {
-    const all = controlsFor(t.id), covering = all.filter(c => selected.has(c));
-    out.set(t.l, covering.length ? ["covered", covering] : all.length ? ["gap", all] : ["none", []]);
-  }
-  return out;
-}
-function navigatorLayer(name, description, selected) {
-  const cov = coverage(selected);
-  const ids = [...cov.keys()].sort(byTid);
-  const techniques = ids.map(tid => {
-    const [status, controls] = cov.get(tid), e = {techniqueID: tid};
-    if (status === "covered") { e.score = controls.length; e.comment = "Mitigated by " + controls.join(", "); }
-    else if (status === "gap") { e.color = STATUS.gap; e.comment = "Not covered. Controls that would mitigate it: " + controls.join(", "); }
-    else { e.color = STATUS.none; e.comment = "The mapping has no mitigating control for this technique"; }
-    if (!tid.includes(".") && ids.some(t => t.startsWith(tid + "."))) e.showSubtechniques = false;
-    return e;
-  });
-  const top = Math.max(1, ...[...cov.values()].filter(([s]) => s === "covered").map(([, c]) => c.length));
-  return {
-    name, versions: {attack: "16", navigator: "4.9.0", layer: "4.5"}, domain: "enterprise-attack", description,
-    sorting: 3, layout: {layout: "side", showID: true, showName: true, expandedSubtechniques: "none"}, hideDisabled: false,
-    techniques, gradient: {colors: ["#d9f2d9", STATUS.covered], minValue: 1, maxValue: Math.max(top, 2)},
-    legendItems: [
-      {label: "Covered (darker = more controls)", color: STATUS.covered},
-      {label: "Gap: a control exists in the mapping but is not selected", color: STATUS.gap},
-      {label: "No mitigating control in the mapping", color: STATUS.none},
-    ],
-    links: [{label: "NIST 800-53 to ATT&CK ontology", url: SITE}],
-    metadata: [
-      {name: "Source", value: "CTID NIST 800-53 Rev. 5 to ATT&CK 16.1 Enterprise, claims under rule R1"},
-      {name: "Controls selected", value: String(selected.size)},
-    ],
-  };
-}
+const byTid = C2.byTechniqueId;
+const MODEL = {
+  techniques: ENTERPRISE.map(t => ({id: t.l, name: t.s, tactics: tacticsOf(t.id).map(x => x.p[":tacticShortName"])})),
+  controls: Object.fromEntries([...CONTROLS].map(([cid, n]) => [cid, {title: n.s, baselines: baselinesOf(n.id)}])),
+  mitigates: Object.fromEntries([...CONTROLS].map(([cid, n]) => [cid, OUT.get(n.id).filter(([p]) => p === ":mitigatesTechnique").map(([, o]) => BY_ID.get(o).l)])),
+};
+const coverage = selected => C2.coverage(MODEL, selected);
+const navigatorLayer = (name, description, selected) => C2.navigatorLayer(MODEL, name, description, selected);
 const csvCell = v => { const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 const toCsv = (header, rows) => [header, ...rows].map(r => r.map(csvCell).join(",")).join("\n") + "\n";
 function download(filename, text, type) {
@@ -578,43 +556,9 @@ const slugName = s => s.replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "").toL
 const BASELINE_LEVELS = ["LOW", "MODERATE", "HIGH", "PRIVACY"];
 let gapSelected = new Set();
 let gapIgnored = {unmapped: [], enhancements: 0};
-function parseControls(text) {
-  const found = new Set(), unmapped = new Set();
-  let enhancements = 0;
-  for (const m of text.matchAll(/\b([A-Za-z]{2})[-\s]0*(\d{1,2})(?!\d)(?:\s*(?:\(\s*\d+\s*\)|\.\d+))?/g)) {
-    const id = `${m[1].toUpperCase()}-${m[2].padStart(2, "0")}`;
-    if (/[(.]/.test(m[0])) enhancements++;
-    (CONTROLS.has(id) ? found : unmapped).add(id);
-  }
-  return {found, unmapped: [...unmapped].sort(), enhancements};
-}
-function controlIdsFromOscal(doc) {
-  // SSP, component definition, profile or catalog. Enhancement ids (ac-2.1) count towards their base control.
-  const ids = [];
-  const ssp = doc["system-security-plan"], cd = doc["component-definition"], prof = doc.profile, cat = doc.catalog;
-  if (ssp) for (const r of ssp["control-implementation"]?.["implemented-requirements"] ?? []) ids.push(r["control-id"]);
-  if (cd) for (const c of cd.components ?? []) for (const ci of c["control-implementations"] ?? []) for (const r of ci["implemented-requirements"] ?? []) ids.push(r["control-id"]);
-  if (prof) for (const imp of prof.imports ?? []) for (const inc of imp["include-controls"] ?? []) ids.push(...(inc["with-ids"] ?? []));
-  if (cat) { const walk = g => { for (const c of g.controls ?? []) { ids.push(c.id); walk(c); } for (const x of g.groups ?? []) walk(x); }; walk(cat); }
-  if (!ssp && !cd && !prof && !cat) throw new Error("Not an OSCAL SSP, component definition, profile or catalog");
-  return ids.filter(Boolean);
-}
-function gapRecommendations(selected, cov, limit = 10) {
-  const gaps = new Set([...cov].filter(([, [s]]) => s === "gap").map(([t]) => t));
-  const picked = [], chosen = new Set(selected);
-  while (picked.length < limit && gaps.size) {
-    let best = null, bestGain = 0;
-    for (const [cid, node] of [...CONTROLS].sort()) {
-      if (chosen.has(cid)) continue;
-      const gain = OUT.get(node.id).filter(([p, o]) => p === ":mitigatesTechnique" && gaps.has(BY_ID.get(o).l)).length;
-      if (gain > bestGain) { best = cid; bestGain = gain; }
-    }
-    if (!best) break;
-    picked.push([best, bestGain]); chosen.add(best);
-    for (const [p, o] of OUT.get(CONTROLS.get(best).id)) if (p === ":mitigatesTechnique") gaps.delete(BY_ID.get(o).l);
-  }
-  return picked;
-}
+function parseControls(text) { return C2.parseControls(text, new Set(CONTROLS.keys())); }
+const controlIdsFromOscal = doc => C2.controlIdsFromOscal(doc);
+const gapRecommendations = (selected, cov, limit = 10) => C2.recommendations(MODEL, selected, limit);
 function gapReport() {
   const cov = coverage(gapSelected);
   const counts = {covered: 0, gap: 0, none: 0};
@@ -695,6 +639,7 @@ function showGaps(list) {
   document.getElementById("gap-clear").addEventListener("click", () => { input.value = ""; setGapText(""); runGaps(); });
   document.getElementById("gap-file").addEventListener("change", async e => {
     const file = e.target.files[0]; if (!file) return;
+    if (file.size > C2.LIMITS.oscalBytes) { document.getElementById("gap-status").textContent = `${file.name} is larger than ${C2.LIMITS.oscalBytes / 1048576} MB.`; return; }
     try {
       const ids = controlIdsFromOscal(JSON.parse(await file.text()));
       input.value = ids.join(", "); setGapText(input.value); runGaps();
