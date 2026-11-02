@@ -73,8 +73,27 @@ These control and technique pairs each appear in two identical rows (every field
 | SC-32 | Information System Partitioning | System Partitioning |
 | IA-08 | Identification and Authentication (Non-Organizational Users) | Identification and Authentication (Non-organizational Users) |
 
-## 4. Observation, not an error
+## 4. Techniques with ATT&CK mitigations but no row
+
+91 active ATT&CK Enterprise 16.1 techniques have no row in the file, of any status. 81 of them have no mitigation in ATT&CK, which agrees with the mapping definition ("the control can prevent the technique"). But the file is not consistent: other techniques with no ATT&CK mitigation have a `non_mappable` row with the comment "no mitigations in ATT&CK", and these 91 have nothing.
+
+Eight of the 91 have substantive ATT&CK mitigations. They look like omissions:
+
+| Technique | Tactics | ATT&CK mitigations (16.1) |
+| --- | --- | --- |
+| T1555.003 Credentials from Web Browsers | Credential Access | M1017 User Training; M1018 User Account Management; M1021 Restrict Web-Based Content; M1027 Password Policies; M1051 Update Software |
+| T1484.001 Group Policy Modification | Defense Evasion, Privilege Escalation | M1018 User Account Management; M1047 Audit |
+| T1484.002 Trust Modification | Defense Evasion, Privilege Escalation | M1018 User Account Management; M1026 Privileged Account Management |
+| T1006 Direct Volume Access | Defense Evasion | M1018 User Account Management; M1040 Behavior Prevention on Endpoint |
+| T1542.002 Component Firmware | Defense Evasion, Persistence | M1051 Update Software |
+| T1564 Hide Artifacts | Defense Evasion | M1013 Application Developer Guidance; M1033 Limit Software Installation; M1049 Antivirus/Antimalware |
+| T1027.006 HTML Smuggling | Defense Evasion | M1048 Application Isolation and Sandboxing |
+| T1593 Search Open Websites/Domains | Reconnaissance | M1013 Application Developer Guidance; M1047 Audit |
+
+Two more (T1480 Execution Guardrails and T1480.001 Environmental Keying) have only M1055 Do Not Mitigate. A `non_mappable` row would make the file consistent for those two and for the other 81.
+
+## 5. Observation, not an error
 
 ATT&CK lists a substantive mitigation for 3 of the 96 techniques marked non_mappable: T1566.004 and T1598.004 Spearphishing Voice (M1017 User Training) and T1656 Impersonation (M1017, M1019 Threat Intelligence Program). User training maps naturally to the SP 800-53 AT family, which is outside the mapping's scope. It may help readers if the scope note says so.
 
-All four findings are reproducible with `python scripts/build_population.py` in [this repository](https://github.com/mmccalla/nist-attack-enterprise-ontology); see `data/source-checks.json` and competency questions CQ05, CQ08, CQ09 and CQ13.
+All five findings are reproducible with `python scripts/build_population.py` in [this repository](https://github.com/mmccalla/nist-attack-enterprise-ontology); see `data/source-checks.json` and competency questions CQ05, CQ08, CQ09, CQ12 and CQ13.
