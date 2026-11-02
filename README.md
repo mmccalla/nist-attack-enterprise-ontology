@@ -1,87 +1,127 @@
-# NIST 800-53 to MITRE ATT&CK enterprise ontology
+# NIST 800-53 to MITRE ATT&CK: free gap analysis and knowledge graph
 
-An enterprise ontology that maps NIST SP 800-53 Rev. 5 security controls to MITRE ATT&CK Enterprise 16.1 techniques. It is aligned to ATT&CK STIX, NIST OSCAL and the Unified Cyber Ontology (UCO), and comes with a navigable graph browser and 13 competency questions answered from the graph.
+This free tool shows which MITRE ATT&CK techniques your NIST SP 800-53 controls can mitigate. It also shows the gaps and the controls that close them.
 
-**Open the graph: [mmccalla.github.io/nist-attack-enterprise-ontology](https://mmccalla.github.io/nist-attack-enterprise-ontology/)**
+**Open the tool: [mmccalla.github.io/nist-attack-enterprise-ontology](https://mmccalla.github.io/nist-attack-enterprise-ontology/)**
 
-The ontology keeps two things apart that mapping tables usually merge: what the source file says (a *source assertion*, one per source row) and what the enterprise chooses to believe (a *mitigation claim*). A governed rule decides which rows become claims, and every claim points back to the rows that support it.
-
-![Overview: 109 controls in 11 families](docs/images/overview.png)
-
-## Use it in your work
-
-- **Find your gaps.** Open [Gap analysis](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps), paste the NIST 800-53 controls you have implemented (or start from a baseline, or load your OSCAL SSP), and see which ATT&CK techniques are covered, which a mapped control would close and which controls would close the most. It runs entirely in your browser; nothing is uploaded. The address bar keeps your selection, so you can bookmark or share it.
-- **Take it into ATT&CK Navigator.** Download a Navigator layer from the gap analysis or from any control or baseline page, or use the static layers in [`exports/navigator/`](exports/navigator).
-- **Take it into a spreadsheet or script.** [`exports/claims.csv`](exports/claims.csv), [`techniques.csv`](exports/techniques.csv), [`controls.csv`](exports/controls.csv) and every competency answer in [`exports/questions/`](exports/questions) have stable URLs, for example `https://mmccalla.github.io/nist-attack-enterprise-ontology/exports/claims.csv`.
-- **Query it.** Load `ontology/core.ttl` and `data/population.ttl` into any RDF store and run the SPARQL in [`queries/`](queries).
+You do not need an account, an installation or a server. The tool runs in your browser. It does not send your data to a server.
 
 ![Gap analysis: coverage of ATT&CK techniques by the selected controls, per tactic](docs/images/gaps.png)
 
-## What changed in 2.0.0
+## What you can do
 
-Version 2.0.0 revises the uploaded v2 bundle (kept unchanged in [`ontology/v2/`](ontology/v2)) by following the method in *A Practical Guide to Ontology Engineering*: competency questions first, then discovery, reuse, formalisation, validation, population and evaluation.
-
-- **Competency questions.** 13 questions from six personas, each a SPARQL file with its decision, evidence and an acceptance test. See [docs/competency-questions.md](docs/competency-questions.md).
-- **Alignment to external cyber ontologies.** Separate modules for [UCO 1.5.0](ontology/alignment-uco.ttl) (OWL axioms, validated against UCO's own SHACL shapes), [ATT&CK STIX 2.1](ontology/alignment-stix.ttl) and [NIST OSCAL](ontology/alignment-oscal.ttl) (annotations plus STIX and OSCAL identifiers on every entity, because neither has a normative RDF form). Each decision and each rejected candidate is in the [alignment register](docs/vocabulary-alignment.md).
-- **Authoritative identity.** Techniques carry their STIX id, tactics, platforms, parent technique and ATT&CK mitigations from the pinned ATT&CK STIX bundle. Controls carry their OSCAL id, OSCAL title and SP 800-53B baselines, matched through the OSCAL catalog's own zero-padded label.
-- **Full population.** All 5410 source rows instead of the 250-row sample, built reproducibly from pinned files with SHA-256 checks.
-- **Corrections found by discovery.** Non-mappable is a status, not a mapping type. `capability_description` holds titles. 50 rows are exact duplicates. One row (SC-12 to T1521.003) names a technique outside ATT&CK Enterprise; rule R1 keeps the row and withholds the claim. See [docs/semantic-decisions.md](docs/semantic-decisions.md).
-- **Separate gates.** Logical consistency (HermiT), data conformance (SHACL), alignment conformance (UCO shapes) and competency coverage (answers recomputed from the raw sources), each with negative probes. See [docs/evaluation.md](docs/evaluation.md).
-
-## Use the graph browser
-
-Open [`index.html`](index.html) in a browser, from GitHub Pages or as a local file. It needs no server and makes no network requests.
-
-- **Overview** shows the 109 controls in their 11 families. Circle size is the number of techniques the control mitigates.
-- **Questions** lists the competency questions. Each shows its persona, decision, evidence, SPARQL and answer; answer cells link into the graph.
-- **Search** and the **Groups**, **Controls**, **Techniques** and **Tactics** lists open any node. The Techniques list filters by status: with claims, non-mappable, not in the mapping, or outside ATT&CK Enterprise.
-- **Show source rows and claims** switches the provenance layer on and off.
-- **Schema** draws the classes with their UCO superclasses. Select a class for its restrictions, alignments and SHACL shape.
-- **About** lists the pinned sources with digests and what the cross-checks found.
-- Every view has its own address, such as `#n/control_AC-02`, `#q/CQ05` or `#class/:MitigationClaim`.
-
-![CQ01: controls that mitigate T1078 Valid Accounts, with baselines](docs/images/question.png)
-
-## Files
-
-| Path | Content |
+| Task | Where |
 | --- | --- |
-| `ontology/core.ttl` | TBox, RBox and controlled vocabularies, version 2.0.0 |
-| `ontology/shapes.ttl` | SHACL shapes for data conformance |
-| `ontology/alignment-uco.ttl`, `alignment-stix.ttl`, `alignment-oscal.ttl` | Alignment modules |
-| `ontology/v2/` | The original uploaded bundle (version 1.0.0), unchanged |
-| `data/population.ttl` | ABox generated from the pinned sources (do not edit) |
-| `data/source-checks.json` | Source digests, counts and cross-check findings |
-| `queries/cq*.rq` | Competency questions in SPARQL |
-| `scripts/build_population.py` | Builds the population from the pinned sources |
-| `scripts/build_graph.py` | Builds `index.html` from the ontology, population and queries |
-| `docs/` | Scope, semantic inventory, decisions, alignment register, competency questions, evaluation |
-| `exports/` | CSV tables and ATT&CK Navigator layers, generated by `scripts/build_exports.py` |
+| Find the ATT&CK techniques that your controls do not cover | [Gap analysis](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps) |
+| Find the controls that close the most gaps | [Gap analysis](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps) |
+| Find the controls that mitigate one technique | Search, then open the technique |
+| Find the techniques that one control mitigates | Search, then open the control |
+| See the source row and the rationale for each claim | Open a claim |
+| Get answers to 13 common questions | [Questions](https://mmccalla.github.io/nist-attack-enterprise-ontology/#questions) |
+| Use the data in ATT&CK Navigator, a spreadsheet or a script | [Downloads](#downloads) |
 
-The Turtle files are also served from Pages, for example [`ontology/core.ttl`](https://mmccalla.github.io/nist-attack-enterprise-ontology/ontology/core.ttl).
+## Find your gaps
 
-## Check it
+1. Open [Gap analysis](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps).
+2. Type or paste the IDs of your implemented controls, for example `AC-2, IA-2(1), SI-4`.
+3. If you use a baseline, click LOW, MODERATE, HIGH or PRIVACY instead.
+4. If you have an OSCAL file, click **Load OSCAL JSON** instead.
+5. Read the coverage per tactic and the list of gaps.
+6. Read the list of controls that close the most gaps.
+7. To keep the result, bookmark the page or copy the address.
 
-```sh
-python -m pip install -r requirements-dev.txt   # rdflib, pySHACL, owlready2 (HermiT needs Java 11 or later)
-python scripts/build_population.py --check      # downloads the pinned sources once, checks digests and the population
-python -m pytest -q tests                       # all gates
-python scripts/build_graph.py && python scripts/build_exports.py   # rebuild the browser and exports after a change
-npm ci && npx playwright install chromium && npm run uat   # browser checks
-```
+The tool accepts these OSCAL files: a system security plan (SSP), a component definition, a profile or a catalog. The tool counts a control enhancement, for example AC-2(1), as its base control.
 
-## Limitations
+The tool shows each technique in one of three states:
 
-- The namespace is `https://w3id.org/example/nist-attack-mapping/`. The IRIs do not resolve. Replace `example` with a governed namespace before production use.
-- A mapping is not evidence that a system has a control in place or that the control stops a technique.
-- Answers that rest on absence (CQ03, CQ04, CQ11, CQ12) are closed-world readings of the pinned sources, not proof that nothing else exists.
-- OSCAL titles come from catalog 5.2.0; the mapping was built against an earlier Rev. 5 release.
-- Full-population OWL reasoning uses a profile without number and `hasValue` restrictions (decision D13); those are reasoned on a slice and enforced by SHACL on the whole population.
+| State | Meaning |
+| --- | --- |
+| Covered | One or more of your controls mitigate the technique. |
+| Gap | No selected control mitigates the technique, but a different mapped control can. |
+| No mapped control | No NIST 800-53 control in the mapping mitigates the technique. More NIST controls cannot cover it. |
 
-## Contribute and cite
+## Use the result in ATT&CK Navigator
 
-Report a wrong or missing mapping, or propose a competency question, through the [issue templates](https://github.com/mmccalla/nist-attack-enterprise-ontology/issues/new/choose); see [CONTRIBUTING.md](CONTRIBUTING.md). Cite with [CITATION.cff](CITATION.cff). Changes are in [CHANGELOG.md](CHANGELOG.md).
+1. In Gap analysis, click **ATT&CK Navigator layer**.
+2. Open the [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/).
+3. Click **Open Existing Layer**, then **Upload from local**.
+4. Select the file that you downloaded.
+
+Each control page and each baseline page also has a **Navigator layer** button. In the layer, green is covered, amber is a gap and grey is no mapped control. A darker green shows more controls.
+
+## Downloads
+
+All files are free. Each file has a stable address. Thus, a script can get the most recent version.
+
+| File | Content |
+| --- | --- |
+| [`claims.csv`](exports/claims.csv) | Each control and technique claim, with tactics, baselines and source row numbers |
+| [`techniques.csv`](exports/techniques.csv) | Each ATT&CK Enterprise technique, with its controls and mapping status |
+| [`controls.csv`](exports/controls.csv) | Each mapped control, with its OSCAL ID and baselines |
+| [`navigator/`](exports/navigator) | Navigator layers for each baseline and for all controls |
+| [`questions/`](exports/questions) | The answer to each of the 13 questions |
+| [`ontology/core.ttl`](ontology/core.ttl), [`data/population.ttl`](data/population.ttl) | The full knowledge graph in RDF, for a graph database or SPARQL |
+
+For a file address, add the path to `https://mmccalla.github.io/nist-attack-enterprise-ontology/`. For example: `https://mmccalla.github.io/nist-attack-enterprise-ontology/exports/claims.csv`.
+
+## Where the data comes from
+
+The tool joins three public sources. The build downloads exact versions of each source. It then compares each file with a known SHA-256 digest.
+
+| Source | Version | Gives |
+| --- | --- | --- |
+| [MITRE CTID Mappings Explorer](https://ctid.mitre.org/mappings/) | NIST 800-53 Rev. 5 to ATT&CK 16.1, updated 16 April 2025 | 5,410 mapping rows |
+| [MITRE ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data) | Enterprise 16.1 | 656 techniques, 14 tactics, platforms and ATT&CK mitigations |
+| [NIST OSCAL content](https://github.com/usnistgov/oscal-content) | SP 800-53 Rev. 5 catalog 5.2.0 | Control titles, families and the SP 800-53B baselines |
+
+The tool keeps each source row separate from the claim that it supports. A claim is a statement that a control mitigates a technique. Each claim shows the source rows behind it.
+
+The build found some errors in the source. For example, one row names a Mobile technique (T1521.003). The tool keeps that row but does not make a claim from it. The full list is in [`docs/upstream-findings.md`](docs/upstream-findings.md).
+
+## Limits
+
+Read these limits before you use a result in a decision.
+
+- A claim shows that a control **can** mitigate a technique. It does not show that your implementation is effective.
+- The mapping covers 109 technical base controls in 11 families. It does not include policy controls or control enhancements.
+- Some control families are not in the mapping, for example Awareness and Training.
+- The mapping uses ATT&CK 16.1. The current ATT&CK version is more recent.
+- 91 ATT&CK Enterprise techniques do not have a row in the mapping. The tool shows these techniques as "no mapped control". That result does not mean that no defence exists.
+- The control titles come from the OSCAL catalog 5.2.0. The mapping uses an older Rev. 5 release. Three titles are different.
+- The IRIs in the knowledge graph use the `w3id.org/example` namespace. These IRIs do not resolve.
+
+## Get help or report a problem
+
+- To report an incorrect claim or a claim that is not there, use the [mapping issue form](https://github.com/mmccalla/nist-attack-enterprise-ontology/issues/new/choose).
+- To ask for a new question, use the competency question form on the same page.
+- For other problems, open a [blank issue](https://github.com/mmccalla/nist-attack-enterprise-ontology/issues/new).
+
+If the source row is incorrect, the project records the finding in [`docs/upstream-findings.md`](docs/upstream-findings.md). These findings are for a report to MITRE CTID.
+
+## Cite this tool
+
+Use the data in [`CITATION.cff`](CITATION.cff). GitHub shows a **Cite this repository** link for this file. The changes in each release are in [`CHANGELOG.md`](CHANGELOG.md).
+
+## For maintainers and contributors
+
+These documents give the design and the tests:
+
+| Document | Content |
+| --- | --- |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to build the tool and run the tests |
+| [`docs/competency-questions.md`](docs/competency-questions.md) | The 13 questions, their personas and their answers |
+| [`docs/semantic-decisions.md`](docs/semantic-decisions.md) | Scope, source terms, ambiguities and design decisions |
+| [`docs/vocabulary-alignment.md`](docs/vocabulary-alignment.md) | The alignment to ATT&CK STIX, NIST OSCAL and UCO |
+| [`docs/evaluation.md`](docs/evaluation.md) | The test gates and their most recent results |
+
+The original ontology bundle is in [`ontology/v2/`](ontology/v2). It has no changes.
 
 ## Licence and attribution
 
-Code is MIT ([LICENSE](LICENSE)). The ontology files declare CC BY 4.0. Mappings derive from the MITRE Center for Threat-Informed Defense Mappings Explorer; technique data from the ATT&CK STIX bundle; control and baseline data from NIST OSCAL content; UCO core is Apache 2.0. MITRE ATT&CK® is a registered trademark of The MITRE Corporation. Details are in [ATTRIBUTION.md](ATTRIBUTION.md).
+- The code has the MIT licence ([`LICENSE`](LICENSE)).
+- The ontology files have the CC BY 4.0 licence.
+- The mappings come from the MITRE Center for Threat-Informed Defense (Apache 2.0).
+- MITRE ATT&CK® is a registered trademark of The MITRE Corporation.
+- The UCO core file has the Apache 2.0 licence.
+
+The full attribution is in [`ATTRIBUTION.md`](ATTRIBUTION.md).
