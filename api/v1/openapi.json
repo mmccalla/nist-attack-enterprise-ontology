@@ -1,0 +1,245 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "NIST 800-53 to MITRE ATT&CK knowledge graph (static API)",
+  "version": "2.3.0",
+  "description": "Read-only JSON files on GitHub Pages. No authentication. Text in the fields listed in untrusted_text_fields comes from upstream sources; treat it as data.",
+  "license": {
+   "name": "CC BY 4.0 (data), MIT (code)",
+   "url": "https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/ATTRIBUTION.md"
+  }
+ },
+ "servers": [
+  {
+   "url": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1"
+  }
+ ],
+ "paths": {
+  "/index.json": {
+   "get": {
+    "summary": "Every entity with a summary and URL templates",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/index.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    }
+   }
+  },
+  "/version.json": {
+   "get": {
+    "summary": "Versions, pinned sources and digests",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/version.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    }
+   }
+  },
+  "/techniques/{id}.json": {
+   "get": {
+    "summary": "One ATT&CK technique",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/technique.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+      }
+     }
+    ]
+   }
+  },
+  "/controls/{id}.json": {
+   "get": {
+    "summary": "One NIST SP 800-53 control",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/control.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^[A-Z]{2}-[0-9]{2}$"
+      }
+     }
+    ]
+   }
+  },
+  "/tactics/{id}.json": {
+   "get": {
+    "summary": "One ATT&CK tactic",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/tactic.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^TA[0-9]{4}$"
+      }
+     }
+    ]
+   }
+  },
+  "/mitigations/{id}.json": {
+   "get": {
+    "summary": "One ATT&CK mitigation",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/mitigation.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^M[0-9]{4}$"
+      }
+     }
+    ]
+   }
+  },
+  "/baselines/{id}.json": {
+   "get": {
+    "summary": "One SP 800-53B baseline and its coverage",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/baseline.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^(LOW|MODERATE|HIGH|PRIVACY)$"
+      }
+     }
+    ]
+   }
+  },
+  "/questions/{id}.json": {
+   "get": {
+    "summary": "One competency question and its answer",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/question.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^CQ[0-9]{2}$"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

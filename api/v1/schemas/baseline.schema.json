@@ -1,0 +1,62 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/baseline.schema.json",
+ "title": "baseline",
+ "description": "An SP 800-53B baseline: its mapped controls and their ATT&CK coverage.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "baseline"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^(LOW|MODERATE|HIGH|PRIVACY)$"
+  },
+  "title": {
+   "type": "string"
+  },
+  "controls": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^[A-Z]{2}-[0-9]{2}$"
+   }
+  },
+  "coverage": {
+   "type": "object",
+   "properties": {
+    "covered": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "gap": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "none": {
+     "type": "integer",
+     "minimum": 0
+    }
+   },
+   "required": [
+    "covered",
+    "gap",
+    "none"
+   ],
+   "additionalProperties": false
+  },
+  "navigator_layer": {
+   "type": "string",
+   "pattern": "^https://"
+  }
+ },
+ "required": [
+  "controls",
+  "coverage"
+ ],
+ "unevaluatedProperties": false
+}

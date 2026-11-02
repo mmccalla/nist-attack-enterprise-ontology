@@ -72,3 +72,10 @@ def test_github_actions_are_pinned_to_commits():
 def test_downloads_are_limited_to_the_pinned_host_and_size():
     src = (ROOT / "scripts" / "build_population.py").read_text()
     assert "MAX_SOURCE_BYTES" in src and 'startswith("https://raw.githubusercontent.com/")' in src
+
+
+def test_no_file_sync_duplicates_in_the_tree():
+    """File sync (for example iCloud) makes copies such as 'name 2.md'. They must never reach a commit."""
+    dups = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*")
+            if re.search(r" \d+(\.[^/]+)?$", p.name) and not {".git", "node_modules", ".cache"} & set(p.parts)]
+    assert not dups, dups

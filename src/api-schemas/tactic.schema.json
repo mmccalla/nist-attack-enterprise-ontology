@@ -1,0 +1,45 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/tactic.schema.json",
+ "title": "tactic",
+ "description": "An ATT&CK 16.1 tactic and its techniques.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "tactic"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^TA[0-9]{4}$"
+  },
+  "name": {
+   "type": "string"
+  },
+  "short_name": {
+   "type": "string"
+  },
+  "order": {
+   "type": "integer"
+  },
+  "stix_id": {
+   "type": "string",
+   "pattern": "^x-mitre-tactic--"
+  },
+  "techniques": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+   }
+  }
+ },
+ "required": [
+  "name",
+  "techniques"
+ ],
+ "unevaluatedProperties": false
+}

@@ -2,6 +2,13 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.3.0 (2026-11-02)
+
+Ontology 2.1.0, unchanged.
+
+- **Static agent API** in `api/v1/`: one JSON file for each technique, control, tactic, ATT&CK mitigation, baseline and competency question, with `index.json`, `version.json`, JSON Schemas (draft 2020-12) and an OpenAPI 3.1 description. Each file gives its evidence, versions, limits and the fields that hold untrusted upstream text.
+- `llms.txt` at the site root and the API guide `docs/api.md`.
+
 ## 2.2.0 (2026-11-02)
 
 Ontology 2.1.0 (backward compatible with 2.0.0).

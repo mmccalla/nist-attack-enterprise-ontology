@@ -1,0 +1,43 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/mitigation.schema.json",
+ "title": "mitigation",
+ "description": "An ATT&CK mitigation and the techniques it applies to.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "mitigation"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^M[0-9]{4}$"
+  },
+  "name": {
+   "type": "string"
+  },
+  "stix_id": {
+   "type": "string",
+   "pattern": "^course-of-action--"
+  },
+  "techniques": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+   }
+  },
+  "attack_url": {
+   "type": "string",
+   "pattern": "^https://"
+  }
+ },
+ "required": [
+  "name",
+  "techniques"
+ ],
+ "unevaluatedProperties": false
+}

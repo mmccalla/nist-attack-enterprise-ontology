@@ -92,3 +92,29 @@ Phase 1 added catalogues and frameworks, ATT&CK version reconciliation, one shar
 ## Owner actions found in this phase
 
 Branch protection, private vulnerability reporting and Dependabot security updates are off. `docs/security.md` lists them with the CI workflow push.
+
+# Retrospective, phase 2 (2026-11-02)
+
+Phase 2 added the static agent API: 856 JSON files with schemas, an OpenAPI description and `llms.txt`. The results: 99 tests and 41 browser checks pass.
+
+## Keep doing
+
+| Practice | Evidence |
+| --- | --- |
+| A strict schema with probes for each output that a machine reads. | Six probes show that the schemas reject bad documents. |
+| A test for each security rule, not only for each feature. | The untrusted-text test found that CQ07 gives CTID rationale without the mark. The build now marks all question rows. |
+| Build twice with different hash seeds. | The API build is identical across seeds. |
+
+## Stop doing
+
+| Practice | Evidence | Better practice |
+| --- | --- | --- |
+| `git reset --hard` and stash churn in a folder that file sync watches. | The sync made 18 copies such as `SECURITY 2.md`. One build then read two copied query files, so the page had 17 questions. | Keep `main` without the workflow files. Build the workflow commit in a temporary worktree outside the synced folder. A test now fails on any copied file. |
+| Tests that run from a copy of the repository. | Two runs used stale copies of the scripts. | Install the test tools in the repository (`npm ci`) and run the checks there. |
+
+## Start doing
+
+| Practice | Reason |
+| --- | --- |
+| Mark all upstream text that an agent reads as untrusted. | Prompt injection can come through source data as well as through user input. |
+| Before git operations that rewrite files, examine whether a sync service watches the folder. | The copies appeared without an error message. |

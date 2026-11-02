@@ -65,6 +65,15 @@ All files are free. Each file has a stable address. Thus, a script can get the m
 
 For a file address, add the path to `https://mmccalla.github.io/nist-attack-enterprise-ontology/`. For example: `https://mmccalla.github.io/nist-attack-enterprise-ontology/exports/claims.csv`.
 
+## Use with AI agents and scripts
+
+The tool has a static JSON API with one small file for each technique, control, tactic, mitigation, baseline and question.
+
+1. Start at [`api/v1/index.json`](https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/index.json).
+2. Get one file, for example [`api/v1/techniques/T1078.json`](https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/techniques/T1078.json).
+
+Each file has a JSON Schema and the fixed limits of the data. The [OpenAPI description](https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/openapi.json) and [`llms.txt`](https://mmccalla.github.io/nist-attack-enterprise-ontology/llms.txt) describe the API. The [API guide](docs/api.md) gives the rules for agents.
+
 ## Where the data comes from
 
 The tool joins three public sources. The build downloads exact versions of each source. It then compares each file with a known SHA-256 digest.
@@ -123,6 +132,7 @@ These documents give the design and the tests:
 | [`docs/evaluation.md`](docs/evaluation.md) | The test gates and their most recent results |
 | [`docs/security.md`](docs/security.md) | Threat model, controls and evidence |
 | [`docs/roadmap.md`](docs/roadmap.md) | Planned work |
+| [`docs/api.md`](docs/api.md) | The agent API: endpoints, fields and rules |
 
 The original ontology bundle is in [`ontology/v2/`](ontology/v2). It has no changes.
 

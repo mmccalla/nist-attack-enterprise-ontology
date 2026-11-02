@@ -1,0 +1,124 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/index.schema.json",
+ "title": "index",
+ "description": "Entry point: every entity with a short summary and URL templates.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "index"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^index$"
+  },
+  "description": {
+   "type": "string"
+  },
+  "url_templates": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "string",
+    "pattern": "^https://"
+   }
+  },
+  "openapi": {
+   "type": "string",
+   "pattern": "^https://"
+  },
+  "techniques": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "controls": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "tactics": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "mitigations": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "baselines": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "questions": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ "required": [
+  "url_templates",
+  "techniques",
+  "controls"
+ ],
+ "unevaluatedProperties": false
+}

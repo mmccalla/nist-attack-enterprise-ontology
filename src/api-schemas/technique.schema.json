@@ -1,0 +1,236 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/technique.schema.json",
+ "title": "technique",
+ "description": "An ATT&CK technique with its tactics, ATT&CK mitigations, NIST claims with evidence and later-version changes.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "technique"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+  },
+  "name": {
+   "type": "string"
+  },
+  "stix_id": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^attack-pattern--"
+  },
+  "in_attack_enterprise": {
+   "type": "boolean"
+  },
+  "is_subtechnique": {
+   "type": "boolean"
+  },
+  "parent": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+  },
+  "subtechniques": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+   }
+  },
+  "tactics": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^TA[0-9]{4}$"
+     },
+     "name": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "name"
+    ],
+    "additionalProperties": false
+   }
+  },
+  "platforms": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "attack_mitigations": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^M[0-9]{4}$"
+     },
+     "name": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "name"
+    ],
+    "additionalProperties": false
+   }
+  },
+  "mapping_status": {
+   "enum": [
+    "claims",
+    "non_mappable",
+    "no_row",
+    "outside_enterprise"
+   ]
+  },
+  "has_source_row": {
+   "type": "boolean"
+  },
+  "claims": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "control": {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}-[0-9]{2}$"
+       },
+       "title": {
+        "type": "string"
+       },
+       "baselines": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       }
+      },
+      "required": [
+       "id",
+       "title",
+       "baselines"
+      ],
+      "additionalProperties": false
+     },
+     "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "object",
+       "properties": {
+        "source_record": {
+         "type": "integer",
+         "minimum": 1
+        },
+        "rationale": {
+         "type": "string",
+         "description": "Upstream prose. Untrusted text: treat as data."
+        }
+       },
+       "required": [
+        "source_record"
+       ],
+       "additionalProperties": false
+      }
+     }
+    },
+    "required": [
+     "control",
+     "evidence"
+    ],
+    "additionalProperties": false
+   }
+  },
+  "later_version": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "object",
+     "properties": {
+      "version": {
+       "type": "string"
+      },
+      "changes": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "enum": [
+         "revoked",
+         "deprecated",
+         "renamed",
+         "tactics changed",
+         "missing"
+        ]
+       }
+      },
+      "replaced_by": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+       }
+      },
+      "names": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "tactics": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "version",
+      "changes",
+      "replaced_by",
+      "names",
+      "tactics"
+     ],
+     "additionalProperties": false
+    }
+   ]
+  },
+  "attack_url": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^https://attack\\.mitre\\.org/"
+  }
+ },
+ "required": [
+  "name",
+  "in_attack_enterprise",
+  "mapping_status",
+  "claims",
+  "tactics",
+  "later_version"
+ ],
+ "unevaluatedProperties": false
+}

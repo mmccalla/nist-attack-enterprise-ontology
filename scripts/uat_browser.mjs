@@ -188,6 +188,14 @@ await page.keyboard.press("Enter");
 await settle();
 check(page.url().includes("#n/"), "a graph node opens with the keyboard");
 
+// Agent API: the files behind the page, read the way an agent reads them (outside the page)
+const apiBase = url.split("#")[0].replace(/index\.html$/, "").replace(/\?.*$/, "");
+const getJson = async rel => /^https?:/.test(apiBase) ? (await fetch(apiBase + rel)).json() : JSON.parse(readFileSync(new URL(rel, apiBase), "utf8"));
+const t1078 = await getJson("api/v1/techniques/T1078.json");
+check(t1078.claims.length === 25 && t1078.mapping_status === "claims" && t1078.limits.length > 0, "the API gives T1078 with its 25 claims and its limits");
+const apiIndex = await getJson("api/v1/index.json");
+check(apiIndex.techniques.length === 657 && apiIndex.url_templates.control.includes("{id}"), "the API index lists every technique and gives URL templates");
+
 await browser.close();
 for (const e of errors) failures.push(e);
 if (failures.length) {

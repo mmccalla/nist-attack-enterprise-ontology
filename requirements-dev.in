@@ -5,3 +5,4 @@ pyshacl==0.40.1
 pytest==9.1.1
 owlready2==0.51
 pip-audit==2.9.0
+jsonschema==4.25.1

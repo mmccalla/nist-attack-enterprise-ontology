@@ -22,8 +22,8 @@ The sizes (S, M, L) are estimates.
 | Phase | Work | Security exit criteria | Size | Depends on |
 | --- | --- | --- | --- | --- |
 | 0. Owner actions | Push the CI and Pages workflows. Make release v2.1.0 and the topics. Decide about the CTID report. | Branch protection and Pages HTTPS are on. | S | Owner |
-| 1. Foundation | (a) Add "catalogue" and "framework" to the model. (b) Reconcile ATT&CK versions. (c) Move the gap logic into one shared module. (d) Apply the security baseline. | Threat model, Content Security Policy, XSS probes, pinned dependencies with hashes, `SECURITY.md`. | L | 0 (CI is useful) |
-| 2. Agent API | Static JSON files for each technique, control, tactic, mitigation and baseline. JSON Schemas, OpenAPI, `version.json`, `llms.txt`. | Each file obeys its schema. No file holds free text from an untrusted input. | M | 1 |
+| 1. Foundation (done 2026-11-02) | (a) Add "catalogue" and "framework" to the model. (b) Reconcile ATT&CK versions. (c) Move the gap logic into one shared module. (d) Apply the security baseline. | Threat model, Content Security Policy, XSS probes, pinned dependencies with hashes, `SECURITY.md`. | L | 0 (CI is useful) |
+| 2. Agent API (done 2026-11-02) | Static JSON files for each technique, control, tactic, mitigation and baseline. JSON Schemas, OpenAPI, `version.json`, `llms.txt`. | Each file obeys its schema. No file holds free text from an untrusted input. | M | 1 |
 | 3. Agentic threats | (a) Import MITRE ATLAS. (b) Add the OWASP lists for generative AI as reference concepts. (c) Gap analysis for ATLAS mitigations. (d) Competency questions for agent builders. | YAML read with a safe loader. Size limits on each source. Licence rules applied. | M to L | 1, 2 |
 | 4. More frameworks | CIS Controls 8.1.2 and CSA CCM 4.1. Then KEV and the AWS, Azure, GCP and M365 sets. | Same as phase 3. | M each | 1 |
 | 5. Local MCP server | Tools for lookup, gap analysis, recommendations, claim evidence and the competency questions. | No network access. Input validation. No free text from an OSCAL file goes to the agent. Limits on input and output size. | M | 1, 3 |

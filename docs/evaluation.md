@@ -15,6 +15,7 @@ The Stage 8 deliverable of *A Practical Guide to Ontology Engineering*. The guid
 | Prior version | The original v2 bundle still parses, conforms to its own shapes and matches its digests | `tests/test_v2_bundle.py` | five probes from the first release |
 | Published browser | `index.html` is rebuilt from the current sources, is reproducible across hash seeds and loads nothing from the network; 33 browser checks, including the gap analysis, OSCAL SSP import and downloads | `tests/test_browser_build.py`, `scripts/uat_browser.mjs` | unknown node falls back to the overview; a recommended control must close exactly the gaps it claims |
 | Security | The page blocks network requests, runs only hashed scripts and shows poisoned data as text; dependencies are hash-locked and sources pinned; `docs/security.md` agrees with the shared gap logic | `scripts/uat_browser.mjs`, `tests/test_supply_chain.py`, `tests/test_security_doc.py`, `tests/js/coverage.test.cjs` | poisoned data and address-bar payloads; an unhashed pin; escaping and policy removed |
+| Agent API | Each file is current, obeys a strict JSON Schema, agrees with the raw sources, resolves every reference, marks upstream prose as untrusted and is small | `tests/test_api.py`, `scripts/uat_browser.mjs` | six schema probes; the untrusted-text test found CQ07 |
 | Exports | CSVs and Navigator layers are current, follow layer format 4.5, name only ATT&CK 16.1 techniques, and the baseline layers agree with an independent computation from the raw sources; the browser's layer equals the static one | `tests/test_exports.py`, `scripts/uat_browser.mjs` | the independent path |
 
 ## Results on 2026-11-02 (release 2.2.0, ontology 2.1.0)
@@ -30,6 +31,13 @@ Run on an Apple M4 Mac with Python 3.14, rdflib 7.6.0, pySHACL 0.40.1, owlready2
 - Security: the page blocks a network request; script in the address bar and in poisoned data does not run. With escaping removed, the Content Security Policy alone stops the payloads. With escaping and the policy removed, the payload runs, which proves the checks can fail.
 - Supply chain: 7 tests pass. An unhashed pin makes the hash test fail. `pip-audit` and `npm audit` find no known vulnerability.
 - Reproducibility: builds with `PYTHONHASHSEED` 3 and 11 give identical files.
+
+## Results on 2026-11-02 (release 2.3.0, phase 2)
+
+- `python -m pytest -q tests`: **99 passed** in 204 seconds.
+- `npm run uat` with the poisoned page: **41 browser checks** pass, including two that read the API files as an agent does.
+- Agent API: 856 files. Each document obeys its JSON Schema. Six probes are rejected (unknown field, missing field, bad ID, unknown status, claim without evidence, link without https). Technique claims agree with the raw sources. Each reference resolves to a file. The largest file is less than 120 KB.
+- Reproducibility: the API build is identical with `PYTHONHASHSEED` 5 and 9.
 
 ## Semantic correctness
 
