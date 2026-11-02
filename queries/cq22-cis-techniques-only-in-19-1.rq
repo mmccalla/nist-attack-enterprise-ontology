@@ -1,0 +1,19 @@
+# id: CQ22
+# persona: Threat-informed defence analyst
+# question: Which techniques that CIS 8.1.2 maps exist only in ATT&CK 19.1, and which ATT&CK 16.1 techniques do they replace?
+# decision: Which CIS claims have no NIST counterpart only because the two mappings use different ATT&CK versions.
+# evidence: CTID CIS claims; ATT&CK 19.1 revoked-by relationships; STIX ids.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?technique ?name (COUNT(DISTINCT ?s) AS ?cisSafeguards) (SAMPLE(?replaced) AS ?replaces16)
+WHERE {
+  ?s a :CisSafeguard ; :mitigatesTechnique ?t .
+  ?t :inAttackEnterprise false ; :activeInCatalogue data:catalogue_attack-enterprise-19.1 ; :techniqueId ?technique ; :techniqueName ?name .
+  OPTIONAL { { SELECT ?t (GROUP_CONCAT(?oldId; separator=" ") AS ?replaced) WHERE { ?t :replacesTechnique ?old . ?old :techniqueId ?oldId } GROUP BY ?t } }
+}
+GROUP BY ?technique ?name
+ORDER BY ?technique

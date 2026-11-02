@@ -11,7 +11,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?family ?tactic ?order (COUNT(DISTINCT ?t) AS ?techniques)
 WHERE {
-  ?c :mitigatesTechnique ?t ; :inCapabilityGroup/:groupCode ?family .
+  ?c a :Nist80053Control ; :mitigatesTechnique ?t ; :inCapabilityGroup/:groupCode ?family .
   ?t :inTactic ?ta . ?ta skos:prefLabel ?tactic ; :tacticOrder ?order .
 }
 GROUP BY ?family ?tactic ?order

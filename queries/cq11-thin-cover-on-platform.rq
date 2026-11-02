@@ -12,7 +12,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?technique ?name (COUNT(DISTINCT ?c) AS ?controls)
 WHERE {
   ?t :targetsPlatform data:platform_IaaS ; :inAttackEnterprise true ; :techniqueId ?technique ; :techniqueName ?name .
-  OPTIONAL { ?c :mitigatesTechnique ?t }
+  OPTIONAL { ?c a :Nist80053Control ; :mitigatesTechnique ?t }
 }
 GROUP BY ?technique ?name
 HAVING (COUNT(DISTINCT ?c) < 3)

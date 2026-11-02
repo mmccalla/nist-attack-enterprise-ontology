@@ -196,3 +196,33 @@ def test_cq19_owasp_llm_risks_to_atlas_mitigations(graph, src):
     actual = {(r, a): set((m or "").split()) - {""} for r, a, _, m in ask(graph, "cq19")}
     assert actual == expected and len(expected) == 13
     assert sorted(a for (_, a), ms in expected.items() if not ms) == ["AML.T0048.002"]
+
+
+def test_cq20_nist_controls_overlapping_cis_13_7(graph, src):
+    techs16 = {src.to16[t] for t, cs in src.cis_for.items() if "CIS-13.7" in cs and t in src.to16}
+    counts = Counter()
+    for t in techs16:
+        counts.update(src.controls_for.get(t, ()))
+    expected = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:10]
+    assert [(c, n) for c, _, n in ask(graph, "cq20")] == expected
+    assert expected[0] == ("SI-03", 45)  # quoted in docs/competency-questions.md
+
+
+def test_cq21_cis_and_nist_coverage_by_tactic(graph, src):
+    both16 = set(src.to16.values())  # techniques active in 16.1 and 19.1
+    cis16 = {src.to16[t] for t in src.cis_for if t in src.to16}
+    cells = defaultdict(lambda: [0, 0, 0])
+    for t in both16:
+        cis, nist = t in cis16, bool(src.controls_for.get(t))
+        for ta in src.tactics_of[t]:
+            c = cells[src.tactic_names[ta]]
+            if cis and nist: c[0] += 1
+            elif cis: c[1] += 1
+            elif nist: c[2] += 1
+    assert {t: [b, c, n] for t, _, b, c, n in ask(graph, "cq21")} == {k: v for k, v in cells.items()}
+
+
+def test_cq22_cis_techniques_only_in_19_1(graph, src):
+    expected = {t: (len(cs), src.replaced_by19.get(t, set())) for t, cs in src.cis_for.items() if t not in src.to16}
+    actual = {t: (n, set((r or "").split()) - {""}) for t, _, n, r in ask(graph, "cq22")}
+    assert actual == expected and len(expected) == 29

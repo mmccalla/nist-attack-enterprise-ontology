@@ -13,6 +13,6 @@ SELECT ?kind ?id ?label
 WHERE {
   { ?m :attackMitigationFor data:technique_T1078 ; :mitigationId ?id ; skos:prefLabel ?label . BIND("ATT&CK mitigation" AS ?kind) }
   UNION
-  { ?c :mitigatesTechnique data:technique_T1078 ; :controlId ?id ; :controlTitle ?label . BIND("NIST control" AS ?kind) }
+  { ?c a :Nist80053Control ; :mitigatesTechnique data:technique_T1078 ; :controlId ?id ; :controlTitle ?label . BIND("NIST control" AS ?kind) }
 }
 ORDER BY ?kind ?id

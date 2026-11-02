@@ -43,6 +43,15 @@ SOURCES = {
         f"{GH}/mitre-attack/attack-stix-data/7eb3ca57f218e1d4f01afdb3e0cdc3b526556173/enterprise-attack/enterprise-attack-16.1.json",
         "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
     ),
+    "cis": (
+        f"{GH}/center-for-threat-informed-defense/mappings-explorer/1b0b81e6fb21eaa3e741fe0f2d281b04eaa04afc/"
+        "mappings/cis/attack-19.1/cis-8.1.2/enterprise/cis-8.1.2_attack-19.1-enterprise.json",
+        "2a35123701e331954be59ee1ed15ee886a4913cd3bf912dbaf908f6f614dbd9a",
+    ),
+    "attack_19_1": (
+        f"{GH}/mitre-attack/attack-stix-data/6c3719993d0401de199203ecc3f369544d9e091c/enterprise-attack/enterprise-attack-19.1.json",
+        "bdf1ce86a4e604214c5076d37ae4dcb322678afc528df8492e6fdc1b554f5da3",
+    ),
     "attack_latest": (
         f"{GH}/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json",
         "81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352",
@@ -165,6 +174,7 @@ def build() -> tuple[Graph, dict]:
     g.add((framework, RDFS.label, lit("NIST SP 800-53 Rev. 5")))
     g.add((framework, ONT.catalogueVersion, lit(catalog["metadata"]["version"])))
     g.add((framework, PROV.wasDerivedFrom, DATA.oscalCatalog))
+    g.add((ds, ONT.mapsToCatalogue, catalogue))
 
     # OSCAL: families, controls, baselines
     families, controls_by_label = {}, {}
@@ -250,6 +260,7 @@ def build() -> tuple[Graph, dict]:
         g.add((node, ONT.stixId, lit(obj["id"])))
         g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix))
         g.add((node, ONT.inCatalogue, catalogue))
+        g.add((node, ONT.activeInCatalogue, catalogue))
         for phase in obj.get("kill_chain_phases", []):
             if phase["kill_chain_name"] == "mitre-attack":
                 g.add((node, ONT.inTactic, tactic_by_short[phase["phase_name"]]))
@@ -295,6 +306,7 @@ def build() -> tuple[Graph, dict]:
     for cid in control_ids:
         node = DATA[f"control_{cid}"]
         g.add((node, RDF.type, ONT.SecurityControl))
+        g.add((node, RDF.type, ONT.Nist80053Control))
         g.add((node, ONT.inFramework, framework))
         g.add((node, ONT.controlId, lit(cid)))
         g.add((node, SKOS.prefLabel, lit(cid)))
@@ -362,6 +374,7 @@ def build() -> tuple[Graph, dict]:
         g.add((DATA[f"control_{cid}"], ONT.mitigatesTechnique, DATA[f"technique_{tid}"]))
     checks["claimsWithheld"] = withheld
     checks["atlas"] = add_atlas(g, fetch("atlas"), stix_techniques, mitigations)
+    checks["cis"] = add_cis(g, fetch("cis"), fetch("attack_19_1"), stix_techniques)
     checks["owasp"] = add_owasp(g)
     checks["counts"] = {
         "sourceRows": len(rows),
@@ -524,6 +537,162 @@ def add_atlas(g: Graph, atlas: dict, attack_techniques: dict, attack_mitigations
         "mitigations": len(matrix["mitigations"]),
         "mitigationLinks": links,
         "attackReferencesNotInGraph": sorted(unresolved),
+    }
+
+
+CIS_URL = "https://www.cisecurity.org/controls/cis-controls-list"
+CIS_RIGHTS = ("CIS Controls content is licensed by the Center for Internet Security under CC BY-NC-ND 4.0. "
+              "This graph keeps only CIS Safeguard and Control IDs and links. Read the titles and text at cisecurity.org.")
+
+
+def add_cis(g: Graph, cis: dict, attack: dict, attack16: dict) -> dict:
+    """CIS Controls 8.1.2 mapped to ATT&CK 19.1, joined to the 16.1 graph by STIX id (decision D23)."""
+    meta, rows = cis["metadata"], cis["mapping_objects"]
+    version = meta["attack_version"]
+    g.add((DATA.attackEnterpriseStix191, RDF.type, ONT.ReferenceDataset))
+    g.add((DATA.attackEnterpriseStix191, DCTERMS.title, lit(f"MITRE ATT&CK Enterprise STIX 2.1 bundle {version}")))
+    g.add((DATA.attackEnterpriseStix191, OWL.versionInfo, lit(version)))
+    g.add((DATA.attackEnterpriseStix191, DCTERMS.source, URIRef(SOURCES["attack_19_1"][0])))
+    g.add((DATA.attackEnterpriseStix191, ONT.sha256, lit(SOURCES["attack_19_1"][1])))
+    catalogue = DATA[f"catalogue_attack-enterprise-{version}"]
+    g.add((catalogue, RDF.type, ONT.ThreatCatalogue))
+    g.add((catalogue, RDFS.label, lit(f"ATT&CK Enterprise {version}")))
+    g.add((catalogue, ONT.catalogueVersion, lit(version)))
+    g.add((catalogue, ONT.catalogueDomain, lit("enterprise-attack")))
+    g.add((catalogue, PROV.wasDerivedFrom, DATA.attackEnterpriseStix191))
+
+    objects = attack["objects"]
+    patterns = {o["id"]: o for o in objects if o["type"] == "attack-pattern"}
+    active19 = {o["id"]: o for o in patterns.values() if active(o) and "enterprise-attack" in o.get("x_mitre_domains", [])}
+    stix16 = {o["id"]: tid for tid, o in attack16.items()}
+    node_of = {}
+    new_nodes = 0
+    for sid, o in active19.items():
+        tid = mitre_id(o)
+        if sid in stix16:
+            node = DATA[f"technique_{stix16[sid]}"]
+            if stix16[sid] != tid:
+                raise SystemExit(f"{tid} in {version} has the STIX id of {stix16[sid]} in 16.1")
+        else:
+            node = DATA[f"technique_{tid}"]
+            if (node, RDF.type, ONT.AttackTechnique) in g:
+                raise SystemExit(f"ID collision: {tid} in {version} is a different technique from {tid} in the graph")
+            new_nodes += 1
+            g.add((node, RDF.type, ONT.AttackTechnique))
+            g.add((node, SKOS.inScheme, ONT.TechniqueScheme))
+            g.add((node, ONT.techniqueId, lit(tid)))
+            g.add((node, ONT.techniqueName, lit(o["name"])))
+            g.add((node, SKOS.prefLabel, lit(o["name"])))
+            g.add((node, ONT.isSubTechnique, lit("." in tid, XSD.boolean)))
+            g.add((node, ONT.inAttackEnterprise, lit(False, XSD.boolean)))
+            g.add((node, ONT.stixId, lit(sid)))
+            g.add((node, ONT.inCatalogue, catalogue))
+            g.add((node, PROV.wasDerivedFrom, DATA.attackEnterpriseStix191))
+        g.add((node, ONT.activeInCatalogue, catalogue))
+        node_of[tid] = node
+    for rel in objects:
+        if rel["type"] != "relationship" or not active(rel):
+            continue
+        src, tgt = rel["source_ref"], rel["target_ref"]
+        if rel["relationship_type"] == "subtechnique-of" and src in active19 and tgt in active19 and src not in stix16:
+            g.add((node_of[mitre_id(active19[src])], ONT.subTechniqueOf, node_of[mitre_id(active19[tgt])]))
+        if rel["relationship_type"] == "revoked-by" and src in stix16 and tgt in active19:
+            g.add((node_of[mitre_id(active19[tgt])], ONT.replacesTechnique, DATA[f"technique_{stix16[src]}"]))
+
+    ds, record, framework = DATA.cisDataset, DATA.cisMetadataRecord, DATA["framework_cis-8.1.2"]
+    g.add((ds, RDF.type, ONT.CybersecurityMappingDataset))
+    g.add((ds, DCTERMS.title, lit(f"CIS Controls {meta['mapping_framework_version']} to MITRE ATT&CK Enterprise {version} source mapping dataset")))
+    g.add((ds, DCTERMS.publisher, lit("MITRE Center for Threat-Informed Defense")))
+    g.add((ds, DCTERMS.source, URIRef(SOURCES["cis"][0])))
+    g.add((ds, ONT.sha256, lit(SOURCES["cis"][1])))
+    g.add((ds, ONT.mapsToCatalogue, catalogue))
+    g.add((ds, ONT.hasMetadataRecord, record))
+    g.add((record, RDF.type, ONT.DatasetMetadataRecord))
+    for prop, key in (("frameworkId", "mapping_framework"), ("frameworkVersion", "mapping_framework_version"), ("attackVersion", "attack_version"),
+                      ("technologyDomain", "technology_domain"), ("sourceCreationDate", "creation_date"), ("sourceLastUpdate", "last_update")):
+        g.add((record, ONT[prop], lit(meta[key])))
+    g.add((framework, RDF.type, ONT.ControlFramework))
+    g.add((framework, RDFS.label, lit(f"CIS Critical Security Controls {meta['mapping_framework_version']}")))
+    g.add((framework, ONT.catalogueVersion, lit(meta["mapping_framework_version"])))
+    g.add((framework, PROV.wasDerivedFrom, ds))
+    # CIS licenses the CIS Controls under CC BY-NC-ND 4.0. Keep only IDs and links, not CIS text (decision D25).
+    g.add((framework, DCTERMS.source, URIRef(CIS_URL)))
+    g.add((framework, DCTERMS.license, URIRef("https://creativecommons.org/licenses/by-nc-nd/4.0/")))
+    g.add((framework, DCTERMS.rights, lit(CIS_RIGHTS)))
+    for code in meta["capability_groups"]:
+        group = DATA[f"cisgroup_{code}"]
+        g.add((group, RDF.type, ONT.CapabilityGroup))
+        g.add((group, SKOS.inScheme, ONT.CapabilityGroupScheme))
+        g.add((group, SKOS.prefLabel, lit(code)))
+        g.add((group, ONT.groupCode, lit(code)))
+        g.add((group, ONT.inFramework, framework))
+    safeguards = {}
+    for r in rows:
+        if r["capability_id"] and r["capability_id"] not in safeguards:
+            safeguards[r["capability_id"]] = r
+            node = DATA[f"cis_{r['capability_id']}"]
+            g.add((node, RDF.type, ONT.SecurityControl))
+            g.add((node, RDF.type, ONT.CisSafeguard))
+            g.add((node, ONT.controlId, lit(r["capability_id"])))
+            g.add((node, SKOS.prefLabel, lit(r["capability_id"])))
+            g.add((node, ONT.inCapabilityGroup, DATA[f"cisgroup_{r['capability_group']}"]))
+            g.add((node, ONT.inFramework, framework))
+            g.add((node, PROV.wasDerivedFrom, ds))
+    seen, pairs = defaultdict(int), defaultdict(list)
+    for number, r in enumerate(rows, start=1):
+        cid, tid = r["capability_id"], r["attack_object_id"]
+        if r["status"] == "complete":
+            if tid not in node_of:
+                raise SystemExit(f"CIS row {number}: {tid} is not an active technique in ATT&CK {version}")
+            key = f"{cid}_{tid}"
+            seen[key] += 1
+            node = DATA[f"cisassertion_{key}" + (f"_{seen[key]}" if seen[key] > 1 else "")]
+            g.add((node, RDF.type, ONT.MitigatesAssertion))
+            g.add((node, ONT.assertsTechnique, node_of[tid]))
+            g.add((node, ONT.assertedMappingType, ONT.mappingType_mitigates))
+            g.add((node, ONT.assertedStatus, ONT.mappingStatus_complete))
+            pairs[(cid, tid)].append(node)
+        elif r["status"] == "non_mappable":
+            seen[cid] += 1
+            node = DATA[f"cisnonmappable_{cid}" + (f"_{seen[cid]}" if seen[cid] > 1 else "")]
+            g.add((node, RDF.type, ONT.NonMappableControlAssertion))
+            g.add((node, ONT.assertedStatus, ONT.mappingStatus_nonMappable))
+            if r.get("mapping_type") == "non_mappable":
+                g.add((node, ONT.assertedMappingType, ONT.mappingType_nonMappable))
+        else:
+            raise SystemExit(f"CIS row {number}: unexpected status {r['status']!r}")
+        g.add((node, ONT.assertsControl, DATA[f"cis_{cid}"]))
+        g.add((node, ONT.assertsCapabilityGroup, DATA[f"cisgroup_{r['capability_group']}"]))
+        g.add((node, ONT.sourceRecordNumber, lit(number, XSD.integer)))
+        g.add((node, PROV.wasDerivedFrom, ds))
+        g.add((ds, ONT.containsAssertion, node))
+        if r.get("comments"):
+            g.add((node, ONT.rationaleText, lit(r["comments"])))
+        for ref in r.get("references") or []:
+            g.add((node, ONT.referenceUrl, lit(ref, XSD.anyURI)))
+    for (cid, tid), support in sorted(pairs.items()):
+        claim = DATA[f"claim_{cid}_{tid}"]
+        g.add((claim, RDF.type, ONT.MitigationClaim))
+        g.add((claim, ONT.claimSubjectControl, DATA[f"cis_{cid}"]))
+        g.add((claim, ONT.claimObjectTechnique, node_of[tid]))
+        for node in support:
+            g.add((claim, ONT.supportedByAssertion, node))
+            g.add((claim, PROV.wasDerivedFrom, node))
+        g.add((DATA[f"cis_{cid}"], ONT.mitigatesTechnique, node_of[tid]))
+    claimed = {tid for _, tid in pairs}
+    return {
+        "attackVersion": version,
+        "rows": len(rows),
+        "mitigatesRows": sum(1 for r in rows if r["status"] == "complete"),
+        "nonMappableControlRows": sum(1 for r in rows if r["status"] == "non_mappable"),
+        "rowsWithComments": sum(1 for r in rows if r.get("comments")),
+        "safeguards": len(safeguards),
+        "controls": len(meta["capability_groups"]),
+        "claims": len(pairs),
+        "duplicateRows": sorted(f"{c} {t}" for (c, t), n in pairs.items() if len(n) > 1),
+        "techniquesClaimed": len(claimed),
+        "techniquesClaimedOnlyInLaterVersion": sum(1 for t in claimed if (node_of[t], ONT.inAttackEnterprise, Literal(False, datatype=XSD.boolean)) in g),
+        "nodesAddedForLaterVersion": new_nodes,
     }
 
 

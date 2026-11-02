@@ -108,6 +108,22 @@ class Sources:
         self.atlas_agent = {tid for tid in self.atlas_techniques if agent(tid)}
         self.owasp = json.loads((ROOT / "data" / "sources" / "owasp-genai.json").read_text())
 
+        # CIS 8.1.2 on ATT&CK 19.1, matched to 16.1 by STIX id.
+        objs19 = build_population.fetch("attack_19_1")["objects"]
+        ap19 = {o["id"]: o for o in objs19 if o["type"] == "attack-pattern"}
+        self.active19 = {_mitre_id(o): o for o in ap19.values() if _active(o) and "enterprise-attack" in o.get("x_mitre_domains", [])}
+        stix16 = {o["id"]: tid for tid, o in self.techniques.items()}
+        self.to16 = {tid: stix16[o["id"]] for tid, o in self.active19.items() if o["id"] in stix16}
+        self.replaced_by19 = defaultdict(set)
+        for r in objs19:
+            if r["type"] == "relationship" and r["relationship_type"] == "revoked-by" and r["source_ref"] in stix16 and r["target_ref"] in ap19:
+                self.replaced_by19[_mitre_id(ap19[r["target_ref"]])].add(stix16[r["source_ref"]])
+        self.cis_rows = build_population.fetch("cis")["mapping_objects"]
+        self.cis_for = defaultdict(set)
+        for r in self.cis_rows:
+            if r["status"] == "complete":
+                self.cis_for[r["attack_object_id"]].add(r["capability_id"])
+
     def baselines_of(self, control_id):
         oid = self.oscal[control_id]["id"]
         return {name for name, ids in self.baselines.items() if oid in ids}

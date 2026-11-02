@@ -12,7 +12,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?control ?title (COUNT(DISTINCT ?t) AS ?techniques)
 WHERE {
   ?t :inTactic/:tacticId "TA0001" .
-  ?c :mitigatesTechnique ?t ; :controlId ?control ; :controlTitle ?title .
+  ?c a :Nist80053Control ; :mitigatesTechnique ?t ; :controlId ?control ; :controlTitle ?title .
 }
 GROUP BY ?control ?title
 ORDER BY DESC(?techniques) ?control

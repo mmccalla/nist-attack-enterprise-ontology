@@ -1,0 +1,19 @@
+# id: CQ20
+# persona: GRC analyst
+# question: Which NIST 800-53 controls share the most ATT&CK techniques with CIS Safeguard 13.7?
+# decision: Which NIST evidence a CIS-based programme can reuse. A shared technique is an overlap, not an equivalence of controls.
+# evidence: CTID CIS 8.1.2 and NIST 800-53 Rev. 5 claims, joined by STIX id across ATT&CK 19.1 and 16.1.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?control ?title (COUNT(DISTINCT ?t) AS ?sharedTechniques)
+WHERE {
+  data:cis_CIS-13.7 :mitigatesTechnique ?t .
+  ?c a :Nist80053Control ; :mitigatesTechnique ?t ; :controlId ?control ; :controlTitle ?title .
+}
+GROUP BY ?control ?title
+ORDER BY DESC(?sharedTechniques) ?control
+LIMIT 10

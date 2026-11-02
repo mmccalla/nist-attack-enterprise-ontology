@@ -11,9 +11,9 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?technique ?name (COUNT(DISTINCT ?c) AS ?controlsOutsideLow)
 WHERE {
-  ?c :mitigatesTechnique ?t .
+  ?c a :Nist80053Control ; :mitigatesTechnique ?t .
   ?t :techniqueId ?technique ; :techniqueName ?name .
-  FILTER NOT EXISTS { ?low :mitigatesTechnique ?t ; :inBaseline data:baseline_LOW }
+  FILTER NOT EXISTS { ?low a :Nist80053Control ; :mitigatesTechnique ?t ; :inBaseline data:baseline_LOW }
 }
 GROUP BY ?technique ?name
 ORDER BY ?technique

@@ -14,7 +14,7 @@ WHERE {
   ?record :describesEntity ?t ; :versionStatus ?status .
   FILTER (?status IN ("revoked", "renamed", "deprecated"))
   ?t :techniqueId ?technique ; :techniqueName ?name .
-  ?claim :claimObjectTechnique ?t .
+  ?claim :claimObjectTechnique ?t ; :claimSubjectControl ?nist . ?nist a :Nist80053Control .
   OPTIONAL { ?record :laterId ?later }
   OPTIONAL { ?record :laterName ?laterName0 }
 }

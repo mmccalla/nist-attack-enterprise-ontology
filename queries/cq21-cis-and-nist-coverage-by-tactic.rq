@@ -1,0 +1,21 @@
+# id: CQ21
+# persona: Security architect
+# question: For each ATT&CK 16.1 tactic, how many techniques do CIS 8.1.2 and NIST 800-53 both cover, how many only CIS and how many only NIST?
+# decision: Where a programme that uses one framework has gaps that the other framework covers.
+# evidence: CTID claims for both frameworks, on techniques active in both ATT&CK 16.1 and 19.1.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?tactic ?order
+       (SUM(IF(?cis && ?nist, 1, 0)) AS ?both) (SUM(IF(?cis && !?nist, 1, 0)) AS ?onlyCis) (SUM(IF(!?cis && ?nist, 1, 0)) AS ?onlyNist)
+WHERE {
+  ?t :inTactic ?ta ; :activeInCatalogue data:catalogue_attack-enterprise-16.1, data:catalogue_attack-enterprise-19.1 .
+  ?ta skos:prefLabel ?tactic ; :tacticOrder ?order .
+  BIND (EXISTS { ?s a :CisSafeguard ; :mitigatesTechnique ?t } AS ?cis)
+  BIND (EXISTS { ?n a :Nist80053Control ; :mitigatesTechnique ?t } AS ?nist)
+}
+GROUP BY ?tactic ?order
+ORDER BY ?order

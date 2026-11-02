@@ -11,7 +11,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?control ?technique (COUNT(?row) AS ?rows) (GROUP_CONCAT(STR(?record); separator=" ") AS ?records)
 WHERE {
-  ?row a :MitigatesAssertion ; :assertsControl/:controlId ?control ; :assertsTechnique/:techniqueId ?technique ; :sourceRecordNumber ?record .
+  ?row a :MitigatesAssertion ; prov:wasDerivedFrom data:sourceDataset ; :assertsControl/:controlId ?control ; :assertsTechnique/:techniqueId ?technique ; :sourceRecordNumber ?record .
 }
 GROUP BY ?control ?technique
 HAVING (COUNT(?row) > 1)

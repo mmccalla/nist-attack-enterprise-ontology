@@ -11,7 +11,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?record ?control ?technique ?name
 WHERE {
-  ?row :assertsTechnique ?t ; :sourceRecordNumber ?record .
+  ?row :assertsTechnique ?t ; :sourceRecordNumber ?record ; prov:wasDerivedFrom data:sourceDataset .
   ?t :inAttackEnterprise false ; :techniqueId ?technique ; :techniqueName ?name .
   OPTIONAL { ?row :assertsControl/:controlId ?control }
 }

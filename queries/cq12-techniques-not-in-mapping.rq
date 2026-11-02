@@ -12,6 +12,6 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?technique ?name
 WHERE {
   ?t :inAttackEnterprise true ; :techniqueId ?technique ; :techniqueName ?name .
-  FILTER NOT EXISTS { ?row :assertsTechnique ?t }
+  FILTER NOT EXISTS { ?row :assertsTechnique ?t ; prov:wasDerivedFrom data:sourceDataset }
 }
 ORDER BY ?technique

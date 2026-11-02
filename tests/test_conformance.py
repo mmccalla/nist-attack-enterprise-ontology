@@ -144,11 +144,33 @@ PROBES = {
         lambda g: g.set((DATA["atlastechnique_AML.T0051.000"], ONT.subTechniqueOf, DATA["atlastechnique_AML.T0053"])),
         "without the last part",
     ),
+    "CIS safeguard with a NIST-style id": (
+        lambda g: g.set((DATA["cis_CIS-13.7"], ONT.controlId, Literal("CI-13"))),
+        "Result Path: :controlId",
+    ),
+    "control-level non-mappable row that names a technique": (
+        lambda g: g.add((DATA["cisnonmappable_CIS-5.5"], ONT.assertsTechnique, DATA["technique_T1078"])),
+        "Result Path: :assertsTechnique",
+    ),
+    "CIS claim on a technique that ATT&CK 19.1 revoked": (
+        lambda g: add_cis_claim_on_revoked(g),
+        "active in the ATT&CK version of its supporting rows",
+    ),
     "sub-technique whose parent is not its ID prefix": (
         lambda g: g.set((DATA["technique_T1556.009"], ONT.subTechniqueOf, DATA["technique_T1078"])),
         "parent whose id is the prefix",
     ),
 }
+
+
+def add_cis_claim_on_revoked(g):
+    """Claim from a CIS row (a CIS row about T1078 survives the slice) on T1562, which ATT&CK 19.1 revoked."""
+    row = next(a for a in g.subjects(ONT.assertsTechnique, DATA["technique_T1078"]) if (a, PROV.wasDerivedFrom, DATA.cisDataset) in g)
+    control = g.value(row, ONT.assertsControl)
+    claim = DATA["claim_probe_T1562"]
+    for t in ((claim, RDF.type, ONT.MitigationClaim), (claim, ONT.claimSubjectControl, control), (claim, ONT.claimObjectTechnique, DATA["technique_T1562"]),
+              (claim, ONT.supportedByAssertion, row), (control, ONT.mitigatesTechnique, DATA["technique_T1562"])):
+        g.add(t)
 
 
 @pytest.mark.parametrize("name", PROBES)

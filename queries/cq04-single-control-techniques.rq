@@ -11,7 +11,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?technique ?name (SAMPLE(?cid) AS ?onlyControl)
 WHERE {
-  ?c :mitigatesTechnique ?t ; :controlId ?cid .
+  ?c a :Nist80053Control ; :mitigatesTechnique ?t ; :controlId ?cid .
   ?t :techniqueId ?technique ; :techniqueName ?name .
 }
 GROUP BY ?technique ?name

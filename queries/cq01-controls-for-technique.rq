@@ -12,6 +12,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?control ?title (GROUP_CONCAT(?level; separator=" ") AS ?baselines)
 WHERE {
   ?claim :claimObjectTechnique data:technique_T1078 ; :claimSubjectControl ?c .
+  ?c a :Nist80053Control .
   ?c :controlId ?control ; :controlTitle ?title .
   OPTIONAL { ?c :inBaseline/:baselineLevel ?level }
 }

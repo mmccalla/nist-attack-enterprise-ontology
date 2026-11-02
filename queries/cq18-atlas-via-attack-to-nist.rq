@@ -13,7 +13,7 @@ SELECT ?atlasTechnique ?atlasName ?attackTechnique ?attackName (COUNT(DISTINCT ?
 WHERE {
   ?a :derivedFromAttack ?t ; :techniqueId ?atlasTechnique ; :techniqueName ?atlasName .
   ?t :techniqueId ?attackTechnique ; :techniqueName ?attackName .
-  OPTIONAL { ?c :mitigatesTechnique ?t }
+  OPTIONAL { ?c a :Nist80053Control ; :mitigatesTechnique ?t }
 }
 GROUP BY ?atlasTechnique ?atlasName ?attackTechnique ?attackName
 ORDER BY ?atlasTechnique

@@ -14,16 +14,16 @@
 <https://w3id.org/example/nist-attack-mapping/ontology/1.0> a owl:Ontology ;
     dcterms:title "Enterprise ontology for NIST 800-53 Rev.5 to MITRE ATT&CK Enterprise mapping" ;
     dcterms:description "Schema-first ontology that separates source assertions from interpreted mitigation claims, links controls to OSCAL baselines and techniques to ATT&CK tactics, platforms and mitigations, and supports validation, provenance and controlled vocabularies." ;
-    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.2.0> ;
-    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/2.1.0> ;
-    owl:backwardCompatibleWith <https://w3id.org/example/nist-attack-mapping/ontology/2.1.0> ;
-    owl:versionInfo "2.2.0" ;
+    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.3.0> ;
+    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/2.2.0> ;
+    owl:backwardCompatibleWith <https://w3id.org/example/nist-attack-mapping/ontology/2.2.0> ;
+    owl:versionInfo "2.3.0" ;
     dcterms:creator "OpenAI" ;
     dcterms:contributor "Mark McCalla" ;
     dcterms:created "2026-04-13"^^xsd:date ;
     dcterms:modified "2026-11-02"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. Version 2.1.0 adds catalogues, frameworks and later-version records. Version 2.2.0 adds MITRE ATLAS and OWASP GenAI risks and widens technique and mitigation properties to every catalogue. Both are backward compatible. See docs/semantic-decisions.md." ;
+    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. Version 2.1.0 adds catalogues, frameworks and later-version records. Version 2.2.0 adds MITRE ATLAS and OWASP GenAI risks. Version 2.3.0 adds the CIS Controls, control-level non-mappable rows and catalogue versions per source. All are backward compatible. See docs/semantic-decisions.md." ;
     dcterms:conformsTo <https://www.w3.org/TR/owl2-syntax/> ,
         <https://www.w3.org/TR/shacl/> ,
         <https://www.w3.org/TR/skos-reference/> ,
@@ -62,7 +62,6 @@
     rdfs:label "Source assertion" ;
     skos:definition "One row of a mapping dataset, preserved as the source states it. It is not automatically an enterprise claim." ;
     rdfs:subClassOf
-        [ a owl:Restriction ; owl:onProperty :assertsTechnique ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :AttackTechnique ],
         [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :MappingStatus ],
         [ a owl:Restriction ; owl:onProperty :assertedMappingType ; owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :MappingType ] .
 
@@ -73,6 +72,7 @@
     rdfs:subClassOf
         [ a owl:Restriction ; owl:onProperty :assertedMappingType ; owl:hasValue :mappingType_mitigates ],
         [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:hasValue :mappingStatus_complete ],
+        [ a owl:Restriction ; owl:onProperty :assertsTechnique ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :AttackTechnique ],
         [ a owl:Restriction ; owl:onProperty :assertsControl ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :SecurityControl ],
         [ a owl:Restriction ; owl:onProperty :assertsCapabilityGroup ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :CapabilityGroup ] .
 
@@ -82,8 +82,18 @@
     skos:definition "A source row with status non_mappable: the source states that it found no control for the technique. Under open-world semantics this records the source's statement, not a proof that no control exists." ;
     rdfs:subClassOf
         [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:hasValue :mappingStatus_nonMappable ],
+        [ a owl:Restriction ; owl:onProperty :assertsTechnique ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :AttackTechnique ],
         [ a owl:Restriction ; owl:onProperty :assertsControl ; owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onClass :SecurityControl ],
         [ a owl:Restriction ; owl:onProperty :assertsCapabilityGroup ; owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onClass :CapabilityGroup ] .
+
+:NonMappableControlAssertion a owl:Class ;
+    rdfs:subClassOf :SourceAssertion ;
+    rdfs:label "Non-mappable control assertion" ;
+    skos:definition "A source row that says a control maps to no technique (the CIS file uses this form). Compare NonMappableAssertion, where a technique maps to no control (the NIST file uses that form)." ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :assertedStatus ; owl:hasValue :mappingStatus_nonMappable ],
+        [ a owl:Restriction ; owl:onProperty :assertsControl ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :SecurityControl ],
+        [ a owl:Restriction ; owl:onProperty :assertsTechnique ; owl:maxQualifiedCardinality "0"^^xsd:nonNegativeInteger ; owl:onClass :AttackTechnique ] .
 
 :MitigationClaim a owl:Class ;
     rdfs:subClassOf prov:Entity ;
@@ -105,6 +115,15 @@
     rdfs:subClassOf
         [ a owl:Restriction ; owl:onProperty :inCapabilityGroup ; owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :CapabilityGroup ],
         [ a owl:Restriction ; owl:onProperty :controlId ; owl:cardinality "1"^^xsd:nonNegativeInteger ] .
+
+:Nist80053Control a owl:Class ;
+    rdfs:subClassOf :SecurityControl ;
+    rdfs:label "NIST SP 800-53 control" .
+
+:CisSafeguard a owl:Class ;
+    rdfs:subClassOf :SecurityControl ;
+    rdfs:label "CIS Safeguard" ;
+    skos:definition "A Safeguard of the CIS Critical Security Controls, such as CIS-13.7. Its CIS Control (CIS-13) is its capability group." .
 
 :CapabilityGroup a owl:Class ;
     rdfs:subClassOf skos:Concept ;
@@ -218,7 +237,9 @@
 :SecurityControl owl:disjointWith :Reference, :DatasetMetadataRecord, :ControlBaseline .
 :AttackTechnique owl:disjointWith :Reference, :DatasetMetadataRecord .
 :MitigationClaim owl:disjointWith :SourceAssertion .
-:MitigatesAssertion owl:disjointWith :NonMappableAssertion .
+:MitigatesAssertion owl:disjointWith :NonMappableAssertion, :NonMappableControlAssertion .
+:NonMappableAssertion owl:disjointWith :NonMappableControlAssertion .
+:Nist80053Control owl:disjointWith :CisSafeguard .
 [] a owl:AllDisjointClasses ;
     owl:members ( :ThreatCatalogue :ControlFramework :LaterVersionRecord :SourceAssertion :MitigationClaim :ControlBaseline ) .
 :AdversaryTechnique owl:disjointWith :ThreatMitigation, :SecurityControl, :Tactic, :OwaspRisk .
@@ -278,6 +299,14 @@
     skos:definition "Links a sub-technique to its parent technique. A classification relation between individuals (skos:broader), not rdfs:subClassOf." .
 :inTactic a owl:ObjectProperty ; rdfs:domain :AdversaryTechnique ; rdfs:range :Tactic ; rdfs:label "in tactic" .
 :targetsPlatform a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :Platform ; rdfs:label "targets platform" .
+:activeInCatalogue a owl:ObjectProperty ; rdfs:domain :AdversaryTechnique ; rdfs:range :ThreatCatalogue ;
+    rdfs:label "active in catalogue" ;
+    skos:definition "The technique is active (not revoked, not deprecated) in this catalogue version. A technique can be active in several versions; matched by STIX id." .
+:mapsToCatalogue a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain :CybersecurityMappingDataset ; rdfs:range :ThreatCatalogue ;
+    rdfs:label "maps to catalogue" ; skos:definition "The catalogue version that a mapping dataset uses for its technique IDs." .
+:replacesTechnique a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :AttackTechnique ;
+    rdfs:label "replaces technique" ;
+    skos:definition "Read from an ATT&CK revoked-by relationship: the later technique replaces the earlier, revoked one. Not an equivalence." .
 :inCatalogue a owl:ObjectProperty ; rdfs:range :ThreatCatalogue ; rdfs:label "in catalogue" ;
     skos:definition "Links a technique, tactic, mitigation or later-version record to the catalogue version it belongs to." .
 :inFramework a owl:ObjectProperty ; rdfs:range :ControlFramework ; rdfs:label "in framework" ;
@@ -324,6 +353,7 @@
 
 :sourceRecordNumber a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :SourceAssertion ; rdfs:range xsd:integer ;
     rdfs:label "source record number" ; skos:definition "One-based position of the row in the mapping_objects array of the source file." .
+:referenceUrl a owl:DatatypeProperty ; rdfs:domain :SourceAssertion ; rdfs:range xsd:anyURI ; rdfs:label "reference URL" .
 :rationaleText a owl:DatatypeProperty ; rdfs:domain :SourceAssertion ; rdfs:range xsd:string ; rdfs:label "rationale text" .
 :referenceText a owl:DatatypeProperty ; rdfs:domain :Reference ; rdfs:range xsd:string .
 
@@ -407,8 +437,7 @@
 
 :mappingType_nonMappable a :MappingType ;
     skos:inScheme :MappingTypeScheme ; skos:prefLabel "non_mappable" ; :mappingTypeCode "non_mappable" ;
-    owl:deprecated true ; dcterms:isReplacedBy :mappingStatus_nonMappable ;
-    rdfs:comment "Deprecated in 2.0.0: in the source, non_mappable is a status and the mapping type is null." .
+    rdfs:comment "Files differ: the NIST 800-53 file sets mapping_type to null on non-mappable rows; the CIS 8.1.2 file declares non_mappable as a mapping type. The type is used only where the source sets it. Deprecated in 2.0.0 and reinstated in 2.3.0." .
 
 :mappingStatus_complete a :MappingStatus ;
     skos:inScheme :MappingStatusScheme ; skos:prefLabel "complete" ; :mappingStatusCode "complete" .
