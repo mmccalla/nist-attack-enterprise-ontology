@@ -1,7 +1,7 @@
 # Top-level development dependencies. Lock with:
 #   pip-compile --generate-hashes --allow-unsafe --strip-extras --output-file requirements-dev.txt requirements-dev.in
 rdflib==7.6.0
-pyshacl==0.40.1
+pyshacl==0.40.2
 pytest==9.1.1
 owlready2==0.51
 pip-audit==2.9.0
