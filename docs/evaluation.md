@@ -39,6 +39,14 @@ Run on an Apple M4 Mac with Python 3.14, rdflib 7.6.0, pySHACL 0.40.1, owlready2
 - Agent API: 856 files. Each document obeys its JSON Schema. Six probes are rejected (unknown field, missing field, bad ID, unknown status, claim without evidence, link without https). Technique claims agree with the raw sources. Each reference resolves to a file. The largest file is less than 120 KB.
 - Reproducibility: the API build is identical with `PYTHONHASHSEED` 5 and 9.
 
+## Results on 2026-11-02 (release 2.4.0, phase 3)
+
+- `python -m pytest -q tests`: **110 passed** in 222 seconds.
+- `npm run uat` with the poisoned page: **47 browser checks** pass, including the ATLAS gap analysis and its agreement with CQ16.
+- Data conformance: 0 violations and 1 warning. Five new probes cover ATLAS IDs, ATLAS mitigation links, OWASP links, ATT&CK tactic STIX ids and ATLAS parents.
+- Competency coverage: all 19 questions agree with the independent reading of the raw ATLAS YAML and the curated OWASP file.
+- Agent API: 1,088 files, all valid against their schemas.
+
 ## Semantic correctness
 
 The guide lists domain expert verification as its own dimension, and no automated gate replaces it. The competency answers in [competency-questions.md](competency-questions.md) are as good as the CTID mapping and should be reviewed by a security architect before they drive a control decision. The alignment decisions in [vocabulary-alignment.md](vocabulary-alignment.md) should be reviewed by someone who maintains a UCO, STIX or OSCAL integration.

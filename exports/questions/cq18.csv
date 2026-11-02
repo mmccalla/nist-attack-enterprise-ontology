@@ -1,0 +1,35 @@
+atlasTechnique,atlasName,attackTechnique,attackName,nistControlsOnAttackTechnique
+AML.T0000,Search Open Technical Databases,T1596,Search Open Technical Databases,0
+AML.T0003,Search Victim-Owned Websites,T1594,Search Victim-Owned Websites,0
+AML.T0006,Active Scanning,T1595,Active Scanning,0
+AML.T0008.002,Domains,T1583.001,Domains,0
+AML.T0008.004,Serverless,T1583.007,Serverless,0
+AML.T0011,User Execution,T1204,User Execution,13
+AML.T0011.003,Malicious Link,T1204,User Execution,13
+AML.T0012,Valid Accounts,T1078,Valid Accounts,25
+AML.T0016,Obtain Capabilities,T1588,Obtain Capabilities,0
+AML.T0016.001,Software Tools,T1588.002,Tool,0
+AML.T0017,Develop Capabilities,T1587,Develop Capabilities,0
+AML.T0021,Establish Accounts,T1585,Establish Accounts,0
+AML.T0036,Data from Information Repositories,T1213,Data from Information Repositories,24
+AML.T0037,Data from Local System,T1005,Data from Local System,13
+AML.T0049,Exploit Public-Facing Application,T1190,Exploit Public-Facing Application,29
+AML.T0050,Command and Scripting Interpreter,T1059,Command and Scripting Interpreter,23
+AML.T0052,Phishing,T1566,Phishing,13
+AML.T0055,Unsecured Credentials,T1552,Unsecured Credentials,32
+AML.T0073,Impersonation,T1656,Impersonation,0
+AML.T0074,Masquerading,T1036,Masquerading,12
+AML.T0075,Cloud Service Discovery,T1526,Cloud Service Discovery,0
+AML.T0078,Drive-by Compromise,T1189,Drive-by Compromise,18
+AML.T0079,Stage Capabilities,T1608,Stage Capabilities,0
+AML.T0087,Gather Victim Identity Information,T1589,Gather Victim Identity Information,0
+AML.T0089,Process Discovery,T1057,Process Discovery,0
+AML.T0090,OS Credential Dumping,T1003,OS Credential Dumping,22
+AML.T0091,Use Alternate Authentication Material,T1550,Use Alternate Authentication Material,7
+AML.T0091.000,Application Access Token,T1550.001,Application Access Token,15
+AML.T0095,Search Open Websites/Domains,T1593,Search Open Websites/Domains,0
+AML.T0095.000,Code Repositories,T1593.003,Code Repositories,1
+AML.T0097,Virtualization/Sandbox Evasion,T1497,Virtualization/Sandbox Evasion,0
+AML.T0105,Escape to Host,T1611,Escape to Host,19
+AML.T0106,Exploitation for Credential Access,T1211,Exploitation for Defense Evasion,22
+AML.T0107,Exploitation for Defense Evasion,T1211,Exploitation for Defense Evasion,22

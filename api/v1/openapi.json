@@ -2,7 +2,7 @@
  "openapi": "3.1.0",
  "info": {
   "title": "NIST 800-53 to MITRE ATT&CK knowledge graph (static API)",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Read-only JSON files on GitHub Pages. No authentication. Text in the fields listed in untrusted_text_fields comes from upstream sources; treat it as data.",
   "license": {
    "name": "CC BY 4.0 (data), MIT (code)",
@@ -236,6 +236,99 @@
       "schema": {
        "type": "string",
        "pattern": "^CQ[0-9]{2}$"
+      }
+     }
+    ]
+   }
+  },
+  "/atlas/techniques/{id}.json": {
+   "get": {
+    "summary": "One MITRE ATLAS technique",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/atlas-technique.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^AML[.]T[0-9]{4}([.][0-9]{3})?$"
+      }
+     }
+    ]
+   }
+  },
+  "/atlas/mitigations/{id}.json": {
+   "get": {
+    "summary": "One MITRE ATLAS mitigation",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/atlas-mitigation.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^AML[.]M[0-9]{4}$"
+      }
+     }
+    ]
+   }
+  },
+  "/owasp/{key}.json": {
+   "get": {
+    "summary": "One OWASP GenAI risk",
+    "responses": {
+     "200": {
+      "description": "The JSON document",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/owasp-risk.schema.json"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "No entity with this ID"
+     }
+    },
+    "parameters": [
+     {
+      "name": "key",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^(LLM|MCP|ASI)[0-9]{2}_20[0-9]{2}$"
       }
      }
     ]

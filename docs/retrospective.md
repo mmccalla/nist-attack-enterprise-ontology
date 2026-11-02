@@ -118,3 +118,31 @@ Phase 2 added the static agent API: 856 JSON files with schemas, an OpenAPI desc
 | --- | --- |
 | Mark all upstream text that an agent reads as untrusted. | Prompt injection can come through source data as well as through user input. |
 | Before git operations that rewrite files, examine whether a sync service watches the folder. | The copies appeared without an error message. |
+
+# Retrospective, phase 3 (2026-11-02)
+
+Phase 3 added MITRE ATLAS, the OWASP GenAI lists, a gap analysis for AI systems and four competency questions for agent builders.
+
+## Keep doing
+
+| Practice | Evidence |
+| --- | --- |
+| Use only published cross-references. | ATLAS publishes its ATT&CK origins and OWASP publishes its ATLAS links. The tool uses those and writes no mapping of its own. |
+| Refuse secondary sources for official facts. | The Agentic Top 10 titles were available only from vendor blogs. The tool leaves them out and says why. |
+| Test licence rules. | A test fails if an MCP Top 10 title appears. |
+| Load a deep link in a real browser before you decide that it is broken. | ATLAS deep links answer 404 but render in a browser. |
+
+## Stop doing
+
+| Practice | Evidence | Better practice |
+| --- | --- | --- |
+| Tests that assume one catalogue. | A STIX-id test failed when ATLAS tactics arrived, because ATLAS has no STIX ids. | Scope each catalogue-specific test to its catalogue. |
+| A loop variable with the same name as an outer variable. | `m` in a new loop replaced the model in `build_exports.py`. | Use a distinct name, and read the enclosing function before an insertion. |
+| A first question that ignores the hierarchy. | CQ16 first counted 19 agent techniques without mitigation, but 5 have one on their parent. | Ask a domain expert question: "on the technique or its parent". Show both numbers where users see one view. |
+
+## Start doing
+
+| Practice | Reason |
+| --- | --- |
+| Label derived classifications as derived at each place where users see them. | The "AI agent" flag is useful, but ATLAS does not publish it. |
+| Ask the owner for official documents that sit behind forms. | The Agentic Top 10 item titles can be added from the official document. |

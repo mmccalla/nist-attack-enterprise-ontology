@@ -25,6 +25,7 @@ from rdflib.namespace import DCTERMS, OWL, PROV, RDF, RDFS, SKOS
 ROOT = Path(__file__).resolve().parent.parent
 CACHE = ROOT / ".cache"
 POPULATION = ROOT / "data" / "population.ttl"
+OWASP = ROOT / "data" / "sources" / "owasp-genai.json"
 CHECKS = ROOT / "data" / "source-checks.json"
 
 ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
@@ -45,6 +46,10 @@ SOURCES = {
     "attack_latest": (
         f"{GH}/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json",
         "81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352",
+    ),
+    "atlas": (
+        f"{GH}/mitre-atlas/atlas-data/da9ebf9b66e6902ad97c267e2a20af0bd996a60f/dist/ATLAS.yaml",
+        "c9c23971d0db07e2782423d795a20e78d5c2c9bcdc78fc67e24530657daaec41",
     ),
     "catalog": (
         f"{OSCAL}/NIST_SP-800-53_rev5_catalog.json",
@@ -76,6 +81,10 @@ def fetch(key: str) -> dict:
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
     if actual != digest:
         raise SystemExit(f"{key}: SHA-256 {actual} does not match the pinned {digest}; delete .cache/{key}.json")
+    if url.endswith(".yaml"):
+        import yaml  # noqa: PLC0415
+
+        return yaml.safe_load(path.read_text(encoding="utf-8"))  # safe_load only: no object construction
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -352,6 +361,8 @@ def build() -> tuple[Graph, dict]:
             g.add((claim, PROV.wasDerivedFrom, node))
         g.add((DATA[f"control_{cid}"], ONT.mitigatesTechnique, DATA[f"technique_{tid}"]))
     checks["claimsWithheld"] = withheld
+    checks["atlas"] = add_atlas(g, fetch("atlas"), stix_techniques, mitigations)
+    checks["owasp"] = add_owasp(g)
     checks["counts"] = {
         "sourceRows": len(rows),
         "mitigatesRows": sum(1 for r in rows if r["status"] == "complete"),
@@ -425,6 +436,131 @@ def reconcile(g: Graph, techniques: dict, later: dict, later_catalogue) -> dict:
         "statusCounts": dict(sorted(counts.items())),
         "techniquesOnlyInLaterVersion": len(later_ids - set(techniques)),
     }
+
+
+AGENT_NAME = re.compile(r"AI Agent|Agentic")
+
+
+def add_atlas(g: Graph, atlas: dict, attack_techniques: dict, attack_mitigations: dict) -> dict:
+    """MITRE ATLAS tactics, techniques and mitigations, and the ATT&CK references that ATLAS publishes."""
+    g.add((DATA.atlasData, RDF.type, ONT.ReferenceDataset))
+    g.add((DATA.atlasData, DCTERMS.title, lit(f"MITRE ATLAS {atlas['version']}")))
+    g.add((DATA.atlasData, OWL.versionInfo, lit(atlas["version"])))
+    g.add((DATA.atlasData, DCTERMS.source, URIRef(SOURCES["atlas"][0])))
+    g.add((DATA.atlasData, ONT.sha256, lit(SOURCES["atlas"][1])))
+    catalogue = DATA[f"catalogue_atlas-{atlas['version']}"]
+    g.add((catalogue, RDF.type, ONT.ThreatCatalogue))
+    g.add((catalogue, RDFS.label, lit(f"MITRE ATLAS {atlas['version']}")))
+    g.add((catalogue, ONT.catalogueVersion, lit(atlas["version"])))
+    g.add((catalogue, ONT.catalogueDomain, lit("atlas")))
+    g.add((catalogue, PROV.wasDerivedFrom, DATA.atlasData))
+    matrix = atlas["matrices"][0]
+    for order, tactic in enumerate(matrix["tactics"], start=1):
+        node = DATA[f"atlastactic_{tactic['id']}"]
+        g.add((node, RDF.type, ONT.Tactic))
+        g.add((node, SKOS.inScheme, ONT.TacticScheme))
+        g.add((node, SKOS.prefLabel, lit(tactic["name"])))
+        g.add((node, ONT.tacticId, lit(tactic["id"])))
+        g.add((node, ONT.tacticOrder, lit(order, XSD.integer)))
+        g.add((node, ONT.inCatalogue, catalogue))
+        g.add((node, PROV.wasDerivedFrom, DATA.atlasData))
+    by_id = {t["id"]: t for t in matrix["techniques"]}
+    agent = {}
+
+    def is_agent(tid):
+        if tid not in agent:
+            t = by_id[tid]
+            agent[tid] = bool(AGENT_NAME.search(t["name"])) or ("specializes" in t and is_agent(t["specializes"]))
+        return agent[tid]
+
+    unresolved = []
+    for t in matrix["techniques"]:
+        node = DATA[f"atlastechnique_{t['id']}"]
+        g.add((node, RDF.type, ONT.AtlasTechnique))
+        g.add((node, ONT.techniqueId, lit(t["id"])))
+        g.add((node, ONT.techniqueName, lit(t["name"])))
+        g.add((node, SKOS.prefLabel, lit(t["name"])))
+        g.add((node, ONT.isSubTechnique, lit("specializes" in t, XSD.boolean)))
+        g.add((node, ONT.isAgentRelated, lit(is_agent(t["id"]), XSD.boolean)))
+        g.add((node, ONT.atlasMaturity, lit(t["maturity"])))
+        g.add((node, ONT.inCatalogue, catalogue))
+        g.add((node, PROV.wasDerivedFrom, DATA.atlasData))
+        if "specializes" in t:
+            g.add((node, ONT.subTechniqueOf, DATA[f"atlastechnique_{t['specializes']}"]))
+        for ta in t.get("tactics", []):
+            g.add((node, ONT.inTactic, DATA[f"atlastactic_{ta}"]))
+        ref = t.get("ATT&CK-reference")
+        if ref:
+            if ref["id"] in attack_techniques:
+                g.add((node, ONT.derivedFromAttack, DATA[f"technique_{ref['id']}"]))
+            else:
+                g.add((node, ONT.attackReferenceId, lit(ref["id"])))
+                unresolved.append(f"{t['id']} {ref['id']}")
+    attack_mitigation_ids = {str(g.value(n, ONT.mitigationId)) for n in attack_mitigations.values()}
+    links = 0
+    for m in matrix["mitigations"]:
+        node = DATA[f"atlasmitigation_{m['id']}"]
+        g.add((node, RDF.type, ONT.AtlasMitigation))
+        g.add((node, ONT.mitigationId, lit(m["id"])))
+        g.add((node, SKOS.prefLabel, lit(m["name"])))
+        for category in (m["category"] if isinstance(m["category"], list) else [m["category"]]):
+            g.add((node, ONT.atlasCategory, lit(category)))
+        g.add((node, ONT.inCatalogue, catalogue))
+        g.add((node, PROV.wasDerivedFrom, DATA.atlasData))
+        for use in m["techniques"]:
+            g.add((node, ONT.atlasMitigationFor, DATA[f"atlastechnique_{use['id']}"]))
+            links += 1
+        ref = m.get("ATT&CK-reference")
+        if ref and ref["id"] in attack_mitigation_ids:
+            g.add((node, ONT.derivedFromAttackMitigation, DATA[f"mitigation_{ref['id']}"]))
+        elif ref:
+            g.add((node, ONT.attackReferenceId, lit(ref["id"])))
+            unresolved.append(f"{m['id']} {ref['id']}")
+    return {
+        "version": atlas["version"],
+        "tactics": len(matrix["tactics"]),
+        "techniques": len(matrix["techniques"]),
+        "agentRelatedTechniques": sum(agent.values()),
+        "mitigations": len(matrix["mitigations"]),
+        "mitigationLinks": links,
+        "attackReferencesNotInGraph": sorted(unresolved),
+    }
+
+
+def add_owasp(g: Graph) -> dict:
+    """OWASP GenAI lists from the curated extract in data/sources/owasp-genai.json (CC BY-SA 4.0 parts)."""
+    raw = OWASP.read_bytes()
+    doc = json.loads(raw)
+    dataset = DATA.owaspGenaiExtract
+    g.add((dataset, RDF.type, ONT.ReferenceDataset))
+    g.add((dataset, DCTERMS.title, lit("OWASP GenAI Security Project lists (curated extract)")))
+    g.add((dataset, DCTERMS.source, URIRef("https://genai.owasp.org/")))
+    g.add((dataset, ONT.sha256, lit(hashlib.sha256(raw).hexdigest())))
+    g.add((dataset, OWL.versionInfo, lit(doc["retrieved"])))
+    counts = {}
+    for lst in doc["lists"]:
+        catalogue = DATA[f"catalogue_{lst['id']}"]
+        g.add((catalogue, RDF.type, ONT.ThreatCatalogue))
+        g.add((catalogue, RDFS.label, lit(lst["title"])))
+        g.add((catalogue, ONT.catalogueVersion, lit(lst.get("published", doc["retrieved"]))))
+        g.add((catalogue, ONT.catalogueDomain, lit("owasp")))
+        g.add((catalogue, DCTERMS.source, URIRef(lst["url"])))
+        g.add((catalogue, DCTERMS.license, lit(lst["licence"])))
+        g.add((catalogue, PROV.wasDerivedFrom, dataset))
+        if lst.get("note"):
+            g.add((catalogue, RDFS.comment, lit(lst["note"])))
+        for item in lst["items"]:
+            node = DATA[f"owasp_{slug(item['id'])}"]
+            g.add((node, RDF.type, ONT.OwaspRisk))
+            g.add((node, ONT.owaspId, lit(item["id"])))
+            g.add((node, SKOS.prefLabel, lit(f"{item['id']} {item['title']}" if item.get("title") else item["id"])))
+            g.add((node, DCTERMS.source, URIRef(item["url"])))
+            g.add((node, ONT.inCatalogue, catalogue))
+            g.add((node, PROV.wasDerivedFrom, dataset))
+            for aid in item.get("related_atlas", []):
+                g.add((node, ONT.relatedAtlasTechnique, DATA[f"atlastechnique_{aid}"]))
+        counts[lst["id"]] = {"items": len(lst["items"]), "atlasLinks": sum(len(i.get("related_atlas", [])) for i in lst["items"])}
+    return counts
 
 
 HEADER = (

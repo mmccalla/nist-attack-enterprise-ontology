@@ -4,8 +4,8 @@
  "id": "MP-07",
  "versions": {
   "api": "1",
-  "release": "2.3.0",
-  "ontology": "2.1.0",
+  "release": "2.4.0",
+  "ontology": "2.2.0",
   "attack": "16.1",
   "attack_later": "20.0"
  },

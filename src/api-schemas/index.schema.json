@@ -113,6 +113,48 @@
      "id"
     ]
    }
+  },
+  "atlas_techniques": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "atlas_mitigations": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  },
+  "owasp_risks": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
   }
  },
  "required": [

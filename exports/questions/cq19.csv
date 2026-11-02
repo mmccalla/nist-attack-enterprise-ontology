@@ -1,0 +1,14 @@
+risk,atlasTechnique,atlasName,atlasMitigations
+LLM01:2025 Prompt Injection,AML.T0051.000,Direct,AML.M0024 AML.M0033
+LLM01:2025 Prompt Injection,AML.T0051.001,Indirect,AML.M0024 AML.M0033
+LLM01:2025 Prompt Injection,AML.T0054,LLM Jailbreak,AML.M0020 AML.M0021 AML.M0022
+LLM02:2025 Sensitive Information Disclosure,AML.T0024.000,Infer Training Data Membership,AML.M0002 AML.M0004 AML.M0024
+LLM02:2025 Sensitive Information Disclosure,AML.T0024.001,Invert AI Model,AML.M0002 AML.M0004 AML.M0024
+LLM02:2025 Sensitive Information Disclosure,AML.T0024.002,Extract AI Model,AML.M0002 AML.M0004 AML.M0024
+LLM04:2025 Data and Model Poisoning,AML.T0018,Manipulate AI Model,AML.M0005 AML.M0008 AML.M0013
+LLM07:2025 System Prompt Leakage,AML.T0051.000,Direct,AML.M0024 AML.M0033
+LLM09:2025 Misinformation,AML.T0048.002,Societal Harm,
+LLM10:2025 Unbounded Consumption,AML.T0024,Exfiltration via AI Inference API,AML.M0004 AML.M0019 AML.M0024
+LLM10:2025 Unbounded Consumption,AML.T0025,Exfiltration via Cyber Means,AML.M0005
+LLM10:2025 Unbounded Consumption,AML.T0029,Denial of AI Service,AML.M0004 AML.M0015 AML.M0019
+LLM10:2025 Unbounded Consumption,AML.T0034,Cost Harvesting,AML.M0004 AML.M0019

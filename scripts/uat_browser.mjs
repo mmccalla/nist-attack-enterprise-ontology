@@ -150,6 +150,29 @@ await settle();
 const [ctl] = await Promise.all([page.waitForEvent("download"), page.locator("#node-layer").click()]);
 check(ctl.suggestedFilename().startsWith("nist-800-53-ac-02"), "a control page downloads its Navigator layer");
 
+// AI and agents: ATLAS, OWASP and the ATLAS gap analysis
+await page.goto(url.split("#")[0] + "#n/atlastechnique_AML.T0053");
+await settle();
+const atl = await page.locator("#detail").textContent();
+check(atl.includes("AI Agent Tool Invocation") && atl.includes("Related to AI agents"), "an ATLAS agent technique shows its name and the derived agent flag");
+check((await page.locator('#detail a[href="https://atlas.mitre.org/techniques/AML.T0053"]').count()) === 1, "an ATLAS technique links to atlas.mitre.org");
+await page.goto(url.split("#")[0] + "#n/owasp_LLM01_2025");
+await settle();
+const ow = await page.locator("#detail").textContent();
+check(ow.includes("Prompt Injection") && ow.includes("AML.T0051.000"), "an OWASP risk shows its published ATLAS links");
+await page.goto(url.split("#")[0] + "#gaps-atlas");
+await settle();
+await page.locator("#atlas-all").click();
+await settle();
+const [aCov, aGap, aNone, aTotal] = (await page.locator("#report .stat b").allTextContents()).map(Number);
+const agentCount = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true").length);
+check(aGap === 0 && aCov + aNone === aTotal && aTotal === agentCount, `with all ATLAS mitigations, ${aCov} of ${aTotal} agent techniques are covered and ${aNone} have no mitigation`);
+check(page.url().includes("#gaps-atlas/AML.M"), "the ATLAS selection is kept in the address bar");
+if (shots) await page.screenshot({ path: `${shots}/gaps-atlas.png` });
+const parentNote = await page.locator("#report").textContent();
+const noParent = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true" && !atlasMitigationsOf(n.id).length && !atlasParentMitigated(n.id)).length);
+check(parentNote.includes(`${aNone - noParent} of these have a mitigation on their parent technique`) && noParent === 14, "the ATLAS view explains parent mitigations and agrees with CQ16 (14)");
+
 // Security probes (docs/security.md)
 const base = url.split("#")[0];
 const blocked = await page.evaluate(h => fetch(`https://${h}/x`).then(() => "sent", () => "blocked"), PROBE_HOST);

@@ -85,6 +85,6 @@ Only the repository owner can make these changes.
 ## Rules for later phases
 
 - **Phase 2 (agent API), done:** each file obeys a strict schema (`tests/test_api.py`, with six probes). No file holds text from a user. Fields with upstream prose are listed in `untrusted_text_fields`; a test found that CQ07 needed this. The API is static, with no server, and each file is below 120 KB.
-- **Phase 3 (ATLAS and OWASP):** read YAML with a safe loader. Apply the size and host limits to each new source. Apply the licence rules.
+- **Phase 3 (ATLAS and OWASP), done:** ATLAS is read with `yaml.safe_load` only, and a test fails on any other YAML loader. ATLAS is pinned to a commit and a digest, within the host and size limits. The curated OWASP file is in the repository with its digest recorded in the graph. The licence rules are tested: no MCP Top 10 title is copied. ATLAS mitigation "use" text is not imported.
 - **Phase 5 (MCP server):** no network access. Validate each input. Never return free text from an OSCAL file. Limit input and output size. Pin and document the server version.
 - **Phase 6:** add OpenSSF Scorecard, the secret scan and the dependency scan to CI, with each workflow at minimum permissions.

@@ -1,0 +1,146 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/atlas-technique.schema.json",
+ "title": "atlas-technique",
+ "description": "A MITRE ATLAS technique with its mitigations, ATT&CK origin and OWASP risks.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "atlas-technique"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^AML[.]T[0-9]{4}([.][0-9]{3})?$"
+  },
+  "name": {
+   "type": "string"
+  },
+  "catalogue": {
+   "type": "string"
+  },
+  "agent_related": {
+   "type": "boolean",
+   "description": "Derived by this project from the technique name; not published by ATLAS."
+  },
+  "maturity": {
+   "enum": [
+    "feasible",
+    "demonstrated",
+    "realized"
+   ]
+  },
+  "parent": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^AML[.]T[0-9]{4}([.][0-9]{3})?$"
+  },
+  "subtechniques": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^AML[.]T[0-9]{4}([.][0-9]{3})?$"
+   }
+  },
+  "tactics": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^AML[.]TA[0-9]{4}$"
+     },
+     "name": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "name"
+    ],
+    "additionalProperties": false
+   }
+  },
+  "mitigations": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "pattern": "^AML[.]M[0-9]{4}$"
+     },
+     "name": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "name"
+    ],
+    "additionalProperties": false
+   }
+  },
+  "derived_from_attack": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string",
+       "pattern": "^T[0-9]{4}([.][0-9]{3})?$"
+      },
+      "name": {
+       "type": "string"
+      },
+      "nist_controls_on_attack_technique": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}-[0-9]{2}$"
+       }
+      },
+      "note": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "id",
+      "name",
+      "nist_controls_on_attack_technique",
+      "note"
+     ],
+     "additionalProperties": false
+    }
+   ]
+  },
+  "owasp_risks": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^(LLM|MCP|ASI)[0-9]{2}:20[0-9]{2}$"
+   }
+  },
+  "atlas_url": {
+   "type": "string",
+   "pattern": "^https://"
+  }
+ },
+ "required": [
+  "name",
+  "agent_related",
+  "maturity",
+  "mitigations",
+  "derived_from_attack"
+ ],
+ "unevaluatedProperties": false
+}

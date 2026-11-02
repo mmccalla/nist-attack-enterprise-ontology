@@ -92,6 +92,11 @@ R1 withholds one claim today: row 637 maps SC-12 to T1521.003 SSL Pinning, which
 | D17 | One gap-analysis implementation in `lib/coverage.cjs`, inlined in the page and called from the exports through Node. | Separate JavaScript and Python copies: they can drift, and the MCP server would add a third. |
 | D18 | A Content Security Policy with script hashes and `connect-src 'none'`. | No policy: the page would depend on escaping alone. A policy with `unsafe-inline` for scripts: it would not stop injected handlers. |
 
+| D19 | Import MITRE ATLAS as its own catalogue (`:AtlasTechnique`, `:AtlasMitigation`), with technique and mitigation properties widened to every catalogue (ontology 2.2.0). | Typing ATLAS techniques as ATT&CK techniques: they are a different catalogue with different IDs; `owl:disjointWith` now prevents it. |
+| D20 | Follow only published cross-references: ATLAS `ATT&CK-reference` fields (`:derivedFromAttack`) and OWASP "Related Frameworks and Taxonomies" (`:relatedAtlasTechnique`). NIST claims do not transfer from ATT&CK to ATLAS. | Writing project NIST mappings for ATLAS: declined by the owner on 2026-11-02 for the same reason as D16 (claims stay CTID-only). |
+| D21 | Derive an "AI agent" flag from ATLAS technique names ("AI Agent", "Agentic") and parents, and label it as derived everywhere. | No flag: agent builders could not filter. A flag presented as ATLAS data: it is not. |
+| D22 | OWASP: copy IDs, titles and ATLAS links for the LLM Top 10 (CC BY-SA 4.0, kept in a separate, attributed file); only the list title and link for the Agentic Top 10 (the official document is behind a download form, and secondary sources were not used); only IDs and links for the MCP Top 10 (CC BY-NC-SA 4.0). | Titles from secondary sources: not authoritative. MCP titles: the NonCommercial licence does not permit them in a CC BY project. |
+
 ## Deprecations in 2.0.0
 
 `:mappingType_nonMappable` (replaced by `:mappingStatus_nonMappable`), `:controlDescription` (replaced by `:controlTitle`), `:KnowledgeGraph` (unused). Each carries `owl:deprecated true` and, where there is one, `dcterms:isReplacedBy`.

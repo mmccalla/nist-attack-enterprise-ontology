@@ -79,3 +79,10 @@ def test_no_file_sync_duplicates_in_the_tree():
     dups = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*")
             if re.search(r" \d+(\.[^/]+)?$", p.name) and not {".git", "node_modules", ".cache"} & set(p.parts)]
     assert not dups, dups
+
+
+def test_yaml_is_only_read_with_the_safe_loader():
+    for path in list((ROOT / "scripts").glob("*.py")) + list((ROOT / "tests").glob("*.py")):
+        text = path.read_text()
+        assert not re.search(r"yaml\.(load|unsafe_load|full_load)\(", text), f"{path.name} uses an unsafe YAML loader"
+    assert "yaml.safe_load(" in (ROOT / "scripts" / "build_population.py").read_text()

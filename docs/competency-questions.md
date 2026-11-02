@@ -24,6 +24,10 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 | CQ12 | Threat-informed defence analyst | Which active ATT&CK Enterprise 16.1 techniques does the mapping not address at all? | Where the mapping is silent, so silence is not read as "no control needed" | STIX bundle; rows (CTID) |
 | CQ13 | GRC analyst | Where does the mapping name a control or family differently from the OSCAL catalog? | Which labels to correct before output goes into an OSCAL-based assessment | Rows (CTID); OSCAL catalog |
 | CQ14 | GRC analyst | Which claimed techniques did ATT&CK 20.0 revoke or rename, what replaces them and how many claims does each carry? | Which claims to review before reports move to the current ATT&CK version | Claims (CTID); ATT&CK 16.1 and 20.0 STIX |
+| CQ16 | AI agent builder | Which ATLAS techniques against AI agents have no ATLAS mitigation, on the technique or on its parent technique? | Where an agent design needs its own safeguards | MITRE ATLAS 5.6.0 |
+| CQ17 | AI agent builder | Which ATLAS mitigations address the most techniques against AI agents? | Which safeguards to build first into an agent with tools, MCP servers or other agents | MITRE ATLAS 5.6.0 |
+| CQ18 | Security architect for AI systems | Which ATLAS techniques adapt an ATT&CK technique, and how many NIST controls does CTID map to that ATT&CK technique? | Where existing NIST controls give a start for AI threats (indirect link) | ATLAS ATT&CK-reference; CTID claims |
+| CQ19 | LLM application developer | Which OWASP LLM Top 10 (2025) risks does OWASP link to ATLAS techniques, and which ATLAS mitigations address them? | Which safeguards apply to a named OWASP risk | OWASP pages (CC BY-SA 4.0); MITRE ATLAS |
 | CQ15 | Security architect | Which ATT&CK 16.1 tactics lose techniques in ATT&CK 20.0, to which tactics, and how many? | Which coverage reports by tactic break on the move to the current version | ATT&CK 16.1 and 20.0 STIX |
 
 ## What the answers show
@@ -57,6 +61,14 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 **CQ14** (added 2026-11-02). 25 claimed techniques were revoked or renamed in ATT&CK 20.0. For example, T1070.001 Clear Windows Event Logs (21 claims) is replaced by T1685.005, and T1211 is renamed "Exploitation for Stealth".
 
 **CQ15** (added 2026-11-02). ATT&CK 20.0 divides Defense Evasion. 134 of its techniques move to Stealth, which now has the ID TA0005, and 41 move to Defense Impairment (TA0112). A report that joins on tactic IDs across the two versions gives wrong results.
+
+**CQ16** (added 2026-11-02). 14 of the 26 ATLAS techniques against AI agents have no ATLAS mitigation on the technique or on its parent. Examples are AML.T0104 Publish Poisoned AI Agent Tool, AML.T0083 Credentials from AI Agent Configuration and the four sub-techniques of AML.T0084 Discover AI Agent Configuration. The "AI agent" flag is derived from technique names; ATLAS does not publish it.
+
+**CQ17** (added 2026-11-02). Five mitigations each address four agent techniques: AML.M0024 AI Telemetry Logging, AML.M0026 Privileged AI Agent Permissions Configuration, AML.M0027 Single-User AI Agent Permissions Configuration, AML.M0028 AI Agent Tools Permissions Configuration and AML.M0032 Segmentation of AI Agent Components.
+
+**CQ18** (added 2026-11-02). 34 ATLAS techniques adapt an ATT&CK technique. For 18 of them, CTID maps NIST controls to the ATT&CK technique, for example 32 controls for T1552 Unsecured Credentials behind AML.T0055. The link is indirect: the claims stay on the ATT&CK technique.
+
+**CQ19** (added 2026-11-02). OWASP links 7 of the 10 LLM risks to 13 ATLAS techniques. ATLAS gives mitigations for 12 of them. AML.T0048.002 Societal Harm (from LLM09 Misinformation) has none.
 
 ## Open-world caution
 

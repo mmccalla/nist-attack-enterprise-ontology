@@ -16,6 +16,20 @@ The 2.0.0 population reads control titles, families and SP 800-53B baseline memb
 
 `vendor/uco/core.ttl` is UCO 1.5.0 core from the [Unified Cyber Ontology](https://github.com/ucoProject/UCO), Apache 2.0, with its licence in `vendor/uco/LICENSE`. It is used to validate the UCO alignment.
 
+## MITRE ATLAS
+
+The population reads tactics, techniques and mitigations from [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) 5.6.0, © MITRE, Apache 2.0.
+
+## OWASP GenAI Security Project
+
+`data/sources/owasp-genai.json` is a curated extract from the OWASP GenAI Security Project and the OWASP Foundation, retrieved on 2026-11-02:
+
+- OWASP Top 10 for LLM Applications 2025: item IDs, titles and the MITRE ATLAS IDs that OWASP lists under "Related Frameworks and Taxonomies". Licence: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). This extract, and the parts of the graph, API and exports derived from it, are shared under the same licence.
+- OWASP Top 10 for Agentic Applications for 2026: the list title and link only.
+- OWASP MCP Top 10 (beta): item IDs and the link only, because its CC BY-NC-SA 4.0 licence does not permit copying titles into this project.
+
+Changes: extraction of IDs, titles and links. No OWASP text is copied beyond titles.
+
 ## MITRE ATT&CK
 
 MITRE ATT&CK® is a registered trademark of The MITRE Corporation. The 2.0.0 population reads technique, tactic, platform and mitigation data from the ATT&CK Enterprise 16.1 STIX bundle (`mitre-attack/attack-stix-data`). ATT&CK content is © The MITRE Corporation and is used under the [ATT&CK terms of use](https://attack.mitre.org/resources/legal-and-branding/terms-of-use/).

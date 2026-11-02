@@ -133,6 +133,23 @@ def build() -> dict[str, str]:
         sorted(later_rows, key=lambda r: tkey(r[0])),
         ["technique_id", "technique_name", "change_in_20_0", "replacement_ids", "name_in_20_0", "tactics_in_20_0", "claims"],
     )
+    atlas_rows, mit_rows, owasp_rows = [], [], []
+    tid = lambda n: str(g.value(n, ONT.techniqueId))  # noqa: E731
+    for t in g.subjects(RDF.type, ONT.AtlasTechnique):
+        mits = sorted(str(g.value(x, ONT.mitigationId)) for x in g.subjects(ONT.atlasMitigationFor, t))
+        parent = g.value(t, ONT.subTechniqueOf)
+        derived = g.value(t, ONT.derivedFromAttack)
+        atlas_rows.append([tid(t), str(g.value(t, ONT.techniqueName)), str(g.value(t, ONT.isAgentRelated)).lower(), str(g.value(t, ONT.atlasMaturity)),
+                           tid(parent) if parent is not None else "", " ".join(mits), tid(derived) if derived is not None else ""])
+    for mit in g.subjects(RDF.type, ONT.AtlasMitigation):
+        techs = sorted(tid(t) for t in g.objects(mit, ONT.atlasMitigationFor))
+        mit_rows.append([str(g.value(mit, ONT.mitigationId)), str(g.value(mit, SKOS.prefLabel)), " | ".join(sorted(str(c) for c in g.objects(mit, ONT.atlasCategory))), len(techs), " ".join(techs)])
+    for r in g.subjects(ONT.relatedAtlasTechnique, None):
+        for a in g.objects(r, ONT.relatedAtlasTechnique):
+            owasp_rows.append([str(g.value(r, ONT.owaspId)), str(g.value(r, SKOS.prefLabel)), tid(a), str(g.value(a, ONT.techniqueName))])
+    files["atlas-techniques.csv"] = write_csv(sorted(atlas_rows), ["technique_id", "technique_name", "agent_related_derived", "maturity", "parent", "atlas_mitigations", "derived_from_attack"])
+    files["atlas-mitigations.csv"] = write_csv(sorted(mit_rows), ["mitigation_id", "mitigation_name", "categories", "technique_count", "techniques"])
+    files["owasp-llm-atlas-links.csv"] = write_csv(sorted(set(map(tuple, owasp_rows))), ["owasp_id", "owasp_risk", "atlas_technique_id", "atlas_technique_name"])
     specs = [{"file": "navigator/all-controls.json", "name": "NIST 800-53: all mapped controls",
               "description": "Techniques mitigated by any NIST 800-53 Rev. 5 control in the CTID mapping. Score is the number of controls.",
               "selected": sorted(m["controls"])}]

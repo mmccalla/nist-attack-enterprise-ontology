@@ -2,6 +2,15 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.4.0 (2026-11-02)
+
+Ontology 2.2.0 (backward compatible).
+
+- **MITRE ATLAS 5.6.0**: 16 tactics, 170 techniques and 35 mitigations, with the ATT&CK techniques that ATLAS says it adapts. An "AI agent" flag (derived from names) marks 26 techniques.
+- **OWASP GenAI**: the LLM Top 10 (2025) with the 13 ATLAS links that OWASP publishes; the MCP Top 10 (IDs only) and the Agentic Top 10 (list only).
+- **Gap analysis for AI systems**: select ATLAS mitigations and see which agent techniques stay open, with recommendations.
+- Questions CQ16 to CQ19 for agent builders and LLM developers. New API endpoints (`atlas/techniques`, `atlas/mitigations`, `owasp`) and exports (`atlas-techniques.csv`, `atlas-mitigations.csv`, `owasp-llm-atlas-links.csv`).
+
 ## 2.3.0 (2026-11-02)
 
 Ontology 2.1.0, unchanged.

@@ -53,13 +53,16 @@ NODE_TYPES = [
     "ReferenceDataset",
     "DatasetMetadataRecord",
     "LaterVersionRecord",
+    "AtlasTechnique",
+    "AtlasMitigation",
+    "OwaspRisk",
 ]
 # Edges left out of the browser: they point at hub nodes (vocabularies, datasets) or restate another edge.
 # Their values appear as properties instead.
 SKIP_EDGES = {ONT.containsAssertion, ONT.assertsCapabilityGroup, PROV.wasDerivedFrom, SKOS.inScheme, ONT.inCatalogue, ONT.inFramework}
 AS_PROPERTY = {
     ONT.assertedMappingType: "mapping type", ONT.assertedStatus: "status", PROV.wasDerivedFrom: "derived from",
-    ONT.inCatalogue: "catalogue", ONT.inFramework: "framework",
+    ONT.inCatalogue: "catalogue", ONT.inFramework: "framework", DCTERMS.source: "source url",
 }
 SKIP_LITERALS = {SKOS.prefLabel}
 ALIGNMENT_ANNOTATIONS = ["stixObjectType", "stixRelationshipType", "stixProperty", "stixAlignmentNote", "oscalAssembly", "oscalPath"]
@@ -115,6 +118,14 @@ def node_label(graph: Graph, subject, kind: str) -> tuple[str, str | None]:
         control = graph.value(subject, ONT.claimSubjectControl)
         technique = graph.value(subject, ONT.claimObjectTechnique)
         return f"Claim {text(graph, control, ONT.controlId)} mitigates {text(graph, technique, ONT.techniqueId)}", None
+    if kind == "AtlasTechnique":
+        return text(graph, subject, ONT.techniqueId), text(graph, subject, ONT.techniqueName)
+    if kind == "AtlasMitigation":
+        return text(graph, subject, ONT.mitigationId), pref
+    if kind == "OwaspRisk":
+        oid = text(graph, subject, ONT.owaspId)
+        title = pref[len(oid):].strip() if pref and pref.startswith(oid) else None
+        return oid, title or None
     if kind == "LaterVersionRecord":
         catalogue = graph.value(subject, ONT.inCatalogue)
         statuses = ", ".join(sorted(str(x) for x in graph.objects(subject, ONT.versionStatus)))
@@ -146,6 +157,9 @@ def build_instances(graph: Graph) -> tuple[list, list]:
                     key = curie(graph, predicate)
                     props[key] = f"{props[key]} | {value}" if key in props else str(value)
                 elif predicate in AS_PROPERTY and isinstance(value, URIRef):
+                    if predicate == DCTERMS.source:
+                        props[AS_PROPERTY[predicate]] = str(value)
+                        continue
                     if predicate in (ONT.inCatalogue, ONT.inFramework):
                         props[AS_PROPERTY[predicate]] = str(graph.value(value, RDFS.label))
                         continue
@@ -332,6 +346,7 @@ def build_meta(graph: Graph, nodes: list) -> dict:
         "sources": checks["sources"],
         "checks": {k: v for k, v in checks.items() if k not in ("sources", "counts")},
         "sourceCounts": checks["counts"],
+        "atlasVersion": checks["atlas"]["version"],
         "counts": dict(sorted(Counter(n["t"] for n in nodes).items())),
         "triples": len(graph),
     }

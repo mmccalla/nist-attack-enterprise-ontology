@@ -1,0 +1,18 @@
+# id: CQ16
+# persona: AI agent builder
+# question: Which ATLAS techniques against AI agents have no ATLAS mitigation, on the technique or on its parent technique, and how mature is each?
+# decision: Where an agent design needs its own safeguards because ATLAS gives no mitigation yet.
+# evidence: MITRE ATLAS 5.6.0 techniques and mitigations; agent flag derived from technique names.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?technique ?name ?maturity
+WHERE {
+  ?t a :AtlasTechnique ; :isAgentRelated true ; :techniqueId ?technique ; :techniqueName ?name ; :atlasMaturity ?maturity .
+  FILTER NOT EXISTS { ?m :atlasMitigationFor ?t }
+  FILTER NOT EXISTS { ?t :subTechniqueOf ?parent . ?pm :atlasMitigationFor ?parent }
+}
+ORDER BY ?technique

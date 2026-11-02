@@ -14,16 +14,16 @@
 <https://w3id.org/example/nist-attack-mapping/ontology/1.0> a owl:Ontology ;
     dcterms:title "Enterprise ontology for NIST 800-53 Rev.5 to MITRE ATT&CK Enterprise mapping" ;
     dcterms:description "Schema-first ontology that separates source assertions from interpreted mitigation claims, links controls to OSCAL baselines and techniques to ATT&CK tactics, platforms and mitigations, and supports validation, provenance and controlled vocabularies." ;
-    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.1.0> ;
-    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/2.0.0> ;
-    owl:backwardCompatibleWith <https://w3id.org/example/nist-attack-mapping/ontology/2.0.0> ;
-    owl:versionInfo "2.1.0" ;
+    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.2.0> ;
+    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/2.1.0> ;
+    owl:backwardCompatibleWith <https://w3id.org/example/nist-attack-mapping/ontology/2.1.0> ;
+    owl:versionInfo "2.2.0" ;
     dcterms:creator "OpenAI" ;
     dcterms:contributor "Mark McCalla" ;
     dcterms:created "2026-04-13"^^xsd:date ;
     dcterms:modified "2026-11-02"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. Version 2.1.0 adds catalogues, frameworks and later-version records, and is backward compatible with 2.0.0. See docs/semantic-decisions.md." ;
+    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. Version 2.1.0 adds catalogues, frameworks and later-version records. Version 2.2.0 adds MITRE ATLAS and OWASP GenAI risks and widens technique and mitigation properties to every catalogue. Both are backward compatible. See docs/semantic-decisions.md." ;
     dcterms:conformsTo <https://www.w3.org/TR/owl2-syntax/> ,
         <https://www.w3.org/TR/shacl/> ,
         <https://www.w3.org/TR/skos-reference/> ,
@@ -171,6 +171,21 @@
     rdfs:label "Threat mitigation" ;
     skos:definition "A mitigation published by a threat catalogue, such as an ATT&CK mitigation (Mxxxx)." .
 
+:AtlasTechnique a owl:Class ;
+    rdfs:subClassOf :AdversaryTechnique ;
+    rdfs:label "ATLAS technique" ;
+    skos:definition "A technique in MITRE ATLAS: how an adversary attacks an AI-enabled system, including AI agents and their tools." .
+
+:AtlasMitigation a owl:Class ;
+    rdfs:subClassOf :ThreatMitigation ;
+    rdfs:label "ATLAS mitigation" ;
+    skos:definition "A mitigation in MITRE ATLAS (AML.Mxxxx)." .
+
+:OwaspRisk a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "OWASP risk" ;
+    skos:definition "An item in an OWASP GenAI Security Project list, such as LLM01:2025 Prompt Injection or MCP03:2025." .
+
 :LaterVersionRecord a owl:Class ;
     rdfs:subClassOf prov:Entity ;
     rdfs:label "Later version record" ;
@@ -206,7 +221,10 @@
 :MitigatesAssertion owl:disjointWith :NonMappableAssertion .
 [] a owl:AllDisjointClasses ;
     owl:members ( :ThreatCatalogue :ControlFramework :LaterVersionRecord :SourceAssertion :MitigationClaim :ControlBaseline ) .
-:AdversaryTechnique owl:disjointWith :ThreatMitigation, :SecurityControl, :Tactic .
+:AdversaryTechnique owl:disjointWith :ThreatMitigation, :SecurityControl, :Tactic, :OwaspRisk .
+:AtlasTechnique owl:disjointWith :AttackTechnique .
+:AtlasMitigation owl:disjointWith :AttackMitigation .
+:OwaspRisk owl:disjointWith :ThreatMitigation, :SecurityControl, :Tactic .
 
 ##########
 # Concept schemes
@@ -255,17 +273,38 @@
 
 :subTechniqueOf a owl:ObjectProperty ;
     rdfs:subPropertyOf skos:broader ;
-    rdfs:domain :AttackTechnique ; rdfs:range :AttackTechnique ;
+    rdfs:domain :AdversaryTechnique ; rdfs:range :AdversaryTechnique ;
     rdfs:label "sub-technique of" ;
     skos:definition "Links a sub-technique to its parent technique. A classification relation between individuals (skos:broader), not rdfs:subClassOf." .
-:inTactic a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :Tactic ; rdfs:label "in tactic" .
+:inTactic a owl:ObjectProperty ; rdfs:domain :AdversaryTechnique ; rdfs:range :Tactic ; rdfs:label "in tactic" .
 :targetsPlatform a owl:ObjectProperty ; rdfs:domain :AttackTechnique ; rdfs:range :Platform ; rdfs:label "targets platform" .
 :inCatalogue a owl:ObjectProperty ; rdfs:range :ThreatCatalogue ; rdfs:label "in catalogue" ;
     skos:definition "Links a technique, tactic, mitigation or later-version record to the catalogue version it belongs to." .
 :inFramework a owl:ObjectProperty ; rdfs:range :ControlFramework ; rdfs:label "in framework" ;
     skos:definition "Links a control, control family or baseline to its control framework." .
 :describesEntity a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain :LaterVersionRecord ; rdfs:label "describes entity" .
+:threatMitigationFor a owl:ObjectProperty ;
+    rdfs:domain :ThreatMitigation ; rdfs:range :AdversaryTechnique ;
+    rdfs:label "threat mitigation for" ;
+    skos:definition "A threat catalogue's own link from one of its mitigations to one of its techniques." .
+:atlasMitigationFor a owl:ObjectProperty ;
+    rdfs:subPropertyOf :threatMitigationFor ;
+    rdfs:domain :AtlasMitigation ; rdfs:range :AtlasTechnique ;
+    rdfs:label "ATLAS mitigation for" .
+:derivedFromAttack a owl:ObjectProperty ;
+    rdfs:domain :AtlasTechnique ; rdfs:range :AttackTechnique ;
+    rdfs:label "derived from ATT&CK technique" ;
+    skos:definition "ATLAS publishes, in its ATT&CK-reference field, the ATT&CK technique that an ATLAS technique adapts. It is not an equivalence, and NIST claims on the ATT&CK technique do not transfer automatically." .
+:derivedFromAttackMitigation a owl:ObjectProperty ;
+    rdfs:domain :AtlasMitigation ; rdfs:range :AttackMitigation ;
+    rdfs:label "derived from ATT&CK mitigation" ;
+    skos:definition "The ATT&CK mitigation that ATLAS names in the ATT&CK-reference field of an ATLAS mitigation." .
+:relatedAtlasTechnique a owl:ObjectProperty ;
+    rdfs:domain :OwaspRisk ; rdfs:range :AtlasTechnique ;
+    rdfs:label "related ATLAS technique" ;
+    skos:definition "An ATLAS technique that OWASP itself lists under Related Frameworks and Taxonomies for the risk." .
 :attackMitigationFor a owl:ObjectProperty ;
+    rdfs:subPropertyOf :threatMitigationFor ;
     rdfs:domain :AttackMitigation ; rdfs:range :AttackTechnique ;
     rdfs:label "ATT&CK mitigation for" ;
     skos:definition "ATT&CK's own mitigates relationship from a mitigation (Mxxxx) to a technique. Kept apart from mitigatesTechnique because the two come from different sources and different interpretations." .
@@ -301,12 +340,12 @@
     rdfs:label "OSCAL control id" ; skos:definition "Control id in the OSCAL catalog, such as ac-2." .
 :baselineLevel a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :ControlBaseline ; rdfs:range xsd:string .
 
-:techniqueId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:string .
-:techniqueName a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:string ;
+:techniqueId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AdversaryTechnique ; rdfs:range xsd:string .
+:techniqueName a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AdversaryTechnique ; rdfs:range xsd:string ;
     skos:definition "Technique name from the ATT&CK STIX bundle, or from the mapping source when the technique is not in the bundle." .
 :sourceTechniqueName a owl:DatatypeProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:string ;
     skos:definition "The technique name in the mapping source, recorded only where it differs from techniqueName." .
-:isSubTechnique a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:boolean .
+:isSubTechnique a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AdversaryTechnique ; rdfs:range xsd:boolean .
 :inAttackEnterprise a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackTechnique ; rdfs:range xsd:boolean ;
     rdfs:label "in ATT&CK Enterprise" ;
     skos:definition "True when the technique is an active (not revoked, not deprecated) attack-pattern in the pinned ATT&CK Enterprise STIX bundle." .
@@ -315,8 +354,18 @@
 :tacticId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Tactic ; rdfs:range xsd:string .
 :tacticShortName a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Tactic ; rdfs:range xsd:string .
 :tacticOrder a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :Tactic ; rdfs:range xsd:integer .
-:mitigationId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AttackMitigation ; rdfs:range xsd:string .
+:mitigationId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :ThreatMitigation ; rdfs:range xsd:string .
 
+:isAgentRelated a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AtlasTechnique ; rdfs:range xsd:boolean ;
+    rdfs:label "AI agent related" ;
+    skos:definition "Derived by this project, not published by ATLAS: true when the technique name contains 'AI Agent' or 'Agentic', or when its parent technique is agent related." .
+:atlasMaturity a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AtlasTechnique ; rdfs:range xsd:string ;
+    skos:definition "ATLAS maturity: feasible, demonstrated or realized." .
+:atlasCategory a owl:DatatypeProperty ; rdfs:domain :AtlasMitigation ; rdfs:range xsd:string ;
+    skos:definition "ATLAS mitigation category, for example Technical - Cyber. A mitigation can have more than one." .
+:attackReferenceId a owl:DatatypeProperty ; rdfs:range xsd:string ;
+    skos:definition "The ATT&CK ID in an ATLAS ATT&CK-reference field when that technique is not an active ATT&CK Enterprise 16.1 technique in this graph." .
+:owaspId a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :OwaspRisk ; rdfs:range xsd:string .
 :catalogueVersion a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:range xsd:string ; rdfs:label "catalogue version" .
 :catalogueDomain a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :ThreatCatalogue ; rdfs:range xsd:string .
 :versionStatus a owl:DatatypeProperty ; rdfs:domain :LaterVersionRecord ; rdfs:range xsd:string ;
@@ -345,6 +394,9 @@
 :MappingStatus owl:hasKey ( :mappingStatusCode ) .
 :Tactic owl:hasKey ( :tacticId ) .
 :AttackMitigation owl:hasKey ( :mitigationId ) .
+:AtlasTechnique owl:hasKey ( :techniqueId ) .
+:AtlasMitigation owl:hasKey ( :mitigationId ) .
+:OwaspRisk owl:hasKey ( :owaspId ) .
 
 ##########
 # Controlled vocabulary individuals

@@ -97,7 +97,9 @@ def test_alignment_modules_annotate_their_terms(module, annotation, terms):
 
 def test_every_technique_tactic_and_mitigation_in_attack_has_a_stix_id():
     g = gates.graph(gates.CORE)
-    for cls in ("Tactic", "AttackMitigation"):
-        assert all(g.value(n, ONT.stixId) for n in g.subjects(RDF.type, ONT[cls]))
+    attack = DATA["catalogue_attack-enterprise-16.1"]
+    tactics = [n for n in g.subjects(RDF.type, ONT.Tactic) if (n, ONT.inCatalogue, attack) in g]
+    assert len(tactics) == 14 and all(g.value(n, ONT.stixId) for n in tactics)
+    assert all(g.value(n, ONT.stixId) for n in g.subjects(RDF.type, ONT.AttackMitigation))
     for t in g.subjects(ONT.inAttackEnterprise, Literal(True)):
         assert str(g.value(t, ONT.stixId)).startswith("attack-pattern--")

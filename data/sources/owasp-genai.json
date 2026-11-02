@@ -1,0 +1,153 @@
+{
+ "description": "Curated extract of OWASP GenAI Security Project lists, for the NIST 800-53 to ATT&CK ontology. Only published facts: list items, their official titles where the licence permits, and the ATLAS technique IDs that OWASP itself lists under 'Related Frameworks and Taxonomies'.",
+ "retrieved": "2026-11-02",
+ "attribution": "OWASP GenAI Security Project and OWASP Foundation. Changes: extracted IDs, titles and links only.",
+ "lists": [
+  {
+   "id": "owasp-llm-top10-2025",
+   "title": "OWASP Top 10 for LLM Applications 2025",
+   "url": "https://genai.owasp.org/llm-top-10/",
+   "licence": "CC BY-SA 4.0",
+   "items": [
+    {
+     "id": "LLM01:2025",
+     "title": "Prompt Injection",
+     "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+     "related_atlas": [
+      "AML.T0051.000",
+      "AML.T0051.001",
+      "AML.T0054"
+     ]
+    },
+    {
+     "id": "LLM02:2025",
+     "title": "Sensitive Information Disclosure",
+     "url": "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/",
+     "related_atlas": [
+      "AML.T0024.000",
+      "AML.T0024.001",
+      "AML.T0024.002"
+     ]
+    },
+    {
+     "id": "LLM03:2025",
+     "title": "Supply Chain",
+     "url": "https://genai.owasp.org/llmrisk/llm032025-supply-chain/",
+     "related_atlas": []
+    },
+    {
+     "id": "LLM04:2025",
+     "title": "Data and Model Poisoning",
+     "url": "https://genai.owasp.org/llmrisk/llm042025-data-and-model-poisoning/",
+     "related_atlas": [
+      "AML.T0018"
+     ]
+    },
+    {
+     "id": "LLM05:2025",
+     "title": "Improper Output Handling",
+     "url": "https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/",
+     "related_atlas": []
+    },
+    {
+     "id": "LLM06:2025",
+     "title": "Excessive Agency",
+     "url": "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/",
+     "related_atlas": []
+    },
+    {
+     "id": "LLM07:2025",
+     "title": "System Prompt Leakage",
+     "url": "https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/",
+     "related_atlas": [
+      "AML.T0051.000"
+     ]
+    },
+    {
+     "id": "LLM08:2025",
+     "title": "Vector and Embedding Weaknesses",
+     "url": "https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/",
+     "related_atlas": []
+    },
+    {
+     "id": "LLM09:2025",
+     "title": "Misinformation",
+     "url": "https://genai.owasp.org/llmrisk/llm092025-misinformation/",
+     "related_atlas": [
+      "AML.T0048.002"
+     ]
+    },
+    {
+     "id": "LLM10:2025",
+     "title": "Unbounded Consumption",
+     "url": "https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/",
+     "related_atlas": [
+      "AML.T0024",
+      "AML.T0025",
+      "AML.T0029",
+      "AML.T0034"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "owasp-agentic-top10-2026",
+   "title": "OWASP Top 10 for Agentic Applications for 2026",
+   "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+   "licence": "CC BY-SA 4.0",
+   "published": "2025-12-09",
+   "items": [],
+   "note": "Item titles are not included: the official document is behind a download form and no machine-readable source was found. Secondary sources were not used."
+  },
+  {
+   "id": "owasp-mcp-top10",
+   "title": "OWASP MCP Top 10",
+   "url": "https://owasp.org/www-project-mcp-top-10/",
+   "licence": "CC BY-NC-SA 4.0",
+   "status": "beta",
+   "note": "Only IDs and links: the NonCommercial licence does not permit copying titles into this CC BY 4.0 project.",
+   "items": [
+    {
+     "id": "MCP01:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP02:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP03:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP04:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP05:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP06:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP07:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP08:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP09:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    },
+    {
+     "id": "MCP10:2025",
+     "url": "https://owasp.org/www-project-mcp-top-10/"
+    }
+   ]
+  }
+ ]
+}

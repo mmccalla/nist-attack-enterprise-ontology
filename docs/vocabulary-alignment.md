@@ -35,6 +35,14 @@ Strength: **exact** means the formal meanings match and an OWL axiom or an ident
 | `skos:Concept`, `skos:ConceptScheme`, `skos:broader` | SKOS | reused directly | exact | Controlled vocabularies and the sub-technique hierarchy. |
 | `dcterms:*` | DCMI Terms | reused directly | exact | Dataset and ontology metadata. |
 
+## AI threat catalogues (release 2.4.0)
+
+| Local term | External term | Relation used | Strength | Reason |
+| --- | --- | --- | --- | --- |
+| `:AtlasTechnique`, `:AtlasMitigation`, `:Tactic` (ATLAS) | MITRE ATLAS technique, mitigation, tactic | IDs (`AML.T`, `AML.M`, `AML.TA`) from the pinned ATLAS data | exact | ATLAS publishes these objects with stable IDs. |
+| `:derivedFromAttack` | ATLAS `ATT&CK-reference` | object property to the ATT&CK technique | exact (published) | ATLAS states which ATT&CK technique it adapts. It is not an equivalence. |
+| `:OwaspRisk`, `:relatedAtlasTechnique` | OWASP LLM Top 10 2025 "Related Frameworks and Taxonomies" | object property to the ATLAS technique | exact (published) | OWASP lists these ATLAS IDs on each risk page. |
+
 ## Considered and rejected
 
 | Candidate | Why rejected |
@@ -44,6 +52,8 @@ Strength: **exact** means the formal meanings match and an OWL axiom or an ident
 | `owl:equivalentClass` between `:SecurityControl` and `:AttackMitigation` | Different concepts from different publishers (ambiguity A7). Equivalence would merge their instances under reasoning. |
 | `owl:sameAs` between our technique IRIs and STIX ids | STIX ids are strings, not RDF resources. A literal `:stixId` carries the identity without a false identity axiom. |
 | `core:ExternalReference` nodes for every STIX and OSCAL identifier | Would double the node count to restate identifiers already held as literals. No competency question needs them. Add a derived export if a UCO consumer requires them. |
+| Agentic Top 10 item titles from vendor blogs and summaries | Not authoritative, and some use short forms. Item titles wait for a machine-readable official source. |
+| A project mapping from ATLAS techniques to NIST controls | No published mapping exists. The owner decided that claims stay with published sources. |
 | Community RDF renderings of STIX | None is normative or maintained by OASIS; aligning to one would tie the ontology to an unofficial model. |
 
 ## How the alignment is checked

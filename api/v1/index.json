@@ -4,8 +4,8 @@
  "id": "index",
  "versions": {
   "api": "1",
-  "release": "2.3.0",
-  "ontology": "2.1.0",
+  "release": "2.4.0",
+  "ontology": "2.2.0",
   "attack": "16.1",
   "attack_later": "20.0"
  },
@@ -16,7 +16,10 @@
   "tactic": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/tactics/{id}.json",
   "mitigation": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/mitigations/{id}.json",
   "baseline": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/baselines/{id}.json",
-  "question": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/questions/{id}.json"
+  "question": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/questions/{id}.json",
+  "atlas_technique": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/atlas/techniques/{id}.json",
+  "atlas_mitigation": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/atlas/mitigations/{id}.json",
+  "owasp_risk": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/owasp/{key}.json"
  },
  "openapi": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/openapi.json",
  "techniques": [
@@ -5344,6 +5347,1351 @@
    "persona": "Security architect",
    "question": "Which ATT&CK 16.1 tactics lose techniques in ATT&CK 20.0, to which tactics, and how many?",
    "rows": 8
+  },
+  {
+   "id": "CQ16",
+   "persona": "AI agent builder",
+   "question": "Which ATLAS techniques against AI agents have no ATLAS mitigation, on the technique or on its parent technique, and how mature is each?",
+   "rows": 14
+  },
+  {
+   "id": "CQ17",
+   "persona": "AI agent builder",
+   "question": "Which ATLAS mitigations address the most techniques against AI agents?",
+   "rows": 12
+  },
+  {
+   "id": "CQ18",
+   "persona": "Security architect for AI systems",
+   "question": "Which ATLAS techniques adapt an ATT&CK technique, and how many NIST controls does CTID map to that ATT&CK technique?",
+   "rows": 34
+  },
+  {
+   "id": "CQ19",
+   "persona": "LLM application developer",
+   "question": "Which OWASP LLM Top 10 (2025) risks does OWASP link to ATLAS techniques, and which ATLAS mitigations address those techniques?",
+   "rows": 13
+  }
+ ],
+ "atlas_techniques": [
+  {
+   "id": "AML.T0000",
+   "name": "Search Open Technical Databases",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0000.000",
+   "name": "Journals and Conference Proceedings",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0000.001",
+   "name": "Pre-Print Repositories",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0000.002",
+   "name": "Technical Blogs",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0001",
+   "name": "Search Open AI Vulnerability Analysis",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0002",
+   "name": "Acquire Public AI Artifacts",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0002.000",
+   "name": "Datasets",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0002.001",
+   "name": "Models",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0002.002",
+   "name": "AI Agent Configuration",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0003",
+   "name": "Search Victim-Owned Websites",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0004",
+   "name": "Search Application Repositories",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0005",
+   "name": "Create Proxy AI Model",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0005.000",
+   "name": "Train Proxy via Gathered AI Artifacts",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0005.001",
+   "name": "Train Proxy via Replication",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0005.002",
+   "name": "Use Pre-Trained Model",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0006",
+   "name": "Active Scanning",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0007",
+   "name": "Discover AI Artifacts",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0008",
+   "name": "Acquire Infrastructure",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0008.000",
+   "name": "AI Development Workspaces",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0008.001",
+   "name": "Consumer Hardware",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0008.002",
+   "name": "Domains",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0008.003",
+   "name": "Physical Countermeasures",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0008.004",
+   "name": "Serverless",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0008.005",
+   "name": "AI Service Proxies",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0010",
+   "name": "AI Supply Chain Compromise",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0010.000",
+   "name": "Hardware",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0010.001",
+   "name": "AI Software",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0010.002",
+   "name": "Data",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0010.003",
+   "name": "Model",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0010.004",
+   "name": "Container Registry",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0010.005",
+   "name": "AI Agent Tool",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0011",
+   "name": "User Execution",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0011.000",
+   "name": "Unsafe AI Artifacts",
+   "agent_related": false,
+   "mitigations": 6
+  },
+  {
+   "id": "AML.T0011.001",
+   "name": "Malicious Package",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0011.002",
+   "name": "Poisoned AI Agent Tool",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0011.003",
+   "name": "Malicious Link",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0012",
+   "name": "Valid Accounts",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0013",
+   "name": "Discover AI Model Ontology",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0014",
+   "name": "Discover AI Model Family",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0015",
+   "name": "Evade AI Model",
+   "agent_related": false,
+   "mitigations": 6
+  },
+  {
+   "id": "AML.T0016",
+   "name": "Obtain Capabilities",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0016.000",
+   "name": "Adversarial AI Attack Implementations",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0016.001",
+   "name": "Software Tools",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0016.002",
+   "name": "Generative AI",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0017",
+   "name": "Develop Capabilities",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0017.000",
+   "name": "Adversarial AI Attacks",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0018",
+   "name": "Manipulate AI Model",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0018.000",
+   "name": "Poison AI Model",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0018.001",
+   "name": "Modify AI Model Architecture",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0018.002",
+   "name": "Embed Malware",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0019",
+   "name": "Publish Poisoned Datasets",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0020",
+   "name": "Poison Training Data",
+   "agent_related": false,
+   "mitigations": 6
+  },
+  {
+   "id": "AML.T0021",
+   "name": "Establish Accounts",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0024",
+   "name": "Exfiltration via AI Inference API",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0024.000",
+   "name": "Infer Training Data Membership",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0024.001",
+   "name": "Invert AI Model",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0024.002",
+   "name": "Extract AI Model",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0025",
+   "name": "Exfiltration via Cyber Means",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0029",
+   "name": "Denial of AI Service",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0031",
+   "name": "Erode AI Model Integrity",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0034",
+   "name": "Cost Harvesting",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0034.000",
+   "name": "Excessive Queries",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0034.001",
+   "name": "Resource-Intensive Queries",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0034.002",
+   "name": "Agentic Resource Consumption",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0035",
+   "name": "AI Artifact Collection",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0036",
+   "name": "Data from Information Repositories",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0037",
+   "name": "Data from Local System",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0040",
+   "name": "AI Model Inference API Access",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0041",
+   "name": "Physical Environment Access",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0042",
+   "name": "Verify Attack",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0043",
+   "name": "Craft Adversarial Data",
+   "agent_related": false,
+   "mitigations": 8
+  },
+  {
+   "id": "AML.T0043.000",
+   "name": "White-Box Optimization",
+   "agent_related": false,
+   "mitigations": 6
+  },
+  {
+   "id": "AML.T0043.001",
+   "name": "Black-Box Optimization",
+   "agent_related": false,
+   "mitigations": 7
+  },
+  {
+   "id": "AML.T0043.002",
+   "name": "Black-Box Transfer",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0043.003",
+   "name": "Manual Modification",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0043.004",
+   "name": "Insert Backdoor Trigger",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0044",
+   "name": "Full AI Model Access",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0046",
+   "name": "Spamming AI System with Chaff Data",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0047",
+   "name": "AI-Enabled Product or Service",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0048",
+   "name": "External Harms",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0048.000",
+   "name": "Financial Harm",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0048.001",
+   "name": "Reputational Harm",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0048.002",
+   "name": "Societal Harm",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0048.003",
+   "name": "User Harm",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0048.004",
+   "name": "AI Intellectual Property Theft",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0049",
+   "name": "Exploit Public-Facing Application",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0050",
+   "name": "Command and Scripting Interpreter",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0051",
+   "name": "LLM Prompt Injection",
+   "agent_related": false,
+   "mitigations": 6
+  },
+  {
+   "id": "AML.T0051.000",
+   "name": "Direct",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0051.001",
+   "name": "Indirect",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0051.002",
+   "name": "Triggered",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0052",
+   "name": "Phishing",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0052.000",
+   "name": "Spearphishing via Social Engineering LLM",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0052.001",
+   "name": "Deepfake-Assisted Phishing",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0053",
+   "name": "AI Agent Tool Invocation",
+   "agent_related": true,
+   "mitigations": 11
+  },
+  {
+   "id": "AML.T0054",
+   "name": "LLM Jailbreak",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0055",
+   "name": "Unsecured Credentials",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0056",
+   "name": "Extract LLM System Prompt",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0057",
+   "name": "LLM Data Leakage",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0058",
+   "name": "Publish Poisoned Models",
+   "agent_related": false,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0059",
+   "name": "Erode Dataset Integrity",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0060",
+   "name": "Publish Hallucinated Entities",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0061",
+   "name": "LLM Prompt Self-Replication",
+   "agent_related": false,
+   "mitigations": 3
+  },
+  {
+   "id": "AML.T0062",
+   "name": "Discover LLM Hallucinations",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0063",
+   "name": "Discover AI Model Outputs",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0064",
+   "name": "Gather RAG-Indexed Targets",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0065",
+   "name": "LLM Prompt Crafting",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0066",
+   "name": "Retrieval Content Crafting",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0067",
+   "name": "LLM Trusted Output Components Manipulation",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0067.000",
+   "name": "Citations",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0068",
+   "name": "LLM Prompt Obfuscation",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0069",
+   "name": "Discover LLM System Information",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0069.000",
+   "name": "Special Character Sets",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0069.001",
+   "name": "System Instruction Keywords",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0069.002",
+   "name": "System Prompt",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0070",
+   "name": "RAG Poisoning",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0071",
+   "name": "False RAG Entry Injection",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0072",
+   "name": "Reverse Shell",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0073",
+   "name": "Impersonation",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0074",
+   "name": "Masquerading",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0075",
+   "name": "Cloud Service Discovery",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0076",
+   "name": "Corrupt AI Model",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0077",
+   "name": "LLM Response Rendering",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0078",
+   "name": "Drive-by Compromise",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0079",
+   "name": "Stage Capabilities",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0080",
+   "name": "AI Agent Context Poisoning",
+   "agent_related": true,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0080.000",
+   "name": "Memory",
+   "agent_related": true,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0080.001",
+   "name": "Thread",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0081",
+   "name": "Modify AI Agent Configuration",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0082",
+   "name": "RAG Credential Harvesting",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0083",
+   "name": "Credentials from AI Agent Configuration",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0084",
+   "name": "Discover AI Agent Configuration",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0084.000",
+   "name": "Embedded Knowledge",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0084.001",
+   "name": "Tool Definitions",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0084.002",
+   "name": "Activation Triggers",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0084.003",
+   "name": "Call Chains",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0085",
+   "name": "Data from AI Services",
+   "agent_related": false,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0085.000",
+   "name": "RAG Databases",
+   "agent_related": false,
+   "mitigations": 4
+  },
+  {
+   "id": "AML.T0085.001",
+   "name": "AI Agent Tools",
+   "agent_related": true,
+   "mitigations": 5
+  },
+  {
+   "id": "AML.T0086",
+   "name": "Exfiltration via AI Agent Tool Invocation",
+   "agent_related": true,
+   "mitigations": 8
+  },
+  {
+   "id": "AML.T0087",
+   "name": "Gather Victim Identity Information",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0088",
+   "name": "Generate Deepfakes",
+   "agent_related": false,
+   "mitigations": 2
+  },
+  {
+   "id": "AML.T0089",
+   "name": "Process Discovery",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0090",
+   "name": "OS Credential Dumping",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0091",
+   "name": "Use Alternate Authentication Material",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0091.000",
+   "name": "Application Access Token",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0092",
+   "name": "Manipulate User LLM Chat History",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0093",
+   "name": "Prompt Infiltration via Public-Facing Application",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0094",
+   "name": "Delay Execution of LLM Instructions",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0095",
+   "name": "Search Open Websites/Domains",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0095.000",
+   "name": "Code Repositories",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0096",
+   "name": "AI Service API",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0097",
+   "name": "Virtualization/Sandbox Evasion",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0098",
+   "name": "AI Agent Tool Credential Harvesting",
+   "agent_related": true,
+   "mitigations": 1
+  },
+  {
+   "id": "AML.T0099",
+   "name": "AI Agent Tool Data Poisoning",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0100",
+   "name": "AI Agent Clickbait",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0101",
+   "name": "Data Destruction via AI Agent Tool Invocation",
+   "agent_related": true,
+   "mitigations": 6
+  },
+  {
+   "id": "AML.T0102",
+   "name": "Generate Malicious Commands",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0103",
+   "name": "Deploy AI Agent",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0104",
+   "name": "Publish Poisoned AI Agent Tool",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0105",
+   "name": "Escape to Host",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0106",
+   "name": "Exploitation for Credential Access",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0107",
+   "name": "Exploitation for Defense Evasion",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0108",
+   "name": "AI Agent",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0109",
+   "name": "AI Supply Chain Rug Pull",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0110",
+   "name": "AI Agent Tool Poisoning",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0111",
+   "name": "AI Supply Chain Reputation Inflation",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0112",
+   "name": "Machine Compromise",
+   "agent_related": false,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0112.000",
+   "name": "Local AI Agent",
+   "agent_related": true,
+   "mitigations": 0
+  },
+  {
+   "id": "AML.T0112.001",
+   "name": "AI Artifacts",
+   "agent_related": false,
+   "mitigations": 0
+  }
+ ],
+ "atlas_mitigations": [
+  {
+   "id": "AML.M0000",
+   "name": "Limit Public Release of Information",
+   "techniques": 7
+  },
+  {
+   "id": "AML.M0001",
+   "name": "Limit Model Artifact Release",
+   "techniques": 6
+  },
+  {
+   "id": "AML.M0002",
+   "name": "Passive AI Output Obfuscation",
+   "techniques": 11
+  },
+  {
+   "id": "AML.M0003",
+   "name": "Model Hardening",
+   "techniques": 8
+  },
+  {
+   "id": "AML.M0004",
+   "name": "Restrict Number of AI Model Queries",
+   "techniques": 16
+  },
+  {
+   "id": "AML.M0005",
+   "name": "Control Access to AI Models and Data at Rest",
+   "techniques": 13
+  },
+  {
+   "id": "AML.M0006",
+   "name": "Use Ensemble Methods",
+   "techniques": 11
+  },
+  {
+   "id": "AML.M0007",
+   "name": "Sanitize Training Data",
+   "techniques": 4
+  },
+  {
+   "id": "AML.M0008",
+   "name": "Validate AI Model",
+   "techniques": 8
+  },
+  {
+   "id": "AML.M0009",
+   "name": "Use Multi-Modal Sensors",
+   "techniques": 3
+  },
+  {
+   "id": "AML.M0010",
+   "name": "Input Restoration",
+   "techniques": 8
+  },
+  {
+   "id": "AML.M0011",
+   "name": "Restrict Library Loading",
+   "techniques": 3
+  },
+  {
+   "id": "AML.M0012",
+   "name": "Encrypt Sensitive Information",
+   "techniques": 4
+  },
+  {
+   "id": "AML.M0013",
+   "name": "Code Signing",
+   "techniques": 8
+  },
+  {
+   "id": "AML.M0014",
+   "name": "Verify AI Artifacts",
+   "techniques": 6
+  },
+  {
+   "id": "AML.M0015",
+   "name": "Adversarial Input Detection",
+   "techniques": 9
+  },
+  {
+   "id": "AML.M0016",
+   "name": "Vulnerability Scanning",
+   "techniques": 3
+  },
+  {
+   "id": "AML.M0017",
+   "name": "AI Model Distribution Methods",
+   "techniques": 6
+  },
+  {
+   "id": "AML.M0018",
+   "name": "User Training",
+   "techniques": 6
+  },
+  {
+   "id": "AML.M0019",
+   "name": "Control Access to AI Models and Data in Production",
+   "techniques": 11
+  },
+  {
+   "id": "AML.M0020",
+   "name": "Generative AI Guardrails",
+   "techniques": 8
+  },
+  {
+   "id": "AML.M0021",
+   "name": "Generative AI Guidelines",
+   "techniques": 7
+  },
+  {
+   "id": "AML.M0022",
+   "name": "Generative AI Model Alignment",
+   "techniques": 7
+  },
+  {
+   "id": "AML.M0023",
+   "name": "AI Bill of Materials",
+   "techniques": 7
+  },
+  {
+   "id": "AML.M0024",
+   "name": "AI Telemetry Logging",
+   "techniques": 17
+  },
+  {
+   "id": "AML.M0025",
+   "name": "Maintain AI Dataset Provenance",
+   "techniques": 5
+  },
+  {
+   "id": "AML.M0026",
+   "name": "Privileged AI Agent Permissions Configuration",
+   "techniques": 7
+  },
+  {
+   "id": "AML.M0027",
+   "name": "Single-User AI Agent Permissions Configuration",
+   "techniques": 7
+  },
+  {
+   "id": "AML.M0028",
+   "name": "AI Agent Tools Permissions Configuration",
+   "techniques": 5
+  },
+  {
+   "id": "AML.M0029",
+   "name": "Human In-the-Loop for AI Agent Actions",
+   "techniques": 3
+  },
+  {
+   "id": "AML.M0030",
+   "name": "Restrict AI Agent Tool Invocation on Untrusted Data",
+   "techniques": 3
+  },
+  {
+   "id": "AML.M0031",
+   "name": "Memory Hardening",
+   "techniques": 2
+  },
+  {
+   "id": "AML.M0032",
+   "name": "Segmentation of AI Agent Components",
+   "techniques": 6
+  },
+  {
+   "id": "AML.M0033",
+   "name": "Input and Output Validation for AI Agent Components",
+   "techniques": 6
+  },
+  {
+   "id": "AML.M0034",
+   "name": "Deepfake Detection",
+   "techniques": 5
+  }
+ ],
+ "owasp_risks": [
+  {
+   "id": "LLM01:2025",
+   "key": "LLM01_2025",
+   "title": "Prompt Injection",
+   "related_atlas": 3
+  },
+  {
+   "id": "LLM02:2025",
+   "key": "LLM02_2025",
+   "title": "Sensitive Information Disclosure",
+   "related_atlas": 3
+  },
+  {
+   "id": "LLM03:2025",
+   "key": "LLM03_2025",
+   "title": "Supply Chain",
+   "related_atlas": 0
+  },
+  {
+   "id": "LLM04:2025",
+   "key": "LLM04_2025",
+   "title": "Data and Model Poisoning",
+   "related_atlas": 1
+  },
+  {
+   "id": "LLM05:2025",
+   "key": "LLM05_2025",
+   "title": "Improper Output Handling",
+   "related_atlas": 0
+  },
+  {
+   "id": "LLM06:2025",
+   "key": "LLM06_2025",
+   "title": "Excessive Agency",
+   "related_atlas": 0
+  },
+  {
+   "id": "LLM07:2025",
+   "key": "LLM07_2025",
+   "title": "System Prompt Leakage",
+   "related_atlas": 1
+  },
+  {
+   "id": "LLM08:2025",
+   "key": "LLM08_2025",
+   "title": "Vector and Embedding Weaknesses",
+   "related_atlas": 0
+  },
+  {
+   "id": "LLM09:2025",
+   "key": "LLM09_2025",
+   "title": "Misinformation",
+   "related_atlas": 1
+  },
+  {
+   "id": "LLM10:2025",
+   "key": "LLM10_2025",
+   "title": "Unbounded Consumption",
+   "related_atlas": 4
+  },
+  {
+   "id": "MCP01:2025",
+   "key": "MCP01_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP02:2025",
+   "key": "MCP02_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP03:2025",
+   "key": "MCP03_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP04:2025",
+   "key": "MCP04_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP05:2025",
+   "key": "MCP05_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP06:2025",
+   "key": "MCP06_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP07:2025",
+   "key": "MCP07_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP08:2025",
+   "key": "MCP08_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP09:2025",
+   "key": "MCP09_2025",
+   "title": null,
+   "related_atlas": 0
+  },
+  {
+   "id": "MCP10:2025",
+   "key": "MCP10_2025",
+   "title": null,
+   "related_atlas": 0
   }
  ],
  "links": {

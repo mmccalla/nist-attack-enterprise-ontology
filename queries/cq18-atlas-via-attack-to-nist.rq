@@ -1,0 +1,19 @@
+# id: CQ18
+# persona: Security architect for AI systems
+# question: Which ATLAS techniques adapt an ATT&CK technique, and how many NIST controls does CTID map to that ATT&CK technique?
+# decision: Where existing NIST controls give a starting point for AI threats. The link is indirect: the claims are on the ATT&CK technique, not on the ATLAS technique.
+# evidence: ATLAS ATT&CK-reference fields; CTID claims on the ATT&CK technique.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?atlasTechnique ?atlasName ?attackTechnique ?attackName (COUNT(DISTINCT ?c) AS ?nistControlsOnAttackTechnique)
+WHERE {
+  ?a :derivedFromAttack ?t ; :techniqueId ?atlasTechnique ; :techniqueName ?atlasName .
+  ?t :techniqueId ?attackTechnique ; :techniqueName ?attackName .
+  OPTIONAL { ?c :mitigatesTechnique ?t }
+}
+GROUP BY ?atlasTechnique ?atlasName ?attackTechnique ?attackName
+ORDER BY ?atlasTechnique

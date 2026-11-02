@@ -1,0 +1,15 @@
+technique,name,maturity
+AML.T0081,Modify AI Agent Configuration,demonstrated
+AML.T0083,Credentials from AI Agent Configuration,demonstrated
+AML.T0084,Discover AI Agent Configuration,demonstrated
+AML.T0084.000,Embedded Knowledge,demonstrated
+AML.T0084.001,Tool Definitions,demonstrated
+AML.T0084.002,Activation Triggers,demonstrated
+AML.T0084.003,Call Chains,demonstrated
+AML.T0099,AI Agent Tool Data Poisoning,feasible
+AML.T0100,AI Agent Clickbait,demonstrated
+AML.T0103,Deploy AI Agent,realized
+AML.T0104,Publish Poisoned AI Agent Tool,realized
+AML.T0108,AI Agent,demonstrated
+AML.T0110,AI Agent Tool Poisoning,realized
+AML.T0112.000,Local AI Agent,demonstrated

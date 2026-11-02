@@ -1,4 +1,13 @@
 {
+  "atlas": {
+    "agentRelatedTechniques": 26,
+    "attackReferencesNotInGraph": [],
+    "mitigationLinks": 246,
+    "mitigations": 35,
+    "tactics": 16,
+    "techniques": 170,
+    "version": "5.6.0"
+  },
   "claimsWithheld": [
     "SC-12 T1521.003"
   ],
@@ -25,7 +34,7 @@
     "tactics": 14,
     "techniquesInAttackEnterprise": 656,
     "techniquesInMapping": 566,
-    "triples": 93945
+    "triples": 96433
   },
   "duplicateRows": [
     "CM-02 T1021.001",
@@ -95,6 +104,20 @@
     "techniquesOnlyInLaterVersion": 66,
     "version": "20.0"
   },
+  "owasp": {
+    "owasp-agentic-top10-2026": {
+      "atlasLinks": 0,
+      "items": 0
+    },
+    "owasp-llm-top10-2025": {
+      "atlasLinks": 13,
+      "items": 10
+    },
+    "owasp-mcp-top10": {
+      "atlasLinks": 0,
+      "items": 10
+    }
+  },
   "sources": {
     "HIGH": {
       "sha256": "d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83",
@@ -111,6 +134,10 @@
     "PRIVACY": {
       "sha256": "c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc",
       "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json"
+    },
+    "atlas": {
+      "sha256": "c9c23971d0db07e2782423d795a20e78d5c2c9bcdc78fc67e24530657daaec41",
+      "url": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/da9ebf9b66e6902ad97c267e2a20af0bd996a60f/dist/ATLAS.yaml"
     },
     "attack": {
       "sha256": "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",

@@ -15,6 +15,7 @@
   --control: #2457c5; --technique: #b42318; --group: #6d3fc0; --claim: #0b7a52;
   --assertion: #b45309; --nonmap: #5f6b7a; --vocab: #0e7490; --dataset: #3f4a5a;
   --tactic: #a3367a; --platform: #0e7490; --mitigation: #6b5a00; --baseline: #1f6f8b;
+  --atlas: #7a3e00; --atlasm: #4d6b00; --owasp: #9b1c5a;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -23,6 +24,7 @@
     --control: #7fa6ff; --technique: #ff8a7a; --group: #b79bff; --claim: #4fd1a1;
     --assertion: #f6b35b; --nonmap: #a9b4c2; --vocab: #5fd0e6; --dataset: #b6c0cf;
     --tactic: #f08cc8; --platform: #5fd0e6; --mitigation: #e2c94a; --baseline: #7cc6e0;
+    --atlas: #f2a65a; --atlasm: #b5d86a; --owasp: #f58bbd;
   }
 }
 * { box-sizing: border-box; }
@@ -131,6 +133,7 @@ svg .node.dim path { opacity: .35; }
       <button role="tab" id="tab-controls" aria-controls="browse" aria-selected="false" data-tab="controls">Controls</button>
       <button role="tab" id="tab-techniques" aria-controls="browse" aria-selected="false" data-tab="techniques">Techniques</button>
       <button role="tab" id="tab-tactics" aria-controls="browse" aria-selected="false" data-tab="tactics">Tactics</button>
+      <button role="tab" id="tab-atlas" aria-controls="browse" aria-selected="false" data-tab="atlas">AI and agents</button>
       <button role="tab" id="tab-classes" aria-controls="browse" aria-selected="false" data-tab="classes">Classes</button>
     </div>
     <div id="browse" role="tabpanel" aria-live="polite"></div>
@@ -176,6 +179,9 @@ const TYPES = {
   ReferenceDataset: ["Reference dataset", "dataset", d3.symbolCross, 300],
   DatasetMetadataRecord: ["Dataset metadata record", "dataset", d3.symbolCross, 260],
   LaterVersionRecord: ["Change in a later ATT&CK version", "vocab", d3.symbolTriangle, 200],
+  AtlasTechnique: ["ATLAS technique", "atlas", d3.symbolSquare, 220],
+  AtlasMitigation: ["ATLAS mitigation", "atlasm", d3.symbolDiamond, 260],
+  OwaspRisk: ["OWASP risk", "owasp", d3.symbolTriangle, 280],
 };
 const PROVENANCE = new Set(["MitigationClaim", "MitigatesAssertion", "NonMappableAssertion"]);
 const MAX_NEIGHBOURS = 160;
@@ -187,6 +193,8 @@ const mitigated = id => OUT.get(id).filter(([p]) => p === ":mitigatesTechnique")
 const mitigatedBy = id => IN.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
 const isNonMappable = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique" && BY_ID.get(s).t === "NonMappableAssertion");
 const hasRow = id => IN.get(id).some(([p]) => p === ":assertsTechnique");
+const atlasMitigationsOf = id => IN.get(id).filter(([p]) => p === ":atlasMitigationFor").map(([, s]) => s);
+const atlasParentMitigated = id => OUT.get(id).some(([p, o]) => p === ":subTechniqueOf" && atlasMitigationsOf(o).length);
 const QUESTIONS = DATA.questions;
 const byLabel = (a, b) => a.l.localeCompare(b.l, "en", {numeric: true});
 
@@ -194,7 +202,7 @@ const byLabel = (a, b) => a.l.localeCompare(b.l, "en", {numeric: true});
 const M = DATA.meta, C = M.counts;
 const SC = M.sourceCounts;
 document.getElementById("subtitle").textContent =
-  `Ontology ${M.version}. Full CTID source: ${SC.sourceRows} rows, ${SC.claims} claims. ATT&CK ${M.source.attackVersion} Enterprise: ${SC.techniquesInAttackEnterprise} techniques. Aligned to ATT&CK STIX, NIST OSCAL and UCO.`;
+  `Ontology ${M.version}. Full CTID source: ${SC.sourceRows} rows, ${SC.claims} claims. ATT&CK ${M.source.attackVersion} Enterprise: ${SC.techniquesInAttackEnterprise} techniques. Aligned to ATT&CK STIX, NIST OSCAL and UCO. AI coverage: MITRE ATLAS ${DATA.meta.atlasVersion} and OWASP GenAI.`;
 document.getElementById("legend").innerHTML = Object.entries(TYPES)
   .filter(([t]) => !["ReferenceDataset", "DatasetMetadataRecord", "Platform"].includes(t))
   .map(([t, [name, , sym]]) => `<span><svg width="14" height="14" aria-hidden="true"><path transform="translate(7,7)" d="${d3.symbol(sym, 70)()}" fill="${color(t)}"/></svg>${esc(name)}</span>`).join("");
@@ -210,7 +218,7 @@ function renderBrowse() {
   const current = route().id;
   const term = q.value.trim().toLowerCase();
   if (term) {
-    const hits = NODES.filter(n => ["SecurityControl", "AttackTechnique", "CapabilityGroup", "Tactic", "AttackMitigation"].includes(n.t))
+    const hits = NODES.filter(n => ["SecurityControl", "AttackTechnique", "CapabilityGroup", "Tactic", "AttackMitigation", "AtlasTechnique", "AtlasMitigation", "OwaspRisk"].includes(n.t))
       .filter(n => (n.l + " " + (n.s ?? "")).toLowerCase().includes(term)).sort(byLabel);
     browse.innerHTML = `<p class="note">${hits.length} match${hits.length === 1 ? "" : "es"}${hits.length > 100 ? ", first 100 shown" : ""}.</p>` + listItems(hits.slice(0, 100), current);
     return;
@@ -231,8 +239,18 @@ function renderBrowse() {
       <p class="note">Count: mitigating controls. n/m: the source marks it non-mappable. no row: the mapping does not mention it.</p>` + listItems(items, current);
     document.getElementById("tech-filter").addEventListener("change", renderBrowse);
   } else if (tab === "tactics") {
-    const items = ofType("Tactic").sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
+    const items = ofType("Tactic").filter(n => (n.p.catalogue ?? "").startsWith("ATT&CK")).sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
     browse.innerHTML = `<p class="note">ATT&amp;CK matrix order. Count: Enterprise techniques in the tactic.</p>` + listItems(items, current);
+  } else if (tab === "atlas") {
+    const filter = document.getElementById("atlas-filter")?.value ?? "agent";
+    const items = ofType("AtlasTechnique").sort(byLabel).map(n => ({...n, c: atlasMitigationsOf(n.id).length}))
+      .filter(n => filter === "all" || (filter === "agent" && n.p[":isAgentRelated"] === "true") || (filter === "none" && n.p[":isAgentRelated"] === "true" && !atlasMitigationsOf(n.id).length && !atlasParentMitigated(n.id)));
+    const risks = ofType("OwaspRisk").sort(byLabel).map(n => ({...n, c: OUT.get(n.id).filter(([p]) => p === ":relatedAtlasTechnique").length || ""}));
+    browse.innerHTML = `<label class="note" for="atlas-filter">MITRE ATLAS techniques</label> <select id="atlas-filter">
+      ${[["agent", "Techniques against AI agents"], ["none", "Agent techniques with no mitigation (CQ16)"], ["all", "All ATLAS techniques"]].map(([v, l]) => `<option value="${v}"${v === filter ? " selected" : ""}>${l}</option>`).join("")}
+      </select> <span class="note">${items.length} shown. Count: ATLAS mitigations.</span>` + listItems(items, current)
+      + `<h3>OWASP GenAI risks</h3><p class="note">Count: ATLAS techniques that OWASP links to the risk.</p>` + listItems(risks, current);
+    document.getElementById("atlas-filter").addEventListener("change", renderBrowse);
   } else {
     browse.innerHTML = `<p class="note">Open a class in the schema view.</p><ul class="list">${DATA.schema.classes.map(c =>
       `<li><a href="#class/${encodeURIComponent(c.id)}"${current === c.id ? ' aria-current="true"' : ""}><span class="id">${esc(c.label ?? c.id)}</span><span class="count">${C[c.id.replace(/^:/, "")] ?? ""}</span></a></li>`).join("")}</ul>`;
@@ -341,7 +359,11 @@ function schemaGraph(focus) {
 /* Detail panel */
 const detail = document.getElementById("detail");
 const ATTACK = "https://attack.mitre.org/versions/v16/";
+const ATLAS_SITE = "https://atlas.mitre.org/";  // a single-page app: deep links answer 404 but render in a browser
 function attackUrl(n) {
+  if (n.t === "AtlasTechnique") return ATLAS_SITE + "techniques/" + n.l;
+  if (n.t === "AtlasMitigation") return ATLAS_SITE + "mitigations/" + n.l;
+  if (n.t === "Tactic" && (n.p.catalogue ?? "").startsWith("MITRE ATLAS")) return ATLAS_SITE + "tactics/" + n.l;
   if (n.t === "AttackTechnique") return ATTACK + "techniques/" + n.l.replace(".", "/") + "/";
   if (n.t === "AttackMitigation") return ATTACK + "mitigations/" + n.l + "/";
   if (n.t === "Tactic") return ATTACK + "tactics/" + n.l + "/";
@@ -383,7 +405,16 @@ function showNode(id) {
   const [typeName] = TYPES[n.t];
   const props = Object.entries(n.p).filter(([k]) => k !== ":rationaleText");
   let extra = "";
-  if (attackUrl(n) && n.p[":inAttackEnterprise"] !== "false") extra += `<p><a href="${attackUrl(n)}" rel="noopener">Open ${esc(n.l)} on attack.mitre.org (version 16)</a></p>`;
+  if (attackUrl(n) && n.p[":inAttackEnterprise"] !== "false") extra += `<p><a href="${attackUrl(n)}" rel="noopener">Open ${esc(n.l)} on ${n.t.startsWith("Atlas") || (n.p.catalogue ?? "").startsWith("MITRE ATLAS") ? "atlas.mitre.org" : "attack.mitre.org (version 16)"}</a></p>`;
+  if (n.t === "AtlasTechnique") {
+    if (n.p[":isAgentRelated"] === "true") extra += `<p class="note">Related to AI agents. This project derives the flag from the name; ATLAS does not publish it.</p>`;
+    for (const [p, o] of OUT.get(id)) if (p === ":derivedFromAttack") extra += `<p class="note">ATLAS adapts this technique from ATT&amp;CK ${link(o)}. The NIST claims on that ATT&amp;CK technique do not transfer automatically (CQ18).</p>`;
+    if (!atlasMitigationsOf(id).length) extra += `<p class="warn">ATLAS lists no mitigation for this technique${atlasParentMitigated(id) ? ", but it lists one for the parent technique" : " or its parent"}.</p>`;
+  }
+  if (n.t === "OwaspRisk") {
+    if (n.p["source url"]) extra += `<p><a href="${esc(n.p["source url"])}" rel="noopener">Open ${esc(n.l)} on the OWASP site</a></p>`;
+    extra += `<p class="note">From ${esc(n.p.catalogue ?? "an OWASP list")}. Links to ATLAS are the ones OWASP itself publishes. OWASP content: CC BY-SA 4.0 (LLM, Agentic) or CC BY-NC-SA 4.0 (MCP, IDs only).</p>`;
+  }
   if (n.t === "AttackTechnique") {
     if (n.p[":inAttackEnterprise"] === "false") extra += `<p class="warn">Not an active technique in ATT&amp;CK Enterprise ${esc(M.source.attackVersion)}. Rule R1 keeps the source row but makes no enterprise claim. See CQ08.</p>`;
     else if (!hasRow(id)) extra += `<p class="note">The mapping has no row for this technique (CQ12). That is silence, not a statement that no control applies.</p>`;
@@ -455,6 +486,8 @@ function showOverview() {
       <li><a href="#n/technique_T1521.003">T1521.003</a>: a source row outside ATT&amp;CK Enterprise (CQ08)</li>
       <li><a href="#questions">The 13 competency questions</a> and their answers</li>
       <li><a href="#gaps">Gap analysis</a>: paste your controls or load an OSCAL SSP and see what is uncovered</li>
+      <li><a href="#n/atlastechnique_AML.T0053">AML.T0053 AI Agent Tool Invocation</a> and the <a href="#gaps-atlas">ATLAS gap analysis</a> for AI agents</li>
+      <li><a href="#n/owasp_LLM01_2025">LLM01:2025 Prompt Injection</a> with its ATLAS techniques and mitigations (CQ19)</li>
       <li><a href="#class/:MitigationClaim">The MitigationClaim class</a></li></ul>`;
   overview();
   crumb("Overview: capability groups and controls");
@@ -613,7 +646,7 @@ function setGapText(text) {
 }
 function showGaps(list) {
   const initial = list ?? (gapSelected.size ? [...gapSelected].sort().join(", ") : "");
-  detail.innerHTML = `<h2>Gap analysis</h2>
+  detail.innerHTML = `<p class="note"><b>NIST controls and ATT&amp;CK</b> | <a href="#gaps-atlas">ATLAS mitigations and AI techniques</a></p><h2>Gap analysis</h2>
     <p>Which ATT&amp;CK techniques do your NIST 800-53 controls leave uncovered, and which controls would close the most gaps? Paste control ids, start from a baseline, or load an OSCAL file. <b>Everything runs in this page; nothing is uploaded.</b></p>
     <label class="field" for="gap-input">Your implemented controls</label>
     <textarea id="gap-input" spellcheck="false" placeholder="AC-2, AC-3, IA-2(1), SI-4 ...">${esc(initial)}</textarea>
@@ -666,6 +699,80 @@ function showGaps(list) {
   runGaps(list != null);
 }
 
+/* Gap analysis for AI systems: ATLAS mitigations against ATLAS techniques (same shared logic) */
+const ATLAS_T = ofType("AtlasTechnique");
+const ATLAS_M = new Map(ofType("AtlasMitigation").map(n => [n.l, n]));
+const atlasTactics = id => {
+  const own = OUT.get(id).filter(([p]) => p === ":inTactic").map(([, o]) => o);
+  if (own.length) return own;
+  const parent = OUT.get(id).find(([p]) => p === ":subTechniqueOf");
+  return parent ? OUT.get(parent[1]).filter(([p]) => p === ":inTactic").map(([, o]) => o) : [];
+};
+function atlasModel(agentOnly) {
+  const techniques = ATLAS_T.filter(t => !agentOnly || t.p[":isAgentRelated"] === "true");
+  const ids = new Set(techniques.map(t => t.l));
+  return {
+    techniques: techniques.map(t => ({id: t.l, name: t.s, tactics: atlasTactics(t.id)})),
+    controls: Object.fromEntries([...ATLAS_M].map(([mid, n]) => [mid, {title: n.s, baselines: []}])),
+    mitigates: Object.fromEntries([...ATLAS_M].map(([mid, n]) => [mid, OUT.get(n.id).filter(([p]) => p === ":atlasMitigationFor").map(([, o]) => BY_ID.get(o).l).filter(t => ids.has(t))])),
+  };
+}
+let atlasSelected = new Set(), atlasUnmapped = [];
+function showGapsAtlas(list) {
+  detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <b>ATLAS mitigations and AI techniques</b></p>
+    <h2>Gap analysis for AI systems</h2>
+    <p>Which MITRE ATLAS techniques do your AI safeguards leave uncovered? Paste the ATLAS mitigation IDs that you have, for example <code>AML.M0026, AML.M0029</code>. <b>Everything runs in this page; nothing is uploaded.</b></p>
+    <label class="field" for="atlas-input">Your ATLAS mitigations</label>
+    <textarea id="atlas-input" spellcheck="false" placeholder="AML.M0024, AML.M0026 ...">${esc(list ?? [...atlasSelected].sort().join(", "))}</textarea>
+    <div class="row"><label><input type="checkbox" id="atlas-agent" checked> AI agent techniques only</label>
+      <button class="btn" id="atlas-all">All ATLAS mitigations</button><button class="btn" id="atlas-clear">Clear</button></div>
+    <p class="note" id="atlas-status" aria-live="polite"></p>
+    <h3>Download</h3><div class="row"><button class="btn" id="atlas-csv">Techniques CSV</button><button class="btn" id="atlas-recs-csv">Recommendations CSV</button></div>
+    <div id="atlas-recs"></div>
+    <p class="note">The "AI agent" flag is derived by this project from technique names. ATLAS mitigations are linked to techniques by ATLAS itself. A link shows that a mitigation can address a technique, not that it is effective.</p>`;
+  const input = document.getElementById("atlas-input"), agentBox = document.getElementById("atlas-agent");
+  const run = (updateHash = true) => {
+    const r = C2.parseIds(input.value, new Set(ATLAS_M.keys()), /\bAML\.M\d{4}\b/);
+    atlasSelected = r.found; atlasUnmapped = r.unmapped;
+    const model = atlasModel(agentBox.checked), cov = C2.coverage(model, atlasSelected), counts = C2.counts(cov);
+    const recs = C2.recommendations(model, atlasSelected);
+    document.getElementById("atlas-status").innerHTML = `${atlasSelected.size} ATLAS mitigation${atlasSelected.size === 1 ? "" : "s"} recognised.` + (atlasUnmapped.length ? ` Not in ATLAS ${esc(DATA.meta.atlasVersion)}: <code>${atlasUnmapped.slice(0, 20).join(" ")}</code>.` : "");
+    document.getElementById("atlas-recs").innerHTML = recs.length ? `<h3>Mitigations that would close the most gaps</h3><ol>${recs.map(([m, n]) => `<li><a href="#n/atlasmitigation_${m}">${m}</a> ${esc(ATLAS_M.get(m).s)} <span class="count">+${n}</span></li>`).join("")}</ol>` : "";
+    const total = cov.size, pct = n => total ? Math.round(100 * n / total) : 0;
+    const gaps = [...cov].filter(([, [st]]) => st === "gap"), none = [...cov].filter(([, [st]]) => st === "none");
+    const row = ([tid, [, ms]]) => `<tr><td>${link("atlastechnique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("atlastechnique_" + tid).s)}</td><td>${ms.map(m => `<a href="#n/atlasmitigation_${m}">${m}</a>`).join(" ")}</td></tr>`;
+    document.getElementById("report").innerHTML = `<h2>Coverage of ${agentBox.checked ? "AI agent techniques" : "all ATLAS techniques"} in MITRE ATLAS ${esc(DATA.meta.atlasVersion)}</h2>
+      <div><span class="stat"><b>${counts.covered}</b>&#10003; covered (${pct(counts.covered)}%)</span>
+        <span class="stat"><b>${counts.gap}</b>! gaps an ATLAS mitigation would close</span>
+        <span class="stat"><b>${counts.none}</b>&#9675; no ATLAS mitigation</span><span class="stat"><b>${total}</b>techniques</span></div>
+      <h3>Gaps an ATLAS mitigation would close (${gaps.length})</h3>${gaps.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>ATLAS mitigations</th></tr></thead><tbody>${gaps.map(row).join("")}</tbody></table>` : "<p>None.</p>"}
+      <h3>Techniques with no ATLAS mitigation listed on them (${none.length})</h3>${none.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>Parent technique</th></tr></thead><tbody>${none.map(([tid]) => {
+        const node = BY_ID.get("atlastechnique_" + tid), parent = OUT.get(node.id).find(([p]) => p === ":subTechniqueOf");
+        const pm = parent ? atlasMitigationsOf(parent[1]).map(m => BY_ID.get(m).l) : [];
+        return `<tr><td>${link(node.id).split("</a>")[0]}</a></td><td>${esc(node.s)}</td><td>${parent ? `${link(parent[1]).split("</a>")[0]}</a>${pm.length ? `: ${pm.map(m => `<a href="#n/atlasmitigation_${m}">${m}</a>`).join(" ")}` : ": none"}` : ""}</td></tr>`;
+      }).join("")}</tbody></table><p class="note">${none.filter(([tid]) => atlasParentMitigated("atlastechnique_" + tid)).length} of these have a mitigation on their parent technique. For the others, an agent design needs its own safeguards (<a href="#q/CQ16">CQ16</a>).</p>` : "<p>None.</p>"}`;
+    if (updateHash) history.replaceState(null, "", "#gaps-atlas/" + [...atlasSelected].sort().join(","));
+    crumb(`ATLAS gap analysis: ${atlasSelected.size} mitigations, ${counts.covered} of ${total} techniques covered`);
+    return {model, cov};
+  };
+  let timer;
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(run, 250); });
+  agentBox.addEventListener("change", () => run());
+  document.getElementById("atlas-all").addEventListener("click", () => { input.value = [...ATLAS_M.keys()].sort().join(", "); run(); });
+  document.getElementById("atlas-clear").addEventListener("click", () => { input.value = ""; run(); });
+  document.getElementById("atlas-csv").addEventListener("click", () => {
+    const {cov} = run(false);
+    download("atlas-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "status", "atlas_mitigations"],
+      [...cov].map(([tid, [st, ms]]) => [tid, BY_ID.get("atlastechnique_" + tid).s, st, ms.join(" ")])), "text/csv");
+  });
+  document.getElementById("atlas-recs-csv").addEventListener("click", () => {
+    const {model} = run(false);
+    download("atlas-recommended-mitigations.csv", toCsv(["rank", "mitigation_id", "mitigation_name", "gaps_closed"],
+      C2.recommendations(model, atlasSelected, 50).map(([m, n], i) => [i + 1, m, ATLAS_M.get(m).s, n])), "text/csv");
+  });
+  run(list != null);
+}
+
 /* Routing */
 function route() {
   const h = decodeURIComponent(location.hash.replace(/^#/, ""));
@@ -673,15 +780,16 @@ function route() {
   if (h.startsWith("class/")) return {view: "class", id: h.slice(6)};
   if (h.startsWith("q/")) return {view: "question", id: h.slice(2)};
   if (h === "gaps" || h.startsWith("gaps/")) return {view: "gaps", list: h.startsWith("gaps/") ? h.slice(5) : null};
+  if (h === "gaps-atlas" || h.startsWith("gaps-atlas/")) return {view: "gaps-atlas", list: h.startsWith("gaps-atlas/") ? h.slice(11) : null};
   return {view: ["schema", "about", "questions"].includes(h) ? h : "overview"};
 }
 function crumb(t) { document.getElementById("crumb").textContent = t; }
 function go() {
   const r = route();
-  const gapsView = r.view === "gaps";
+  const gapsView = r.view === "gaps" || r.view === "gaps-atlas";
   document.getElementById("report").hidden = !gapsView;
   for (const id of ["graph", "legend", "toolbar"]) document.getElementById(id).style.visibility = gapsView ? "hidden" : "";
-  const navView = {class: "schema", question: "questions"}[r.view] ?? r.view;
+  const navView = {class: "schema", question: "questions", "gaps-atlas": "gaps"}[r.view] ?? r.view;
   document.querySelectorAll("header nav a[data-view]").forEach(a => a.toggleAttribute("aria-current", a.dataset.view === navView));
   document.querySelectorAll("header nav a[aria-current]").forEach(a => a.setAttribute("aria-current", "page"));
   if (r.view === "node" && BY_ID.has(r.id)) showNode(r.id);
@@ -690,6 +798,7 @@ function go() {
   else if (r.view === "about") showAbout();
   else if (r.view === "questions") showQuestions();
   else if (r.view === "gaps") showGaps(r.list);
+  else if (r.view === "gaps-atlas") showGapsAtlas(r.list);
   else if (r.view === "question") showQuestion(r.id);
   else showOverview();
   document.title = `${document.getElementById("crumb").textContent.split(".")[0]} | NIST 800-53 to ATT&CK ontology`;

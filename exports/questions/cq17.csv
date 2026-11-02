@@ -1,0 +1,13 @@
+mitigation,name,categories,agentTechniques
+AML.M0024,AI Telemetry Logging,- Cyber Technical,4
+AML.M0026,Privileged AI Agent Permissions Configuration,- Cyber Technical,4
+AML.M0027,Single-User AI Agent Permissions Configuration,- Cyber Technical,4
+AML.M0028,AI Agent Tools Permissions Configuration,- Cyber Technical,4
+AML.M0032,Segmentation of AI Agent Components,- Cyber Technical,4
+AML.M0029,Human In-the-Loop for AI Agent Actions,- ML Technical,3
+AML.M0030,Restrict AI Agent Tool Invocation on Untrusted Data,- ML Technical,3
+AML.M0031,Memory Hardening,- ML Technical,2
+AML.M0033,Input and Output Validation for AI Agent Components,- ML Technical,2
+AML.M0020,Generative AI Guardrails,- ML Technical,1
+AML.M0021,Generative AI Guidelines,- ML Technical,1
+AML.M0022,Generative AI Model Alignment,- ML Technical,1

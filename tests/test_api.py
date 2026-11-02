@@ -93,6 +93,8 @@ def test_technique_claims_match_the_raw_sources():
 
 def test_every_reference_resolves_to_a_file():
     have = {kind: {p.stem for p in (API / kind).glob("*.json")} for kind in ("techniques", "controls", "tactics", "mitigations")}
+    have["atlas_t"] = {p.stem for p in (API / "atlas" / "techniques").glob("*.json")}
+    have["atlas_m"] = {p.stem for p in (API / "atlas" / "mitigations").glob("*.json")}
     for p, doc in documents():
         refs = []
         if doc["type"] == "technique":
@@ -105,6 +107,14 @@ def test_every_reference_resolves_to_a_file():
             refs += [("techniques", t) for t in doc["techniques"]]
         elif doc["type"] == "baseline":
             refs += [("controls", c) for c in doc["controls"]]
+        elif doc["type"] == "atlas-technique":
+            refs += [("atlas_m", m["id"]) for m in doc["mitigations"]] + [("atlas_t", t) for t in doc["subtechniques"] + ([doc["parent"]] if doc["parent"] else [])]
+            if doc["derived_from_attack"]:
+                refs += [("techniques", doc["derived_from_attack"]["id"])] + [("controls", c) for c in doc["derived_from_attack"]["nist_controls_on_attack_technique"]]
+        elif doc["type"] == "atlas-mitigation":
+            refs += [("atlas_t", t) for t in doc["techniques"]]
+        elif doc["type"] == "owasp-risk":
+            refs += [("atlas_t", t) for t in doc["related_atlas"]]
         for kind, ref in refs:
             assert ref in have[kind], f"{p.name} refers to missing {kind}/{ref}"
 
@@ -127,9 +137,8 @@ def test_files_are_small_enough_for_agents():
 def test_index_openapi_and_llms_txt_point_at_real_files():
     index = json.loads((API / "index.json").read_text())
     for kind, template in index["url_templates"].items():
-        listing = index[kind + "s"] if kind != "mitigation" else index["mitigations"]
-        for item in listing:
-            path = template.replace("{id}", item["id"]).replace(SITE, "")
+        for item in index[kind + "s"]:
+            path = template.replace("{id}", item["id"]).replace("{key}", item.get("key", "")).replace(SITE, "")
             assert (ROOT / path).exists(), path
     spec = json.loads((API / "openapi.json").read_text())
     for path, op in spec["paths"].items():
@@ -137,3 +146,18 @@ def test_index_openapi_and_llms_txt_point_at_real_files():
         assert (ROOT / ref.replace(SITE, "")).exists(), ref
     for url in re.findall(rf"\(({re.escape(SITE)}[^)]+)\)", (ROOT / "llms.txt").read_text()):
         assert (ROOT / url.replace(SITE, "")).exists(), url
+
+
+def test_atlas_and_owasp_files_match_the_raw_sources():
+    src = sources()
+    files = {p.stem: json.loads(p.read_text()) for p in (API / "atlas" / "techniques").glob("*.json")}
+    assert set(files) == set(src.atlas_techniques)
+    for tid, doc in files.items():
+        assert {m["id"] for m in doc["mitigations"]} == src.atlas_mitigated_by[tid], tid
+        assert doc["agent_related"] == (tid in src.atlas_agent), tid
+    owasp = {json.loads(p.read_text())["id"]: json.loads(p.read_text()) for p in (API / "owasp").glob("*.json")}
+    llm = next(l for l in src.owasp["lists"] if l["id"] == "owasp-llm-top10-2025")
+    for item in llm["items"]:
+        assert owasp[item["id"]]["related_atlas"] == sorted(item["related_atlas"]), item["id"]
+    mcp = [d for d in owasp.values() if d["id"].startswith("MCP")]
+    assert len(mcp) == 10 and all(d["title"] is None for d in mcp), "MCP Top 10 titles must not be copied (CC BY-NC-SA)"

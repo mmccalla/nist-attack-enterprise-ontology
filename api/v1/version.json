@@ -4,8 +4,8 @@
  "id": "version",
  "versions": {
   "api": "1",
-  "release": "2.3.0",
-  "ontology": "2.1.0",
+  "release": "2.4.0",
+  "ontology": "2.2.0",
   "attack": "16.1",
   "attack_later": "20.0"
  },
@@ -25,6 +25,10 @@
   "PRIVACY": {
    "sha256": "c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc",
    "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json"
+  },
+  "atlas": {
+   "sha256": "c9c23971d0db07e2782423d795a20e78d5c2c9bcdc78fc67e24530657daaec41",
+   "url": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/da9ebf9b66e6902ad97c267e2a20af0bd996a60f/dist/ATLAS.yaml"
   },
   "attack": {
    "sha256": "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
@@ -55,7 +59,7 @@
   "tactics": 14,
   "techniquesInAttackEnterprise": 656,
   "techniquesInMapping": 566,
-  "triples": 93945
+  "triples": 96433
  },
  "later_version": {
   "statusCounts": {

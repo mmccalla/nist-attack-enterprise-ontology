@@ -1,0 +1,18 @@
+# id: CQ17
+# persona: AI agent builder
+# question: Which ATLAS mitigations address the most techniques against AI agents?
+# decision: Which safeguards to build first into an agent that uses tools, MCP servers or other agents.
+# evidence: MITRE ATLAS 5.6.0 mitigations and their techniques; agent flag derived from technique names.
+PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
+PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT ?mitigation ?name (GROUP_CONCAT(DISTINCT ?category; separator=", ") AS ?categories) (COUNT(DISTINCT ?t) AS ?agentTechniques)
+WHERE {
+  ?m a :AtlasMitigation ; :mitigationId ?mitigation ; skos:prefLabel ?name ; :atlasCategory ?category ; :atlasMitigationFor ?t .
+  ?t :isAgentRelated true .
+}
+GROUP BY ?mitigation ?name
+ORDER BY DESC(?agentTechniques) ?mitigation

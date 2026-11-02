@@ -21,6 +21,9 @@ The API gives the knowledge graph as small JSON files. AI agents, scripts and ot
 | `mitigations/{id}.json` | An ATT&CK mitigation and its techniques |
 | `baselines/{id}.json` | An SP 800-53B baseline: its controls and its coverage (covered, gap, none) |
 | `questions/{id}.json` | A competency question and its answer |
+| `atlas/techniques/{id}.json` | A MITRE ATLAS technique: agent flag (derived), maturity, mitigations, the ATT&CK technique it adapts, OWASP risks |
+| `atlas/mitigations/{id}.json` | A MITRE ATLAS mitigation and its techniques |
+| `owasp/{key}.json` | An OWASP GenAI risk and the ATLAS techniques that OWASP links to it. The key replaces the colon with an underscore, for example `LLM01_2025`. |
 | `version.json` | Versions, pinned sources, SHA-256 digests and counts |
 
 Technique IDs use the ATT&CK form (`T1078`, `T1556.009`). Control IDs use the zero-padded form (`AC-02`).

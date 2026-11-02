@@ -7,6 +7,7 @@ JSON. Agreement between the two paths is the acceptance criterion for a competen
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import defaultdict
 from functools import lru_cache
@@ -91,6 +92,21 @@ class Sources:
         for r in self.rows:
             if r["status"] == "complete" and r["attack_object_id"] in self.techniques:
                 self.controls_for[r["attack_object_id"]].add(r["capability_id"])
+
+        # MITRE ATLAS and the curated OWASP extract, read directly.
+        atlas = build_population.fetch("atlas")["matrices"][0]
+        self.atlas_techniques = {t["id"]: t for t in atlas["techniques"]}
+        self.atlas_mitigations = {m["id"]: m for m in atlas["mitigations"]}
+        self.atlas_mitigated_by = defaultdict(set)
+        for m in atlas["mitigations"]:
+            for use in m["techniques"]:
+                self.atlas_mitigated_by[use["id"]].add(m["id"])
+
+        def agent(tid):
+            t = self.atlas_techniques[tid]
+            return bool(re.search(r"AI Agent|Agentic", t["name"])) or ("specializes" in t and agent(t["specializes"]))
+        self.atlas_agent = {tid for tid in self.atlas_techniques if agent(tid)}
+        self.owasp = json.loads((ROOT / "data" / "sources" / "owasp-genai.json").read_text())
 
     def baselines_of(self, control_id):
         oid = self.oscal[control_id]["id"]

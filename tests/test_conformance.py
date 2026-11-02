@@ -124,6 +124,26 @@ PROBES = {
         lambda g: g.set((DATA["laterversion_T1070.001_20.0"], ONT.inCatalogue, DATA["catalogue_attack-enterprise-16.1"])),
         "different catalogue",
     ),
+    "ATLAS technique with an ATT&CK-style id": (
+        lambda g: g.set((DATA["atlastechnique_AML.T0053"], ONT.techniqueId, Literal("T0053"))),
+        "Result Path: :techniqueId",
+    ),
+    "ATLAS mitigation with no technique": (
+        lambda g: g.remove((DATA["atlasmitigation_AML.M0024"], ONT.atlasMitigationFor, None)),
+        "Result Path: :atlasMitigationFor",
+    ),
+    "OWASP risk linked to an ATT&CK technique as if it were ATLAS": (
+        lambda g: g.add((DATA["owasp_LLM01_2025"], ONT.relatedAtlasTechnique, DATA["technique_T1078"])),
+        "Result Path: :relatedAtlasTechnique",
+    ),
+    "ATT&CK tactic without its STIX id": (
+        lambda g: g.remove((DATA["tactic_TA0001"], ONT.stixId, None)),
+        "must carry its STIX id",
+    ),
+    "ATLAS sub-technique with the wrong parent": (
+        lambda g: g.set((DATA["atlastechnique_AML.T0051.000"], ONT.subTechniqueOf, DATA["atlastechnique_AML.T0053"])),
+        "without the last part",
+    ),
     "sub-technique whose parent is not its ID prefix": (
         lambda g: g.set((DATA["technique_T1556.009"], ONT.subTechniqueOf, DATA["technique_T1078"])),
         "parent whose id is the prefix",

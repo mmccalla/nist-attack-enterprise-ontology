@@ -160,3 +160,39 @@ def test_cq15_tactic_moves_from_16_1_to_20_0(graph, src):
     assert {(a, b): n for a, b, n in ask(graph, "cq15")} == {k: len(v) for k, v in pairs.items()}
     top = {(f, t): n for f, t, n in ask(graph, "cq15")}
     assert top[("Defense Evasion", "Stealth (TA0005)")] == 134 and top[("Defense Evasion", "Defense Impairment (TA0112)")] == 41
+
+
+def test_cq16_agent_techniques_without_atlas_mitigation(graph, src):
+    def none(tid):
+        parent = src.atlas_techniques[tid].get("specializes")
+        return not src.atlas_mitigated_by[tid] and not (parent and src.atlas_mitigated_by[parent])
+    expected = {t for t in src.atlas_agent if none(t)}
+    assert {t for t, _, _ in ask(graph, "cq16")} == expected and len(expected) == 14
+    assert len(src.atlas_agent) == 26  # quoted in the docs
+
+
+def test_cq17_mitigations_for_agent_techniques(graph, src):
+    expected = {m: sum(1 for t in src.atlas_agent if m in src.atlas_mitigated_by[t]) for m in src.atlas_mitigations}
+    expected = {m: n for m, n in expected.items() if n}
+    assert {m: n for m, _, _, n in ask(graph, "cq17")} == expected
+    assert sorted(m for m, n in expected.items() if n == max(expected.values())) == ["AML.M0024", "AML.M0026", "AML.M0027", "AML.M0028", "AML.M0032"]
+
+
+def test_cq18_atlas_techniques_derived_from_attack(graph, src):
+    expected = {
+        tid: (t["ATT&CK-reference"]["id"], len(src.controls_for.get(t["ATT&CK-reference"]["id"], ())))
+        for tid, t in src.atlas_techniques.items() if t.get("ATT&CK-reference")
+    }
+    assert {a: (t, n) for a, _, t, _, n in ask(graph, "cq18")} == expected and len(expected) == 34
+    assert sum(1 for _, n in expected.values() if n) == 18 and expected["AML.T0055"] == ("T1552", 32)
+
+
+def test_cq19_owasp_llm_risks_to_atlas_mitigations(graph, src):
+    llm = next(l for l in src.owasp["lists"] if l["id"] == "owasp-llm-top10-2025")
+    expected = {}
+    for item in llm["items"]:
+        for aid in item["related_atlas"]:
+            expected[(f"{item['id']} {item['title']}", aid)] = src.atlas_mitigated_by[aid]
+    actual = {(r, a): set((m or "").split()) - {""} for r, a, _, m in ask(graph, "cq19")}
+    assert actual == expected and len(expected) == 13
+    assert sorted(a for (_, a), ms in expected.items() if not ms) == ["AML.T0048.002"]

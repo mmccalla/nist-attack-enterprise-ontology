@@ -9,6 +9,1464 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+data:atlasmitigation_AML.M0000 a :AtlasMitigation ;
+    skos:prefLabel "Limit Public Release of Information" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0000,
+        data:atlastechnique_AML.T0002,
+        data:atlastechnique_AML.T0003,
+        data:atlastechnique_AML.T0004,
+        data:atlastechnique_AML.T0005,
+        data:atlastechnique_AML.T0005.000,
+        data:atlastechnique_AML.T0005.002 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0000" .
+
+data:atlasmitigation_AML.M0001 a :AtlasMitigation ;
+    skos:prefLabel "Limit Model Artifact Release" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0002.000,
+        data:atlastechnique_AML.T0002.001,
+        data:atlastechnique_AML.T0005,
+        data:atlastechnique_AML.T0005.000,
+        data:atlastechnique_AML.T0020,
+        data:atlastechnique_AML.T0035 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0001" .
+
+data:atlasmitigation_AML.M0002 a :AtlasMitigation ;
+    skos:prefLabel "Passive AI Output Obfuscation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0005,
+        data:atlastechnique_AML.T0005.001,
+        data:atlastechnique_AML.T0013,
+        data:atlastechnique_AML.T0014,
+        data:atlastechnique_AML.T0024.000,
+        data:atlastechnique_AML.T0024.001,
+        data:atlastechnique_AML.T0024.002,
+        data:atlastechnique_AML.T0042,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0063 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0002" .
+
+data:atlasmitigation_AML.M0003 a :AtlasMitigation ;
+    skos:prefLabel "Model Hardening" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0015,
+        data:atlastechnique_AML.T0031,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.000,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0043.002,
+        data:atlastechnique_AML.T0043.003,
+        data:atlastechnique_AML.T0043.004 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0003" .
+
+data:atlasmitigation_AML.M0004 a :AtlasMitigation ;
+    skos:prefLabel "Restrict Number of AI Model Queries" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0005,
+        data:atlastechnique_AML.T0005.001,
+        data:atlastechnique_AML.T0013,
+        data:atlastechnique_AML.T0014,
+        data:atlastechnique_AML.T0024,
+        data:atlastechnique_AML.T0024.000,
+        data:atlastechnique_AML.T0024.001,
+        data:atlastechnique_AML.T0024.002,
+        data:atlastechnique_AML.T0029,
+        data:atlastechnique_AML.T0034,
+        data:atlastechnique_AML.T0042,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0043.003,
+        data:atlastechnique_AML.T0046,
+        data:atlastechnique_AML.T0062 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0004" .
+
+data:atlasmitigation_AML.M0005 a :AtlasMitigation ;
+    skos:prefLabel "Control Access to AI Models and Data at Rest" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0007,
+        data:atlastechnique_AML.T0010.002,
+        data:atlastechnique_AML.T0010.003,
+        data:atlastechnique_AML.T0018,
+        data:atlastechnique_AML.T0018.000,
+        data:atlastechnique_AML.T0018.001,
+        data:atlastechnique_AML.T0020,
+        data:atlastechnique_AML.T0025,
+        data:atlastechnique_AML.T0035,
+        data:atlastechnique_AML.T0042,
+        data:atlastechnique_AML.T0043.000,
+        data:atlastechnique_AML.T0044,
+        data:atlastechnique_AML.T0048.004 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0005" .
+
+data:atlasmitigation_AML.M0006 a :AtlasMitigation ;
+    skos:prefLabel "Use Ensemble Methods" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010.001,
+        data:atlastechnique_AML.T0010.003,
+        data:atlastechnique_AML.T0014,
+        data:atlastechnique_AML.T0015,
+        data:atlastechnique_AML.T0031,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.000,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0043.002,
+        data:atlastechnique_AML.T0043.003,
+        data:atlastechnique_AML.T0043.004 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0006" .
+
+data:atlasmitigation_AML.M0007 a :AtlasMitigation ;
+    skos:prefLabel "Sanitize Training Data" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010.002,
+        data:atlastechnique_AML.T0018.000,
+        data:atlastechnique_AML.T0020,
+        data:atlastechnique_AML.T0059 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0007" .
+
+data:atlasmitigation_AML.M0008 a :AtlasMitigation ;
+    skos:prefLabel "Validate AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010.003,
+        data:atlastechnique_AML.T0018,
+        data:atlastechnique_AML.T0018.000,
+        data:atlastechnique_AML.T0018.001,
+        data:atlastechnique_AML.T0020,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.004,
+        data:atlastechnique_AML.T0057 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0008" .
+
+data:atlasmitigation_AML.M0009 a :AtlasMitigation ;
+    skos:prefLabel "Use Multi-Modal Sensors" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0015,
+        data:atlastechnique_AML.T0041,
+        data:atlastechnique_AML.T0088 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0009" .
+
+data:atlasmitigation_AML.M0010 a :AtlasMitigation ;
+    skos:prefLabel "Input Restoration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0015,
+        data:atlastechnique_AML.T0031,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.000,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0043.002,
+        data:atlastechnique_AML.T0043.003,
+        data:atlastechnique_AML.T0043.004 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0010" .
+
+data:atlasmitigation_AML.M0011 a :AtlasMitigation ;
+    skos:prefLabel "Restrict Library Loading" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0011,
+        data:atlastechnique_AML.T0011.000,
+        data:atlastechnique_AML.T0011.001 ;
+    :derivedFromAttackMitigation data:mitigation_M1044 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0011" .
+
+data:atlasmitigation_AML.M0012 a :AtlasMitigation ;
+    skos:prefLabel "Encrypt Sensitive Information" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0007,
+        data:atlastechnique_AML.T0035,
+        data:atlastechnique_AML.T0048.004,
+        data:atlastechnique_AML.T0063 ;
+    :derivedFromAttackMitigation data:mitigation_M1041 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0012" .
+
+data:atlasmitigation_AML.M0013 a :AtlasMitigation ;
+    skos:prefLabel "Code Signing" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010.001,
+        data:atlastechnique_AML.T0010.003,
+        data:atlastechnique_AML.T0011.000,
+        data:atlastechnique_AML.T0011.001,
+        data:atlastechnique_AML.T0018,
+        data:atlastechnique_AML.T0018.000,
+        data:atlastechnique_AML.T0018.001,
+        data:atlastechnique_AML.T0018.002 ;
+    :derivedFromAttackMitigation data:mitigation_M1045 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0013" .
+
+data:atlasmitigation_AML.M0014 a :AtlasMitigation ;
+    skos:prefLabel "Verify AI Artifacts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0002.001,
+        data:atlastechnique_AML.T0010,
+        data:atlastechnique_AML.T0010.002,
+        data:atlastechnique_AML.T0011,
+        data:atlastechnique_AML.T0011.000,
+        data:atlastechnique_AML.T0019 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0014" .
+
+data:atlasmitigation_AML.M0015 a :AtlasMitigation ;
+    skos:prefLabel "Adversarial Input Detection" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0015,
+        data:atlastechnique_AML.T0029,
+        data:atlastechnique_AML.T0031,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.000,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0043.002,
+        data:atlastechnique_AML.T0043.003,
+        data:atlastechnique_AML.T0043.004 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0015" .
+
+data:atlasmitigation_AML.M0016 a :AtlasMitigation ;
+    skos:prefLabel "Vulnerability Scanning" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0011,
+        data:atlastechnique_AML.T0011.000,
+        data:atlastechnique_AML.T0011.001 ;
+    :derivedFromAttackMitigation data:mitigation_M1016 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0016" .
+
+data:atlasmitigation_AML.M0017 a :AtlasMitigation ;
+    skos:prefLabel "AI Model Distribution Methods" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010.003,
+        data:atlastechnique_AML.T0035,
+        data:atlastechnique_AML.T0043.000,
+        data:atlastechnique_AML.T0044,
+        data:atlastechnique_AML.T0048.004,
+        data:atlastechnique_AML.T0063 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0017" .
+
+data:atlasmitigation_AML.M0018 a :AtlasMitigation ;
+    skos:prefLabel "User Training" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0011,
+        data:atlastechnique_AML.T0011.000,
+        data:atlastechnique_AML.T0011.001,
+        data:atlastechnique_AML.T0052,
+        data:atlastechnique_AML.T0052.000,
+        data:atlastechnique_AML.T0052.001 ;
+    :derivedFromAttackMitigation data:mitigation_M1017 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0018" .
+
+data:atlasmitigation_AML.M0019 a :AtlasMitigation ;
+    skos:prefLabel "Control Access to AI Models and Data in Production" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0005,
+        data:atlastechnique_AML.T0024,
+        data:atlastechnique_AML.T0029,
+        data:atlastechnique_AML.T0034,
+        data:atlastechnique_AML.T0040,
+        data:atlastechnique_AML.T0042,
+        data:atlastechnique_AML.T0043,
+        data:atlastechnique_AML.T0043.001,
+        data:atlastechnique_AML.T0046,
+        data:atlastechnique_AML.T0051,
+        data:atlastechnique_AML.T0063 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0019" .
+
+data:atlasmitigation_AML.M0020 a :AtlasMitigation ;
+    skos:prefLabel "Generative AI Guardrails" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010,
+        data:atlastechnique_AML.T0051,
+        data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0054,
+        data:atlastechnique_AML.T0056,
+        data:atlastechnique_AML.T0057,
+        data:atlastechnique_AML.T0061,
+        data:atlastechnique_AML.T0062 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0020" .
+
+data:atlasmitigation_AML.M0021 a :AtlasMitigation ;
+    skos:prefLabel "Generative AI Guidelines" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0051,
+        data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0054,
+        data:atlastechnique_AML.T0056,
+        data:atlastechnique_AML.T0057,
+        data:atlastechnique_AML.T0061,
+        data:atlastechnique_AML.T0062 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0021" .
+
+data:atlasmitigation_AML.M0022 a :AtlasMitigation ;
+    skos:prefLabel "Generative AI Model Alignment" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0051,
+        data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0054,
+        data:atlastechnique_AML.T0056,
+        data:atlastechnique_AML.T0057,
+        data:atlastechnique_AML.T0061,
+        data:atlastechnique_AML.T0062 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0022" .
+
+data:atlasmitigation_AML.M0023 a :AtlasMitigation ;
+    skos:prefLabel "AI Bill of Materials" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Policy" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010,
+        data:atlastechnique_AML.T0011,
+        data:atlastechnique_AML.T0011.000,
+        data:atlastechnique_AML.T0011.001,
+        data:atlastechnique_AML.T0019,
+        data:atlastechnique_AML.T0020,
+        data:atlastechnique_AML.T0058 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0023" .
+
+data:atlasmitigation_AML.M0024 a :AtlasMitigation ;
+    skos:prefLabel "AI Telemetry Logging" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0005.001,
+        data:atlastechnique_AML.T0024,
+        data:atlastechnique_AML.T0024.000,
+        data:atlastechnique_AML.T0024.001,
+        data:atlastechnique_AML.T0024.002,
+        data:atlastechnique_AML.T0040,
+        data:atlastechnique_AML.T0047,
+        data:atlastechnique_AML.T0051,
+        data:atlastechnique_AML.T0051.000,
+        data:atlastechnique_AML.T0051.001,
+        data:atlastechnique_AML.T0051.002,
+        data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0085,
+        data:atlastechnique_AML.T0085.000,
+        data:atlastechnique_AML.T0085.001,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0101 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0024" .
+
+data:atlasmitigation_AML.M0025 a :AtlasMitigation ;
+    skos:prefLabel "Maintain AI Dataset Provenance" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0010.002,
+        data:atlastechnique_AML.T0018.000,
+        data:atlastechnique_AML.T0019,
+        data:atlastechnique_AML.T0020,
+        data:atlastechnique_AML.T0059 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0025" .
+
+data:atlasmitigation_AML.M0026 a :AtlasMitigation ;
+    skos:prefLabel "Privileged AI Agent Permissions Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0082,
+        data:atlastechnique_AML.T0085,
+        data:atlastechnique_AML.T0085.000,
+        data:atlastechnique_AML.T0085.001,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0101 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0026" .
+
+data:atlasmitigation_AML.M0027 a :AtlasMitigation ;
+    skos:prefLabel "Single-User AI Agent Permissions Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0082,
+        data:atlastechnique_AML.T0085,
+        data:atlastechnique_AML.T0085.000,
+        data:atlastechnique_AML.T0085.001,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0101 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0027" .
+
+data:atlasmitigation_AML.M0028 a :AtlasMitigation ;
+    skos:prefLabel "AI Agent Tools Permissions Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0085,
+        data:atlastechnique_AML.T0085.001,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0101 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0028" .
+
+data:atlasmitigation_AML.M0029 a :AtlasMitigation ;
+    skos:prefLabel "Human In-the-Loop for AI Agent Actions" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0101 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0029" .
+
+data:atlasmitigation_AML.M0030 a :AtlasMitigation ;
+    skos:prefLabel "Restrict AI Agent Tool Invocation on Untrusted Data" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0101 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0030" .
+
+data:atlasmitigation_AML.M0031 a :AtlasMitigation ;
+    skos:prefLabel "Memory Hardening" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0080,
+        data:atlastechnique_AML.T0080.000 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0031" .
+
+data:atlasmitigation_AML.M0032 a :AtlasMitigation ;
+    skos:prefLabel "Segmentation of AI Agent Components" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - Cyber" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0085,
+        data:atlastechnique_AML.T0085.000,
+        data:atlastechnique_AML.T0085.001,
+        data:atlastechnique_AML.T0086,
+        data:atlastechnique_AML.T0098 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0032" .
+
+data:atlasmitigation_AML.M0033 a :AtlasMitigation ;
+    skos:prefLabel "Input and Output Validation for AI Agent Components" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0051,
+        data:atlastechnique_AML.T0051.000,
+        data:atlastechnique_AML.T0051.001,
+        data:atlastechnique_AML.T0051.002,
+        data:atlastechnique_AML.T0053,
+        data:atlastechnique_AML.T0086 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0033" .
+
+data:atlasmitigation_AML.M0034 a :AtlasMitigation ;
+    skos:prefLabel "Deepfake Detection" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasCategory "Technical - ML" ;
+    :atlasMitigationFor data:atlastechnique_AML.T0015,
+        data:atlastechnique_AML.T0052,
+        data:atlastechnique_AML.T0052.000,
+        data:atlastechnique_AML.T0052.001,
+        data:atlastechnique_AML.T0088 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :mitigationId "AML.M0034" .
+
+data:atlastechnique_AML.T0000.000 a :AtlasTechnique ;
+    skos:prefLabel "Journals and Conference Proceedings" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0000 ;
+    :techniqueId "AML.T0000.000" ;
+    :techniqueName "Journals and Conference Proceedings" .
+
+data:atlastechnique_AML.T0000.001 a :AtlasTechnique ;
+    skos:prefLabel "Pre-Print Repositories" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0000 ;
+    :techniqueId "AML.T0000.001" ;
+    :techniqueName "Pre-Print Repositories" .
+
+data:atlastechnique_AML.T0000.002 a :AtlasTechnique ;
+    skos:prefLabel "Technical Blogs" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0000 ;
+    :techniqueId "AML.T0000.002" ;
+    :techniqueName "Technical Blogs" .
+
+data:atlastechnique_AML.T0001 a :AtlasTechnique ;
+    skos:prefLabel "Search Open AI Vulnerability Analysis" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0001" ;
+    :techniqueName "Search Open AI Vulnerability Analysis" .
+
+data:atlastechnique_AML.T0002.002 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0002 ;
+    :techniqueId "AML.T0002.002" ;
+    :techniqueName "AI Agent Configuration" .
+
+data:atlastechnique_AML.T0006 a :AtlasTechnique ;
+    skos:prefLabel "Active Scanning" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1595 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0006" ;
+    :techniqueName "Active Scanning" .
+
+data:atlastechnique_AML.T0008.000 a :AtlasTechnique ;
+    skos:prefLabel "AI Development Workspaces" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0008 ;
+    :techniqueId "AML.T0008.000" ;
+    :techniqueName "AI Development Workspaces" .
+
+data:atlastechnique_AML.T0008.001 a :AtlasTechnique ;
+    skos:prefLabel "Consumer Hardware" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0008 ;
+    :techniqueId "AML.T0008.001" ;
+    :techniqueName "Consumer Hardware" .
+
+data:atlastechnique_AML.T0008.002 a :AtlasTechnique ;
+    skos:prefLabel "Domains" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1583.001 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0008 ;
+    :techniqueId "AML.T0008.002" ;
+    :techniqueName "Domains" .
+
+data:atlastechnique_AML.T0008.003 a :AtlasTechnique ;
+    skos:prefLabel "Physical Countermeasures" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0008 ;
+    :techniqueId "AML.T0008.003" ;
+    :techniqueName "Physical Countermeasures" .
+
+data:atlastechnique_AML.T0008.004 a :AtlasTechnique ;
+    skos:prefLabel "Serverless" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :derivedFromAttack data:technique_T1583.007 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0008 ;
+    :techniqueId "AML.T0008.004" ;
+    :techniqueName "Serverless" .
+
+data:atlastechnique_AML.T0008.005 a :AtlasTechnique ;
+    skos:prefLabel "AI Service Proxies" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0008 ;
+    :techniqueId "AML.T0008.005" ;
+    :techniqueName "AI Service Proxies" .
+
+data:atlastechnique_AML.T0010.000 a :AtlasTechnique ;
+    skos:prefLabel "Hardware" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0010 ;
+    :techniqueId "AML.T0010.000" ;
+    :techniqueName "Hardware" .
+
+data:atlastechnique_AML.T0010.004 a :AtlasTechnique ;
+    skos:prefLabel "Container Registry" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0010 ;
+    :techniqueId "AML.T0010.004" ;
+    :techniqueName "Container Registry" .
+
+data:atlastechnique_AML.T0010.005 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Tool" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0010 ;
+    :techniqueId "AML.T0010.005" ;
+    :techniqueName "AI Agent Tool" .
+
+data:atlastechnique_AML.T0011.002 a :AtlasTechnique ;
+    skos:prefLabel "Poisoned AI Agent Tool" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0011 ;
+    :techniqueId "AML.T0011.002" ;
+    :techniqueName "Poisoned AI Agent Tool" .
+
+data:atlastechnique_AML.T0011.003 a :AtlasTechnique ;
+    skos:prefLabel "Malicious Link" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1204 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0011 ;
+    :techniqueId "AML.T0011.003" ;
+    :techniqueName "Malicious Link" .
+
+data:atlastechnique_AML.T0012 a :AtlasTechnique ;
+    skos:prefLabel "Valid Accounts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1078 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004,
+        data:atlastactic_AML.TA0012 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0012" ;
+    :techniqueName "Valid Accounts" .
+
+data:atlastechnique_AML.T0016.000 a :AtlasTechnique ;
+    skos:prefLabel "Adversarial AI Attack Implementations" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0016 ;
+    :techniqueId "AML.T0016.000" ;
+    :techniqueName "Adversarial AI Attack Implementations" .
+
+data:atlastechnique_AML.T0016.001 a :AtlasTechnique ;
+    skos:prefLabel "Software Tools" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1588.002 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0016 ;
+    :techniqueId "AML.T0016.001" ;
+    :techniqueName "Software Tools" .
+
+data:atlastechnique_AML.T0016.002 a :AtlasTechnique ;
+    skos:prefLabel "Generative AI" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0016 ;
+    :techniqueId "AML.T0016.002" ;
+    :techniqueName "Generative AI" .
+
+data:atlastechnique_AML.T0017.000 a :AtlasTechnique ;
+    skos:prefLabel "Adversarial AI Attacks" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0017 ;
+    :techniqueId "AML.T0017.000" ;
+    :techniqueName "Adversarial AI Attacks" .
+
+data:atlastechnique_AML.T0021 a :AtlasTechnique ;
+    skos:prefLabel "Establish Accounts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1585 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0021" ;
+    :techniqueName "Establish Accounts" .
+
+data:atlastechnique_AML.T0034.000 a :AtlasTechnique ;
+    skos:prefLabel "Excessive Queries" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0034 ;
+    :techniqueId "AML.T0034.000" ;
+    :techniqueName "Excessive Queries" .
+
+data:atlastechnique_AML.T0034.001 a :AtlasTechnique ;
+    skos:prefLabel "Resource-Intensive Queries" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0034 ;
+    :techniqueId "AML.T0034.001" ;
+    :techniqueName "Resource-Intensive Queries" .
+
+data:atlastechnique_AML.T0034.002 a :AtlasTechnique ;
+    skos:prefLabel "Agentic Resource Consumption" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0034 ;
+    :techniqueId "AML.T0034.002" ;
+    :techniqueName "Agentic Resource Consumption" .
+
+data:atlastechnique_AML.T0036 a :AtlasTechnique ;
+    skos:prefLabel "Data from Information Repositories" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1213 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0009 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0036" ;
+    :techniqueName "Data from Information Repositories" .
+
+data:atlastechnique_AML.T0037 a :AtlasTechnique ;
+    skos:prefLabel "Data from Local System" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1005 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0009 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0037" ;
+    :techniqueName "Data from Local System" .
+
+data:atlastechnique_AML.T0048.000 a :AtlasTechnique ;
+    skos:prefLabel "Financial Harm" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0048 ;
+    :techniqueId "AML.T0048.000" ;
+    :techniqueName "Financial Harm" .
+
+data:atlastechnique_AML.T0048.001 a :AtlasTechnique ;
+    skos:prefLabel "Reputational Harm" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0048 ;
+    :techniqueId "AML.T0048.001" ;
+    :techniqueName "Reputational Harm" .
+
+data:atlastechnique_AML.T0048.003 a :AtlasTechnique ;
+    skos:prefLabel "User Harm" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0048 ;
+    :techniqueId "AML.T0048.003" ;
+    :techniqueName "User Harm" .
+
+data:atlastechnique_AML.T0049 a :AtlasTechnique ;
+    skos:prefLabel "Exploit Public-Facing Application" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1190 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0049" ;
+    :techniqueName "Exploit Public-Facing Application" .
+
+data:atlastechnique_AML.T0050 a :AtlasTechnique ;
+    skos:prefLabel "Command and Scripting Interpreter" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1059 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0005 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0050" ;
+    :techniqueName "Command and Scripting Interpreter" .
+
+data:atlastechnique_AML.T0055 a :AtlasTechnique ;
+    skos:prefLabel "Unsecured Credentials" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1552 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0013 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0055" ;
+    :techniqueName "Unsecured Credentials" .
+
+data:atlastechnique_AML.T0060 a :AtlasTechnique ;
+    skos:prefLabel "Publish Hallucinated Entities" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0060" ;
+    :techniqueName "Publish Hallucinated Entities" .
+
+data:atlastechnique_AML.T0064 a :AtlasTechnique ;
+    skos:prefLabel "Gather RAG-Indexed Targets" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0064" ;
+    :techniqueName "Gather RAG-Indexed Targets" .
+
+data:atlastechnique_AML.T0065 a :AtlasTechnique ;
+    skos:prefLabel "LLM Prompt Crafting" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0065" ;
+    :techniqueName "LLM Prompt Crafting" .
+
+data:atlastechnique_AML.T0066 a :AtlasTechnique ;
+    skos:prefLabel "Retrieval Content Crafting" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0066" ;
+    :techniqueName "Retrieval Content Crafting" .
+
+data:atlastechnique_AML.T0067.000 a :AtlasTechnique ;
+    skos:prefLabel "Citations" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0067 ;
+    :techniqueId "AML.T0067.000" ;
+    :techniqueName "Citations" .
+
+data:atlastechnique_AML.T0068 a :AtlasTechnique ;
+    skos:prefLabel "LLM Prompt Obfuscation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0068" ;
+    :techniqueName "LLM Prompt Obfuscation" .
+
+data:atlastechnique_AML.T0069.000 a :AtlasTechnique ;
+    skos:prefLabel "Special Character Sets" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0069 ;
+    :techniqueId "AML.T0069.000" ;
+    :techniqueName "Special Character Sets" .
+
+data:atlastechnique_AML.T0069.001 a :AtlasTechnique ;
+    skos:prefLabel "System Instruction Keywords" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0069 ;
+    :techniqueId "AML.T0069.001" ;
+    :techniqueName "System Instruction Keywords" .
+
+data:atlastechnique_AML.T0069.002 a :AtlasTechnique ;
+    skos:prefLabel "System Prompt" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0069 ;
+    :techniqueId "AML.T0069.002" ;
+    :techniqueName "System Prompt" .
+
+data:atlastechnique_AML.T0070 a :AtlasTechnique ;
+    skos:prefLabel "RAG Poisoning" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0006 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0070" ;
+    :techniqueName "RAG Poisoning" .
+
+data:atlastechnique_AML.T0071 a :AtlasTechnique ;
+    skos:prefLabel "False RAG Entry Injection" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0071" ;
+    :techniqueName "False RAG Entry Injection" .
+
+data:atlastechnique_AML.T0072 a :AtlasTechnique ;
+    skos:prefLabel "Reverse Shell" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0014 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0072" ;
+    :techniqueName "Reverse Shell" .
+
+data:atlastechnique_AML.T0073 a :AtlasTechnique ;
+    skos:prefLabel "Impersonation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1656 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0073" ;
+    :techniqueName "Impersonation" .
+
+data:atlastechnique_AML.T0074 a :AtlasTechnique ;
+    skos:prefLabel "Masquerading" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1036 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0074" ;
+    :techniqueName "Masquerading" .
+
+data:atlastechnique_AML.T0075 a :AtlasTechnique ;
+    skos:prefLabel "Cloud Service Discovery" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1526 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0075" ;
+    :techniqueName "Cloud Service Discovery" .
+
+data:atlastechnique_AML.T0076 a :AtlasTechnique ;
+    skos:prefLabel "Corrupt AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0076" ;
+    :techniqueName "Corrupt AI Model" .
+
+data:atlastechnique_AML.T0077 a :AtlasTechnique ;
+    skos:prefLabel "LLM Response Rendering" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0010 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0077" ;
+    :techniqueName "LLM Response Rendering" .
+
+data:atlastechnique_AML.T0078 a :AtlasTechnique ;
+    skos:prefLabel "Drive-by Compromise" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1189 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0078" ;
+    :techniqueName "Drive-by Compromise" .
+
+data:atlastechnique_AML.T0079 a :AtlasTechnique ;
+    skos:prefLabel "Stage Capabilities" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1608 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0079" ;
+    :techniqueName "Stage Capabilities" .
+
+data:atlastechnique_AML.T0080.001 a :AtlasTechnique ;
+    skos:prefLabel "Thread" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0080 ;
+    :techniqueId "AML.T0080.001" ;
+    :techniqueName "Thread" .
+
+data:atlastechnique_AML.T0081 a :AtlasTechnique ;
+    skos:prefLabel "Modify AI Agent Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0006,
+        data:atlastactic_AML.TA0007 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0081" ;
+    :techniqueName "Modify AI Agent Configuration" .
+
+data:atlastechnique_AML.T0083 a :AtlasTechnique ;
+    skos:prefLabel "Credentials from AI Agent Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0013 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0083" ;
+    :techniqueName "Credentials from AI Agent Configuration" .
+
+data:atlastechnique_AML.T0084.000 a :AtlasTechnique ;
+    skos:prefLabel "Embedded Knowledge" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0084 ;
+    :techniqueId "AML.T0084.000" ;
+    :techniqueName "Embedded Knowledge" .
+
+data:atlastechnique_AML.T0084.001 a :AtlasTechnique ;
+    skos:prefLabel "Tool Definitions" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0084 ;
+    :techniqueId "AML.T0084.001" ;
+    :techniqueName "Tool Definitions" .
+
+data:atlastechnique_AML.T0084.002 a :AtlasTechnique ;
+    skos:prefLabel "Activation Triggers" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0084 ;
+    :techniqueId "AML.T0084.002" ;
+    :techniqueName "Activation Triggers" .
+
+data:atlastechnique_AML.T0084.003 a :AtlasTechnique ;
+    skos:prefLabel "Call Chains" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0084 ;
+    :techniqueId "AML.T0084.003" ;
+    :techniqueName "Call Chains" .
+
+data:atlastechnique_AML.T0087 a :AtlasTechnique ;
+    skos:prefLabel "Gather Victim Identity Information" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1589 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0087" ;
+    :techniqueName "Gather Victim Identity Information" .
+
+data:atlastechnique_AML.T0089 a :AtlasTechnique ;
+    skos:prefLabel "Process Discovery" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1057 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0089" ;
+    :techniqueName "Process Discovery" .
+
+data:atlastechnique_AML.T0090 a :AtlasTechnique ;
+    skos:prefLabel "OS Credential Dumping" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1003 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0013 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0090" ;
+    :techniqueName "OS Credential Dumping" .
+
+data:atlastechnique_AML.T0091.000 a :AtlasTechnique ;
+    skos:prefLabel "Application Access Token" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1550.001 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0091 ;
+    :techniqueId "AML.T0091.000" ;
+    :techniqueName "Application Access Token" .
+
+data:atlastechnique_AML.T0092 a :AtlasTechnique ;
+    skos:prefLabel "Manipulate User LLM Chat History" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0092" ;
+    :techniqueName "Manipulate User LLM Chat History" .
+
+data:atlastechnique_AML.T0093 a :AtlasTechnique ;
+    skos:prefLabel "Prompt Infiltration via Public-Facing Application" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004,
+        data:atlastactic_AML.TA0006 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0093" ;
+    :techniqueName "Prompt Infiltration via Public-Facing Application" .
+
+data:atlastechnique_AML.T0094 a :AtlasTechnique ;
+    skos:prefLabel "Delay Execution of LLM Instructions" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0094" ;
+    :techniqueName "Delay Execution of LLM Instructions" .
+
+data:atlastechnique_AML.T0095.000 a :AtlasTechnique ;
+    skos:prefLabel "Code Repositories" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1593.003 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0095 ;
+    :techniqueId "AML.T0095.000" ;
+    :techniqueName "Code Repositories" .
+
+data:atlastechnique_AML.T0096 a :AtlasTechnique ;
+    skos:prefLabel "AI Service API" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0014 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0096" ;
+    :techniqueName "AI Service API" .
+
+data:atlastechnique_AML.T0097 a :AtlasTechnique ;
+    skos:prefLabel "Virtualization/Sandbox Evasion" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1497 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0097" ;
+    :techniqueName "Virtualization/Sandbox Evasion" .
+
+data:atlastechnique_AML.T0099 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Tool Data Poisoning" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0006 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0099" ;
+    :techniqueName "AI Agent Tool Data Poisoning" .
+
+data:atlastechnique_AML.T0100 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Clickbait" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0005 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0100" ;
+    :techniqueName "AI Agent Clickbait" .
+
+data:atlastechnique_AML.T0102 a :AtlasTechnique ;
+    skos:prefLabel "Generate Malicious Commands" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0001 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0102" ;
+    :techniqueName "Generate Malicious Commands" .
+
+data:atlastechnique_AML.T0103 a :AtlasTechnique ;
+    skos:prefLabel "Deploy AI Agent" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0005 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0103" ;
+    :techniqueName "Deploy AI Agent" .
+
+data:atlastechnique_AML.T0104 a :AtlasTechnique ;
+    skos:prefLabel "Publish Poisoned AI Agent Tool" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0104" ;
+    :techniqueName "Publish Poisoned AI Agent Tool" .
+
+data:atlastechnique_AML.T0105 a :AtlasTechnique ;
+    skos:prefLabel "Escape to Host" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1611 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0012 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0105" ;
+    :techniqueName "Escape to Host" .
+
+data:atlastechnique_AML.T0106 a :AtlasTechnique ;
+    skos:prefLabel "Exploitation for Credential Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1211 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0013 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0106" ;
+    :techniqueName "Exploitation for Credential Access" .
+
+data:atlastechnique_AML.T0107 a :AtlasTechnique ;
+    skos:prefLabel "Exploitation for Defense Evasion" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1211 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0107" ;
+    :techniqueName "Exploitation for Defense Evasion" .
+
+data:atlastechnique_AML.T0108 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0014 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0108" ;
+    :techniqueName "AI Agent" .
+
+data:atlastechnique_AML.T0109 a :AtlasTechnique ;
+    skos:prefLabel "AI Supply Chain Rug Pull" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0109" ;
+    :techniqueName "AI Supply Chain Rug Pull" .
+
+data:atlastechnique_AML.T0110 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Tool Poisoning" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0006 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0110" ;
+    :techniqueName "AI Agent Tool Poisoning" .
+
+data:atlastechnique_AML.T0111 a :AtlasTechnique ;
+    skos:prefLabel "AI Supply Chain Reputation Inflation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0111" ;
+    :techniqueName "AI Supply Chain Reputation Inflation" .
+
+data:atlastechnique_AML.T0112.000 a :AtlasTechnique ;
+    skos:prefLabel "Local AI Agent" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0112 ;
+    :techniqueId "AML.T0112.000" ;
+    :techniqueName "Local AI Agent" .
+
+data:atlastechnique_AML.T0112.001 a :AtlasTechnique ;
+    skos:prefLabel "AI Artifacts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0112 ;
+    :techniqueId "AML.T0112.001" ;
+    :techniqueName "AI Artifacts" .
+
+data:catalogue_owasp-agentic-top10-2026 a :ThreatCatalogue ;
+    rdfs:label "OWASP Top 10 for Agentic Applications for 2026" ;
+    dcterms:license "CC BY-SA 4.0" ;
+    dcterms:source <https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/> ;
+    rdfs:comment "Item titles are not included: the official document is behind a download form and no machine-readable source was found. Secondary sources were not used." ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :catalogueDomain "owasp" ;
+    :catalogueVersion "2025-12-09" .
+
 data:claim_AC-02_T1003 a :MitigationClaim ;
     prov:wasDerivedFrom data:assertion_AC-02_T1003 ;
     :claimObjectTechnique data:technique_T1003 ;
@@ -33312,78 +34770,6 @@ data:mitigation_M1015 a :AttackMitigation ;
     :mitigationId "M1015" ;
     :stixId "course-of-action--e3388c78-2a8d-47c2-8422-c1398b324462" .
 
-data:mitigation_M1016 a :AttackMitigation ;
-    skos:prefLabel "Vulnerability Scanning" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :attackMitigationFor data:technique_T1190,
-        data:technique_T1195,
-        data:technique_T1195.001,
-        data:technique_T1195.002,
-        data:technique_T1210 ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :mitigationId "M1016" ;
-    :stixId "course-of-action--15437c6d-b998-4a36-be41-4ace3d54d266" .
-
-data:mitigation_M1017 a :AttackMitigation ;
-    skos:prefLabel "User Training" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :attackMitigationFor data:technique_T1003,
-        data:technique_T1003.001,
-        data:technique_T1003.002,
-        data:technique_T1003.003,
-        data:technique_T1003.004,
-        data:technique_T1003.005,
-        data:technique_T1027,
-        data:technique_T1036,
-        data:technique_T1036.007,
-        data:technique_T1056.002,
-        data:technique_T1072,
-        data:technique_T1078,
-        data:technique_T1078.002,
-        data:technique_T1078.004,
-        data:technique_T1111,
-        data:technique_T1176,
-        data:technique_T1185,
-        data:technique_T1204,
-        data:technique_T1204.001,
-        data:technique_T1204.002,
-        data:technique_T1204.003,
-        data:technique_T1213,
-        data:technique_T1213.001,
-        data:technique_T1213.002,
-        data:technique_T1213.003,
-        data:technique_T1213.004,
-        data:technique_T1213.005,
-        data:technique_T1221,
-        data:technique_T1528,
-        data:technique_T1539,
-        data:technique_T1547.007,
-        data:technique_T1552,
-        data:technique_T1552.001,
-        data:technique_T1552.008,
-        data:technique_T1555.003,
-        data:technique_T1555.005,
-        data:technique_T1556.001,
-        data:technique_T1557,
-        data:technique_T1557.002,
-        data:technique_T1557.004,
-        data:technique_T1566,
-        data:technique_T1566.001,
-        data:technique_T1566.002,
-        data:technique_T1566.003,
-        data:technique_T1566.004,
-        data:technique_T1598,
-        data:technique_T1598.001,
-        data:technique_T1598.002,
-        data:technique_T1598.003,
-        data:technique_T1598.004,
-        data:technique_T1621,
-        data:technique_T1656,
-        data:technique_T1657 ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :mitigationId "M1017" ;
-    :stixId "course-of-action--2a4f6c11-a4a7-4cb9-b0ef-6ae1bb3a718a" .
-
 data:mitigation_M1018 a :AttackMitigation ;
     skos:prefLabel "User Account Management" ;
     prov:wasDerivedFrom data:attackEnterpriseStix ;
@@ -34339,44 +35725,6 @@ data:mitigation_M1040 a :AttackMitigation ;
     :mitigationId "M1040" ;
     :stixId "course-of-action--90f39ee1-d5a3-4aaa-9f28-3b42815b0d46" .
 
-data:mitigation_M1041 a :AttackMitigation ;
-    skos:prefLabel "Encrypt Sensitive Information" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :attackMitigationFor data:technique_T1003,
-        data:technique_T1003.003,
-        data:technique_T1020.001,
-        data:technique_T1040,
-        data:technique_T1070,
-        data:technique_T1070.001,
-        data:technique_T1070.002,
-        data:technique_T1114,
-        data:technique_T1114.001,
-        data:technique_T1114.002,
-        data:technique_T1114.003,
-        data:technique_T1119,
-        data:technique_T1213,
-        data:technique_T1530,
-        data:technique_T1550.001,
-        data:technique_T1552,
-        data:technique_T1552.004,
-        data:technique_T1557,
-        data:technique_T1557.002,
-        data:technique_T1558,
-        data:technique_T1558.002,
-        data:technique_T1558.003,
-        data:technique_T1558.004,
-        data:technique_T1565,
-        data:technique_T1565.001,
-        data:technique_T1565.002,
-        data:technique_T1602,
-        data:technique_T1602.001,
-        data:technique_T1602.002,
-        data:technique_T1649,
-        data:technique_T1659 ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :mitigationId "M1041" ;
-    :stixId "course-of-action--feff9142-e8c2-46f4-842b-bd6fb3d41157" .
-
 data:mitigation_M1042 a :AttackMitigation ;
     skos:prefLabel "Disable or Remove Feature or Program" ;
     prov:wasDerivedFrom data:attackEnterpriseStix ;
@@ -34467,44 +35815,6 @@ data:mitigation_M1043 a :AttackMitigation ;
     :inCatalogue data:catalogue_attack-enterprise-16.1 ;
     :mitigationId "M1043" ;
     :stixId "course-of-action--49c06d54-9002-491d-9147-8efb537fbd26" .
-
-data:mitigation_M1044 a :AttackMitigation ;
-    skos:prefLabel "Restrict Library Loading" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :attackMitigationFor data:technique_T1547.008,
-        data:technique_T1574,
-        data:technique_T1574.001 ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :mitigationId "M1044" ;
-    :stixId "course-of-action--e8242a33-481c-4891-af63-4cf3e4cf6aff" .
-
-data:mitigation_M1045 a :AttackMitigation ;
-    skos:prefLabel "Code Signing" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :attackMitigationFor data:technique_T1036,
-        data:technique_T1036.001,
-        data:technique_T1036.005,
-        data:technique_T1059,
-        data:technique_T1059.001,
-        data:technique_T1059.002,
-        data:technique_T1127.002,
-        data:technique_T1204.003,
-        data:technique_T1505,
-        data:technique_T1505.001,
-        data:technique_T1505.002,
-        data:technique_T1505.004,
-        data:technique_T1525,
-        data:technique_T1543,
-        data:technique_T1543.003,
-        data:technique_T1546.006,
-        data:technique_T1546.013,
-        data:technique_T1554,
-        data:technique_T1601,
-        data:technique_T1601.001,
-        data:technique_T1601.002 ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :mitigationId "M1045" ;
-    :stixId "course-of-action--590777b3-b475-4c7c-aaf8-f4a73b140312" .
 
 data:mitigation_M1046 a :AttackMitigation ;
     skos:prefLabel "Boot Integrity" ;
@@ -34946,6 +36256,159 @@ data:mitigation_M1060 a :AttackMitigation ;
     :mitigationId "M1060" ;
     :stixId "course-of-action--80a0e940-f683-4fbd-ac00-e9f935f2f808" .
 
+data:owasp_LLM01_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm01-prompt-injection/> ;
+    skos:prefLabel "LLM01:2025 Prompt Injection" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM01:2025" ;
+    :relatedAtlasTechnique data:atlastechnique_AML.T0051.000,
+        data:atlastechnique_AML.T0051.001,
+        data:atlastechnique_AML.T0054 .
+
+data:owasp_LLM02_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/> ;
+    skos:prefLabel "LLM02:2025 Sensitive Information Disclosure" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM02:2025" ;
+    :relatedAtlasTechnique data:atlastechnique_AML.T0024.000,
+        data:atlastechnique_AML.T0024.001,
+        data:atlastechnique_AML.T0024.002 .
+
+data:owasp_LLM03_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm032025-supply-chain/> ;
+    skos:prefLabel "LLM03:2025 Supply Chain" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM03:2025" .
+
+data:owasp_LLM04_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm042025-data-and-model-poisoning/> ;
+    skos:prefLabel "LLM04:2025 Data and Model Poisoning" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM04:2025" ;
+    :relatedAtlasTechnique data:atlastechnique_AML.T0018 .
+
+data:owasp_LLM05_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm052025-improper-output-handling/> ;
+    skos:prefLabel "LLM05:2025 Improper Output Handling" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM05:2025" .
+
+data:owasp_LLM06_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm062025-excessive-agency/> ;
+    skos:prefLabel "LLM06:2025 Excessive Agency" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM06:2025" .
+
+data:owasp_LLM07_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/> ;
+    skos:prefLabel "LLM07:2025 System Prompt Leakage" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM07:2025" ;
+    :relatedAtlasTechnique data:atlastechnique_AML.T0051.000 .
+
+data:owasp_LLM08_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/> ;
+    skos:prefLabel "LLM08:2025 Vector and Embedding Weaknesses" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM08:2025" .
+
+data:owasp_LLM09_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm092025-misinformation/> ;
+    skos:prefLabel "LLM09:2025 Misinformation" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM09:2025" ;
+    :relatedAtlasTechnique data:atlastechnique_AML.T0048.002 .
+
+data:owasp_LLM10_2025 a :OwaspRisk ;
+    dcterms:source <https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/> ;
+    skos:prefLabel "LLM10:2025 Unbounded Consumption" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-llm-top10-2025 ;
+    :owaspId "LLM10:2025" ;
+    :relatedAtlasTechnique data:atlastechnique_AML.T0024,
+        data:atlastechnique_AML.T0025,
+        data:atlastechnique_AML.T0029,
+        data:atlastechnique_AML.T0034 .
+
+data:owasp_MCP01_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP01:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP01:2025" .
+
+data:owasp_MCP02_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP02:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP02:2025" .
+
+data:owasp_MCP03_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP03:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP03:2025" .
+
+data:owasp_MCP04_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP04:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP04:2025" .
+
+data:owasp_MCP05_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP05:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP05:2025" .
+
+data:owasp_MCP06_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP06:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP06:2025" .
+
+data:owasp_MCP07_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP07:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP07:2025" .
+
+data:owasp_MCP08_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP08:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP08:2025" .
+
+data:owasp_MCP09_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP09:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP09:2025" .
+
+data:owasp_MCP10_2025 a :OwaspRisk ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    skos:prefLabel "MCP10:2025" ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :inCatalogue data:catalogue_owasp-mcp-top10 ;
+    :owaspId "MCP10:2025" .
+
 data:technique_T1007 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "System Service Discovery" ;
@@ -35101,22 +36564,6 @@ data:technique_T1056.004 a :AttackTechnique ;
     :targetsPlatform data:platform_Windows ;
     :techniqueId "T1056.004" ;
     :techniqueName "Credential API Hooking" .
-
-data:technique_T1057 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Process Discovery" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0007 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--8f4a33ec-8b1f-4b80-a2f6-642b2e479580" ;
-    :targetsPlatform data:platform_Linux,
-        data:platform_Network,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1057" ;
-    :techniqueName "Process Discovery" .
 
 data:technique_T1069.001 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -35370,22 +36817,6 @@ data:technique_T1518.001 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1518.001" ;
     :techniqueName "Security Software Discovery" .
-
-data:technique_T1526 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Cloud Service Discovery" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0007 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--e24fcba8-2557-4442-a139-1ee2f2e784db" ;
-    :targetsPlatform data:platform_IaaS,
-        data:platform_Identity_Provider,
-        data:platform_Office_Suite,
-        data:platform_SaaS ;
-    :techniqueId "T1526" ;
-    :techniqueName "Cloud Service Discovery" .
 
 data:technique_T1529 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -35676,6 +37107,175 @@ data:assertion_SC-12_T1521.003 a :MitigatesAssertion ;
     :assertsTechnique data:technique_T1521.003 ;
     :sourceRecordNumber 637 .
 
+data:atlastechnique_AML.T0002.000 a :AtlasTechnique ;
+    skos:prefLabel "Datasets" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0002 ;
+    :techniqueId "AML.T0002.000" ;
+    :techniqueName "Datasets" .
+
+data:atlastechnique_AML.T0003 a :AtlasTechnique ;
+    skos:prefLabel "Search Victim-Owned Websites" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1594 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0003" ;
+    :techniqueName "Search Victim-Owned Websites" .
+
+data:atlastechnique_AML.T0004 a :AtlasTechnique ;
+    skos:prefLabel "Search Application Repositories" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0004" ;
+    :techniqueName "Search Application Repositories" .
+
+data:atlastechnique_AML.T0005.002 a :AtlasTechnique ;
+    skos:prefLabel "Use Pre-Trained Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0005 ;
+    :techniqueId "AML.T0005.002" ;
+    :techniqueName "Use Pre-Trained Model" .
+
+data:atlastechnique_AML.T0017 a :AtlasTechnique ;
+    skos:prefLabel "Develop Capabilities" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1587 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0017" ;
+    :techniqueName "Develop Capabilities" .
+
+data:atlastechnique_AML.T0018.002 a :AtlasTechnique ;
+    skos:prefLabel "Embed Malware" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0018 ;
+    :techniqueId "AML.T0018.002" ;
+    :techniqueName "Embed Malware" .
+
+data:atlastechnique_AML.T0041 a :AtlasTechnique ;
+    skos:prefLabel "Physical Environment Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0000 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0041" ;
+    :techniqueName "Physical Environment Access" .
+
+data:atlastechnique_AML.T0047 a :AtlasTechnique ;
+    skos:prefLabel "AI-Enabled Product or Service" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0000 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0047" ;
+    :techniqueName "AI-Enabled Product or Service" .
+
+data:atlastechnique_AML.T0048.002 a :AtlasTechnique ;
+    skos:prefLabel "Societal Harm" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0048 ;
+    :techniqueId "AML.T0048.002" ;
+    :techniqueName "Societal Harm" .
+
+data:atlastechnique_AML.T0058 a :AtlasTechnique ;
+    skos:prefLabel "Publish Poisoned Models" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0058" ;
+    :techniqueName "Publish Poisoned Models" .
+
+data:atlastechnique_AML.T0067 a :AtlasTechnique ;
+    skos:prefLabel "LLM Trusted Output Components Manipulation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0067" ;
+    :techniqueName "LLM Trusted Output Components Manipulation" .
+
+data:atlastechnique_AML.T0080.000 a :AtlasTechnique ;
+    skos:prefLabel "Memory" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0080 ;
+    :techniqueId "AML.T0080.000" ;
+    :techniqueName "Memory" .
+
+data:atlastechnique_AML.T0091 a :AtlasTechnique ;
+    skos:prefLabel "Use Alternate Authentication Material" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1550 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0015 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0091" ;
+    :techniqueName "Use Alternate Authentication Material" .
+
+data:atlastechnique_AML.T0095 a :AtlasTechnique ;
+    skos:prefLabel "Search Open Websites/Domains" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1593 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0095" ;
+    :techniqueName "Search Open Websites/Domains" .
+
+data:atlastechnique_AML.T0098 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Tool Credential Harvesting" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0013 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0098" ;
+    :techniqueName "AI Agent Tool Credential Harvesting" .
+
 data:datasetMetadataRecord a :DatasetMetadataRecord ;
     dcterms:source "nist_800_53-rev5_attack-16.1-enterprise.json" ;
     :attackVersion "16.1" ;
@@ -35684,6 +37284,154 @@ data:datasetMetadataRecord a :DatasetMetadataRecord ;
     :sourceCreationDate "01/13/2022" ;
     :sourceLastUpdate "04/16/2025" ;
     :technologyDomain "enterprise" .
+
+data:mitigation_M1016 a :AttackMitigation ;
+    skos:prefLabel "Vulnerability Scanning" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :attackMitigationFor data:technique_T1190,
+        data:technique_T1195,
+        data:technique_T1195.001,
+        data:technique_T1195.002,
+        data:technique_T1210 ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :mitigationId "M1016" ;
+    :stixId "course-of-action--15437c6d-b998-4a36-be41-4ace3d54d266" .
+
+data:mitigation_M1017 a :AttackMitigation ;
+    skos:prefLabel "User Training" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :attackMitigationFor data:technique_T1003,
+        data:technique_T1003.001,
+        data:technique_T1003.002,
+        data:technique_T1003.003,
+        data:technique_T1003.004,
+        data:technique_T1003.005,
+        data:technique_T1027,
+        data:technique_T1036,
+        data:technique_T1036.007,
+        data:technique_T1056.002,
+        data:technique_T1072,
+        data:technique_T1078,
+        data:technique_T1078.002,
+        data:technique_T1078.004,
+        data:technique_T1111,
+        data:technique_T1176,
+        data:technique_T1185,
+        data:technique_T1204,
+        data:technique_T1204.001,
+        data:technique_T1204.002,
+        data:technique_T1204.003,
+        data:technique_T1213,
+        data:technique_T1213.001,
+        data:technique_T1213.002,
+        data:technique_T1213.003,
+        data:technique_T1213.004,
+        data:technique_T1213.005,
+        data:technique_T1221,
+        data:technique_T1528,
+        data:technique_T1539,
+        data:technique_T1547.007,
+        data:technique_T1552,
+        data:technique_T1552.001,
+        data:technique_T1552.008,
+        data:technique_T1555.003,
+        data:technique_T1555.005,
+        data:technique_T1556.001,
+        data:technique_T1557,
+        data:technique_T1557.002,
+        data:technique_T1557.004,
+        data:technique_T1566,
+        data:technique_T1566.001,
+        data:technique_T1566.002,
+        data:technique_T1566.003,
+        data:technique_T1566.004,
+        data:technique_T1598,
+        data:technique_T1598.001,
+        data:technique_T1598.002,
+        data:technique_T1598.003,
+        data:technique_T1598.004,
+        data:technique_T1621,
+        data:technique_T1656,
+        data:technique_T1657 ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :mitigationId "M1017" ;
+    :stixId "course-of-action--2a4f6c11-a4a7-4cb9-b0ef-6ae1bb3a718a" .
+
+data:mitigation_M1041 a :AttackMitigation ;
+    skos:prefLabel "Encrypt Sensitive Information" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :attackMitigationFor data:technique_T1003,
+        data:technique_T1003.003,
+        data:technique_T1020.001,
+        data:technique_T1040,
+        data:technique_T1070,
+        data:technique_T1070.001,
+        data:technique_T1070.002,
+        data:technique_T1114,
+        data:technique_T1114.001,
+        data:technique_T1114.002,
+        data:technique_T1114.003,
+        data:technique_T1119,
+        data:technique_T1213,
+        data:technique_T1530,
+        data:technique_T1550.001,
+        data:technique_T1552,
+        data:technique_T1552.004,
+        data:technique_T1557,
+        data:technique_T1557.002,
+        data:technique_T1558,
+        data:technique_T1558.002,
+        data:technique_T1558.003,
+        data:technique_T1558.004,
+        data:technique_T1565,
+        data:technique_T1565.001,
+        data:technique_T1565.002,
+        data:technique_T1602,
+        data:technique_T1602.001,
+        data:technique_T1602.002,
+        data:technique_T1649,
+        data:technique_T1659 ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :mitigationId "M1041" ;
+    :stixId "course-of-action--feff9142-e8c2-46f4-842b-bd6fb3d41157" .
+
+data:mitigation_M1044 a :AttackMitigation ;
+    skos:prefLabel "Restrict Library Loading" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :attackMitigationFor data:technique_T1547.008,
+        data:technique_T1574,
+        data:technique_T1574.001 ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :mitigationId "M1044" ;
+    :stixId "course-of-action--e8242a33-481c-4891-af63-4cf3e4cf6aff" .
+
+data:mitigation_M1045 a :AttackMitigation ;
+    skos:prefLabel "Code Signing" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :attackMitigationFor data:technique_T1036,
+        data:technique_T1036.001,
+        data:technique_T1036.005,
+        data:technique_T1059,
+        data:technique_T1059.001,
+        data:technique_T1059.002,
+        data:technique_T1127.002,
+        data:technique_T1204.003,
+        data:technique_T1505,
+        data:technique_T1505.001,
+        data:technique_T1505.002,
+        data:technique_T1505.004,
+        data:technique_T1525,
+        data:technique_T1543,
+        data:technique_T1543.003,
+        data:technique_T1546.006,
+        data:technique_T1546.013,
+        data:technique_T1554,
+        data:technique_T1601,
+        data:technique_T1601.001,
+        data:technique_T1601.002 ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :mitigationId "M1045" ;
+    :stixId "course-of-action--590777b3-b475-4c7c-aaf8-f4a73b140312" .
 
 data:nonmappable_T1016.002 a :NonMappableAssertion ;
     prov:wasDerivedFrom data:sourceDataset ;
@@ -36425,6 +38173,22 @@ data:technique_T1036.006 a :AttackTechnique ;
     :techniqueId "T1036.006" ;
     :techniqueName "Space after Filename" .
 
+data:technique_T1057 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Process Discovery" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0007 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--8f4a33ec-8b1f-4b80-a2f6-642b2e479580" ;
+    :targetsPlatform data:platform_Linux,
+        data:platform_Network,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1057" ;
+    :techniqueName "Process Discovery" .
+
 data:technique_T1070.004 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "File Deletion" ;
@@ -36652,6 +38416,22 @@ data:technique_T1521.003 a :AttackTechnique ;
     :techniqueId "T1521.003" ;
     :techniqueName "SSL Pinning" .
 
+data:technique_T1526 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Cloud Service Discovery" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0007 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--e24fcba8-2557-4442-a139-1ee2f2e784db" ;
+    :targetsPlatform data:platform_IaaS,
+        data:platform_Identity_Provider,
+        data:platform_Office_Suite,
+        data:platform_SaaS ;
+    :techniqueId "T1526" ;
+    :techniqueName "Cloud Service Discovery" .
+
 data:technique_T1546.017 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Udev Rules" ;
@@ -36817,6 +38597,190 @@ data:technique_T1665 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1665" ;
     :techniqueName "Hide Infrastructure" .
+
+data:atlastactic_AML.TA0015 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Lateral Movement" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0015" ;
+    :tacticOrder 11 .
+
+data:atlastechnique_AML.T0002.001 a :AtlasTechnique ;
+    skos:prefLabel "Models" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0002 ;
+    :techniqueId "AML.T0002.001" ;
+    :techniqueName "Models" .
+
+data:atlastechnique_AML.T0005.000 a :AtlasTechnique ;
+    skos:prefLabel "Train Proxy via Gathered AI Artifacts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0005 ;
+    :techniqueId "AML.T0005.000" ;
+    :techniqueName "Train Proxy via Gathered AI Artifacts" .
+
+data:atlastechnique_AML.T0007 a :AtlasTechnique ;
+    skos:prefLabel "Discover AI Artifacts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0007" ;
+    :techniqueName "Discover AI Artifacts" .
+
+data:atlastechnique_AML.T0010.001 a :AtlasTechnique ;
+    skos:prefLabel "AI Software" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0010 ;
+    :techniqueId "AML.T0010.001" ;
+    :techniqueName "AI Software" .
+
+data:atlastechnique_AML.T0013 a :AtlasTechnique ;
+    skos:prefLabel "Discover AI Model Ontology" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0013" ;
+    :techniqueName "Discover AI Model Ontology" .
+
+data:atlastechnique_AML.T0025 a :AtlasTechnique ;
+    skos:prefLabel "Exfiltration via Cyber Means" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0010 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0025" ;
+    :techniqueName "Exfiltration via Cyber Means" .
+
+data:atlastechnique_AML.T0040 a :AtlasTechnique ;
+    skos:prefLabel "AI Model Inference API Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0000 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0040" ;
+    :techniqueName "AI Model Inference API Access" .
+
+data:atlastechnique_AML.T0044 a :AtlasTechnique ;
+    skos:prefLabel "Full AI Model Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0000 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0044" ;
+    :techniqueName "Full AI Model Access" .
+
+data:atlastechnique_AML.T0046 a :AtlasTechnique ;
+    skos:prefLabel "Spamming AI System with Chaff Data" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0046" ;
+    :techniqueName "Spamming AI System with Chaff Data" .
+
+data:atlastechnique_AML.T0051.002 a :AtlasTechnique ;
+    skos:prefLabel "Triggered" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0051 ;
+    :techniqueId "AML.T0051.002" ;
+    :techniqueName "Triggered" .
+
+data:atlastechnique_AML.T0052.000 a :AtlasTechnique ;
+    skos:prefLabel "Spearphishing via Social Engineering LLM" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0052 ;
+    :techniqueId "AML.T0052.000" ;
+    :techniqueName "Spearphishing via Social Engineering LLM" .
+
+data:atlastechnique_AML.T0052.001 a :AtlasTechnique ;
+    skos:prefLabel "Deepfake-Assisted Phishing" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0052 ;
+    :techniqueId "AML.T0052.001" ;
+    :techniqueName "Deepfake-Assisted Phishing" .
+
+data:atlastechnique_AML.T0059 a :AtlasTechnique ;
+    skos:prefLabel "Erode Dataset Integrity" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0059" ;
+    :techniqueName "Erode Dataset Integrity" .
+
+data:atlastechnique_AML.T0082 a :AtlasTechnique ;
+    skos:prefLabel "RAG Credential Harvesting" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0013 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0082" ;
+    :techniqueName "RAG Credential Harvesting" .
+
+data:atlastechnique_AML.T0088 a :AtlasTechnique ;
+    skos:prefLabel "Generate Deepfakes" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0001 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0088" ;
+    :techniqueName "Generate Deepfakes" .
+
+data:atlastechnique_AML.T0112 a :AtlasTechnique ;
+    skos:prefLabel "Machine Compromise" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0112" ;
+    :techniqueName "Machine Compromise" .
 
 data:control_AC-08 a :SecurityControl ;
     skos:prefLabel "AC-08" ;
@@ -37017,20 +38981,6 @@ data:technique_T1566.004 a :AttackTechnique ;
     :techniqueId "T1566.004" ;
     :techniqueName "Spearphishing Voice" .
 
-data:technique_T1583.001 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Domains" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0042 ;
-    :isSubTechnique true ;
-    :stixId "attack-pattern--40f5caa0-4cb7-4117-89fc-d421bb493df3" ;
-    :subTechniqueOf data:technique_T1583 ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1583.001" ;
-    :techniqueName "Domains" .
-
 data:technique_T1583.002 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "DNS Server" ;
@@ -37100,20 +39050,6 @@ data:technique_T1583.006 a :AttackTechnique ;
     :targetsPlatform data:platform_PRE ;
     :techniqueId "T1583.006" ;
     :techniqueName "Web Services" .
-
-data:technique_T1583.007 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Serverless" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0042 ;
-    :isSubTechnique true ;
-    :stixId "attack-pattern--04a5a8ab-3bc8-4c83-95c9-55274a89786d" ;
-    :subTechniqueOf data:technique_T1583 ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1583.007" ;
-    :techniqueName "Serverless" .
 
 data:technique_T1583.008 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -37394,20 +39330,6 @@ data:technique_T1588.001 a :AttackTechnique ;
     :targetsPlatform data:platform_PRE ;
     :techniqueId "T1588.001" ;
     :techniqueName "Malware" .
-
-data:technique_T1588.002 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Tool" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0042 ;
-    :isSubTechnique true ;
-    :stixId "attack-pattern--a2fdce72-04b2-409a-ac10-cc1695f4fce0" ;
-    :subTechniqueOf data:technique_T1588 ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1588.002" ;
-    :techniqueName "Tool" .
 
 data:technique_T1588.003 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -37730,19 +39652,6 @@ data:technique_T1593.002 a :AttackTechnique ;
     :targetsPlatform data:platform_PRE ;
     :techniqueId "T1593.002" ;
     :techniqueName "Search Engines" .
-
-data:technique_T1594 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Search Victim-Owned Websites" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0043 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--16cdd21f-da65-4e4f-bc04-dd7d198c7b26" ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1594" ;
-    :techniqueName "Search Victim-Owned Websites" .
 
 data:technique_T1595.001 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -85802,6 +87711,136 @@ data:assertion_SR-11_T1601.002 a :MitigatesAssertion ;
     :assertsTechnique data:technique_T1601.002 ;
     :sourceRecordNumber 2950 .
 
+data:atlastactic_AML.TA0014 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Command and Control" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0014" ;
+    :tacticOrder 14 .
+
+data:atlastechnique_AML.T0005.001 a :AtlasTechnique ;
+    skos:prefLabel "Train Proxy via Replication" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0005 ;
+    :techniqueId "AML.T0005.001" ;
+    :techniqueName "Train Proxy via Replication" .
+
+data:atlastechnique_AML.T0014 a :AtlasTechnique ;
+    skos:prefLabel "Discover AI Model Family" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0014" ;
+    :techniqueName "Discover AI Model Family" .
+
+data:atlastechnique_AML.T0016 a :AtlasTechnique ;
+    skos:prefLabel "Obtain Capabilities" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1588 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0016" ;
+    :techniqueName "Obtain Capabilities" .
+
+data:atlastechnique_AML.T0018.001 a :AtlasTechnique ;
+    skos:prefLabel "Modify AI Model Architecture" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0018 ;
+    :techniqueId "AML.T0018.001" ;
+    :techniqueName "Modify AI Model Architecture" .
+
+data:atlastechnique_AML.T0019 a :AtlasTechnique ;
+    skos:prefLabel "Publish Poisoned Datasets" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0019" ;
+    :techniqueName "Publish Poisoned Datasets" .
+
+data:atlastechnique_AML.T0048.004 a :AtlasTechnique ;
+    skos:prefLabel "AI Intellectual Property Theft" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0048 ;
+    :techniqueId "AML.T0048.004" ;
+    :techniqueName "AI Intellectual Property Theft" .
+
+data:atlastechnique_AML.T0051.001 a :AtlasTechnique ;
+    skos:prefLabel "Indirect" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0051 ;
+    :techniqueId "AML.T0051.001" ;
+    :techniqueName "Indirect" .
+
+data:atlastechnique_AML.T0056 a :AtlasTechnique ;
+    skos:prefLabel "Extract LLM System Prompt" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0010 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0056" ;
+    :techniqueName "Extract LLM System Prompt" .
+
+data:atlastechnique_AML.T0061 a :AtlasTechnique ;
+    skos:prefLabel "LLM Prompt Self-Replication" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0006 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0061" ;
+    :techniqueName "LLM Prompt Self-Replication" .
+
+data:atlastechnique_AML.T0069 a :AtlasTechnique ;
+    skos:prefLabel "Discover LLM System Information" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0069" ;
+    :techniqueName "Discover LLM System Information" .
+
+data:atlastechnique_AML.T0080 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Context Poisoning" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0006 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0080" ;
+    :techniqueName "AI Agent Context Poisoning" .
+
 data:technique_T1006 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Direct Volume Access" ;
@@ -85883,6 +87922,61 @@ data:technique_T1484.002 a :AttackTechnique ;
     :techniqueId "T1484.002" ;
     :techniqueName "Trust Modification" .
 
+data:technique_T1583.001 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Domains" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0042 ;
+    :isSubTechnique true ;
+    :stixId "attack-pattern--40f5caa0-4cb7-4117-89fc-d421bb493df3" ;
+    :subTechniqueOf data:technique_T1583 ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1583.001" ;
+    :techniqueName "Domains" .
+
+data:technique_T1583.007 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Serverless" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0042 ;
+    :isSubTechnique true ;
+    :stixId "attack-pattern--04a5a8ab-3bc8-4c83-95c9-55274a89786d" ;
+    :subTechniqueOf data:technique_T1583 ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1583.007" ;
+    :techniqueName "Serverless" .
+
+data:technique_T1588.002 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Tool" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0042 ;
+    :isSubTechnique true ;
+    :stixId "attack-pattern--a2fdce72-04b2-409a-ac10-cc1695f4fce0" ;
+    :subTechniqueOf data:technique_T1588 ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1588.002" ;
+    :techniqueName "Tool" .
+
+data:technique_T1594 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Search Victim-Owned Websites" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0043 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--16cdd21f-da65-4e4f-bc04-dd7d198c7b26" ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1594" ;
+    :techniqueName "Search Victim-Owned Websites" .
+
 data:technique_T1600 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Weaken Encryption" ;
@@ -85895,6 +87989,243 @@ data:technique_T1600 a :AttackTechnique ;
     :targetsPlatform data:platform_Network ;
     :techniqueId "T1600" ;
     :techniqueName "Weaken Encryption" .
+
+data:atlastactic_AML.TA0000 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "AI Model Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0000" ;
+    :tacticOrder 4 .
+
+data:atlastactic_AML.TA0009 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Collection" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0009" ;
+    :tacticOrder 12 .
+
+data:atlastactic_AML.TA0012 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Privilege Escalation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0012" ;
+    :tacticOrder 7 .
+
+data:atlastechnique_AML.T0000 a :AtlasTechnique ;
+    skos:prefLabel "Search Open Technical Databases" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :derivedFromAttack data:technique_T1596 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0002 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0000" ;
+    :techniqueName "Search Open Technical Databases" .
+
+data:atlastechnique_AML.T0002 a :AtlasTechnique ;
+    skos:prefLabel "Acquire Public AI Artifacts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0002" ;
+    :techniqueName "Acquire Public AI Artifacts" .
+
+data:atlastechnique_AML.T0010.002 a :AtlasTechnique ;
+    skos:prefLabel "Data" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0010 ;
+    :techniqueId "AML.T0010.002" ;
+    :techniqueName "Data" .
+
+data:atlastechnique_AML.T0024.000 a :AtlasTechnique ;
+    skos:prefLabel "Infer Training Data Membership" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0024 ;
+    :techniqueId "AML.T0024.000" ;
+    :techniqueName "Infer Training Data Membership" .
+
+data:atlastechnique_AML.T0024.001 a :AtlasTechnique ;
+    skos:prefLabel "Invert AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0024 ;
+    :techniqueId "AML.T0024.001" ;
+    :techniqueName "Invert AI Model" .
+
+data:atlastechnique_AML.T0024.002 a :AtlasTechnique ;
+    skos:prefLabel "Extract AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0024 ;
+    :techniqueId "AML.T0024.002" ;
+    :techniqueName "Extract AI Model" .
+
+data:atlastechnique_AML.T0029 a :AtlasTechnique ;
+    skos:prefLabel "Denial of AI Service" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0029" ;
+    :techniqueName "Denial of AI Service" .
+
+data:atlastechnique_AML.T0031 a :AtlasTechnique ;
+    skos:prefLabel "Erode AI Model Integrity" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0031" ;
+    :techniqueName "Erode AI Model Integrity" .
+
+data:atlastechnique_AML.T0035 a :AtlasTechnique ;
+    skos:prefLabel "AI Artifact Collection" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0009 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0035" ;
+    :techniqueName "AI Artifact Collection" .
+
+data:atlastechnique_AML.T0042 a :AtlasTechnique ;
+    skos:prefLabel "Verify Attack" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0001 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0042" ;
+    :techniqueName "Verify Attack" .
+
+data:atlastechnique_AML.T0043.002 a :AtlasTechnique ;
+    skos:prefLabel "Black-Box Transfer" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0043 ;
+    :techniqueId "AML.T0043.002" ;
+    :techniqueName "Black-Box Transfer" .
+
+data:atlastechnique_AML.T0051.000 a :AtlasTechnique ;
+    skos:prefLabel "Direct" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0051 ;
+    :techniqueId "AML.T0051.000" ;
+    :techniqueName "Direct" .
+
+data:atlastechnique_AML.T0052 a :AtlasTechnique ;
+    skos:prefLabel "Phishing" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1566 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004,
+        data:atlastactic_AML.TA0015 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0052" ;
+    :techniqueName "Phishing" .
+
+data:atlastechnique_AML.T0054 a :AtlasTechnique ;
+    skos:prefLabel "LLM Jailbreak" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0007,
+        data:atlastactic_AML.TA0012 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0054" ;
+    :techniqueName "LLM Jailbreak" .
+
+data:atlastechnique_AML.T0057 a :AtlasTechnique ;
+    skos:prefLabel "LLM Data Leakage" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0010 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0057" ;
+    :techniqueName "LLM Data Leakage" .
+
+data:atlastechnique_AML.T0062 a :AtlasTechnique ;
+    skos:prefLabel "Discover LLM Hallucinations" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0062" ;
+    :techniqueName "Discover LLM Hallucinations" .
+
+data:atlastechnique_AML.T0063 a :AtlasTechnique ;
+    skos:prefLabel "Discover AI Model Outputs" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0063" ;
+    :techniqueName "Discover AI Model Outputs" .
+
+data:atlastechnique_AML.T0084 a :AtlasTechnique ;
+    skos:prefLabel "Discover AI Agent Configuration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0008 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0084" ;
+    :techniqueName "Discover AI Agent Configuration" .
+
+data:atlastechnique_AML.T0085.000 a :AtlasTechnique ;
+    skos:prefLabel "RAG Databases" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0085 ;
+    :techniqueId "AML.T0085.000" ;
+    :techniqueName "RAG Databases" .
 
 data:control_AC-11 a :SecurityControl ;
     skos:prefLabel "AC-11" ;
@@ -86008,22 +88339,6 @@ data:technique_T1496.003 a :AttackTechnique ;
     :techniqueId "T1496.003" ;
     :techniqueName "SMS Pumping" .
 
-data:technique_T1497 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Virtualization/Sandbox Evasion" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0005,
-        data:tactic_TA0007 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--82caa33e-d11a-433a-94ea-9b5a5fbef81d" ;
-    :targetsPlatform data:platform_Linux,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1497" ;
-    :techniqueName "Virtualization/Sandbox Evasion" .
-
 data:technique_T1597 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Search Closed Sources" ;
@@ -86037,22 +88352,82 @@ data:technique_T1597 a :AttackTechnique ;
     :techniqueId "T1597" ;
     :techniqueName "Search Closed Sources" .
 
-data:technique_T1656 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Impersonation" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0005 ;
+data:atlastechnique_AML.T0010.003 a :AtlasTechnique ;
+    skos:prefLabel "Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0010 ;
+    :techniqueId "AML.T0010.003" ;
+    :techniqueName "Model" .
+
+data:atlastechnique_AML.T0011.001 a :AtlasTechnique ;
+    skos:prefLabel "Malicious Package" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0011 ;
+    :techniqueId "AML.T0011.001" ;
+    :techniqueName "Malicious Package" .
+
+data:atlastechnique_AML.T0018.000 a :AtlasTechnique ;
+    skos:prefLabel "Poison AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0018 ;
+    :techniqueId "AML.T0018.000" ;
+    :techniqueName "Poison AI Model" .
+
+data:atlastechnique_AML.T0043.003 a :AtlasTechnique ;
+    skos:prefLabel "Manual Modification" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0043 ;
+    :techniqueId "AML.T0043.003" ;
+    :techniqueName "Manual Modification" .
+
+data:atlastechnique_AML.T0043.004 a :AtlasTechnique ;
+    skos:prefLabel "Insert Backdoor Trigger" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0043 ;
+    :techniqueId "AML.T0043.004" ;
+    :techniqueName "Insert Backdoor Trigger" .
+
+data:atlastechnique_AML.T0048 a :AtlasTechnique ;
+    skos:prefLabel "External Harms" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
     :isSubTechnique false ;
-    :stixId "attack-pattern--c9e0c59e-162e-40a4-b8b1-78fab4329ada" ;
-    :targetsPlatform data:platform_Linux,
-        data:platform_Office_Suite,
-        data:platform_SaaS,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1656" ;
-    :techniqueName "Impersonation" .
+    :techniqueId "AML.T0048" ;
+    :techniqueName "External Harms" .
+
+data:atlastechnique_AML.T0085.001 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Tools" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated true ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0085 ;
+    :techniqueId "AML.T0085.001" ;
+    :techniqueName "AI Agent Tools" .
 
 data:technique_T1027.011 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -86102,6 +88477,22 @@ data:technique_T1496 a :AttackTechnique ;
     :techniqueId "T1496" ;
     :techniqueName "Resource Hijacking" .
 
+data:technique_T1497 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Virtualization/Sandbox Evasion" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0005,
+        data:tactic_TA0007 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--82caa33e-d11a-433a-94ea-9b5a5fbef81d" ;
+    :targetsPlatform data:platform_Linux,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1497" ;
+    :techniqueName "Virtualization/Sandbox Evasion" .
+
 data:technique_T1535 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Unused/Unsupported Cloud Regions" ;
@@ -86131,19 +88522,6 @@ data:technique_T1555.003 a :AttackTechnique ;
     :techniqueId "T1555.003" ;
     :techniqueName "Credentials from Web Browsers" .
 
-data:technique_T1585 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Establish Accounts" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0042 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--cdfc5f0a-9bb9-4352-b896-553cfa2d8fd8" ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1585" ;
-    :techniqueName "Establish Accounts" .
-
 data:technique_T1586 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Compromise Accounts" ;
@@ -86156,59 +88534,6 @@ data:technique_T1586 a :AttackTechnique ;
     :targetsPlatform data:platform_PRE ;
     :techniqueId "T1586" ;
     :techniqueName "Compromise Accounts" .
-
-data:technique_T1589 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Gather Victim Identity Information" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0043 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--5282dd9a-d26d-4e16-88b7-7c0f4553daf4" ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1589" ;
-    :techniqueName "Gather Victim Identity Information" .
-
-data:technique_T1593 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Search Open Websites/Domains" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0043 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--a0e6614a-7740-4b24-bd65-f1bde09fc365" ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1593" ;
-    :techniqueName "Search Open Websites/Domains" .
-
-data:technique_T1593.003 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Code Repositories" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0043 ;
-    :isSubTechnique true ;
-    :stixId "attack-pattern--70910fbd-58dc-4c1c-8c48-814d11fcd022" ;
-    :subTechniqueOf data:technique_T1593 ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1593.003" ;
-    :techniqueName "Code Repositories" .
-
-data:technique_T1595 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Active Scanning" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0043 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--67073dde-d720-45ae-83da-b12d5e73ca3b" ;
-    :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1595" ;
-    :techniqueName "Active Scanning" .
 
 data:technique_T1595.003 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -86223,6 +88548,135 @@ data:technique_T1595.003 a :AttackTechnique ;
     :targetsPlatform data:platform_PRE ;
     :techniqueId "T1595.003" ;
     :techniqueName "Wordlist Scanning" .
+
+data:technique_T1656 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Impersonation" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0005 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--c9e0c59e-162e-40a4-b8b1-78fab4329ada" ;
+    :targetsPlatform data:platform_Linux,
+        data:platform_Office_Suite,
+        data:platform_SaaS,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1656" ;
+    :techniqueName "Impersonation" .
+
+data:atlastactic_AML.TA0001 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "AI Attack Staging" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0001" ;
+    :tacticOrder 13 .
+
+data:atlastactic_AML.TA0005 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Execution" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0005" ;
+    :tacticOrder 5 .
+
+data:atlastactic_AML.TA0010 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Exfiltration" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0010" ;
+    :tacticOrder 15 .
+
+data:atlastactic_AML.TA0013 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Credential Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0013" ;
+    :tacticOrder 9 .
+
+data:atlastechnique_AML.T0008 a :AtlasTechnique ;
+    skos:prefLabel "Acquire Infrastructure" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0008" ;
+    :techniqueName "Acquire Infrastructure" .
+
+data:atlastechnique_AML.T0011.000 a :AtlasTechnique ;
+    skos:prefLabel "Unsafe AI Artifacts" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0011 ;
+    :techniqueId "AML.T0011.000" ;
+    :techniqueName "Unsafe AI Artifacts" .
+
+data:atlastechnique_AML.T0015 a :AtlasTechnique ;
+    skos:prefLabel "Evade AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004,
+        data:atlastactic_AML.TA0007,
+        data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0015" ;
+    :techniqueName "Evade AI Model" .
+
+data:atlastechnique_AML.T0020 a :AtlasTechnique ;
+    skos:prefLabel "Poison Training Data" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0003,
+        data:atlastactic_AML.TA0006 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0020" ;
+    :techniqueName "Poison Training Data" .
+
+data:atlastechnique_AML.T0034 a :AtlasTechnique ;
+    skos:prefLabel "Cost Harvesting" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "feasible" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0034" ;
+    :techniqueName "Cost Harvesting" .
+
+data:atlastechnique_AML.T0043.000 a :AtlasTechnique ;
+    skos:prefLabel "White-Box Optimization" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0043 ;
+    :techniqueId "AML.T0043.000" ;
+    :techniqueName "White-Box Optimization" .
+
+data:atlastechnique_AML.T0101 a :AtlasTechnique ;
+    skos:prefLabel "Data Destruction via AI Agent Tool Invocation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0011 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0101" ;
+    :techniqueName "Data Destruction via AI Agent Tool Invocation" .
 
 data:control_SA-16 a :SecurityControl ;
     skos:prefLabel "SA-16" ;
@@ -86309,18 +88763,31 @@ data:technique_T1564.012 a :AttackTechnique ;
     :techniqueId "T1564.012" ;
     :techniqueName "File/Path Exclusions" .
 
-data:technique_T1587 a :AttackTechnique ;
+data:technique_T1585 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Develop Capabilities" ;
+    skos:prefLabel "Establish Accounts" ;
     prov:wasDerivedFrom data:attackEnterpriseStix ;
     :inAttackEnterprise true ;
     :inCatalogue data:catalogue_attack-enterprise-16.1 ;
     :inTactic data:tactic_TA0042 ;
     :isSubTechnique false ;
-    :stixId "attack-pattern--edadea33-549c-4ed1-9783-8f5a5853cbdf" ;
+    :stixId "attack-pattern--cdfc5f0a-9bb9-4352-b896-553cfa2d8fd8" ;
     :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1587" ;
-    :techniqueName "Develop Capabilities" .
+    :techniqueId "T1585" ;
+    :techniqueName "Establish Accounts" .
+
+data:technique_T1589 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Gather Victim Identity Information" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0043 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--5282dd9a-d26d-4e16-88b7-7c0f4553daf4" ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1589" ;
+    :techniqueName "Gather Victim Identity Information" .
 
 data:technique_T1591 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -86348,6 +88815,99 @@ data:technique_T1592 a :AttackTechnique ;
     :techniqueId "T1592" ;
     :techniqueName "Gather Victim Host Information" .
 
+data:technique_T1593 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Search Open Websites/Domains" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0043 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--a0e6614a-7740-4b24-bd65-f1bde09fc365" ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1593" ;
+    :techniqueName "Search Open Websites/Domains" .
+
+data:technique_T1593.003 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Code Repositories" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0043 ;
+    :isSubTechnique true ;
+    :stixId "attack-pattern--70910fbd-58dc-4c1c-8c48-814d11fcd022" ;
+    :subTechniqueOf data:technique_T1593 ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1593.003" ;
+    :techniqueName "Code Repositories" .
+
+data:technique_T1595 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Active Scanning" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0043 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--67073dde-d720-45ae-83da-b12d5e73ca3b" ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1595" ;
+    :techniqueName "Active Scanning" .
+
+data:atlastactic_AML.TA0004 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Initial Access" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0004" ;
+    :tacticOrder 3 .
+
+data:atlastechnique_AML.T0018 a :AtlasTechnique ;
+    skos:prefLabel "Manipulate AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0001,
+        data:atlastactic_AML.TA0006 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0018" ;
+    :techniqueName "Manipulate AI Model" .
+
+data:atlastechnique_AML.T0024 a :AtlasTechnique ;
+    skos:prefLabel "Exfiltration via AI Inference API" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0010 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0024" ;
+    :techniqueName "Exfiltration via AI Inference API" .
+
+data:atlastechnique_AML.T0043.001 a :AtlasTechnique ;
+    skos:prefLabel "Black-Box Optimization" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :isAgentRelated false ;
+    :isSubTechnique true ;
+    :subTechniqueOf data:atlastechnique_AML.T0043 ;
+    :techniqueId "AML.T0043.001" ;
+    :techniqueName "Black-Box Optimization" .
+
+data:atlastechnique_AML.T0085 a :AtlasTechnique ;
+    skos:prefLabel "Data from AI Services" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0009 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0085" ;
+    :techniqueName "Data from AI Services" .
+
 data:baseline_PRIVACY a :ControlBaseline ;
     rdfs:label "SP 800-53B PRIVACY baseline" ;
     dcterms:source <https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json> ;
@@ -86372,18 +88932,18 @@ data:technique_T1037.001 a :AttackTechnique ;
     :techniqueId "T1037.001" ;
     :techniqueName "Logon Script (Windows)" .
 
-data:technique_T1596 a :AttackTechnique ;
+data:technique_T1587 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Search Open Technical Databases" ;
+    skos:prefLabel "Develop Capabilities" ;
     prov:wasDerivedFrom data:attackEnterpriseStix ;
     :inAttackEnterprise true ;
     :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0043 ;
+    :inTactic data:tactic_TA0042 ;
     :isSubTechnique false ;
-    :stixId "attack-pattern--55fc4df0-b42c-479a-b860-7a6761bcaad0" ;
+    :stixId "attack-pattern--edadea33-549c-4ed1-9783-8f5a5853cbdf" ;
     :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1596" ;
-    :techniqueName "Search Open Technical Databases" .
+    :techniqueId "T1587" ;
+    :techniqueName "Develop Capabilities" .
 
 data:technique_T1666 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -86400,6 +88960,36 @@ data:technique_T1666 a :AttackTechnique ;
 
 :capabilityGroup_MP :inFramework data:framework_nist-800-53-rev5 ;
     :oscalFamilyTitle "Media Protection" .
+
+data:atlastactic_AML.TA0002 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Reconnaissance" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0002" ;
+    :tacticOrder 1 .
+
+data:atlastechnique_AML.T0005 a :AtlasTechnique ;
+    skos:prefLabel "Create Proxy AI Model" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0001 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0005" ;
+    :techniqueName "Create Proxy AI Model" .
+
+data:atlastechnique_AML.T0086 a :AtlasTechnique ;
+    skos:prefLabel "Exfiltration via AI Agent Tool Invocation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0010 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0086" ;
+    :techniqueName "Exfiltration via AI Agent Tool Invocation" .
 
 data:control_AC-10 a :SecurityControl ;
     skos:prefLabel "AC-10" ;
@@ -86523,18 +89113,18 @@ data:technique_T1590 a :AttackTechnique ;
     :techniqueId "T1590" ;
     :techniqueName "Gather Victim Network Information" .
 
-data:technique_T1608 a :AttackTechnique ;
+data:technique_T1596 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Stage Capabilities" ;
+    skos:prefLabel "Search Open Technical Databases" ;
     prov:wasDerivedFrom data:attackEnterpriseStix ;
     :inAttackEnterprise true ;
     :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0042 ;
+    :inTactic data:tactic_TA0043 ;
     :isSubTechnique false ;
-    :stixId "attack-pattern--84771bc3-f6a0-403e-b144-01af70e5fda0" ;
+    :stixId "attack-pattern--55fc4df0-b42c-479a-b860-7a6761bcaad0" ;
     :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1608" ;
-    :techniqueName "Stage Capabilities" .
+    :techniqueId "T1596" ;
+    :techniqueName "Search Open Technical Databases" .
 
 data:technique_T1657 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -86553,6 +89143,64 @@ data:technique_T1657 a :AttackTechnique ;
     :techniqueId "T1657" ;
     :techniqueName "Financial Theft" .
 
+data:atlastactic_AML.TA0006 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Persistence" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0006" ;
+    :tacticOrder 6 .
+
+data:atlastactic_AML.TA0008 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Discovery" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0008" ;
+    :tacticOrder 10 .
+
+data:atlastactic_AML.TA0011 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Impact" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0011" ;
+    :tacticOrder 16 .
+
+data:atlastechnique_AML.T0010 a :AtlasTechnique ;
+    skos:prefLabel "AI Supply Chain Compromise" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0004 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0010" ;
+    :techniqueName "AI Supply Chain Compromise" .
+
+data:atlastechnique_AML.T0011 a :AtlasTechnique ;
+    skos:prefLabel "User Execution" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :derivedFromAttack data:technique_T1204 ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0005 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0011" ;
+    :techniqueName "User Execution" .
+
+data:atlastechnique_AML.T0051 a :AtlasTechnique ;
+    skos:prefLabel "LLM Prompt Injection" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0005 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0051" ;
+    :techniqueName "LLM Prompt Injection" .
+
 data:technique_T1027.012 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "LNK Icon Smuggling" ;
@@ -86567,18 +89215,35 @@ data:technique_T1027.012 a :AttackTechnique ;
     :techniqueId "T1027.012" ;
     :techniqueName "LNK Icon Smuggling" .
 
-data:technique_T1588 a :AttackTechnique ;
+data:technique_T1608 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Obtain Capabilities" ;
+    skos:prefLabel "Stage Capabilities" ;
     prov:wasDerivedFrom data:attackEnterpriseStix ;
     :inAttackEnterprise true ;
     :inCatalogue data:catalogue_attack-enterprise-16.1 ;
     :inTactic data:tactic_TA0042 ;
     :isSubTechnique false ;
-    :stixId "attack-pattern--ce0687a0-e692-4b77-964a-0784a8e54ff1" ;
+    :stixId "attack-pattern--84771bc3-f6a0-403e-b144-01af70e5fda0" ;
     :targetsPlatform data:platform_PRE ;
-    :techniqueId "T1588" ;
-    :techniqueName "Obtain Capabilities" .
+    :techniqueId "T1608" ;
+    :techniqueName "Stage Capabilities" .
+
+data:catalogue_owasp-llm-top10-2025 a :ThreatCatalogue ;
+    rdfs:label "OWASP Top 10 for LLM Applications 2025" ;
+    dcterms:license "CC BY-SA 4.0" ;
+    dcterms:source <https://genai.owasp.org/llm-top-10/> ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :catalogueDomain "owasp" ;
+    :catalogueVersion "2026-11-02" .
+
+data:catalogue_owasp-mcp-top10 a :ThreatCatalogue ;
+    rdfs:label "OWASP MCP Top 10" ;
+    dcterms:license "CC BY-NC-SA 4.0" ;
+    dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
+    rdfs:comment "Only IDs and links: the NonCommercial licence does not permit copying titles into this CC BY 4.0 project." ;
+    prov:wasDerivedFrom data:owaspGenaiExtract ;
+    :catalogueDomain "owasp" ;
+    :catalogueVersion "2026-11-02" .
 
 data:control_AC-21 a :SecurityControl ;
     skos:prefLabel "AC-21" ;
@@ -86902,6 +89567,31 @@ data:technique_T1584 a :AttackTechnique ;
     :techniqueId "T1584" ;
     :techniqueName "Compromise Infrastructure" .
 
+data:technique_T1588 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Obtain Capabilities" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0042 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--ce0687a0-e692-4b77-964a-0784a8e54ff1" ;
+    :targetsPlatform data:platform_PRE ;
+    :techniqueId "T1588" ;
+    :techniqueName "Obtain Capabilities" .
+
+data:atlastechnique_AML.T0053 a :AtlasTechnique ;
+    skos:prefLabel "AI Agent Tool Invocation" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "demonstrated" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0005,
+        data:atlastactic_AML.TA0012 ;
+    :isAgentRelated true ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0053" ;
+    :techniqueName "AI Agent Tool Invocation" .
+
 data:technique_T1112 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Modify Registry" ;
@@ -87121,6 +89811,25 @@ data:technique_T1564.003 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1564.003" ;
     :techniqueName "Hidden Window" .
+
+data:atlastactic_AML.TA0003 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Resource Development" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0003" ;
+    :tacticOrder 2 .
+
+data:atlastechnique_AML.T0043 a :AtlasTechnique ;
+    skos:prefLabel "Craft Adversarial Data" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :atlasMaturity "realized" ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :inTactic data:atlastactic_AML.TA0001 ;
+    :isAgentRelated false ;
+    :isSubTechnique false ;
+    :techniqueId "AML.T0043" ;
+    :techniqueName "Craft Adversarial Data" .
 
 data:technique_T1027.007 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -87561,6 +90270,14 @@ data:technique_T1606.001 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1606.001" ;
     :techniqueName "Web Cookies" .
+
+data:atlastactic_AML.TA0007 a :Tactic ;
+    skos:inScheme :TacticScheme ;
+    skos:prefLabel "Defense Evasion" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :inCatalogue data:catalogue_atlas-5.6.0 ;
+    :tacticId "AML.TA0007" ;
+    :tacticOrder 8 .
 
 data:technique_T1027.009 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -88904,6 +91621,12 @@ data:technique_T1619 a :AttackTechnique ;
     :targetsPlatform data:platform_IaaS ;
     :techniqueId "T1619" ;
     :techniqueName "Cloud Storage Object Discovery" .
+
+data:owaspGenaiExtract a :ReferenceDataset ;
+    dcterms:source <https://genai.owasp.org/> ;
+    dcterms:title "OWASP GenAI Security Project lists (curated extract)" ;
+    owl:versionInfo "2026-11-02" ;
+    :sha256 "f26a38d7a81fdf4766e7ad99639836414c4b91f122a91d98217fb9ae4e00ae69" .
 
 data:tactic_TA0008 a :Tactic ;
     skos:inScheme :TacticScheme ;
@@ -90660,25 +93383,6 @@ data:technique_T1546.013 a :AttackTechnique ;
     :techniqueId "T1546.013" ;
     :techniqueName "PowerShell Profile" .
 
-data:technique_T1550 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Use Alternate Authentication Material" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0005,
-        data:tactic_TA0008 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--51a14c76-dd3b-440b-9c20-2bf91d25a814" ;
-    :targetsPlatform data:platform_Containers,
-        data:platform_IaaS,
-        data:platform_Identity_Provider,
-        data:platform_Office_Suite,
-        data:platform_SaaS,
-        data:platform_Windows ;
-    :techniqueId "T1550" ;
-    :techniqueName "Use Alternate Authentication Material" .
-
 data:technique_T1555 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Credentials from Password Stores" ;
@@ -90875,6 +93579,25 @@ data:technique_T1485 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1485" ;
     :techniqueName "Data Destruction" .
+
+data:technique_T1550 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Use Alternate Authentication Material" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0005,
+        data:tactic_TA0008 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--51a14c76-dd3b-440b-9c20-2bf91d25a814" ;
+    :targetsPlatform data:platform_Containers,
+        data:platform_IaaS,
+        data:platform_Identity_Provider,
+        data:platform_Office_Suite,
+        data:platform_SaaS,
+        data:platform_Windows ;
+    :techniqueId "T1550" ;
+    :techniqueName "Use Alternate Authentication Material" .
 
 data:technique_T1553.003 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -91793,22 +94516,6 @@ data:tactic_TA0009 a :Tactic ;
     :tacticOrder 11 ;
     :tacticShortName "collection" .
 
-data:technique_T1005 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Data from Local System" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0009 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--3c4a2599-71ee-4405-ba1e-0e28414b4bc5" ;
-    :targetsPlatform data:platform_Linux,
-        data:platform_Network,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1005" ;
-    :techniqueName "Data from Local System" .
-
 data:technique_T1036.005 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Match Legitimate Name or Location" ;
@@ -91920,6 +94627,22 @@ data:control_SC-08 a :SecurityControl ;
         data:technique_T1602.002,
         data:technique_T1622 ;
     :oscalControlId "sc-8" .
+
+data:technique_T1005 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Data from Local System" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0009 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--3c4a2599-71ee-4405-ba1e-0e28414b4bc5" ;
+    :targetsPlatform data:platform_Linux,
+        data:platform_Network,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1005" ;
+    :techniqueName "Data from Local System" .
 
 data:technique_T1134.005 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -92990,23 +95713,6 @@ data:technique_T1098 a :AttackTechnique ;
     :techniqueId "T1098" ;
     :techniqueName "Account Manipulation" .
 
-data:technique_T1204 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "User Execution" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0002 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--8c32eb4d-805f-4fc5-bf60-c4d476c131b5" ;
-    :targetsPlatform data:platform_Containers,
-        data:platform_IaaS,
-        data:platform_Linux,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1204" ;
-    :techniqueName "User Execution" .
-
 data:technique_T1221 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Template Injection" ;
@@ -93237,6 +95943,23 @@ data:technique_T1176 a :AttackTechnique ;
     :techniqueId "T1176" ;
     :techniqueName "Browser Extensions" .
 
+data:technique_T1204 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "User Execution" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0002 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--8c32eb4d-805f-4fc5-bf60-c4d476c131b5" ;
+    :targetsPlatform data:platform_Containers,
+        data:platform_IaaS,
+        data:platform_Linux,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1204" ;
+    :techniqueName "User Execution" .
+
 data:technique_T1525 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Implant Internal Image" ;
@@ -93250,24 +95973,6 @@ data:technique_T1525 a :AttackTechnique ;
         data:platform_IaaS ;
     :techniqueId "T1525" ;
     :techniqueName "Implant Internal Image" .
-
-data:technique_T1566 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Phishing" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0001 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--a62a8db3-f23a-4d8f-afd6-9dbc77e7813b" ;
-    :targetsPlatform data:platform_Identity_Provider,
-        data:platform_Linux,
-        data:platform_Office_Suite,
-        data:platform_SaaS,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1566" ;
-    :techniqueName "Phishing" .
 
 data:control_AC-18 a :SecurityControl ;
     skos:prefLabel "AC-18" ;
@@ -93373,6 +96078,24 @@ data:technique_T1557.004 a :AttackTechnique ;
     :targetsPlatform data:platform_Network ;
     :techniqueId "T1557.004" ;
     :techniqueName "Evil Twin" .
+
+data:technique_T1566 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Phishing" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0001 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--a62a8db3-f23a-4d8f-afd6-9dbc77e7813b" ;
+    :targetsPlatform data:platform_Identity_Provider,
+        data:platform_Linux,
+        data:platform_Office_Suite,
+        data:platform_SaaS,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1566" ;
+    :techniqueName "Phishing" .
 
 data:technique_T1574.007 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -93638,25 +96361,6 @@ data:technique_T1543.002 a :AttackTechnique ;
     :techniqueId "T1543.002" ;
     :techniqueName "Systemd Service" .
 
-data:technique_T1550.001 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Application Access Token" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0005,
-        data:tactic_TA0008 ;
-    :isSubTechnique true ;
-    :stixId "attack-pattern--f005e783-57d4-4837-88ad-dbe7faee1c51" ;
-    :subTechniqueOf data:technique_T1550 ;
-    :targetsPlatform data:platform_Containers,
-        data:platform_IaaS,
-        data:platform_Identity_Provider,
-        data:platform_Office_Suite,
-        data:platform_SaaS ;
-    :techniqueId "T1550.001" ;
-    :techniqueName "Application Access Token" .
-
 data:technique_T1119 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Automated Collection" ;
@@ -93689,6 +96393,25 @@ data:technique_T1204.003 a :AttackTechnique ;
         data:platform_IaaS ;
     :techniqueId "T1204.003" ;
     :techniqueName "Malicious Image" .
+
+data:technique_T1550.001 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Application Access Token" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0005,
+        data:tactic_TA0008 ;
+    :isSubTechnique true ;
+    :stixId "attack-pattern--f005e783-57d4-4837-88ad-dbe7faee1c51" ;
+    :subTechniqueOf data:technique_T1550 ;
+    :targetsPlatform data:platform_Containers,
+        data:platform_IaaS,
+        data:platform_Identity_Provider,
+        data:platform_Office_Suite,
+        data:platform_SaaS ;
+    :techniqueId "T1550.001" ;
+    :techniqueName "Application Access Token" .
 
 data:control_AC-19 a :SecurityControl ;
     skos:prefLabel "AC-19" ;
@@ -93929,22 +96652,6 @@ data:technique_T1021 a :AttackTechnique ;
     :techniqueId "T1021" ;
     :techniqueName "Remote Services" .
 
-data:technique_T1036 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Masquerading" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0005 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--42e8de7b-37b2-4258-905a-6897815e58e0" ;
-    :targetsPlatform data:platform_Containers,
-        data:platform_Linux,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1036" ;
-    :techniqueName "Masquerading" .
-
 data:technique_T1041 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Exfiltration Over C2 Channel" ;
@@ -94010,6 +96717,22 @@ data:technique_T1552.001 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1552.001" ;
     :techniqueName "Credentials In Files" .
+
+data:technique_T1036 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Masquerading" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0005 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--42e8de7b-37b2-4258-905a-6897815e58e0" ;
+    :targetsPlatform data:platform_Containers,
+        data:platform_Linux,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1036" ;
+    :techniqueName "Masquerading" .
 
 data:technique_T1542.003 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -94112,22 +96835,6 @@ data:technique_T1003.003 a :AttackTechnique ;
     :techniqueId "T1003.003" ;
     :techniqueName "NTDS" .
 
-data:technique_T1189 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Drive-by Compromise" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0001 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--d742a578-d70e-4d0e-96a6-02a9c30204e6" ;
-    :targetsPlatform data:platform_Identity_Provider,
-        data:platform_Linux,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1189" ;
-    :techniqueName "Drive-by Compromise" .
-
 data:technique_T1195.001 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Compromise Software Dependencies and Development Tools" ;
@@ -94189,6 +96896,22 @@ data:technique_T1547.006 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1547.006" ;
     :techniqueName "Kernel Modules and Extensions" .
+
+data:technique_T1189 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Drive-by Compromise" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0001 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--d742a578-d70e-4d0e-96a6-02a9c30204e6" ;
+    :targetsPlatform data:platform_Identity_Provider,
+        data:platform_Linux,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1189" ;
+    :techniqueName "Drive-by Compromise" .
 
 data:technique_T1052.001 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -94318,21 +97041,6 @@ data:technique_T1599 a :AttackTechnique ;
     :techniqueId "T1599" ;
     :techniqueName "Network Boundary Bridging" .
 
-data:technique_T1611 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Escape to Host" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0004 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--4a5b7ade-8bb5-4853-84ed-23f262002665" ;
-    :targetsPlatform data:platform_Containers,
-        data:platform_Linux,
-        data:platform_Windows ;
-    :techniqueId "T1611" ;
-    :techniqueName "Escape to Host" .
-
 data:technique_T1059.001 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "PowerShell" ;
@@ -94399,6 +97107,21 @@ data:technique_T1542.004 a :AttackTechnique ;
     :targetsPlatform data:platform_Network ;
     :techniqueId "T1542.004" ;
     :techniqueName "ROMMONkit" .
+
+data:technique_T1611 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Escape to Host" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0004 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--4a5b7ade-8bb5-4853-84ed-23f262002665" ;
+    :targetsPlatform data:platform_Containers,
+        data:platform_Linux,
+        data:platform_Windows ;
+    :techniqueId "T1611" ;
+    :techniqueName "Escape to Host" .
 
 data:platform_SaaS a :Platform ;
     skos:inScheme :PlatformScheme ;
@@ -94965,23 +97688,6 @@ data:control_SI-16 a :SecurityControl ;
         data:technique_T1611 ;
     :oscalControlId "si-16" .
 
-data:technique_T1211 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Exploitation for Defense Evasion" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0005 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--fe926152-f431-4baf-956c-4ad3cb0bf23b" ;
-    :targetsPlatform data:platform_IaaS,
-        data:platform_Linux,
-        data:platform_SaaS,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1211" ;
-    :techniqueName "Exploitation for Defense Evasion" .
-
 data:technique_T1557.002 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "ARP Cache Poisoning" ;
@@ -95112,6 +97818,23 @@ data:technique_T1070 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1070" ;
     :techniqueName "Indicator Removal" .
+
+data:technique_T1211 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Exploitation for Defense Evasion" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0005 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--fe926152-f431-4baf-956c-4ad3cb0bf23b" ;
+    :targetsPlatform data:platform_IaaS,
+        data:platform_Linux,
+        data:platform_SaaS,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1211" ;
+    :techniqueName "Exploitation for Defense Evasion" .
 
 data:platform_Office_Suite a :Platform ;
     skos:inScheme :PlatformScheme ;
@@ -95451,21 +98174,6 @@ data:baseline_HIGH a :ControlBaseline ;
     :inFramework data:framework_nist-800-53-rev5 ;
     :sha256 "d2ef340986b9f1ee820ad866a0f964d9a9d1088b24080c74b795ddb0148b9f83" .
 
-data:technique_T1003 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "OS Credential Dumping" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0006 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--0a3ead4e-6d47-4ccb-854c-a6a4f9d96b22" ;
-    :targetsPlatform data:platform_Linux,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1003" ;
-    :techniqueName "OS Credential Dumping" .
-
 data:technique_T1557 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Adversary-in-the-Middle" ;
@@ -95600,6 +98308,36 @@ data:control_SI-15 a :SecurityControl ;
         data:technique_T1622 ;
     :oscalControlId "si-15" .
 
+data:technique_T1003 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "OS Credential Dumping" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0006 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--0a3ead4e-6d47-4ccb-854c-a6a4f9d96b22" ;
+    :targetsPlatform data:platform_Linux,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1003" ;
+    :techniqueName "OS Credential Dumping" .
+
+data:technique_T1565 a :AttackTechnique ;
+    skos:inScheme :TechniqueScheme ;
+    skos:prefLabel "Data Manipulation" ;
+    prov:wasDerivedFrom data:attackEnterpriseStix ;
+    :inAttackEnterprise true ;
+    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
+    :inTactic data:tactic_TA0040 ;
+    :isSubTechnique false ;
+    :stixId "attack-pattern--ac9e6b22-11bf-45d7-9181-c1cb08360931" ;
+    :targetsPlatform data:platform_Linux,
+        data:platform_Windows,
+        data:platform_macOS ;
+    :techniqueId "T1565" ;
+    :techniqueName "Data Manipulation" .
+
 data:technique_T1213 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Data from Information Repositories" ;
@@ -95617,21 +98355,6 @@ data:technique_T1213 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1213" ;
     :techniqueName "Data from Information Repositories" .
-
-data:technique_T1565 a :AttackTechnique ;
-    skos:inScheme :TechniqueScheme ;
-    skos:prefLabel "Data Manipulation" ;
-    prov:wasDerivedFrom data:attackEnterpriseStix ;
-    :inAttackEnterprise true ;
-    :inCatalogue data:catalogue_attack-enterprise-16.1 ;
-    :inTactic data:tactic_TA0040 ;
-    :isSubTechnique false ;
-    :stixId "attack-pattern--ac9e6b22-11bf-45d7-9181-c1cb08360931" ;
-    :targetsPlatform data:platform_Linux,
-        data:platform_Windows,
-        data:platform_macOS ;
-    :techniqueId "T1565" ;
-    :techniqueName "Data Manipulation" .
 
 data:technique_T1078 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -95657,6 +98380,10 @@ data:technique_T1078 a :AttackTechnique ;
     :techniqueId "T1078" ;
     :techniqueName "Valid Accounts" .
 
+data:platform_PRE a :Platform ;
+    skos:inScheme :PlatformScheme ;
+    skos:prefLabel "PRE" .
+
 data:technique_T1059 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
     skos:prefLabel "Command and Scripting Interpreter" ;
@@ -95675,10 +98402,6 @@ data:technique_T1059 a :AttackTechnique ;
         data:platform_macOS ;
     :techniqueId "T1059" ;
     :techniqueName "Command and Scripting Interpreter" .
-
-data:platform_PRE a :Platform ;
-    skos:inScheme :PlatformScheme ;
-    skos:prefLabel "PRE" .
 
 data:technique_T1072 a :AttackTechnique ;
     skos:inScheme :TechniqueScheme ;
@@ -96592,6 +99315,18 @@ data:control_RA-05 a :SecurityControl ;
         data:technique_T1578.003,
         data:technique_T1612 ;
     :oscalControlId "ra-5" .
+
+data:catalogue_atlas-5.6.0 a :ThreatCatalogue ;
+    rdfs:label "MITRE ATLAS 5.6.0" ;
+    prov:wasDerivedFrom data:atlasData ;
+    :catalogueDomain "atlas" ;
+    :catalogueVersion "5.6.0" .
+
+data:atlasData a :ReferenceDataset ;
+    dcterms:source <https://raw.githubusercontent.com/mitre-atlas/atlas-data/da9ebf9b66e6902ad97c267e2a20af0bd996a60f/dist/ATLAS.yaml> ;
+    dcterms:title "MITRE ATLAS 5.6.0" ;
+    owl:versionInfo "5.6.0" ;
+    :sha256 "c9c23971d0db07e2782423d795a20e78d5c2c9bcdc78fc67e24530657daaec41" .
 
 :capabilityGroup_CA :inFramework data:framework_nist-800-53-rev5 ;
     :oscalFamilyTitle "Assessment, Authorization, and Monitoring" .

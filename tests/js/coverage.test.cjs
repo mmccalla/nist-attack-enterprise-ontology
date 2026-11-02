@@ -82,3 +82,17 @@ test("OSCAL free text and malformed ids never come back (negative probes)", () =
   assert.throws(() => C.controlIdsFromOscal({hello: "world"}), /Not an OSCAL/);
   assert.throws(() => C.controlIdsFromOscal(null), /Not a JSON object/);
 });
+
+test("ATLAS mitigation ids are read from text, other text is ignored", () => {
+  const known = new Set(["AML.M0024", "AML.M0026"]);
+  const r = C.parseIds("aml.m0024, AML.M0026 AML.M9999 AML.T0053 M1032 <b>AML.M0024</b>", known, /\bAML\.M\d{4}\b/);
+  assert.deepEqual([...r.found].sort(), ["AML.M0024", "AML.M0026"]);
+  assert.deepEqual(r.unmapped, ["AML.M9999"]);
+});
+
+test("the shared logic works for any catalogue (ATLAS model)", () => {
+  const atlas = {techniques: [{id: "AML.T0053", name: "x", tactics: []}, {id: "AML.T0104", name: "y", tactics: []}],
+    controls: {"AML.M0026": {title: "p", baselines: []}}, mitigates: {"AML.M0026": ["AML.T0053"]}};
+  assert.deepEqual(C.counts(C.coverage(atlas, new Set())), {covered: 0, gap: 1, none: 1});
+  assert.deepEqual(C.recommendations(atlas, new Set()), [["AML.M0026", 1]]);
+});
