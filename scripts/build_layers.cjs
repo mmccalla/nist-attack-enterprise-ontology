@@ -8,6 +8,6 @@ process.stdin.on("data", chunk => { input += chunk; });
 process.stdin.on("end", () => {
   const {model, layers} = JSON.parse(input);
   const out = {};
-  for (const l of layers) out[l.file] = coverage.navigatorLayer(model, l.name, l.description, new Set(l.selected));
+  for (const l of layers) out[l.file] = coverage.navigatorLayer(l.model ?? model, l.name, l.description, new Set(l.selected), l.options ?? {});
   process.stdout.write(JSON.stringify(out));
 });

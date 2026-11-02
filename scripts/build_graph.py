@@ -41,7 +41,9 @@ UCO = Namespace("https://ontology.unifiedcyberontology.org/uco/core/")
 NODE_TYPES = [
     "MitigatesAssertion",
     "NonMappableAssertion",
+    "NonMappableControlAssertion",
     "MitigationClaim",
+    "CisSafeguard",
     "SecurityControl",
     "AttackTechnique",
     "CapabilityGroup",
@@ -59,10 +61,10 @@ NODE_TYPES = [
 ]
 # Edges left out of the browser: they point at hub nodes (vocabularies, datasets) or restate another edge.
 # Their values appear as properties instead.
-SKIP_EDGES = {ONT.containsAssertion, ONT.assertsCapabilityGroup, PROV.wasDerivedFrom, SKOS.inScheme, ONT.inCatalogue, ONT.inFramework}
+SKIP_EDGES = {ONT.containsAssertion, ONT.assertsCapabilityGroup, PROV.wasDerivedFrom, SKOS.inScheme, ONT.inCatalogue, ONT.inFramework, ONT.activeInCatalogue}
 AS_PROPERTY = {
     ONT.assertedMappingType: "mapping type", ONT.assertedStatus: "status", PROV.wasDerivedFrom: "derived from",
-    ONT.inCatalogue: "catalogue", ONT.inFramework: "framework", DCTERMS.source: "source url",
+    ONT.inCatalogue: "catalogue", ONT.inFramework: "framework", DCTERMS.source: "source url", ONT.activeInCatalogue: "active in",
 }
 SKIP_LITERALS = {SKOS.prefLabel}
 ALIGNMENT_ANNOTATIONS = ["stixObjectType", "stixRelationshipType", "stixProperty", "stixAlignmentNote", "oscalAssembly", "oscalPath"]
@@ -102,12 +104,12 @@ def load() -> Graph:
 
 def node_label(graph: Graph, subject, kind: str) -> tuple[str, str | None]:
     pref = text(graph, subject, SKOS.prefLabel)
-    if kind == "SecurityControl":
+    if kind in ("SecurityControl", "CisSafeguard"):
         return text(graph, subject, ONT.controlId), text(graph, subject, ONT.controlTitle)
     if kind == "AttackTechnique":
         return text(graph, subject, ONT.techniqueId), text(graph, subject, ONT.techniqueName)
     if kind == "CapabilityGroup":
-        return text(graph, subject, ONT.groupCode), text(graph, subject, ONT.oscalFamilyTitle)
+        return text(graph, subject, ONT.groupCode), text(graph, subject, ONT.oscalFamilyTitle) or text(graph, subject, ONT.groupName)
     if kind == "Tactic":
         return text(graph, subject, ONT.tacticId), pref
     if kind == "AttackMitigation":
@@ -130,14 +132,17 @@ def node_label(graph: Graph, subject, kind: str) -> tuple[str, str | None]:
         catalogue = graph.value(subject, ONT.inCatalogue)
         statuses = ", ".join(sorted(str(x) for x in graph.objects(subject, ONT.versionStatus)))
         return f"{graph.value(catalogue, RDFS.label)}: {statuses}", None
-    if kind in ("MitigatesAssertion", "NonMappableAssertion"):
+    if kind in ("MitigatesAssertion", "NonMappableAssertion", "NonMappableControlAssertion"):
         technique = graph.value(subject, ONT.assertsTechnique)
         control = graph.value(subject, ONT.assertsControl)
         row = text(graph, subject, ONT.sourceRecordNumber)
+        prefix = "CIS row" if (subject, PROV.wasDerivedFrom, DATA.cisDataset) in graph else "Row"
+        if technique is None:
+            return f"{prefix} {row}: {text(graph, control, ONT.controlId)} non_mappable", None
         tid = text(graph, technique, ONT.techniqueId)
         if control is None:
-            return f"Row {row}: {tid} non_mappable", None
-        return f"Row {row}: {text(graph, control, ONT.controlId)} mitigates {tid}", None
+            return f"{prefix} {row}: {tid} non_mappable", None
+        return f"{prefix} {row}: {text(graph, control, ONT.controlId)} mitigates {tid}", None
     return pref or text(graph, subject, DCTERMS.title) or text(graph, subject, RDFS.label) or local(subject), None
 
 
@@ -160,8 +165,9 @@ def build_instances(graph: Graph) -> tuple[list, list]:
                     if predicate == DCTERMS.source:
                         props[AS_PROPERTY[predicate]] = str(value)
                         continue
-                    if predicate in (ONT.inCatalogue, ONT.inFramework):
-                        props[AS_PROPERTY[predicate]] = str(graph.value(value, RDFS.label))
+                    if predicate in (ONT.inCatalogue, ONT.inFramework, ONT.activeInCatalogue):
+                        key, catalogue = AS_PROPERTY[predicate], str(graph.value(value, RDFS.label))
+                        props[key] = f"{props[key]} | {catalogue}" if key in props else catalogue
                         continue
                     if predicate == PROV.wasDerivedFrom and not (
                         (value, RDF.type, ONT.ReferenceDataset) in graph or (value, RDF.type, ONT.CybersecurityMappingDataset) in graph

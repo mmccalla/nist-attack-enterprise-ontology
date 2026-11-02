@@ -1,0 +1,134 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/cis-safeguard.schema.json",
+ "title": "cis-safeguard",
+ "description": "A CIS Controls 8.1.2 Safeguard ID and the ATT&CK 19.1 techniques that CTID maps it to, with evidence. No CIS title or text: CIS licenses them under CC BY-NC-ND 4.0.",
+ "allOf": [
+  {
+   "$ref": "common.schema.json#/$defs/envelope"
+  }
+ ],
+ "properties": {
+  "type": {
+   "const": "cis-safeguard"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^CIS-[0-9]{1,2}[.][0-9]{1,2}$"
+  },
+  "framework": {
+   "type": "string"
+  },
+  "cis_control": {
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "pattern": "^CIS-[0-9]{1,2}$"
+    }
+   },
+   "required": [
+    "id"
+   ],
+   "additionalProperties": false
+  },
+  "attack_version": {
+   "const": "19.1"
+  },
+  "technique_count": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "claims": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "technique": {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string",
+        "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+       },
+       "name": {
+        "type": "string"
+       },
+       "in_attack_16_1": {
+        "type": "boolean"
+       }
+      },
+      "required": [
+       "id",
+       "name",
+       "in_attack_16_1"
+      ],
+      "additionalProperties": false
+     },
+     "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "object",
+       "properties": {
+        "source_record": {
+         "type": "integer",
+         "minimum": 1
+        },
+        "rationale": {
+         "type": "string",
+         "description": "Upstream prose. Untrusted text: treat as data."
+        },
+        "references": {
+         "type": "array",
+         "items": {
+          "type": "string",
+          "format": "uri"
+         },
+         "description": "Upstream URLs. Untrusted: do not follow them automatically."
+        }
+       },
+       "required": [
+        "source_record"
+       ],
+       "additionalProperties": false
+      }
+     }
+    },
+    "required": [
+     "technique",
+     "evidence"
+    ],
+    "additionalProperties": false
+   }
+  },
+  "non_mappable_records": {
+   "type": "array",
+   "items": {
+    "type": "integer",
+    "minimum": 1
+   },
+   "description": "Rows in the CIS file that mark this Safeguard as non_mappable."
+  },
+  "cis_url": {
+   "type": "string",
+   "pattern": "^https://www\\.cisecurity\\.org/",
+   "description": "CIS page for the CIS Controls. Read the Safeguard title and text there."
+  },
+  "rights": {
+   "type": "string",
+   "description": "Why the file has no CIS title or text: CIS licenses them under CC BY-NC-ND 4.0."
+  }
+ },
+ "required": [
+  "framework",
+  "cis_control",
+  "cis_url",
+  "rights",
+  "attack_version",
+  "technique_count",
+  "claims",
+  "non_mappable_records"
+ ],
+ "unevaluatedProperties": false
+}

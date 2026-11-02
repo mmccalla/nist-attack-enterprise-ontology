@@ -6,7 +6,7 @@ import json
 import re
 import subprocess
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from functools import lru_cache
 from pathlib import Path
 
@@ -70,6 +70,9 @@ BAD = {
     "an unknown mapping status": lambda d: d.update({"mapping_status": "secure"}),
     "a claim without evidence": lambda d: d["claims"][0].update({"evidence": []}),
     "a link that is not https": lambda d: d["links"].update({"self": "http://example.org"}),
+    "a malformed CIS Safeguard id": lambda d: d["cis_claims"][0]["safeguard"].update({"id": "CIS 6.1"}),
+    "a CIS claim without evidence": lambda d: d["cis_claims"][0].update({"evidence": []}),
+    "no ATT&CK version for CIS": lambda d: d["versions"].pop("attack_cis"),
 }
 
 
@@ -88,19 +91,51 @@ def test_technique_claims_match_the_raw_sources():
         doc = json.loads(p.read_text())
         statuses[doc["mapping_status"]] += 1
         assert {c["control"]["id"] for c in doc["claims"]} == src.controls_for.get(doc["id"], set()), doc["id"]
-    assert statuses == {"claims": 469, "non_mappable": 96, "no_row": 91, "outside_enterprise": 1}
+    assert statuses == {"claims": 469, "non_mappable": 96, "no_row": 91, "outside_enterprise": 1, "not_in_attack_16_1": 57}
+
+
+def test_cis_files_match_the_raw_sources():
+    src = sources()
+    only19 = set(src.active19) - set(src.to16)
+    assert len(only19) == 57
+    for p in (API / "techniques").glob("*.json"):
+        doc = json.loads(p.read_text())
+        tid = doc["id"]
+        assert {c["safeguard"]["id"] for c in doc["cis_claims"]} == src.cis_for.get(tid, set()), tid
+        assert doc["in_attack_19_1"] == (tid in src.active19), tid
+        assert (doc["mapping_status"] == "not_in_attack_16_1") == (tid in only19), tid
+        assert set(doc["replaces"]) == src.replaced_by19.get(tid, set()), tid
+    rows = defaultdict(set)
+    for n, r in enumerate(src.cis_rows, 1):
+        rows[r["capability_id"]].add(n)
+    files = list((API / "cis" / "safeguards").glob("*.json"))
+    assert {p.stem for p in files} == {r["capability_id"] for r in src.cis_rows} and len(files) == 152
+    for p in files:
+        doc = json.loads(p.read_text())
+        sid = doc["id"]
+        assert {c["technique"]["id"] for c in doc["claims"]} == {t for t, cs in src.cis_for.items() if sid in cs}, sid
+        cited = {e["source_record"] for c in doc["claims"] for e in c["evidence"]} | set(doc["non_mappable_records"])
+        assert cited == rows[sid], sid
+        assert all(src.cis_rows[n - 1]["status"] == "non_mappable" for n in doc["non_mappable_records"]), sid
+        assert all(c["technique"]["in_attack_16_1"] == (c["technique"]["id"] in src.techniques) for c in doc["claims"]), sid
+    docs = [json.loads(p.read_text()) for p in files]
+    assert sum(1 for d in docs if d["claims"]) == 70 and sum(1 for d in docs if d["non_mappable_records"]) == 82  # README and CHANGELOG
 
 
 def test_every_reference_resolves_to_a_file():
     have = {kind: {p.stem for p in (API / kind).glob("*.json")} for kind in ("techniques", "controls", "tactics", "mitigations")}
     have["atlas_t"] = {p.stem for p in (API / "atlas" / "techniques").glob("*.json")}
     have["atlas_m"] = {p.stem for p in (API / "atlas" / "mitigations").glob("*.json")}
+    have["cis"] = {p.stem for p in (API / "cis" / "safeguards").glob("*.json")}
     for p, doc in documents():
         refs = []
         if doc["type"] == "technique":
             refs += [("controls", c["control"]["id"]) for c in doc["claims"]]
             refs += [("techniques", t) for t in doc["subtechniques"] + ([doc["parent"]] if doc["parent"] else [])]
             refs += [("tactics", t["id"]) for t in doc["tactics"]] + [("mitigations", m["id"]) for m in doc["attack_mitigations"]]
+            refs += [("cis", c["safeguard"]["id"]) for c in doc["cis_claims"]] + [("techniques", t) for t in doc["replaces"]]
+        elif doc["type"] == "cis-safeguard":
+            refs += [("techniques", c["technique"]["id"]) for c in doc["claims"]]
         elif doc["type"] == "control":
             refs += [("techniques", c["technique"]["id"]) for c in doc["claims"]]
         elif doc["type"] in ("tactic", "mitigation"):
@@ -124,8 +159,11 @@ def test_upstream_prose_is_marked_untrusted():
         text = json.dumps(doc)
         if doc["type"] == "question":
             assert doc["untrusted_text_fields"] == ["rows"], p
-        elif '"rationale"' in text:
-            assert "claims[].evidence[].rationale" in doc["untrusted_text_fields"], p
+        else:
+            for key in ("claims", "cis_claims"):
+                for field in ("rationale", "references"):
+                    if any(field in e for c in doc.get(key, []) for e in c["evidence"]):
+                        assert f"{key}[].evidence[].{field}" in doc["untrusted_text_fields"], (p, key, field)
         assert "<script" not in text.lower(), p
 
 
@@ -161,3 +199,26 @@ def test_atlas_and_owasp_files_match_the_raw_sources():
         assert owasp[item["id"]]["related_atlas"] == sorted(item["related_atlas"]), item["id"]
     mcp = [d for d in owasp.values() if d["id"].startswith("MCP")]
     assert len(mcp) == 10 and all(d["title"] is None for d in mcp), "MCP Top 10 titles must not be copied (CC BY-NC-SA)"
+
+
+def test_no_cis_text_is_copied():
+    """CIS licenses the CIS Controls under CC BY-NC-ND 4.0, so no output may hold a Safeguard or Control title (D25)."""
+    src = sources()
+    meta = build_population_fetch_cis_metadata()
+    titles = {r["capability_description"] for r in src.cis_rows if r["capability_description"]} | set(meta["capability_groups"].values())
+    nist = {n for n in src.family_names.values()} | {r["capability_description"] for r in src.rows if r["capability_description"]}
+    titles -= nist
+    assert len(titles) > 150
+    outputs = [ROOT / "index.html", ROOT / "llms.txt", ROOT / "data" / "population.ttl"]
+    outputs += [p for p in (ROOT / "api").rglob("*.json")] + [p for p in (ROOT / "exports").rglob("*") if p.is_file()]
+    for p in outputs:
+        text = p.read_text(encoding="utf-8")
+        found = [t for t in titles if f'"{t}"' in text or f",{t}," in text]
+        assert not found, f"{p.relative_to(ROOT)} holds CIS text: {found[:3]}"
+
+
+def build_population_fetch_cis_metadata():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_population  # noqa: PLC0415
+
+    return build_population.fetch("cis")["metadata"]

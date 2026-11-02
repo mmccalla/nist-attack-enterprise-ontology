@@ -1,0 +1,11 @@
+control,title,sharedTechniques
+SI-03,Malicious Code Protection,45
+SI-04,System Monitoring,43
+AC-06,Least Privilege,40
+CM-06,Configuration Settings,33
+CM-02,Baseline Configuration,32
+SI-02,Flaw Remediation,32
+SC-18,Mobile Code,24
+AC-03,Access Enforcement,23
+CM-07,Least Functionality,20
+SI-07,"Software, Firmware, and Information Integrity",20

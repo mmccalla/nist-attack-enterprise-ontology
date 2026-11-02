@@ -44,9 +44,12 @@ def layers():
     return {p.stem: json.loads(p.read_text()) for p in (EXPORTS / "navigator").glob("*.json")}
 
 
+CIS_LAYERS = {"cis-all-safeguards"}  # the CIS mapping uses ATT&CK 19.1
+
+
 def test_navigator_layers_follow_format_4_5():
     for name, layer in layers().items():
-        assert layer["versions"]["layer"] == "4.5" and layer["versions"]["attack"] == "16", name
+        assert layer["versions"]["layer"] == "4.5" and layer["versions"]["attack"] == ("19" if name in CIS_LAYERS else "16"), name
         assert layer["domain"] == "enterprise-attack" and layer["name"], name
         assert layer["gradient"]["maxValue"] > layer["gradient"]["minValue"], name
         assert all(set(t) <= {"techniqueID", "score", "color", "comment", "showSubtechniques"} for t in layer["techniques"]), name
@@ -55,7 +58,25 @@ def test_navigator_layers_follow_format_4_5():
 def test_layer_techniques_exist_in_attack_16_1():
     src = sources()
     for name, layer in layers().items():
-        assert {t["techniqueID"] for t in layer["techniques"]} == set(src.techniques), name
+        if name not in CIS_LAYERS:
+            assert {t["techniqueID"] for t in layer["techniques"]} == set(src.techniques), name
+
+
+def test_cis_layer_matches_an_independent_computation():
+    src = sources()
+    layer = layers()["cis-all-safeguards"]
+    assert {t["techniqueID"] for t in layer["techniques"]} == set(src.active19)
+    assert {t["techniqueID"] for t in layer["techniques"] if "score" in t} == set(src.cis_for) and len(src.cis_for) == 404
+
+
+def test_cis_claims_csv_matches_the_source_rows():
+    src = sources()
+    rows = read_csv("cis-claims.csv")
+    assert {(r["safeguard_id"], r["technique_id_19_1"]) for r in rows} == {(c, t) for t, cs in src.cis_for.items() for c in cs}
+    assert len(rows) == 1140
+    for r in rows:
+        assert all(src.cis_rows[int(n) - 1]["capability_id"] == r["safeguard_id"] for n in r["source_record_numbers"].split())
+        assert (r["in_attack_16_1"] == "yes") == (r["technique_id_19_1"] in src.to16 and src.to16[r["technique_id_19_1"]] == r["technique_id_19_1"])
 
 
 def test_baseline_layers_match_an_independent_computation():

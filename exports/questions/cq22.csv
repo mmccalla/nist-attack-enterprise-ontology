@@ -1,0 +1,30 @@
+technique,name,cisSafeguards,replaces16
+T1027.015,Compression,2,
+T1027.017,SVG Smuggling,1,
+T1176.001,Browser Extensions,4,
+T1176.002,IDE Extensions,2,
+T1204.004,Malicious Copy and Paste,2,
+T1204.005,Malicious Library,1,
+T1213.006,Databases,2,
+T1219.001,IDE Tunneling,2,
+T1219.002,Remote Desktop Software,5,
+T1505.006,vSphere Installation Bundles,1,
+T1564.014,Extended Attributes,1,
+T1569.003,Systemctl,1,
+T1667,Email Bombing,2,
+T1669,Wi-Fi Networks,3,
+T1671,Cloud Application Integration,1,
+T1677,Poisoned Pipeline Execution,4,
+T1684,Social Engineering,1,
+T1684.001,Impersonation,1,T1656
+T1684.002,Email Spoofing,2,
+T1685,Disable or Modify Tools,2,T1562 T1562.001 T1562.006
+T1685.005,Clear Windows Event Logs,1,T1070.001
+T1685.006,Clear Linux or Mac System Logs,1,T1070.002
+T1686,Disable or Modify System Firewall,1,T1562.004
+T1686.001,Cloud Firewall,1,T1562.007
+T1686.002,Network Device Firewall,6,
+T1686.003,Windows Host Firewall,1,
+T1687,Exploitation for Defense Impairment,1,
+T1688,Safe Mode Boot,1,T1562.009
+T1689,Downgrade Attack,3,T1562.010

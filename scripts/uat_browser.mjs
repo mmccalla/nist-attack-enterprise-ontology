@@ -173,6 +173,39 @@ const parentNote = await page.locator("#report").textContent();
 const noParent = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true" && !atlasMitigationsOf(n.id).length && !atlasParentMitigated(n.id)).length);
 check(parentNote.includes(`${aNone - noParent} of these have a mitigation on their parent technique`) && noParent === 14, "the ATLAS view explains parent mitigations and agrees with CQ16 (14)");
 
+// CIS Controls on ATT&CK 19.1 (phase 4a)
+const cisLayer = exported("cis-all-safeguards");
+await page.goto(url.split("#")[0] + "#gaps-cis");
+await settle();
+await page.locator("#cis-all").click();
+await settle();
+const [cCov, cGap, cNone, cTotal] = await stats();
+check(cGap === 0 && cCov === cisLayer.techniques.filter(t => "score" in t).length && cTotal === cisLayer.techniques.length,
+  `with all CIS Safeguards, ${cCov} of ${cTotal} ATT&CK 19.1 techniques are covered, as in the static layer`);
+const cisClient = await page.evaluate(() => C2.navigatorLayer(cisModel(), "x", "x", cisSelected, {attack: "19"}));
+check(strip(cisClient) === strip(cisLayer) && cisClient.versions.attack === "19", "the browser's CIS layer matches the static CIS layer technique for technique");
+if (shots) await page.screenshot({ path: `${shots}/gaps-cis.png` });
+await page.locator("#cis-input").fill("6.3, CIS-99.9");
+await settle();
+const cisStatus = await page.locator("#cis-status").textContent();
+check(cisStatus.startsWith("1 mapped Safeguard recognised") && cisStatus.includes("CIS-99.9"), "a bare Safeguard number is recognised and an unknown ID is reported");
+check(page.url().endsWith("#gaps-cis/CIS-6.3"), "the CIS selection is kept in the address bar");
+await page.goto(url.split("#")[0] + "#n/cis_CIS-6.3");
+await settle();
+const sg = await page.locator("#detail").textContent();
+check(sg.includes("CC BY-NC-ND 4.0") && (await page.locator('#detail a[href="https://www.cisecurity.org/controls/cis-controls-list"]').count()) === 1, "a Safeguard page explains the CIS licence and links to cisecurity.org");
+check(!sg.includes("Require MFA"), "a Safeguard page does not show the CIS title");
+await page.goto(url.split("#")[0] + "#n/technique_T1685");
+await settle();
+check((await page.locator("#detail .warn").first().textContent()).includes("Only in ATT&CK Enterprise 19.1"), "a technique that is only in ATT&CK 19.1 is flagged");
+await page.goto(url.split("#")[0] + "#n/technique_T1562");
+await settle();
+check((await page.locator("#detail").textContent()).includes("replaces it with T1685"), "a 16.1 technique shows its 19.1 replacement");
+await page.goto(url.split("#")[0] + "#n/cisassertion_CIS-2.3_T1021.005");
+await settle();
+check((await page.locator("#detail").textContent()).includes("cas.docs.cisecurity.org") && (await page.locator('#detail a[href*="cisecurity.org/en/latest"]').count()) === 0,
+  "a CIS reference URL shows as text, not as a link");
+
 // Security probes (docs/security.md)
 const base = url.split("#")[0];
 const blocked = await page.evaluate(h => fetch(`https://${h}/x`).then(() => "sent", () => "blocked"), PROBE_HOST);
@@ -217,7 +250,9 @@ const getJson = async rel => /^https?:/.test(apiBase) ? (await fetch(apiBase + r
 const t1078 = await getJson("api/v1/techniques/T1078.json");
 check(t1078.claims.length === 25 && t1078.mapping_status === "claims" && t1078.limits.length > 0, "the API gives T1078 with its 25 claims and its limits");
 const apiIndex = await getJson("api/v1/index.json");
-check(apiIndex.techniques.length === 657 && apiIndex.url_templates.control.includes("{id}"), "the API index lists every technique and gives URL templates");
+check(apiIndex.techniques.length === 714 && apiIndex.url_templates.control.includes("{id}"), "the API index lists every technique (656 in 16.1, 57 only in 19.1, 1 outside Enterprise) and gives URL templates");
+const cis63 = await getJson("api/v1/cis/safeguards/CIS-6.3.json");
+check(cis63.claims.length > 0 && !("title" in cis63) && cis63.rights.includes("CC BY-NC-ND 4.0"), "the API gives a CIS Safeguard with its claims, its rights statement and no CIS title");
 
 await browser.close();
 for (const e of errors) failures.push(e);

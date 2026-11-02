@@ -18,7 +18,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from rdflib import Graph, Literal
-from rdflib.namespace import RDF, SKOS
+from rdflib.namespace import PROV, RDF, SKOS
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -36,6 +36,11 @@ def load() -> Graph:
     return g
 
 
+def nist_rows(g: Graph, t) -> list:
+    """The rows of the NIST mapping file for a technique. CIS rows have another dataset."""
+    return [r for r in g.subjects(ONT.assertsTechnique, t) if (r, PROV.wasDerivedFrom, DATA.sourceDataset) in g]
+
+
 def model(g: Graph) -> dict:
     """Plain dictionaries the exports and the browser logic both work from."""
     techniques = {}
@@ -44,11 +49,11 @@ def model(g: Graph) -> dict:
         techniques[tid] = {
             "name": str(g.value(t, ONT.techniqueName)),
             "tactics": sorted(str(g.value(ta, ONT.tacticShortName)) for ta in g.objects(t, ONT.inTactic)),
-            "nonMappable": any((r, RDF.type, ONT.NonMappableAssertion) in g for r in g.subjects(ONT.assertsTechnique, t)),
-            "hasRow": (None, ONT.assertsTechnique, t) in g,
+            "nonMappable": any((r, RDF.type, ONT.NonMappableAssertion) in g for r in nist_rows(g, t)),
+            "hasRow": bool(nist_rows(g, t)),
         }
     controls, mitigates = {}, defaultdict(set)
-    for c in g.subjects(RDF.type, ONT.SecurityControl):
+    for c in g.subjects(RDF.type, ONT.Nist80053Control):
         cid = str(g.value(c, ONT.controlId))
         controls[cid] = {
             "title": str(g.value(c, ONT.controlTitle)),
@@ -59,6 +64,8 @@ def model(g: Graph) -> dict:
             mitigates[cid].add(str(g.value(t, ONT.techniqueId)))
     rows = defaultdict(list)
     for claim in g.subjects(RDF.type, ONT.MitigationClaim):
+        if (g.value(claim, ONT.claimSubjectControl), RDF.type, ONT.Nist80053Control) not in g:
+            continue
         cid = str(g.value(g.value(claim, ONT.claimSubjectControl), ONT.controlId))
         tid = str(g.value(g.value(claim, ONT.claimObjectTechnique), ONT.techniqueId))
         rows[(cid, tid)] = sorted(int(g.value(a, ONT.sourceRecordNumber)) for a in g.objects(claim, ONT.supportedByAssertion))
@@ -157,6 +164,36 @@ def build() -> dict[str, str]:
         specs.append({"file": f"navigator/baseline-{level}.json", "name": f"NIST 800-53B {level} baseline coverage",
                       "description": f"ATT&CK Enterprise techniques mitigated by the mapped controls in the SP 800-53B {level} baseline. Amber: a mapped control outside the baseline would mitigate it. Grey: no mapped control.",
                       "selected": sorted(cid for cid, c in m["controls"].items() if level in c["baselines"])})
+    # CIS 8.1.2 on ATT&CK 19.1: claims with evidence, and a Navigator layer over the 19.1 techniques
+    c191 = DATA["catalogue_attack-enterprise-19.1"]
+    techs19 = {t: str(g.value(t, ONT.techniqueId)) for t in g.subjects(ONT.activeInCatalogue, c191)}
+    cis_mit, cis_ctl, cis_rows = defaultdict(set), {}, []
+    for sg in g.subjects(RDF.type, ONT.CisSafeguard):
+        sid = str(g.value(sg, ONT.controlId))
+        cis_ctl[sid] = {"title": "", "baselines": []}  # no CIS titles (CC BY-NC-ND 4.0, decision D25)
+        for t in g.objects(sg, ONT.mitigatesTechnique):
+            cis_mit[sid].add(techs19[t])
+    for claim in g.subjects(RDF.type, ONT.MitigationClaim):
+        sg = g.value(claim, ONT.claimSubjectControl)
+        if (sg, RDF.type, ONT.CisSafeguard) not in g:
+            continue
+        t = g.value(claim, ONT.claimObjectTechnique)
+        rows_ = sorted(g.objects(claim, ONT.supportedByAssertion), key=lambda a: int(g.value(a, ONT.sourceRecordNumber)))
+        cis_rows.append([str(g.value(sg, ONT.controlId)), str(g.value(g.value(sg, ONT.inCapabilityGroup), ONT.groupCode)),
+                         techs19[t], str(g.value(t, ONT.techniqueName)), "yes" if g.value(t, ONT.inAttackEnterprise) == Literal(True) else "no",
+                         " ".join(str(g.value(a, ONT.sourceRecordNumber)) for a in rows_),
+                         " | ".join(str(g.value(a, ONT.rationaleText)) for a in rows_ if g.value(a, ONT.rationaleText)),
+                         " ".join(sorted({str(u) for a in rows_ for u in g.objects(a, ONT.referenceUrl)}))])
+    files["cis-claims.csv"] = write_csv(sorted(cis_rows, key=lambda r: ([int(x) for x in re.findall(r"\d+", r[0])], tkey(r[3]))),
+        ["safeguard_id", "cis_control", "technique_id_19_1", "technique_name", "in_attack_16_1", "source_record_numbers", "rationale", "references"])
+    cis_model = {
+        "techniques": [{"id": tid, "name": str(g.value(t, ONT.techniqueName)), "tactics": []} for t, tid in sorted(techs19.items(), key=lambda kv: tkey(kv[1]))],
+        "controls": cis_ctl, "mitigates": {k: sorted(v) for k, v in cis_mit.items()},
+    }
+    specs.append({"file": "navigator/cis-all-safeguards.json", "name": "CIS Controls 8.1.2: all mapped Safeguards",
+                  "description": "ATT&CK Enterprise 19.1 techniques mitigated by CIS 8.1.2 Safeguards in the CTID mapping. Score is the number of Safeguards.",
+                  "selected": sorted(cis_ctl), "model": cis_model,
+                  "options": {"attack": "19", "source": "CTID CIS Controls 8.1.2 to ATT&CK 19.1 Enterprise"}})
     for name, layer in layers(m, specs).items():
         files[name] = json.dumps(layer, indent=2) + "\n"
 
@@ -177,7 +214,7 @@ def main() -> int:
     args = parser.parse_args()
     files = build()
     if args.check:
-        stale = [name for name, text in files.items() if not (OUT / name).exists() or (OUT / name).read_text(encoding="utf-8") != text]
+        stale = [name for name, text in files.items() if not (OUT / name).exists() or (OUT / name).read_bytes() != text.encode("utf-8")]
         extra = [p.relative_to(OUT).as_posix() for p in OUT.rglob("*") if p.is_file() and p.name != "README.md" and p.relative_to(OUT).as_posix() not in files]
         if stale or extra:
             print(f"exports out of date: {stale + extra}; run python scripts/build_exports.py", file=sys.stderr)
@@ -187,7 +224,7 @@ def main() -> int:
     for name, text in files.items():
         path = OUT / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text, encoding="utf-8")
+        path.write_bytes(text.encode("utf-8"))  # bytes: source fields can hold CRLF, which text mode would translate
     print(f"wrote {len(files)} files to exports/")
     return 0
 

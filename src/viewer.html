@@ -15,7 +15,7 @@
   --control: #2457c5; --technique: #b42318; --group: #6d3fc0; --claim: #0b7a52;
   --assertion: #b45309; --nonmap: #5f6b7a; --vocab: #0e7490; --dataset: #3f4a5a;
   --tactic: #a3367a; --platform: #0e7490; --mitigation: #6b5a00; --baseline: #1f6f8b;
-  --atlas: #7a3e00; --atlasm: #4d6b00; --owasp: #9b1c5a;
+  --atlas: #7a3e00; --atlasm: #4d6b00; --owasp: #9b1c5a; --cis: #00695c;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -24,7 +24,7 @@
     --control: #7fa6ff; --technique: #ff8a7a; --group: #b79bff; --claim: #4fd1a1;
     --assertion: #f6b35b; --nonmap: #a9b4c2; --vocab: #5fd0e6; --dataset: #b6c0cf;
     --tactic: #f08cc8; --platform: #5fd0e6; --mitigation: #e2c94a; --baseline: #7cc6e0;
-    --atlas: #f2a65a; --atlasm: #b5d86a; --owasp: #f58bbd;
+    --atlas: #f2a65a; --atlasm: #b5d86a; --owasp: #f58bbd; --cis: #4db6ac;
   }
 }
 * { box-sizing: border-box; }
@@ -132,6 +132,7 @@ svg .node.dim path { opacity: .35; }
       <button role="tab" id="tab-groups" aria-controls="browse" aria-selected="true" data-tab="groups">Groups</button>
       <button role="tab" id="tab-controls" aria-controls="browse" aria-selected="false" data-tab="controls">Controls</button>
       <button role="tab" id="tab-techniques" aria-controls="browse" aria-selected="false" data-tab="techniques">Techniques</button>
+      <button role="tab" id="tab-cis" aria-controls="browse" aria-selected="false" data-tab="cis">CIS</button>
       <button role="tab" id="tab-tactics" aria-controls="browse" aria-selected="false" data-tab="tactics">Tactics</button>
       <button role="tab" id="tab-atlas" aria-controls="browse" aria-selected="false" data-tab="atlas">AI and agents</button>
       <button role="tab" id="tab-classes" aria-controls="browse" aria-selected="false" data-tab="classes">Classes</button>
@@ -165,12 +166,14 @@ for (const [s, pi, o] of DATA.edges) {
 }
 const PROPS = new Map(DATA.schema.properties.map(p => [p.id, p]));
 const TYPES = {
-  SecurityControl: ["Security control", "control", d3.symbolCircle, 260],
+  SecurityControl: ["NIST 800-53 control", "control", d3.symbolCircle, 260],
+  CisSafeguard: ["CIS Safeguard", "cis", d3.symbolCircle, 220],
   AttackTechnique: ["ATT&CK technique", "technique", d3.symbolSquare, 200],
   CapabilityGroup: ["Capability group", "group", d3.symbolStar, 520],
   MitigationClaim: ["Mitigation claim", "claim", d3.symbolDiamond, 150],
   MitigatesAssertion: ["Mitigates assertion (source row)", "assertion", d3.symbolTriangle, 150],
   NonMappableAssertion: ["Non-mappable assertion (source row)", "nonmap", d3.symbolTriangle, 150],
+  NonMappableControlAssertion: ["Non-mappable Safeguard (CIS source row)", "nonmap", d3.symbolTriangle, 150],
   Tactic: ["ATT&CK tactic", "tactic", d3.symbolWye, 360],
   AttackMitigation: ["ATT&CK mitigation", "mitigation", d3.symbolDiamond, 260],
   Platform: ["Platform", "platform", d3.symbolSquare, 140],
@@ -183,16 +186,20 @@ const TYPES = {
   AtlasMitigation: ["ATLAS mitigation", "atlasm", d3.symbolDiamond, 260],
   OwaspRisk: ["OWASP risk", "owasp", d3.symbolTriangle, 280],
 };
-const PROVENANCE = new Set(["MitigationClaim", "MitigatesAssertion", "NonMappableAssertion"]);
+const PROVENANCE = new Set(["MitigationClaim", "MitigatesAssertion", "NonMappableAssertion", "NonMappableControlAssertion"]);
 const MAX_NEIGHBOURS = 160;
 const color = t => getComputedStyle(document.documentElement).getPropertyValue("--" + TYPES[t][1]).trim();
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
 const link = id => { const n = BY_ID.get(id); return `<a href="#n/${encodeURIComponent(id)}">${esc(n.l)}</a>${n.s ? ` <span class="sub">${esc(n.s)}</span>` : ""}`; };
 const ofType = t => NODES.filter(n => n.t === t);
 const mitigated = id => OUT.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
-const mitigatedBy = id => IN.get(id).filter(([p]) => p === ":mitigatesTechnique").length;
+const mitigatedBy = id => IN.get(id).filter(([p, s]) => p === ":mitigatesTechnique" && BY_ID.get(s).t === "SecurityControl").length;
+const cisFor = id => IN.get(id).filter(([p, s]) => p === ":mitigatesTechnique" && BY_ID.get(s).t === "CisSafeguard").map(([, s]) => BY_ID.get(s).l);
+const CIS_ATTACK = "19.1";
+const inCisAttack = n => (n.p["active in"] ?? "").split(" | ").includes(`ATT&CK Enterprise ${CIS_ATTACK}`);
+const only19 = n => n.p[":inAttackEnterprise"] === "false" && (n.p.catalogue ?? "") === `ATT&CK Enterprise ${CIS_ATTACK}`;
 const isNonMappable = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique" && BY_ID.get(s).t === "NonMappableAssertion");
-const hasRow = id => IN.get(id).some(([p]) => p === ":assertsTechnique");
+const hasRow = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique" && !s.startsWith("cis"));  // NIST rows only
 const atlasMitigationsOf = id => IN.get(id).filter(([p]) => p === ":atlasMitigationFor").map(([, s]) => s);
 const atlasParentMitigated = id => OUT.get(id).some(([p, o]) => p === ":subTechniqueOf" && atlasMitigationsOf(o).length);
 const QUESTIONS = DATA.questions;
@@ -202,7 +209,7 @@ const byLabel = (a, b) => a.l.localeCompare(b.l, "en", {numeric: true});
 const M = DATA.meta, C = M.counts;
 const SC = M.sourceCounts;
 document.getElementById("subtitle").textContent =
-  `Ontology ${M.version}. Full CTID source: ${SC.sourceRows} rows, ${SC.claims} claims. ATT&CK ${M.source.attackVersion} Enterprise: ${SC.techniquesInAttackEnterprise} techniques. Aligned to ATT&CK STIX, NIST OSCAL and UCO. AI coverage: MITRE ATLAS ${DATA.meta.atlasVersion} and OWASP GenAI.`;
+  `Ontology ${M.version}. Full CTID source: ${SC.sourceRows} rows, ${SC.claims} claims. ATT&CK ${M.source.attackVersion} Enterprise: ${SC.techniquesInAttackEnterprise} techniques. Aligned to ATT&CK STIX, NIST OSCAL and UCO. CIS Controls 8.1.2 on ATT&CK ${CIS_ATTACK}. AI coverage: MITRE ATLAS ${DATA.meta.atlasVersion} and OWASP GenAI.`;
 document.getElementById("legend").innerHTML = Object.entries(TYPES)
   .filter(([t]) => !["ReferenceDataset", "DatasetMetadataRecord", "Platform"].includes(t))
   .map(([t, [name, , sym]]) => `<span><svg width="14" height="14" aria-hidden="true"><path transform="translate(7,7)" d="${d3.symbol(sym, 70)()}" fill="${color(t)}"/></svg>${esc(name)}</span>`).join("");
@@ -218,7 +225,7 @@ function renderBrowse() {
   const current = route().id;
   const term = q.value.trim().toLowerCase();
   if (term) {
-    const hits = NODES.filter(n => ["SecurityControl", "AttackTechnique", "CapabilityGroup", "Tactic", "AttackMitigation", "AtlasTechnique", "AtlasMitigation", "OwaspRisk"].includes(n.t))
+    const hits = NODES.filter(n => ["SecurityControl", "CisSafeguard", "AttackTechnique", "CapabilityGroup", "Tactic", "AttackMitigation", "AtlasTechnique", "AtlasMitigation", "OwaspRisk"].includes(n.t))
       .filter(n => (n.l + " " + (n.s ?? "")).toLowerCase().includes(term)).sort(byLabel);
     browse.innerHTML = `<p class="note">${hits.length} match${hits.length === 1 ? "" : "es"}${hits.length > 100 ? ", first 100 shown" : ""}.</p>` + listItems(hits.slice(0, 100), current);
     return;
@@ -231,13 +238,16 @@ function renderBrowse() {
   } else if (tab === "techniques") {
     const filter = document.getElementById("tech-filter")?.value ?? "all";
     const items = ofType("AttackTechnique").sort(byLabel)
-      .map(n => ({...n, c: n.p[":inAttackEnterprise"] === "false" ? "not in Enterprise" : mitigatedBy(n.id) || (isNonMappable(n.id) ? "n/m" : hasRow(n.id) ? "" : "no row")}))
-      .filter(n => filter === "all" || (filter === "claims" && typeof n.c === "number") || (filter === "nm" && n.c === "n/m") || (filter === "none" && n.c === "no row") || (filter === "outside" && n.c === "not in Enterprise"));
+      .map(n => ({...n, c: only19(n) ? "19.1 only" : n.p[":inAttackEnterprise"] === "false" ? "not in Enterprise" : mitigatedBy(n.id) || (isNonMappable(n.id) ? "n/m" : hasRow(n.id) ? "" : "no row")}))
+      .filter(n => filter === "all" || (filter === "claims" && typeof n.c === "number") || (filter === "nm" && n.c === "n/m") || (filter === "none" && n.c === "no row") || (filter === "outside" && n.c === "not in Enterprise")
+        || (filter === "cis" && cisFor(n.id).length) || (filter === "only19" && n.c === "19.1 only"));
     browse.innerHTML = `<label class="note" for="tech-filter">Show</label> <select id="tech-filter">
-      ${[["all", "All techniques"], ["claims", "With mitigation claims"], ["nm", "Non-mappable in the source"], ["none", "Not in the mapping (CQ12)"], ["outside", "Not in ATT&CK Enterprise (CQ08)"]].map(([v, l]) => `<option value="${v}"${v === filter ? " selected" : ""}>${l}</option>`).join("")}
+      ${[["all", "All techniques"], ["claims", "With mitigation claims"], ["nm", "Non-mappable in the source"], ["none", "Not in the mapping (CQ12)"], ["outside", "Not in ATT&CK Enterprise (CQ08)"], ["cis", "With CIS Safeguard claims"], ["only19", "Only in ATT&CK 19.1 (CQ22)"]].map(([v, l]) => `<option value="${v}"${v === filter ? " selected" : ""}>${l}</option>`).join("")}
       </select> <span class="note">${items.length} shown</span>
-      <p class="note">Count: mitigating controls. n/m: the source marks it non-mappable. no row: the mapping does not mention it.</p>` + listItems(items, current);
+      <p class="note">Count: mitigating NIST controls. n/m: the source marks it non-mappable. no row: the NIST mapping does not mention it. 19.1 only: in ATT&amp;CK ${CIS_ATTACK}, which the CIS mapping uses, but not in 16.1.</p>` + listItems(items, current);
     document.getElementById("tech-filter").addEventListener("change", renderBrowse);
+  } else if (tab === "cis") {
+    browse.innerHTML = `<p class="note">CIS Controls 8.1.2 Safeguards. Count: ATT&amp;CK ${CIS_ATTACK} techniques mitigated. The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}.</p>` + listItems(ofType("CisSafeguard").sort(byLabel).map(n => ({...n, c: mitigated(n.id)})), current);
   } else if (tab === "tactics") {
     const items = ofType("Tactic").filter(n => (n.p.catalogue ?? "").startsWith("ATT&CK")).sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
     browse.innerHTML = `<p class="note">ATT&amp;CK matrix order. Count: Enterprise techniques in the tactic.</p>` + listItems(items, current);
@@ -333,7 +343,7 @@ function neighbourhood(id) {
 }
 
 function overview() {
-  const groups = ofType("CapabilityGroup"), controls = ofType("SecurityControl");
+  const groups = ofType("CapabilityGroup").filter(g => !g.id.startsWith("cisgroup_")), controls = ofType("SecurityControl");  // NIST families only
   const nodes = [...groups.map(g => ({...nodeView(g), short: g.s, label: true, size: 700})),
     ...controls.map(c => { const m = mitigated(c.id); return {...nodeView(c), size: 60 + Math.sqrt(m) * 120, dim: m === 0, label: m >= 10}; })];
   const links = controls.flatMap(c => OUT.get(c.id).filter(([p]) => p === ":inCapabilityGroup").map(([, g]) => ({source: c.id, target: g})));
@@ -389,7 +399,7 @@ function evidence(id) {
   // Rationale text on source rows behind this node, so the claim can be checked against what the source says.
   const n = BY_ID.get(id);
   let rows = [];
-  if (n.t === "SecurityControl") rows = IN.get(id).filter(([p]) => p === ":assertsControl").map(([, s]) => s);
+  if (n.t === "SecurityControl" || n.t === "CisSafeguard") rows = IN.get(id).filter(([p]) => p === ":assertsControl").map(([, s]) => s);
   else if (n.t === "AttackTechnique") rows = IN.get(id).filter(([p]) => p === ":assertsTechnique").map(([, s]) => s);
   else if (n.t === "MitigationClaim") rows = OUT.get(id).filter(([p]) => p === ":supportedByAssertion").map(([, o]) => o);
   else if (PROVENANCE.has(n.t)) rows = [id];
@@ -416,8 +426,15 @@ function showNode(id) {
     extra += `<p class="note">From ${esc(n.p.catalogue ?? "an OWASP list")}. Links to ATLAS are the ones OWASP itself publishes. OWASP content: CC BY-SA 4.0 (LLM, Agentic) or CC BY-NC-SA 4.0 (MCP, IDs only).</p>`;
   }
   if (n.t === "AttackTechnique") {
-    if (n.p[":inAttackEnterprise"] === "false") extra += `<p class="warn">Not an active technique in ATT&amp;CK Enterprise ${esc(M.source.attackVersion)}. Rule R1 keeps the source row but makes no enterprise claim. See CQ08.</p>`;
-    else if (!hasRow(id)) extra += `<p class="note">The mapping has no row for this technique (CQ12). That is silence, not a statement that no control applies.</p>`;
+    if (only19(n)) extra += `<p class="warn">Only in ATT&amp;CK Enterprise ${CIS_ATTACK}. The CIS mapping uses ${CIS_ATTACK}. The NIST mapping uses ${esc(M.source.attackVersion)}, so it has no row for this technique (CQ22).</p>`;
+    else if (n.p[":inAttackEnterprise"] === "false") extra += `<p class="warn">Not an active technique in ATT&amp;CK Enterprise ${esc(M.source.attackVersion)}. Rule R1 keeps the source row but makes no enterprise claim. See CQ08.</p>`;
+    else if (!hasRow(id)) extra += `<p class="note">The NIST mapping has no row for this technique (CQ12). That is silence, not a statement that no control applies.</p>`;
+    if (n.p[":inAttackEnterprise"] === "true" && !inCisAttack(n)) {
+      const by = IN.get(id).filter(([p]) => p === ":replacesTechnique").map(([, s]) => s);
+      extra += `<p class="note">Not active in ATT&amp;CK ${CIS_ATTACK}, so the CIS mapping cannot refer to it.${by.length ? ` ATT&amp;CK ${CIS_ATTACK} replaces it with ${by.map(link).join(", ")}.` : ""}</p>`;
+    }
+    const cis = cisFor(id);
+    if (cis.length) extra += `<p class="note">${cis.length} CIS Safeguard${cis.length === 1 ? "" : "s"} (ATT&amp;CK ${CIS_ATTACK}): ${cis.sort((a, b) => a.localeCompare(b, "en", {numeric: true})).map(c => `<a href="#n/cis_${encodeURIComponent(c)}">${esc(c)}</a>`).join(" ")}. See CQ20 for the NIST controls on the same technique.</p>`;
     for (const [p, rid] of IN.get(id)) if (p === ":describesEntity") {
       const r = BY_ID.get(rid).p, st = r[":versionStatus"] ?? "";
       extra += `<p class="warn">${esc(BY_ID.get(rid).l)}.${r[":laterId"] ? ` Replaced by ${esc(r[":laterId"])} ${esc(r[":laterName"] ?? "")}.` : r[":laterName"] ? ` New name: ${esc(r[":laterName"])}.` : ""}${r[":laterTactic"] ? ` Tactics in the later version include ${esc(r[":laterTactic"])}.` : ""} The claims here use ATT&amp;CK ${esc(M.source.attackVersion)} (CQ14, CQ15).</p>`;
@@ -427,6 +444,8 @@ function showNode(id) {
   if (n.t === "CapabilityGroup" && n.p[":groupName"] !== n.p[":oscalFamilyTitle"]) extra += `<p class="note">The mapping source calls this family "${esc(n.p[":groupName"])}". The title above is from the OSCAL catalog (CQ13).</p>`;
   if (n.t === "MitigationClaim") extra += `<p class="note">An enterprise claim interpreted from source rows. It is not the same thing as the source row that supports it.</p>`;
   if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
+  if (n.t === "NonMappableControlAssertion") extra += `<p class="note">The CIS source row marks this Safeguard as non_mappable. The row names no ATT&amp;CK technique.</p>`;
+  if (n.t === "CisSafeguard") extra += `<p class="note">CIS licenses the titles and text of the CIS Controls under CC BY-NC-ND 4.0, so this page shows only the ID. Read the Safeguard on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>.</p><p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Claims on techniques that are also in ${esc(M.source.attackVersion)} share the technique node by STIX id.</p><div class="row"><a class="btn" href="#gaps-cis/${encodeURIComponent(n.l)}">Open in CIS gap analysis</a></div>`;
   const nb = neighbourhood(id);
   if (n.t === "SecurityControl" || n.t === "ControlBaseline") {
     const ids = n.t === "SecurityControl" ? [n.l] : [...CONTROLS].filter(([, c]) => baselinesOf(c.id).includes(n.l)).map(([c]) => c).sort();
@@ -484,8 +503,9 @@ function showOverview() {
       <li><a href="#n/claim_AC-02_T1556.009">A claim and its supporting source row</a></li>
       <li><a href="#n/nonmappable_T1656">A non-mappable row</a> for a technique ATT&amp;CK does mitigate (CQ05)</li>
       <li><a href="#n/technique_T1521.003">T1521.003</a>: a source row outside ATT&amp;CK Enterprise (CQ08)</li>
-      <li><a href="#questions">The 13 competency questions</a> and their answers</li>
+      <li><a href="#questions">The ${QUESTIONS.length} competency questions</a> and their answers</li>
       <li><a href="#gaps">Gap analysis</a>: paste your controls or load an OSCAL SSP and see what is uncovered</li>
+      <li><a href="#n/cis_CIS-6.3">CIS Safeguard CIS-6.3</a> and the <a href="#gaps-cis">CIS gap analysis</a> on ATT&amp;CK 19.1</li>
       <li><a href="#n/atlastechnique_AML.T0053">AML.T0053 AI Agent Tool Invocation</a> and the <a href="#gaps-atlas">ATLAS gap analysis</a> for AI agents</li>
       <li><a href="#n/owasp_LLM01_2025">LLM01:2025 Prompt Injection</a> with its ATLAS techniques and mitigations (CQ19)</li>
       <li><a href="#class/:MitigationClaim">The MitigationClaim class</a></li></ul>`;
@@ -498,7 +518,7 @@ function showAbout() {
   detail.innerHTML = `<h2>About</h2><p>${esc(M.description)}</p>
     <dl><dt>Ontology IRI</dt><dd><code>${esc(M.iri)}</code></dd><dt>Version</dt><dd>${esc(M.version)} (<code>${esc(M.versionIri)}</code>), ${esc(M.modified)}</dd>
     <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a></dd><dt>Triples</dt><dd>${M.triples} (core, alignments and population)</dd></dl>
-    <h3>Downloads</h3><p>Stable files, rebuilt with every release: <a href="exports/claims.csv">claims.csv</a> (every control and technique claim with its source rows), <a href="exports/techniques.csv">techniques.csv</a>, <a href="exports/controls.csv">controls.csv</a>, Navigator layers for the <a href="exports/navigator/baseline-LOW.json">LOW</a>, <a href="exports/navigator/baseline-MODERATE.json">MODERATE</a>, <a href="exports/navigator/baseline-HIGH.json">HIGH</a> and <a href="exports/navigator/baseline-PRIVACY.json">PRIVACY</a> baselines and <a href="exports/navigator/all-controls.json">all controls</a>, and every competency answer under <code>exports/questions/</code>. For AI agents and scripts: the JSON API at <a href="api/v1/index.json">api/v1/index.json</a> (<a href="api/v1/openapi.json">OpenAPI</a>, <a href="llms.txt">llms.txt</a>). The ontology and population are under <a href="ontology/core.ttl">ontology/</a> and <a href="data/population.ttl">data/</a>.</p>
+    <h3>Downloads</h3><p>Stable files, rebuilt with every release: <a href="exports/claims.csv">claims.csv</a> (every control and technique claim with its source rows), <a href="exports/techniques.csv">techniques.csv</a>, <a href="exports/controls.csv">controls.csv</a>, Navigator layers for the <a href="exports/navigator/baseline-LOW.json">LOW</a>, <a href="exports/navigator/baseline-MODERATE.json">MODERATE</a>, <a href="exports/navigator/baseline-HIGH.json">HIGH</a> and <a href="exports/navigator/baseline-PRIVACY.json">PRIVACY</a> baselines and <a href="exports/navigator/all-controls.json">all controls</a>, <a href="exports/cis-claims.csv">cis-claims.csv</a> and the <a href="exports/navigator/cis-all-safeguards.json">CIS Safeguards layer</a> (ATT&amp;CK 19.1), and every competency answer under <code>exports/questions/</code>. For AI agents and scripts: the JSON API at <a href="api/v1/index.json">api/v1/index.json</a> (<a href="api/v1/openapi.json">OpenAPI</a>, <a href="llms.txt">llms.txt</a>). The ontology and population are under <a href="ontology/core.ttl">ontology/</a> and <a href="data/population.ttl">data/</a>.</p>
     <h3>Cite</h3><p class="note">McCalla, M. (2026). <i>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</i> (version ${esc(M.version)}). https://github.com/mmccalla/nist-attack-enterprise-ontology. See <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/CITATION.cff">CITATION.cff</a>.</p>
     <h3>Pinned sources</h3><table><thead><tr><th>Source</th><th>SHA-256</th></tr></thead><tbody>${Object.entries(M.sources).map(([key, v]) => `<tr><td><a href="${esc(v.url)}">${esc(key)}</a></td><td><code>${esc(v.sha256.slice(0, 16))}</code></td></tr>`).join("")}</tbody></table>
     <h3>What the cross-checks found</h3><ul>
@@ -646,7 +666,7 @@ function setGapText(text) {
 }
 function showGaps(list) {
   const initial = list ?? (gapSelected.size ? [...gapSelected].sort().join(", ") : "");
-  detail.innerHTML = `<p class="note"><b>NIST controls and ATT&amp;CK</b> | <a href="#gaps-atlas">ATLAS mitigations and AI techniques</a></p><h2>Gap analysis</h2>
+  detail.innerHTML = `<p class="note"><b>NIST controls and ATT&amp;CK</b> | <a href="#gaps-cis">CIS Safeguards and ATT&amp;CK</a> | <a href="#gaps-atlas">ATLAS mitigations and AI techniques</a></p><h2>Gap analysis</h2>
     <p>Which ATT&amp;CK techniques do your NIST 800-53 controls leave uncovered, and which controls would close the most gaps? Paste control ids, start from a baseline, or load an OSCAL file. <b>Everything runs in this page; nothing is uploaded.</b></p>
     <label class="field" for="gap-input">Your implemented controls</label>
     <textarea id="gap-input" spellcheck="false" placeholder="AC-2, AC-3, IA-2(1), SI-4 ...">${esc(initial)}</textarea>
@@ -719,7 +739,7 @@ function atlasModel(agentOnly) {
 }
 let atlasSelected = new Set(), atlasUnmapped = [];
 function showGapsAtlas(list) {
-  detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <b>ATLAS mitigations and AI techniques</b></p>
+  detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <a href="#gaps-cis">CIS Safeguards and ATT&amp;CK</a> | <b>ATLAS mitigations and AI techniques</b></p>
     <h2>Gap analysis for AI systems</h2>
     <p>Which MITRE ATLAS techniques do your AI safeguards leave uncovered? Paste the ATLAS mitigation IDs that you have, for example <code>AML.M0026, AML.M0029</code>. <b>Everything runs in this page; nothing is uploaded.</b></p>
     <label class="field" for="atlas-input">Your ATLAS mitigations</label>
@@ -773,6 +793,75 @@ function showGapsAtlas(list) {
   run(list != null);
 }
 
+/* Gap analysis for CIS Controls 8.1.2: Safeguards against ATT&CK 19.1 techniques (same shared logic) */
+const CIS_S = new Map(ofType("CisSafeguard").map(n => [n.l, n]));
+function cisModel() {
+  const techniques = ofType("AttackTechnique").filter(inCisAttack);
+  const ids = new Set(techniques.map(t => t.l));
+  return {
+    techniques: techniques.map(t => ({id: t.l, name: t.s, tactics: []})),
+    controls: Object.fromEntries([...CIS_S].map(([sid, n]) => [sid, {title: n.s, baselines: []}])),
+    mitigates: Object.fromEntries([...CIS_S].map(([sid, n]) => [sid, OUT.get(n.id).filter(([p]) => p === ":mitigatesTechnique").map(([, o]) => BY_ID.get(o).l).filter(t => ids.has(t))])),
+  };
+}
+/* Accept "CIS-6.1" and the bare Safeguard number "6.1". */
+const cisIds = text => C2.parseIds(String(text ?? "").replace(/(^|[^\w.-])(\d{1,2}\.\d{1,2})(?![\w.])/g, "$1CIS-$2"), new Set(CIS_S.keys()), /\bCIS-\d{1,2}\.\d{1,2}\b/);
+let cisSelected = new Set();
+function showGapsCis(list) {
+  detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <b>CIS Safeguards and ATT&amp;CK</b> | <a href="#gaps-atlas">ATLAS mitigations and AI techniques</a></p>
+    <h2>Gap analysis for CIS Controls</h2>
+    <p>Which ATT&amp;CK Enterprise ${CIS_ATTACK} techniques do your CIS Controls 8.1.2 Safeguards leave uncovered? Paste Safeguard numbers, for example <code>4.1, 6.3, CIS-10.1</code>. <b>Everything runs in this page; nothing is uploaded.</b></p>
+    <label class="field" for="cis-input">Your implemented Safeguards</label>
+    <textarea id="cis-input" spellcheck="false" placeholder="1.1, 2.3, 4.1 ...">${esc(list ?? [...cisSelected].sort().join(", "))}</textarea>
+    <div class="row"><button class="btn" id="cis-all">All mapped Safeguards</button><button class="btn" id="cis-clear">Clear</button></div>
+    <p class="note" id="cis-status" aria-live="polite"></p>
+    <h3>Download</h3><div class="row"><button class="btn" id="cis-layer">ATT&amp;CK Navigator layer (ATT&amp;CK 19)</button><button class="btn" id="cis-csv">Techniques CSV</button><button class="btn" id="cis-recs-csv">Recommendations CSV</button></div>
+    <div id="cis-recs"></div>
+    <p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}, not ${esc(M.source.attackVersion)}. Implementation Groups are not in the mapping file, so this page does not filter by them. CIS licenses the Safeguard titles and text under CC BY-NC-ND 4.0, so this page shows only IDs. Read them on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>. A mapping says a Safeguard can mitigate a technique. It does not show that the Safeguard is implemented well or that it stops the technique.</p>`;
+  const input = document.getElementById("cis-input");
+  const run = (updateHash = true) => {
+    const r = cisIds(input.value);
+    cisSelected = r.found;
+    const model = cisModel(), cov = C2.coverage(model, cisSelected), counts = C2.counts(cov);
+    const recs = C2.recommendations(model, cisSelected);
+    document.getElementById("cis-status").innerHTML = `${cisSelected.size} mapped Safeguard${cisSelected.size === 1 ? "" : "s"} recognised.` + (r.unmapped.length ? ` Not in the CIS mapping: <code>${esc(r.unmapped.slice(0, 20).join(" "))}</code>.` : "");
+    document.getElementById("cis-recs").innerHTML = recs.length ? `<h3>Safeguards that would close the most gaps</h3><ol>${recs.map(([c, n]) => `<li><a href="#n/cis_${encodeURIComponent(c)}">${c}</a> <span class="count">+${n}</span></li>`).join("")}</ol><p class="note">Greedy order: each Safeguard is ranked by the gaps it closes after the ones above it are added.</p>` : "";
+    const total = cov.size, pct = n => total ? Math.round(100 * n / total) : 0;
+    const gaps = [...cov].filter(([, [st]]) => st === "gap").sort(([a], [b]) => byTid(a, b));
+    const row = ([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(c => `<a href="#n/cis_${encodeURIComponent(c)}">${c}</a>`).join(" ")}</td></tr>`;
+    document.getElementById("report").innerHTML = `<h2>Coverage of ATT&amp;CK Enterprise ${CIS_ATTACK} by CIS Controls 8.1.2</h2>
+      <div><span class="stat"><b>${counts.covered}</b>&#10003; covered (${pct(counts.covered)}%)</span>
+        <span class="stat"><b>${counts.gap}</b>! gaps a mapped Safeguard would close</span>
+        <span class="stat"><b>${counts.none}</b>&#9675; no mapped Safeguard</span><span class="stat"><b>${total}</b>techniques</span></div>
+      <h3>Gaps a mapped Safeguard would close (${gaps.length})</h3>${gaps.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>CIS Safeguards</th></tr></thead><tbody>${gaps.map(row).join("")}</tbody></table>` : "<p>None.</p>"}
+      <p class="note">${counts.none} techniques have no Safeguard in the mapping. That is silence in the mapping, not a statement that no defence exists.</p>`;
+    if (updateHash) history.replaceState(null, "", "#gaps-cis/" + [...cisSelected].sort().join(","));
+    crumb(`CIS gap analysis: ${cisSelected.size} Safeguards, ${counts.covered} of ${total} techniques covered`);
+    return {model, cov};
+  };
+  let timer;
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(run, 250); });
+  document.getElementById("cis-all").addEventListener("click", () => { input.value = [...CIS_S.keys()].filter(c => cisModel().mitigates[c].length).sort((a, b) => a.localeCompare(b, "en", {numeric: true})).join(", "); run(); });
+  document.getElementById("cis-clear").addEventListener("click", () => { input.value = ""; run(); });
+  document.getElementById("cis-layer").addEventListener("click", () => {
+    const {model} = run(false);
+    downloadLayer("cis-8-1-2-coverage-layer.json", C2.navigatorLayer(model, "CIS Controls 8.1.2 coverage: my Safeguards",
+      `ATT&CK Enterprise ${CIS_ATTACK} techniques mitigated by ${cisSelected.size} selected CIS Controls 8.1.2 Safeguards.`, cisSelected,
+      {attack: "19", source: "CTID CIS Controls 8.1.2 to ATT&CK 19.1 Enterprise"}));
+  });
+  document.getElementById("cis-csv").addEventListener("click", () => {
+    const {cov} = run(false);
+    download("cis-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "status", "cis_safeguards"],
+      [...cov].sort(([a], [b]) => byTid(a, b)).map(([tid, [st, cs]]) => [tid, BY_ID.get("technique_" + tid).s, st, cs.join(" ")])), "text/csv");
+  });
+  document.getElementById("cis-recs-csv").addEventListener("click", () => {
+    const {model} = run(false);
+    download("cis-recommended-safeguards.csv", toCsv(["rank", "safeguard_id", "gaps_closed"],
+      C2.recommendations(model, cisSelected, 50).map(([c, n], i) => [i + 1, c, n])), "text/csv");
+  });
+  run(list != null);
+}
+
 /* Routing */
 function route() {
   const h = decodeURIComponent(location.hash.replace(/^#/, ""));
@@ -781,15 +870,16 @@ function route() {
   if (h.startsWith("q/")) return {view: "question", id: h.slice(2)};
   if (h === "gaps" || h.startsWith("gaps/")) return {view: "gaps", list: h.startsWith("gaps/") ? h.slice(5) : null};
   if (h === "gaps-atlas" || h.startsWith("gaps-atlas/")) return {view: "gaps-atlas", list: h.startsWith("gaps-atlas/") ? h.slice(11) : null};
+  if (h === "gaps-cis" || h.startsWith("gaps-cis/")) return {view: "gaps-cis", list: h.startsWith("gaps-cis/") ? h.slice(9) : null};
   return {view: ["schema", "about", "questions"].includes(h) ? h : "overview"};
 }
 function crumb(t) { document.getElementById("crumb").textContent = t; }
 function go() {
   const r = route();
-  const gapsView = r.view === "gaps" || r.view === "gaps-atlas";
+  const gapsView = ["gaps", "gaps-atlas", "gaps-cis"].includes(r.view);
   document.getElementById("report").hidden = !gapsView;
   for (const id of ["graph", "legend", "toolbar"]) document.getElementById(id).style.visibility = gapsView ? "hidden" : "";
-  const navView = {class: "schema", question: "questions", "gaps-atlas": "gaps"}[r.view] ?? r.view;
+  const navView = {class: "schema", question: "questions", "gaps-atlas": "gaps", "gaps-cis": "gaps"}[r.view] ?? r.view;
   document.querySelectorAll("header nav a[data-view]").forEach(a => a.toggleAttribute("aria-current", a.dataset.view === navView));
   document.querySelectorAll("header nav a[aria-current]").forEach(a => a.setAttribute("aria-current", "page"));
   if (r.view === "node" && BY_ID.has(r.id)) showNode(r.id);
@@ -799,6 +889,7 @@ function go() {
   else if (r.view === "questions") showQuestions();
   else if (r.view === "gaps") showGaps(r.list);
   else if (r.view === "gaps-atlas") showGapsAtlas(r.list);
+  else if (r.view === "gaps-cis") showGapsCis(r.list);
   else if (r.view === "question") showQuestion(r.id);
   else showOverview();
   document.title = `${document.getElementById("crumb").textContent.split(".")[0]} | NIST 800-53 to ATT&CK ontology`;
