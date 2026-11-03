@@ -2,6 +2,15 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.6.0 (2026-11-03)
+
+Ontology 2.3.0, unchanged. Licence and attribution release.
+
+- **Notices**: `NOTICE.md` gives the exact copyright notice, licence and changes for each source. `LICENSES/` holds the full texts (Apache 2.0, the ATT&CK terms of use for 16.1 and for 19.1 and 20.0, ISC for D3). Each API file links to the notices (`links.notices`). Each Navigator layer holds the ATT&CK notice for its version. The page has a Notices link and the D3 licence text. Tests examine all of this.
+- **CIS text**: a CIS title inside the CTID rationale (one row) is replaced by a marker, and the title slugs are removed from CIS URLs. The licence test now finds titles in any letter case, inside other text and as slugs.
+- **CSA CCM**: no CSA content. The page links to the CTID CSA CCM page. Each technique page and API file links to the CTID page for the technique (`ctid_url`).
+- The CIS gap analysis states that it does not assess compliance with the CIS Controls.
+
 ## 2.5.0 (2026-11-02)
 
 Ontology 2.3.0. Read the compatibility notes.

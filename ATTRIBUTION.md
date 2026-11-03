@@ -1,5 +1,7 @@
 # Attribution
 
+The exact copyright notices, licences and changes for each source are in [NOTICE.md](NOTICE.md). The licence texts are in [LICENSES/](LICENSES).
+
 ## Ontology
 
 The files in `ontology/v2/` are the uploaded `nist_attack_enterprise_ontology_v2_bundle.zip`, unchanged (see [SOURCE-MANIFEST.md](SOURCE-MANIFEST.md)). Its header declares `dcterms:license` [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) and names OpenAI as `dcterms:creator`. Version 2.0.0 (`ontology/core.ttl`, `ontology/shapes.ttl`, the alignment modules and `data/population.ttl`) is a revision of that work by Mark McCalla under the same licence, with OpenAI kept as creator and Mark McCalla added as contributor. The MIT [LICENSE](LICENSE) covers the scripts, the graph browser, the queries and the tests.

@@ -176,3 +176,13 @@ Phase 4a added the CTID mapping of CIS Controls 8.1.2 on ATT&CK 19.1, three comp
 | --- | --- |
 | Give the page a size budget. | The page grew from 3.4 MB to 4.4 MB with CIS. More frameworks will make it larger. |
 | Ask the owner about restrictive licences before work starts. | CSA CCM terms do not permit redistribution. Phase 4b waits for an owner decision. |
+
+## Addendum, 2026-11-03: licence and attribution review
+
+| Type | Learning |
+| --- | --- |
+| Stop | Testing a licence rule only on whole fields. A CIS title was inside one rationale sentence, and CIS URLs held the titles as slugs. |
+| Stop | Attribution as a short list with links. The ATT&CK terms require the notice and the licence in each copy. Apache 2.0 requires the licence text and a statement of changes. |
+| Start | For each source, read the licence file at the pinned commit, copy the exact notice and test that each output keeps it. |
+| Start | Where a licence forbids redistribution, deliver value with links to the publisher (CSA CCM), not with copies. |
+| Keep | Negative probes that first assert that the probe changed the input. One probe in this review did not match, and the assertion showed it. |

@@ -175,10 +175,11 @@ The original ontology bundle is in [`ontology/v2/`](ontology/v2). It has no chan
 ## Licence and attribution
 
 - The code has the MIT licence ([`LICENSE`](LICENSE)).
-- The ontology files have the CC BY 4.0 licence.
-- The mappings come from the MITRE Center for Threat-Informed Defense (Apache 2.0).
-- MITRE ATT&CK® is a registered trademark of The MITRE Corporation.
-- CIS Controls® is a registered trademark of the Center for Internet Security. CIS licenses the CIS Controls under CC BY-NC-ND 4.0. The tool keeps only IDs and links, not CIS text.
-- The UCO core file has the Apache 2.0 licence.
+- The ontology and the project's own data have the CC BY 4.0 licence.
+- Third-party content keeps its own licence. These licences do not apply to it.
+- [`NOTICE.md`](NOTICE.md) gives the copyright notice, the licence and the changes for each source. The full licence texts are in [`LICENSES/`](LICENSES).
+- If you copy the data, keep the notices with it. For example, the ATT&CK terms of use require MITRE's copyright notice and the licence in each copy.
+- MITRE ATT&CK® is a registered trademark of The MITRE Corporation. CIS Controls® is a registered trademark of the Center for Internet Security. No publisher sponsors or endorses this tool.
+- The tool copies no CIS Controls text and no CSA Cloud Controls Matrix content.
 
 The full attribution is in [`ATTRIBUTION.md`](ATTRIBUTION.md).
