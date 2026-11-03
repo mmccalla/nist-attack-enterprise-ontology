@@ -86,3 +86,11 @@ def test_yaml_is_only_read_with_the_safe_loader():
         text = path.read_text()
         assert not re.search(r"yaml\.(load|unsafe_load|full_load)\(", text), f"{path.name} uses an unsafe YAML loader"
     assert "yaml.safe_load(" in (ROOT / "scripts" / "build_population.py").read_text()
+
+
+def test_ci_uses_the_python_version_of_the_lock():
+    """The hash lock is resolved for one Python version. On another version pip can need packages the lock does not hold."""
+    locked = re.search(r"Lock with Python (\d+\.\d+)", (ROOT / "requirements-dev.in").read_text()).group(1)
+    ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text()
+    versions = re.findall(r'python-version: "([^"]+)"', ci)
+    assert versions and set(versions) == {locked}, (versions, locked)

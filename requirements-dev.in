@@ -1,4 +1,4 @@
-# Top-level development dependencies. Lock with:
+# Top-level development dependencies. Lock with Python 3.14 (CI uses the same version):
 #   pip-compile --generate-hashes --allow-unsafe --strip-extras --output-file requirements-dev.txt requirements-dev.in
 rdflib==7.6.0
 pyshacl==0.40.1
