@@ -3419,6 +3419,10 @@
     {
       "label": "NIST 800-53 to ATT&CK ontology",
       "url": "https://mmccalla.github.io/nist-attack-enterprise-ontology/"
+    },
+    {
+      "label": "Notices and licences",
+      "url": "https://mmccalla.github.io/nist-attack-enterprise-ontology/NOTICE.md"
     }
   ],
   "metadata": [
@@ -3429,6 +3433,14 @@
     {
       "name": "Controls selected",
       "value": "83"
+    },
+    {
+      "name": "ATT&CK notice",
+      "value": "\u00a9 2024 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation."
+    },
+    {
+      "name": "Mappings",
+      "value": "MITRE Center for Threat-Informed Defense, Apache 2.0. Notices: https://mmccalla.github.io/nist-attack-enterprise-ontology/NOTICE.md"
     }
   ]
 }

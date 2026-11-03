@@ -121,6 +121,7 @@ svg .node.dim path { opacity: .35; }
     <a class="btn" href="#questions" data-view="questions">Questions</a>
     <a class="btn" href="#schema" data-view="schema">Schema</a>
     <a class="btn" href="#about" data-view="about">About</a>
+    <a class="btn" href="NOTICE.md">Notices</a>
     <a class="btn" href="https://github.com/mmccalla/nist-attack-enterprise-ontology">Repository</a>
   </nav>
 </header>
@@ -426,6 +427,7 @@ function showNode(id) {
     extra += `<p class="note">From ${esc(n.p.catalogue ?? "an OWASP list")}. Links to ATLAS are the ones OWASP itself publishes. OWASP content: CC BY-SA 4.0 (LLM, Agentic) or CC BY-NC-SA 4.0 (MCP, IDs only).</p>`;
   }
   if (n.t === "AttackTechnique") {
+    if (n.p[":inAttackEnterprise"] === "true") extra += `<p><a href="https://ctid.mitre.org/mappings/attack/attack-16.1/domain-enterprise/techniques/${encodeURIComponent(n.l)}/" rel="noopener">Open ${esc(n.l)} in CTID Mappings Explorer</a> <span class="note">(all CTID mappings on ATT&amp;CK 16.1, for example AWS, Azure, M365 and KEV)</span></p>`;
     if (only19(n)) extra += `<p class="warn">Only in ATT&amp;CK Enterprise ${CIS_ATTACK}. The CIS mapping uses ${CIS_ATTACK}. The NIST mapping uses ${esc(M.source.attackVersion)}, so it has no row for this technique (CQ22).</p>`;
     else if (n.p[":inAttackEnterprise"] === "false") extra += `<p class="warn">Not an active technique in ATT&amp;CK Enterprise ${esc(M.source.attackVersion)}. Rule R1 keeps the source row but makes no enterprise claim. See CQ08.</p>`;
     else if (!hasRow(id)) extra += `<p class="note">The NIST mapping has no row for this technique (CQ12). That is silence, not a statement that no control applies.</p>`;
@@ -517,7 +519,7 @@ function showAbout() {
   const fmt = o => Object.entries(o).map(([id, v]) => `<li><b>${esc(id)}</b>: source "${esc(v.source)}", ${esc(v.oscal ? "OSCAL" : "ATT&CK")} "${esc(v.oscal ?? v.attack)}"</li>`).join("");
   detail.innerHTML = `<h2>About</h2><p>${esc(M.description)}</p>
     <dl><dt>Ontology IRI</dt><dd><code>${esc(M.iri)}</code></dd><dt>Version</dt><dd>${esc(M.version)} (<code>${esc(M.versionIri)}</code>), ${esc(M.modified)}</dd>
-    <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a></dd><dt>Triples</dt><dd>${M.triples} (core, alignments and population)</dd></dl>
+    <dt>Licence</dt><dd><a href="${esc(M.license)}">${esc(M.license)}</a> for the project's own contributions. Third-party content keeps its own licence (<a href="NOTICE.md">notices</a>).</dd><dt>Triples</dt><dd>${M.triples} (core, alignments and population)</dd></dl>
     <h3>Downloads</h3><p>Stable files, rebuilt with every release: <a href="exports/claims.csv">claims.csv</a> (every control and technique claim with its source rows), <a href="exports/techniques.csv">techniques.csv</a>, <a href="exports/controls.csv">controls.csv</a>, Navigator layers for the <a href="exports/navigator/baseline-LOW.json">LOW</a>, <a href="exports/navigator/baseline-MODERATE.json">MODERATE</a>, <a href="exports/navigator/baseline-HIGH.json">HIGH</a> and <a href="exports/navigator/baseline-PRIVACY.json">PRIVACY</a> baselines and <a href="exports/navigator/all-controls.json">all controls</a>, <a href="exports/cis-claims.csv">cis-claims.csv</a> and the <a href="exports/navigator/cis-all-safeguards.json">CIS Safeguards layer</a> (ATT&amp;CK 19.1), and every competency answer under <code>exports/questions/</code>. For AI agents and scripts: the JSON API at <a href="api/v1/index.json">api/v1/index.json</a> (<a href="api/v1/openapi.json">OpenAPI</a>, <a href="llms.txt">llms.txt</a>). The ontology and population are under <a href="ontology/core.ttl">ontology/</a> and <a href="data/population.ttl">data/</a>.</p>
     <h3>Cite</h3><p class="note">McCalla, M. (2026). <i>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</i> (version ${esc(M.version)}). https://github.com/mmccalla/nist-attack-enterprise-ontology. See <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/CITATION.cff">CITATION.cff</a>.</p>
     <h3>Pinned sources</h3><table><thead><tr><th>Source</th><th>SHA-256</th></tr></thead><tbody>${Object.entries(M.sources).map(([key, v]) => `<tr><td><a href="${esc(v.url)}">${esc(key)}</a></td><td><code>${esc(v.sha256.slice(0, 16))}</code></td></tr>`).join("")}</tbody></table>
@@ -531,7 +533,15 @@ function showAbout() {
       <li>The namespace is <code>w3id.org/example</code>. The IRIs do not resolve.</li>
       <li>A mapping is not evidence that a system has the control in place or that the control stops the technique.</li>
       <li>OSCAL titles come from catalog 5.2.0; the mapping was built against an earlier Rev. 5 release.</li></ul>
-    <h3>Attribution</h3><p class="note">Mappings: MITRE Center for Threat-Informed Defense <a href="https://ctid.io/mappings-explorer">Mappings Explorer</a> (Apache 2.0). MITRE ATT&amp;CK&reg; is a registered trademark of The MITRE Corporation; ATT&amp;CK content &copy; The MITRE Corporation. NIST SP 800-53, SP 800-53B and OSCAL content: NIST. UCO: Apache 2.0. Graph browser: <a href="https://d3js.org">D3</a> (ISC).</p>`;
+    <h3>Notices and attribution</h3><p class="note">Third-party content keeps its own licence. The full notices and licence texts are in <a href="NOTICE.md">NOTICE.md</a> and <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/tree/main/LICENSES">LICENSES/</a>. Keep them with any copy of the data.</p><ul class="note">
+      <li>MITRE ATT&amp;CK 16.1: ${esc(C2.ATTACK_NOTICES["16"])} ATT&amp;CK 19.1 and 20.0: ${esc(C2.ATTACK_NOTICES["19"])} MITRE ATT&amp;CK and ATT&amp;CK are registered trademarks of The MITRE Corporation.</li>
+      <li>Mappings: MITRE Center for Threat-Informed Defense, <a href="https://ctid.mitre.org/mappings/">Mappings Explorer</a>, Apache 2.0. &copy; 2024 MITRE. Approved for public release. Document number(s) CT0104.</li>
+      <li>MITRE ATLAS: Copyright 2021-2026 MITRE, Apache 2.0.</li>
+      <li>CIS Controls&reg; is a registered trademark of the Center for Internet Security. CIS licenses the CIS Controls under CC BY-NC-ND 4.0. This tool copies no CIS text and does not assess compliance with the CIS Controls.</li>
+      <li>NIST SP 800-53, SP 800-53B and OSCAL content: NIST, public domain in the United States and CC0 1.0. No endorsement by NIST is implied.</li>
+      <li>OWASP Top 10 for LLM Applications 2025: OWASP GenAI Security Project, CC BY-SA 4.0.</li>
+      <li>UCO: Apache 2.0. Graph browser: <a href="https://d3js.org">D3</a> 7.9.0, &copy; 2010-2023 Mike Bostock, ISC.</li>
+      <li>No publisher above sponsors or endorses this tool.</li></ul>`;
   overview();
   crumb("About");
 }
@@ -681,7 +691,8 @@ function showGaps(list) {
       <button class="btn" id="gap-recs-csv">Recommendations CSV</button></div>
     <p class="note">Open the layer in the <a href="https://mitre-attack.github.io/attack-navigator/" rel="noopener">ATT&amp;CK Navigator</a> (Open Existing Layer, Upload from local). The address bar now holds your selection, so you can bookmark or share it.</p>
     <div id="gap-recs"></div>
-    <p class="note">A mapping says a control can mitigate a technique. It does not show the control is implemented well or that it stops the technique.</p>`;
+    <p class="note">A mapping says a control can mitigate a technique. It does not show the control is implemented well or that it stops the technique.</p>
+    <p class="note">Other frameworks: CTID also maps the <a href="https://ctid.mitre.org/mappings/external/csa_ccm/" rel="noopener">CSA Cloud Controls Matrix</a> (ATT&amp;CK 17.1), AWS, Azure, GCP, M365 and KEV. This tool does not include them. The CSA terms do not permit redistribution of the CCM. Open them in <a href="https://ctid.mitre.org/mappings/" rel="noopener">Mappings Explorer</a>.</p>`;
   const input = document.getElementById("gap-input");
   let timer;
   input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => { setGapText(input.value); runGaps(); }, 250); });
@@ -817,7 +828,7 @@ function showGapsCis(list) {
     <p class="note" id="cis-status" aria-live="polite"></p>
     <h3>Download</h3><div class="row"><button class="btn" id="cis-layer">ATT&amp;CK Navigator layer (ATT&amp;CK 19)</button><button class="btn" id="cis-csv">Techniques CSV</button><button class="btn" id="cis-recs-csv">Recommendations CSV</button></div>
     <div id="cis-recs"></div>
-    <p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}, not ${esc(M.source.attackVersion)}. Implementation Groups are not in the mapping file, so this page does not filter by them. CIS licenses the Safeguard titles and text under CC BY-NC-ND 4.0, so this page shows only IDs. Read them on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>. A mapping says a Safeguard can mitigate a technique. It does not show that the Safeguard is implemented well or that it stops the technique.</p>`;
+    <p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}, not ${esc(M.source.attackVersion)}. Implementation Groups are not in the mapping file, so this page does not filter by them. CIS licenses the Safeguard titles and text under CC BY-NC-ND 4.0, so this page shows only IDs. Read them on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>. A mapping says a Safeguard can mitigate a technique. It does not show that the Safeguard is implemented well or that it stops the technique. This page does not assess compliance with the CIS Controls. CIS does not sponsor or endorse this tool.</p>`;
   const input = document.getElementById("cis-input");
   const run = (updateHash = true) => {
     const r = cisIds(input.value);

@@ -393,7 +393,9 @@ def render(poisoned: bool = False) -> str:
         poison(payload)
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
     data = data.replace("</", "<\\/")
-    d3 = D3.read_text(encoding="utf-8").replace("</script", "<\\/script")
+    # ISC licence: the copyright and permission notice must appear in all copies (NOTICE.md).
+    d3_licence = (ROOT / "LICENSES" / "ISC-d3.txt").read_text(encoding="utf-8").replace("*/", "* /")
+    d3 = f"/*! D3 7.9.0\n{d3_licence}*/\n" + D3.read_text(encoding="utf-8").replace("</script", "<\\/script")
     html = TEMPLATE.read_text(encoding="utf-8")
     coverage = COVERAGE.read_text(encoding="utf-8").replace("</script", "<\\/script")
     for marker in ("/*__GRAPH_DATA__*/", "/*__D3__*/", "/*__COVERAGE__*/"):

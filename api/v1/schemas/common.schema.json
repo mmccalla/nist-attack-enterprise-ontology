@@ -59,10 +59,16 @@
       "html": {
        "type": "string",
        "pattern": "^https://"
+      },
+      "notices": {
+       "type": "string",
+       "pattern": "^https://",
+       "description": "Copyright notices and licences of third-party content. Keep them with any copy."
       }
      },
      "required": [
-      "self"
+      "self",
+      "notices"
      ],
      "additionalProperties": false
     },

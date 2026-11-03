@@ -202,18 +202,21 @@ def test_atlas_and_owasp_files_match_the_raw_sources():
 
 
 def test_no_cis_text_is_copied():
-    """CIS licenses the CIS Controls under CC BY-NC-ND 4.0, so no output may hold a Safeguard or Control title (D25)."""
+    """CIS licenses the CIS Controls under CC BY-NC-ND 4.0, so no output may hold a Safeguard or Control title, in any
+    letter case, inside other text or as a URL slug (D25). Titles of one or two words are common phrases and are left."""
     src = sources()
     meta = build_population_fetch_cis_metadata()
     titles = {r["capability_description"] for r in src.cis_rows if r["capability_description"]} | set(meta["capability_groups"].values())
     nist = {n for n in src.family_names.values()} | {r["capability_description"] for r in src.rows if r["capability_description"]}
-    titles -= nist
-    assert len(titles) > 150
+    titles = {t for t in titles - nist if len(t.split()) >= 3}
+    assert len(titles) > 140
+    slug = lambda t: re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-")  # noqa: E731
+    needles = {t.lower() for t in titles} | {slug(t) for t in titles}
     outputs = [ROOT / "index.html", ROOT / "llms.txt", ROOT / "data" / "population.ttl"]
     outputs += [p for p in (ROOT / "api").rglob("*.json")] + [p for p in (ROOT / "exports").rglob("*") if p.is_file()]
     for p in outputs:
-        text = p.read_text(encoding="utf-8")
-        found = [t for t in titles if f'"{t}"' in text or f",{t}," in text]
+        text = p.read_text(encoding="utf-8").lower()
+        found = [t for t in needles if t in text]
         assert not found, f"{p.relative_to(ROOT)} holds CIS text: {found[:3]}"
 
 

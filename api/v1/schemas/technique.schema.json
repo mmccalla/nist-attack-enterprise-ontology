@@ -300,6 +300,14 @@
     ],
     "additionalProperties": false
    }
+  },
+  "ctid_url": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^https://ctid\\.mitre\\.org/mappings/",
+   "description": "CTID Mappings Explorer page for the technique on ATT&CK 16.1. It lists every CTID mapping on that version."
   }
  },
  "required": [
