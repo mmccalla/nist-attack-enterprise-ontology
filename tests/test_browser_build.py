@@ -41,8 +41,10 @@ def test_the_policy_hashes_every_inline_script_and_refuses_others():
     sys.path.insert(0, str(ROOT / "scripts"))
     import build_graph  # noqa: PLC0415
 
-    policy = build_graph.content_security_policy("<script>a()</script><SCRIPT type='module'>b()</SCRIPT >")
+    policy = build_graph.content_security_policy("<script>a()</script><SCRIPT type='module'>b()</SCRIPT\t\n x>")
     assert policy.count("'sha256-") == 2
-    for bad in ("<script src='https://example.org/x.js'></script>", "<script>a()"):
+    # Script text inside a block, as in the poisoned-data build, is data, not a tag.
+    assert build_graph.content_security_policy('<script>const d = "<script>x<\\/script>";</script>').count("'sha256-") == 1
+    for bad in ("<script src='https://example.org/x.js'></script>", "<script>a()", "<p>x</p><script>a()</script><script>"):
         with pytest.raises(SystemExit):
             build_graph.content_security_policy(bad)

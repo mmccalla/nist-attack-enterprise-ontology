@@ -256,7 +256,8 @@ await page.goto(url.split("#")[0] + "#n/cisassertion_CIS-2.3_T1021.005");
 await settle();
 const refHosts = ((await page.locator("#detail").textContent()).match(/https:\/\/[^\s"<>|]+/g) ?? []).map(u => new URL(u).hostname);
 const refLinks = await page.locator("#detail a[href]").evaluateAll(as => as.map(a => new URL(a.href, location.href).hostname));
-check(refHosts.includes("cas.docs.cisecurity.org") && !refLinks.includes("cas.docs.cisecurity.org"), "a CIS reference URL shows as text, not as a link");
+const CIS_DOCS = "cas.docs.cisecurity.org";
+check(refHosts.some(h => h === CIS_DOCS) && !refLinks.some(h => h === CIS_DOCS), "a CIS reference URL shows as text, not as a link");
 
 // Security probes (docs/security.md)
 const base = url.split("#")[0];
