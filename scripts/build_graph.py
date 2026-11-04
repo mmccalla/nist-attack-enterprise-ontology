@@ -421,7 +421,11 @@ def content_security_policy(html: str) -> str:
     import base64
     import hashlib
 
-    scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.S)
+    # Hash every inline script, in any letter case and with any attributes. Stop if a script tag is not hashed or has a src.
+    tags = re.findall(r"<script\b[^>]*>", html, flags=re.I)
+    scripts = re.findall(r"<script\b[^>]*>(.*?)</script\s*>", html, flags=re.S | re.I)
+    if len(scripts) != len(tags) or any(re.search(r"\bsrc\s*=", t, flags=re.I) for t in tags):
+        raise SystemExit(f"{len(tags)} script tags, {len(scripts)} hashed: each script must be inline and closed")
     hashes = " ".join(f"'sha256-{base64.b64encode(hashlib.sha256(s.encode('utf-8')).digest()).decode()}'" for s in scripts)
     return (
         f"default-src 'none'; script-src {hashes}; style-src 'unsafe-inline'; img-src data: blob:; "

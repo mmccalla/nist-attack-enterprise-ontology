@@ -254,8 +254,9 @@ await settle();
 check((await page.locator("#detail").textContent()).includes("replaces it with T1685"), "a 16.1 technique shows its 19.1 replacement");
 await page.goto(url.split("#")[0] + "#n/cisassertion_CIS-2.3_T1021.005");
 await settle();
-check((await page.locator("#detail").textContent()).includes("cas.docs.cisecurity.org") && (await page.locator('#detail a[href*="cisecurity.org/en/latest"]').count()) === 0,
-  "a CIS reference URL shows as text, not as a link");
+const refHosts = ((await page.locator("#detail").textContent()).match(/https:\/\/[^\s"<>|]+/g) ?? []).map(u => new URL(u).hostname);
+const refLinks = await page.locator("#detail a[href]").evaluateAll(as => as.map(a => new URL(a.href, location.href).hostname));
+check(refHosts.includes("cas.docs.cisecurity.org") && !refLinks.includes("cas.docs.cisecurity.org"), "a CIS reference URL shows as text, not as a link");
 
 // Security probes (docs/security.md)
 const base = url.split("#")[0];
@@ -264,7 +265,8 @@ check(blocked === "blocked", "the Content Security Policy blocks all network req
 const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
 check(/connect-src 'none'/.test(csp) && !/unsafe-eval/.test(csp) && /script-src 'sha256-/.test(csp), "the policy allows only hashed scripts and no connections");
 for (const payload of ['n/<img src=x onerror="window.__xss=1">', 'q/<svg onload="window.__xss=2">', 'gaps/"><img src=x onerror="window.__xss=3">', "class/<img src=x onerror=window.__xss=4>"]) {
-  await page.goto(base + "#" + encodeURIComponent(payload).replace(/%2F/, "/"));
+  const [route, ...rest] = payload.split("/");  // keep the route separator, encode the value
+  await page.goto(`${base}#${route}/${encodeURIComponent(rest.join("/"))}`);
   await settle();
 }
 check(await page.evaluate(() => window.__xss === undefined), "script in the address bar does not run (four payloads)");

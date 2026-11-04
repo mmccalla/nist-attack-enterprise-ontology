@@ -32,3 +32,17 @@ def test_each_node_label_is_the_identifier_of_its_entity():
             assert n["l"] == n["p"][key[n["t"]]], n["id"]
             checked += 1
     assert checked > 1100
+
+
+def test_the_policy_hashes_every_inline_script_and_refuses_others():
+    """Any letter case and any attributes are hashed; a script with src or without a closing tag stops the build (CodeQL py/bad-tag-filter)."""
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_graph  # noqa: PLC0415
+
+    policy = build_graph.content_security_policy("<script>a()</script><SCRIPT type='module'>b()</SCRIPT >")
+    assert policy.count("'sha256-") == 2
+    for bad in ("<script src='https://example.org/x.js'></script>", "<script>a()"):
+        with pytest.raises(SystemExit):
+            build_graph.content_security_policy(bad)
