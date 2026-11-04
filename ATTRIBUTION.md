@@ -34,7 +34,7 @@ The population reads tactics, techniques and mitigations from [MITRE ATLAS](http
 
 - OWASP Top 10 for LLM Applications 2025: item IDs, titles and the MITRE ATLAS IDs that OWASP lists under "Related Frameworks and Taxonomies". Licence: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). This extract, and the parts of the graph, API and exports derived from it, are shared under the same licence.
 - OWASP Top 10 for Agentic Applications for 2026: the list title and link only.
-- OWASP MCP Top 10 (beta): item IDs and the link only, because its CC BY-NC-SA 4.0 licence does not permit copying titles into this project.
+- OWASP MCP Top 10 (2025): IDs, exact titles and item links, in a separate file with its own licence (CC BY-NC-SA 4.0, non-commercial, share alike). See [NOTICE.md](NOTICE.md) and decision D30.
 
 Changes: extraction of IDs, titles and links. No OWASP text is copied beyond titles.
 

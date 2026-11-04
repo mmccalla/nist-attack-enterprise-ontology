@@ -89,7 +89,8 @@ Read these limits for CIS coverage:
 ATT&CK and NIST 800-53 do not describe attacks on AI agents. Thus, the tool also includes:
 
 - **MITRE ATLAS 5.6.0:** 170 techniques and 35 mitigations for AI systems. 26 techniques concern AI agents and their tools, for example tool poisoning and agent configuration theft.
-- **OWASP GenAI lists:** the LLM Top 10 (2025) with the ATLAS techniques that OWASP links to each risk. The MCP Top 10 and the Agentic Top 10 are references.
+- **OWASP GenAI lists:** the LLM Top 10 (2025) with the ATLAS techniques that OWASP links to each risk, and the MCP Top 10 (2025) titles (CC BY-NC-SA 4.0, non-commercial use only). The Agentic Top 10 is a reference.
+- **CIS guidance for AI:** each CIS Safeguard page shows CIS's own guidance for AI LLM systems, AI agents and MCP, from the CIS Controls v8.1.2 AI Guidance workbook (CC BY-NC-ND 4.0).
 - **[Gap analysis for AI systems](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps-atlas):** type your ATLAS mitigations and see which agent techniques stay open.
 
 Read these limits for AI coverage:

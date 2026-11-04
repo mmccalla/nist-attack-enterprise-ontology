@@ -50,9 +50,9 @@ CIS Controls® is a registered trademark of the Center for Internet Security, In
 
 > CIS Critical Security Controls® v8.1.2 © Center for Internet Security, Inc. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Exact text, not changed. Use for non-commercial purposes only. Commercial use needs the prior approval of CIS. Refer to [cisecurity.org/controls](https://www.cisecurity.org/controls/) for the most up-to-date guidance. CIS does not sponsor or endorse this project.
 
-Used: the Control and Safeguard titles, asset classes, security functions and Implementation Groups from the CIS workbook `CIS_Controls_v8_1_2_AI_Guidance_Combined_Workbook_20260714.xlsx`, sheet "Controls v8.1.2 AI Guidance" (SHA-256 `4cba315d91eb2f22bff54492149058a6d862fbba9d7b906368feab341b792079`), retrieved on 2026-11-04. They are in `data/sources/cis-controls-8.1.2.json`, exact and not changed. The workbook licence permits copies and redistribution for non-commercial purposes, with credit to CIS and a link to the licence. This project is free and non-commercial.
+Used: the Control and Safeguard titles, asset classes, security functions, Implementation Groups and the AI LLM, AI Agent and MCP guidance from the CIS workbook `CIS_Controls_v8_1_2_AI_Guidance_Combined_Workbook_20260714.xlsx`, sheet "Controls v8.1.2 AI Guidance" (SHA-256 `4cba315d91eb2f22bff54492149058a6d862fbba9d7b906368feab341b792079`), retrieved on 2026-11-04. They are in `data/sources/cis-controls-8.1.2.json`, exact and not changed. The workbook licence permits copies and redistribution for non-commercial purposes, with credit to CIS and a link to the licence. This project is free and non-commercial.
 
-This CIS text is not under the project licences. It appears only in places that state its licence: `data/sources/cis-controls-8.1.2.json`, the page, the `cis_text` part of each `api/v1/cis/safeguards/` file and `exports/cis-8.1.2-safeguards.csv`. The graph, the claims and the other exports hold only CIS IDs. If you reuse the CIS text, keep the notice above, use it only for non-commercial purposes and do not change it.
+This CIS text is not under the project licences. It appears only in places that state its licence: `data/sources/cis-controls-8.1.2.json`, the page, the `cis_text` part of each `api/v1/cis/safeguards/` file and `exports/cis-8.1.2-safeguards.csv`. The graph, the claims and the other exports hold only CIS IDs. The page shows the AI guidance as CIS text, apart from the project's own text. If you reuse the CIS text, keep the notice above, use it only for non-commercial purposes and do not change it.
 
 The gap analysis shows which ATT&CK techniques the CTID mapping links to the Safeguards that you select. It does not represent or assess compliance with the CIS Controls.
 
@@ -68,7 +68,9 @@ Used: control identifiers, titles, families and SP 800-53B baseline membership f
 
 Used: OWASP Top 10 for LLM Applications 2025 item IDs, titles and the ATLAS IDs that OWASP lists under "Related Frameworks and Taxonomies", in `data/sources/owasp-genai.json`, published by the OWASP GenAI Security Project of the OWASP Foundation. Licence: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). This extract, and the parts of the graph, API and exports derived from it, are shared under CC BY-SA 4.0.
 
-OWASP Top 10 for Agentic Applications for 2026: the list title and link only. OWASP MCP Top 10: IDs and the link only, because its CC BY-NC-SA 4.0 licence does not permit copying titles into this project.
+OWASP Top 10 for Agentic Applications for 2026: the list title and link only.
+
+OWASP MCP Top 10 (2025): the IDs, the exact titles and the item links, in `data/sources/owasp-mcp-top10.json`, from the project index at commit `165fe0f` (SHA-256 `4d65ec4917c33b9196b2bc7d15c89935c2084509dbbadf2ec4debf9dcfac7ded`). © OWASP Foundation. Licence: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), as the project page links it. Change: one leading space removed from the MCP08 title; no word is changed. These titles are not under the project licence. They appear only in that file, the page, the `api/v1/owasp/MCP*` files and the API index, each with the licence. Non-commercial use only. A work that adapts them must use the same licence.
 
 Changes: extraction of IDs, titles and links only.
 
