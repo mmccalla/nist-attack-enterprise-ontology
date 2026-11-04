@@ -6,6 +6,7 @@ import json
 import re
 import subprocess
 import sys
+import zipfile
 from collections import Counter, defaultdict
 from functools import lru_cache
 from pathlib import Path
@@ -214,8 +215,14 @@ def test_no_cis_text_is_copied():
     needles = {t.lower() for t in titles} | {slug(t) for t in titles}
     outputs = [ROOT / "index.html", ROOT / "llms.txt", ROOT / "data" / "population.ttl"]
     outputs += [p for p in (ROOT / "api").rglob("*.json")] + [p for p in (ROOT / "exports").rglob("*") if p.is_file()]
-    for p in outputs:
-        text = p.read_text(encoding="utf-8").lower()
+    texts = {p: p.read_text(encoding="utf-8") for p in outputs}
+    for name in ("cis-synthetic.csv",):
+        texts[ROOT / "tests" / "fixtures" / name] = (ROOT / "tests" / "fixtures" / name).read_text(encoding="utf-8")
+    for name in ("cis-synthetic.xlsx",):
+        with zipfile.ZipFile(ROOT / "tests" / "fixtures" / name) as z:
+            texts[ROOT / "tests" / "fixtures" / name] = " ".join(z.read(n).decode("utf-8") for n in z.namelist())
+    for p, text in texts.items():
+        text = text.lower()
         found = [t for t in needles if t in text]
         assert not found, f"{p.relative_to(ROOT)} holds CIS text: {found[:3]}"
 

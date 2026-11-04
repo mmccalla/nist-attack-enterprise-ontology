@@ -1,0 +1,20 @@
+﻿CIS Control,CIS Safeguard,Asset Type,Security Function,Title,Description,IG1,IG2,IG3
+3,,Devices,Protect,"Synthetic control three","Text with a semicolon; and a comma, in quotes",,,
+3,3.1,Devices,Protect,"Synthetic safeguard 3.1","Text with a semicolon; and a comma, in quotes",x,x,x
+3,3.2,Devices,Protect,"Synthetic safeguard 3.2","Text with a semicolon; and a comma, in quotes",x,x,x
+3,3.3,Devices,Protect,"Synthetic safeguard 3.3","Text with a semicolon; and a comma, in quotes",,x,x
+3,3.4,Devices,Protect,"Synthetic safeguard 3.4","Text with a semicolon; and a comma, in quotes",,x,x
+3,3.5,Devices,Protect,"Synthetic safeguard 3.5","Text with a semicolon; and a comma, in quotes",,x,x
+3,3.6,Devices,Protect,"Synthetic safeguard 3.6","Text with a semicolon; and a comma, in quotes",,,x
+3,3.7,Devices,Protect,"Synthetic safeguard 3.7","Text with a semicolon; and a comma, in quotes",,,x
+3,3.8,Devices,Protect,"Synthetic safeguard 3.8","Text with a semicolon; and a comma, in quotes",,,x
+3,3.9,Devices,Protect,"Synthetic safeguard 3.9","Text with a semicolon; and a comma, in quotes",,,x
+3,3.1,Devices,Protect,"Synthetic safeguard 3.10","Text with a semicolon; and a comma, in quotes",,,x
+3,3.11,Devices,Protect,"Synthetic safeguard 3.11","Text with a semicolon; and a comma, in quotes",,,x
+3,3.12,Devices,Protect,"Synthetic safeguard 3.12","Text with a semicolon; and a comma, in quotes",,,x
+3,3.13,Devices,Protect,"Synthetic safeguard 3.13","Text with a semicolon; and a comma, in quotes",,,x
+3,3.14,Devices,Protect,"Synthetic safeguard 3.14","Text with a semicolon; and a comma, in quotes",,,x
+6,,Devices,Protect,"Synthetic control six","Text with a semicolon; and a comma, in quotes",,,
+6,6.1,Devices,Protect,"Synthetic safeguard 6.1","Text with a semicolon; and a comma, in quotes",x,x,x
+6,6.2,Devices,Protect,"Synthetic safeguard 6.2","Text with a semicolon; and a comma, in quotes",,x,x
+6,6.3,Devices,Protect,"Synthetic <img src=x onerror=""window.__xss=3""> & ""quoted""","Text with a semicolon; and a comma, in quotes",,x,x

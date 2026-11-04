@@ -29,6 +29,7 @@ MAX_CQ_ROWS = 200
 TEMPLATE = ROOT / "src" / "viewer.html"
 D3 = ROOT / "vendor" / "d3.v7.min.js"
 COVERAGE = ROOT / "lib" / "coverage.cjs"
+CISFILE = ROOT / "lib" / "cisfile.cjs"
 OUTPUT = ROOT / "index.html"
 
 ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
@@ -398,10 +399,11 @@ def render(poisoned: bool = False) -> str:
     d3 = f"/*! D3 7.9.0\n{d3_licence}*/\n" + D3.read_text(encoding="utf-8").replace("</script", "<\\/script")
     html = TEMPLATE.read_text(encoding="utf-8")
     coverage = COVERAGE.read_text(encoding="utf-8").replace("</script", "<\\/script")
-    for marker in ("/*__GRAPH_DATA__*/", "/*__D3__*/", "/*__COVERAGE__*/"):
+    cisfile = CISFILE.read_text(encoding="utf-8").replace("</script", "<\\/script")
+    for marker in ("/*__GRAPH_DATA__*/", "/*__D3__*/", "/*__COVERAGE__*/", "/*__CISFILE__*/"):
         if html.count(marker) != 1:
             raise SystemExit(f"template must contain {marker} exactly once")
-    html = html.replace("/*__GRAPH_DATA__*/", data).replace("/*__D3__*/", d3).replace("/*__COVERAGE__*/", coverage)
+    html = html.replace("/*__GRAPH_DATA__*/", data).replace("/*__D3__*/", d3).replace("/*__COVERAGE__*/", coverage).replace("/*__CISFILE__*/", cisfile)
     return html.replace("/*__CSP__*/", content_security_policy(html))
 
 

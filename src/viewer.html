@@ -153,6 +153,7 @@ svg .node.dim path { opacity: .35; }
 </main>
 <script>/*__D3__*/</script>
 <script>/*__COVERAGE__*/</script>
+<script>/*__CISFILE__*/</script>
 <script>
 "use strict";
 const DATA = /*__GRAPH_DATA__*/;
@@ -447,6 +448,7 @@ function showNode(id) {
   if (n.t === "MitigationClaim") extra += `<p class="note">An enterprise claim interpreted from source rows. It is not the same thing as the source row that supports it.</p>`;
   if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
   if (n.t === "NonMappableControlAssertion") extra += `<p class="note">The CIS source row marks this Safeguard as non_mappable. The row names no ATT&amp;CK technique.</p>`;
+  if (n.t === "CisSafeguard" && CIS_USER?.safeguards[n.l]) { const sg = CIS_USER.safeguards[n.l]; extra += `<p><b>${esc(sg.title)}</b><br><span class="note">From your CIS file${CIS_USER.version ? ` (version ${esc(CIS_USER.version)})` : ""}: ${esc([sg.assetType, sg.securityFunction, sg.ig.join(" ")].filter(Boolean).join(", "))}. This text stays on this device.</span></p>`; }
   if (n.t === "CisSafeguard") extra += `<p class="note">CIS licenses the titles and text of the CIS Controls under CC BY-NC-ND 4.0, so this page shows only the ID. Read the Safeguard on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>.</p><p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Claims on techniques that are also in ${esc(M.source.attackVersion)} share the technique node by STIX id.</p><div class="row"><a class="btn" href="#gaps-cis/${encodeURIComponent(n.l)}">Open in CIS gap analysis</a></div>`;
   const nb = neighbourhood(id);
   if (n.t === "SecurityControl" || n.t === "ControlBaseline") {
@@ -818,13 +820,21 @@ function cisModel() {
 /* Accept "CIS-6.1" and the bare Safeguard number "6.1". */
 const cisIds = text => C2.parseIds(String(text ?? "").replace(/(^|[^\w.-])(\d{1,2}\.\d{1,2})(?![\w.])/g, "$1CIS-$2"), new Set(CIS_S.keys()), /\bCIS-\d{1,2}\.\d{1,2}\b/);
 let cisSelected = new Set();
+/* The user's own CIS Controls file (lib/cisfile.cjs). In memory only: never stored, never sent, never in a URL. */
+let CIS_USER = null;
+const CF = NistAttackCisFile;
+const cisTitle = id => CIS_USER?.safeguards[id]?.title ?? "";
+const cisLink = c => `<a href="#n/cis_${encodeURIComponent(c)}">${esc(c)}</a>${cisTitle(c) ? ` <span class="sub">${esc(cisTitle(c))}</span>` : ""}`;
 function showGapsCis(list) {
   detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <b>CIS Safeguards and ATT&amp;CK</b> | <a href="#gaps-atlas">ATLAS mitigations and AI techniques</a></p>
     <h2>Gap analysis for CIS Controls</h2>
     <p>Which ATT&amp;CK Enterprise ${CIS_ATTACK} techniques do your CIS Controls 8.1.2 Safeguards leave uncovered? Paste Safeguard numbers, for example <code>4.1, 6.3, CIS-10.1</code>. <b>Everything runs in this page; nothing is uploaded.</b></p>
     <label class="field" for="cis-input">Your implemented Safeguards</label>
     <textarea id="cis-input" spellcheck="false" placeholder="1.1, 2.3, 4.1 ...">${esc(list ?? [...cisSelected].sort().join(", "))}</textarea>
-    <div class="row"><button class="btn" id="cis-all">All mapped Safeguards</button><button class="btn" id="cis-clear">Clear</button></div>
+    <div class="row"><button class="btn" id="cis-all">All mapped Safeguards</button><button class="btn" id="cis-clear">Clear</button><span id="cis-ig"></span></div>
+    <div class="row"><label class="btn" for="cis-file">Load your CIS Controls file</label><input id="cis-file" type="file" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden>
+      <span class="note">XLSX from <a href="https://www.cisecurity.org/controls" rel="noopener">cisecurity.org</a>, or CSV saved from it. It adds titles and Implementation Groups.</span></div>
+    <p class="note" id="cis-file-status" aria-live="polite">The file stays on this device. The page reads only Safeguard numbers, titles, asset types, security functions and Implementation Groups, and keeps them in memory until you close the page. CIS licenses the file under CC BY-NC-ND 4.0: your use of it, and of the CSV files that you make from it, must follow that licence.</p>
     <p class="note" id="cis-status" aria-live="polite"></p>
     <h3>Download</h3><div class="row"><button class="btn" id="cis-layer">ATT&amp;CK Navigator layer (ATT&amp;CK 19)</button><button class="btn" id="cis-csv">Techniques CSV</button><button class="btn" id="cis-recs-csv">Recommendations CSV</button></div>
     <div id="cis-recs"></div>
@@ -836,10 +846,10 @@ function showGapsCis(list) {
     const model = cisModel(), cov = C2.coverage(model, cisSelected), counts = C2.counts(cov);
     const recs = C2.recommendations(model, cisSelected);
     document.getElementById("cis-status").innerHTML = `${cisSelected.size} mapped Safeguard${cisSelected.size === 1 ? "" : "s"} recognised.` + (r.unmapped.length ? ` Not in the CIS mapping: <code>${esc(r.unmapped.slice(0, 20).join(" "))}</code>.` : "");
-    document.getElementById("cis-recs").innerHTML = recs.length ? `<h3>Safeguards that would close the most gaps</h3><ol>${recs.map(([c, n]) => `<li><a href="#n/cis_${encodeURIComponent(c)}">${c}</a> <span class="count">+${n}</span></li>`).join("")}</ol><p class="note">Greedy order: each Safeguard is ranked by the gaps it closes after the ones above it are added.</p>` : "";
+    document.getElementById("cis-recs").innerHTML = recs.length ? `<h3>Safeguards that would close the most gaps</h3><ol>${recs.map(([c, n]) => `<li>${cisLink(c)} <span class="count">+${n}</span>${CIS_USER?.safeguards[c] ? ` <span class="note">${esc(CIS_USER.safeguards[c].ig.join(" ") || "no IG")}</span>` : ""}</li>`).join("")}</ol><p class="note">Greedy order: each Safeguard is ranked by the gaps it closes after the ones above it are added.</p>` : "";
     const total = cov.size, pct = n => total ? Math.round(100 * n / total) : 0;
     const gaps = [...cov].filter(([, [st]]) => st === "gap").sort(([a], [b]) => byTid(a, b));
-    const row = ([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(c => `<a href="#n/cis_${encodeURIComponent(c)}">${c}</a>`).join(" ")}</td></tr>`;
+    const row = ([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(cisLink).join("<br>")}</td></tr>`;
     document.getElementById("report").innerHTML = `<h2>Coverage of ATT&amp;CK Enterprise ${CIS_ATTACK} by CIS Controls 8.1.2</h2>
       <div><span class="stat"><b>${counts.covered}</b>&#10003; covered (${pct(counts.covered)}%)</span>
         <span class="stat"><b>${counts.gap}</b>! gaps a mapped Safeguard would close</span>
@@ -854,6 +864,32 @@ function showGapsCis(list) {
   input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(run, 250); });
   document.getElementById("cis-all").addEventListener("click", () => { input.value = [...CIS_S.keys()].filter(c => cisModel().mitigates[c].length).sort((a, b) => a.localeCompare(b, "en", {numeric: true})).join(", "); run(); });
   document.getElementById("cis-clear").addEventListener("click", () => { input.value = ""; run(); });
+  const showIg = () => {
+    const mapped = new Set(Object.keys(cisModel().mitigates).filter(c => cisModel().mitigates[c].length));
+    document.getElementById("cis-ig").innerHTML = CIS_USER ? " Start from: " + ["IG1", "IG2", "IG3"].map(g => `<button class="btn" data-ig="${g}">${g}</button>`).join("") : "";
+    detail.querySelectorAll("[data-ig]").forEach(b => b.addEventListener("click", () => {
+      input.value = Object.entries(CIS_USER.safeguards).filter(([id, sg]) => sg.ig.includes(b.dataset.ig) && mapped.has(id)).map(([id]) => id)
+        .sort((a, b2) => a.localeCompare(b2, "en", {numeric: true})).join(", ");
+      run();
+    }));
+  };
+  const fileStatus = document.getElementById("cis-file-status");
+  document.getElementById("cis-file").addEventListener("change", async e => {
+    const file = e.target.files[0]; if (!file) return;
+    try {
+      CIS_USER = await CF.readCisFile(new Uint8Array(await file.arrayBuffer()));
+      const ids = Object.keys(CIS_USER.safeguards), inMap = ids.filter(id => CIS_S.has(id)).length;
+      fileStatus.textContent = `Read ${ids.length} Safeguards from ${file.name}${CIS_USER.version ? ` (CIS Controls version ${CIS_USER.version})` : ""}. ${inMap} of the ${CIS_S.size} Safeguards in the mapping are in the file.`
+        + (CIS_USER.version && CIS_USER.version !== "8.1.2" ? ` The mapping uses version 8.1.2: some titles and Implementation Groups in your file can differ.` : "")
+        + " The data stays on this device. CIS licenses it under CC BY-NC-ND 4.0.";
+    } catch (err) {
+      CIS_USER = null;
+      fileStatus.textContent = `Could not read ${file.name}: ${err.message}`;
+    }
+    e.target.value = "";
+    showIg(); run(false);
+  });
+  showIg();
   document.getElementById("cis-layer").addEventListener("click", () => {
     const {model} = run(false);
     downloadLayer("cis-8-1-2-coverage-layer.json", C2.navigatorLayer(model, "CIS Controls 8.1.2 coverage: my Safeguards",
@@ -862,13 +898,15 @@ function showGapsCis(list) {
   });
   document.getElementById("cis-csv").addEventListener("click", () => {
     const {cov} = run(false);
-    download("cis-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "status", "cis_safeguards"],
-      [...cov].sort(([a], [b]) => byTid(a, b)).map(([tid, [st, cs]]) => [tid, BY_ID.get("technique_" + tid).s, st, cs.join(" ")])), "text/csv");
+    const titles = CIS_USER ? [["safeguard_titles_from_your_cis_file"], cs => cs.map(c => `${c} ${cisTitle(c)}`).join(" | ")] : [[], null];
+    download("cis-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "status", "cis_safeguards", ...titles[0]],
+      [...cov].sort(([a], [b]) => byTid(a, b)).map(([tid, [st, cs]]) => [tid, BY_ID.get("technique_" + tid).s, st, cs.join(" "), ...(titles[1] ? [titles[1](cs)] : [])])), "text/csv");
   });
   document.getElementById("cis-recs-csv").addEventListener("click", () => {
     const {model} = run(false);
-    download("cis-recommended-safeguards.csv", toCsv(["rank", "safeguard_id", "gaps_closed"],
-      C2.recommendations(model, cisSelected, 50).map(([c, n], i) => [i + 1, c, n])), "text/csv");
+    const extra = CIS_USER ? ["safeguard_title_from_your_cis_file", "implementation_groups"] : [];
+    download("cis-recommended-safeguards.csv", toCsv(["rank", "safeguard_id", "gaps_closed", ...extra],
+      C2.recommendations(model, cisSelected, 50).map(([c, n], i) => [i + 1, c, n, ...(CIS_USER ? [cisTitle(c), (CIS_USER.safeguards[c]?.ig ?? []).join(" ")] : [])])), "text/csv");
   });
   run(list != null);
 }
