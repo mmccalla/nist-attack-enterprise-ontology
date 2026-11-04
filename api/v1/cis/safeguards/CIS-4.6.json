@@ -4,7 +4,7 @@
  "id": "CIS-4.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enforce secure management practices for all AI execution environments, applying strict sandboxing and network isolation to endpoint-hosted models while mandating centralized, scoped secret management for SaaS API credentials. Local LLM runtimes effectively turn endpoints into servers that cache sensitive data and write to disk; without rigorous sandboxing and network constraints, they become open pathways for data leakage or lateral movement.",
+   "agent": "Manage agent runtimes and configurations (e.g., prompts, tool definitions) via version-controlled Infrastructure-as-Code (IaC) to ensure they are tamper-evident and reproducible. Isolate code execution tools in ephemeral, hardened sandboxes (such as containers or VMs) with disabled networking and restricted system calls. Treating these tools as untrusted software ensures model-generated code remains contained within a disposable environment, preventing unauthorized host access or lateral movement.",
+   "mcp": "Deploy MCP servers through controlled, repeatable processes that include integrity verification and approval before activation. Use an enterprise MCP registry to manage approved and vetted servers, and prohibit ad hoc installation of community or unvetted servers in production environments.\r\n\r\nApply change control to server deployments, including updates that affect capabilities, OAuth settings, or data source connections. Treat changes to declared tools, resources, and prompts as configuration changes requiring review, approval, and re-validation before promotion to production."
+  },
   "control_title": "Secure Configuration of Enterprise Assets and Software",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -688,6 +693,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

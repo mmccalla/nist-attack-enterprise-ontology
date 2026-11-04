@@ -4,7 +4,7 @@
  "id": "CIS-16.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Monitor for published model/family vulnerabilities and update inventories accordingly. Vulnerabilities affecting specific model families, tokenizers, or serving frameworks must be tracked alongside traditional Common Vulnerabilities and Exposures (CVEs) to ensure timely mitigation.",
+   "agent": "Assess vulnerabilities in tooling and execution surfaces. Evaluate the security of tools available to agents – such as code interpreters, browser tools, shell environments, or MCP tools – and remediate vulnerabilities quickly. Tools often present the highest-risk execution surfaces for agents.",
+   "mcp": "Establish a repeatable process to intake, triage, remediate, verify, and close vulnerabilities across MCP servers, tool handlers, gateways, and authorization flows. Provide intake channels for internal reports, coordinated external disclosures, and upstream advisories affecting MCP SDKs and dependencies.\r\n\r\nPrioritize by exploitability and impact, focusing on tool authorization bypasses, Origin and CORS (Cross-Origin Resource Sharing) validation failures, credential exposure in logs, and JSON-RPC handling defects."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -215,7 +215,7 @@ def build() -> dict[str, str]:
             "non_mappable_records": non_mappable,
         }
         untrusted = [f"claims[].evidence[].{k}" for k in ("rationale", "references") if any(k in e for x in claims for e in x["evidence"])]
-        untrusted += ["cis_text.title", "cis_text.control_title"]
+        untrusted += ["cis_text.title", "cis_text.control_title", "cis_text.ai_guidance.llm", "cis_text.ai_guidance.agent", "cis_text.ai_guidance.mcp"]
         path = f"{API}cis/safeguards/{sid}.json"
         files[path] = envelope("cis-safeguard", sid, path, f"{SITE}#n/cis_{sid}", versions, body, untrusted)
         index_s.append({"id": sid, "techniques": len(claims)})
@@ -306,6 +306,9 @@ def build() -> dict[str, str]:
         path = f"{API}atlas/mitigations/{mid}.json"
         files[path] = envelope("atlas-mitigation", mid, path, f"{SITE}#n/atlasmitigation_{mid}", versions, body)
         index_am.append({"id": mid, "name": body["name"], "techniques": len(techs)})
+    # Exact MCP Top 10 titles with their own licence (CC BY-NC-SA 4.0, D30). Kept apart from the CC BY graph.
+    mcp_text = json.loads((ROOT / "data" / "sources" / "owasp-mcp-top10.json").read_text(encoding="utf-8"))
+    mcp_items = {i["id"]: i for i in mcp_text["items"]}
     index_o = []
     for r in sorted(g.subjects(RDF.type, ONT.OwaspRisk), key=lambda x: s(g, x, ONT.owaspId)):
         oid = s(g, r, ONT.owaspId)
@@ -314,14 +317,18 @@ def build() -> dict[str, str]:
         label = s(g, r, SKOS.prefLabel)
         body = {
             "key": key,
-            "title": label[len(oid):].strip() or None,
+            "title": label[len(oid):].strip() or (mcp_items[oid]["title"] if oid in mcp_items else None),
             "list": {"title": s(g, cat, RDFS.label), "licence": s(g, cat, DCTERMS.license), "url": s(g, cat, DCTERMS.source)},
             "url": s(g, r, DCTERMS.source),
             "related_atlas": sorted(atlas_id[a] for a in g.objects(r, ONT.relatedAtlasTechnique)),
         }
+        if oid in mcp_items:
+            body["url"] = mcp_items[oid]["url"]
+            body["title_licence"] = {"licence": mcp_text["licence"], "licence_url": mcp_text["licence_url"], "attribution": mcp_text["attribution"]}
         path = f"{API}owasp/{key}.json"
         files[path] = envelope("owasp-risk", oid, path, f"{SITE}#n/owasp_{key}", versions, body)
-        index_o.append({"id": oid, "key": key, "title": body["title"], "related_atlas": len(body["related_atlas"])})
+        index_o.append({"id": oid, "key": key, "title": body["title"], "related_atlas": len(body["related_atlas"]),
+                        **({"title_licence": mcp_text["licence"]} if oid in mcp_items else {})})
 
     # Competency questions (answers computed for the browser)
     import build_graph  # noqa: PLC0415

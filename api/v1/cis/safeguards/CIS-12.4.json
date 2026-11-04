@@ -4,7 +4,7 @@
  "id": "CIS-12.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain up-to-date diagrams of LLM system network architecture, including data flows between models, data stores, and external APIs. Accurate diagrams are essential for understanding the attack surface, planning defenses, and conducting incident response in complex AI environments.",
+   "agent": "Maintain current diagrams of agent network architecture, including data flows to tools and memory stores. Essential for understanding agent connectivity, planning segmentation, and conducting incident response; helps identify unauthorized network paths or dependencies.",
+   "mcp": "Maintain diagrams depicting MCP connectivity, data flows, and trust boundaries. Include stdio subprocess communication, Streamable HTTP endpoints, gateways, authorization servers, and backend systems. Describe session management, OAuth discovery mechanisms, and how capability negotiation influences network interactions."
+  },
   "control_title": "Network Infrastructure Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

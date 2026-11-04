@@ -4,7 +4,7 @@
  "id": "CIS-8.10",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Retain AI-related audit logs for a defined period to support long-term trend analysis and forensic investigations. Ensures that historical data is available to investigate incidents that may not be detected immediately, supporting compliance and long-term security monitoring.",
+   "agent": "Set retention periods for agent logs consistent with enterprise, regulatory, or audit requirements. Ensure logs containing sensitive metadata are retained only as long as necessary.",
+   "mcp": "Define MCP-specific retention for audit logs, registry snapshots, authorization policy versions, and server configuration history.\r\n\r\nRetain tool and resource access, capability changes, OAuth events, sampling requests, and session life cycle data for periods aligned to incident response, audit, and data sensitivity."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

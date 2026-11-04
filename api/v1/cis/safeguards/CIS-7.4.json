@@ -4,7 +4,7 @@
  "id": "CIS-7.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Track updates to AI frameworks, drivers, and model-serving runtimes through standard patch management processes (e.g., CUDA/cuDNN, model serving runtimes, container images, SDKs, vector databases, notebook platforms). AI software evolves quickly, and updates may fix vulnerabilities or compatibility issues. Visibility ensures alignment with patch and configuration baselines.",
+   "agent": "Enforce automated patching for agent frameworks, SDKs, and tool execution runtimes. Agents rely on a complex software stack comprising logic frameworks (e.g., planners, model clients) and distinct execution environments (e.g., code interpreters, browser engines). Security flaws in the framework can enable logic bypasses or injection attacks, while unpatched execution tools can allow malicious code to escape sandboxes and compromise the underlying host. Therefore, the patch management process must synchronize updates across this entire dependency chain. Automation is critical to close vulnerability windows immediately, but it must be paired with regression testing to ensure that updates do not inadvertently break agent behavior or disable safety guardrails.",
+   "mcp": "Automate patching for MCP components including server frameworks, OAuth libraries, JSON-RPC implementations, and transport layers. Use package managers to track and update dependencies. Community servers may not support automated updates, requiring manual monitoring of releases and advisories.\r\n\r\nPrioritize updates addressing token handling, authorization metadata, session management, tool execution path security, and MCP specification compliance issues, as vulnerabilities in these areas have the highest potential for authorization bypass and privilege escalation."
+  },
   "control_title": "Continuous Vulnerability Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -388,6 +393,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

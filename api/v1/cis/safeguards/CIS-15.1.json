@@ -4,7 +4,7 @@
  "id": "CIS-15.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain a catalog of approved AI service providers. Clear documentation prevents accidental use of unapproved or insecure providers.",
+   "agent": "Maintain an up-to-date inventory of all external providers used by agents, including model providers, embedding services, tool backends, memory systems, and hosted agent offerings.",
+   "mcp": "Inventory third-party servers supplied or hosted by external service providers, tracking their source, registry status, specification version, transport type, and declared capabilities. Ensure the inventory includes security assessment results, approval date, permitted deployment scope, owner, and integration method."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

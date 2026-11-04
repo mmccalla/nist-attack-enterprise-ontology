@@ -4,7 +4,7 @@
  "id": "CIS-18.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Test for AI-specific attack patterns such as prompt injection, jailbreaks, model extraction, data leakage, and misuse of model capabilities. Pen testers should actively attempt to break guardrails, generate unsafe output, trigger unapproved tools, or extract sensitive model or data elements.",
+   "agent": "Test execution and sandbox surfaces. Assess sandbox isolation, file-system controls, and network restrictions for execution tools (interpreters, shells, browser automation). Attempt code injection, environment breakout, and malicious script execution. If the agent accepts non-text inputs (e.g., screen reading, file uploads, audio commands), use adversarial images (e.g., visual jailbreaks, steganographic commands) or audio to test whether safety guardrails can be bypassed. Verify that the agent does not execute unsafe commands hidden in screenshots or uploaded documents.",
+   "mcp": "Test all internet-accessible MCP servers, gateways, and authorization servers, assessing OAuth vulnerabilities such as PKCE bypass, scope escalation, and token theft. Evaluate authorization bypass paths, DNS rebinding, session hijacking, CORS misconfigurations, JSON-RPC parsing robustness, request and response correlation handling, and safe error behavior."
+  },
   "control_title": "Penetration Testing",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

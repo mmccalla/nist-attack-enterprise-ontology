@@ -4,7 +4,7 @@
  "id": "CIS-5.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Where it is not possible to avoid password use through federation or similar means, enforce unique, strong passwords for all accounts accessing AI development platforms, model repositories, and SaaS AI services. Compromised credentials are a primary vector for model theft and data exfiltration. Unique passwords limit the blast radius if a single AI service or repository account is breached.",
+   "agent": "Agents integrate distinct architectural components, vector databases (memory), LLM APIs (brain), and execution sandboxes (hands), that must not share credentials. Enforce unique, cryptographically strong authentication tokens for each layer. Specifically, ensure that credentials for vector stores, which hold long-term knowledge, are distinct from those used by runtime engines or tool plugins. This segmentation ensures that if an agent’s execution environment is compromised via a tool, the attacker cannot use those same credentials to pivot and exfiltrate the agent’s entire history or knowledge base.",
+   "mcp": "Use strong, unique credentials for all MCP administrative and service identities, preferring federated identity, workload identity, and short-lived credentials over static secrets where possible.\r\n\r\nWhere passwordless methods cannot be implemented, all credentials (including passwords, keys, and tokens) must be rotated on a defined schedule to maintain account security.\r\n\r\nFor Streamable HTTP servers, this includes authorization server accounts, gateway administration accounts, and OAuth client credentials for confidential clients. Client ID Metadata Documents may be used as an alternative to pre-registration, where supported by the chosen authorization server. Service accounts accessing backend APIs through tools must use strong authentication mechanisms."
+  },
   "control_title": "Account Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -211,6 +216,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

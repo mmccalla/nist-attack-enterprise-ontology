@@ -4,7 +4,7 @@
  "id": "CIS-3.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Apply retention policies to model-related artifacts. Establish and enforce documented retention policies for model interaction logs, embeddings, cached outputs, and other transient artifacts to ensure storage duration is intentional, minimal, and compliant with regulations and internal requirements.",
+   "agent": "Enforce strict retention and purging for agent memory, logs, and vector stores, while mandating data minimization for tool inputs and redaction for agent outputs. These components accumulate sensitive “thought patterns” and execution traces; without “need-to-know” filters and auto-deletion, agents risk leaking PII or secrets to third-party APIs or unauthorized users. Stripping requests to the bare minimum and limiting the lifespan of stored context ensures that sensitive information is purged or redacted when no longer necessary, reducing the enterprise’s liability and the blast radius of a potential storage or transmission compromise.",
+   "mcp": "Set minimum and maximum retention periods for MCP data caches, including tool outputs, resource content, context stores, and sampling data, aligned to the classification of data flowing through each server. Retention must be tiered by tool sensitivity and data classification, and enforced through automated deletion with audit evidence."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -193,6 +198,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

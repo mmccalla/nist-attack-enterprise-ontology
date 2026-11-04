@@ -4,7 +4,7 @@
  "id": "CIS-8.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Configure LLM systems to generate detailed logs, including user inputs, model outputs (where appropriate), and system state changes. Detailed logs provide the context needed to understand the nature and impact of complex attacks against AI models, such as prompt injection or data extraction.",
+   "agent": "Log and preserve comprehensive agent activity, including tool call histories, memory interaction logs, retrieval traces, and model inputs/outputs where policy permits, to enable forensic investigation and behavior reconstruction. Record all tool calls, capturing timestamps, identity used, parameters passed, and outcomes, alongside significant reads and writes to working memory, long-term memory, and vector stores. Retrieval events must be documented by recording the sources queried and the high-level nature of retrieved content without exposing raw sensitive data. These detailed logs allow security teams to reconstruct reasoning chains and executed actions, ensuring a forensic path to detect unauthorized activity or identify the origin of autonomous decisions.",
+   "mcp": "Use consistent formats, timestamps, and correlation identifiers across components. Include operation type, identity, tool or resource identifier, result status, message ID, and error details. Where supported, configure verbosity via controlled administrative policy, and restrict who can change log levels, to prevent excessive sensitive data capture."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

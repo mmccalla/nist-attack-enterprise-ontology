@@ -4,7 +4,7 @@
  "id": "CIS-16.10",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enforce strict architectural separation between privileged system instructions and untrusted inputs or retrieved data. Design applications to treat system prompts as immutable code, using strict template binding to ensure user inputs are sandboxed as passive data variables. Applications must never rely on the probabilistic judgment of an LLM to determine if an action is authorized; authorization must be enforced by deterministic application logic external to the model. Secure design also requires stateful validation across multi-turn sessions to prevent “boiling frog” attacks, where\r\na benign initial request evolves into a prohibited action. When model behavior is ambiguous or violates policy, the system must default to a “deny” state rather than attempt to autocorrect.",
+   "agent": "Harden agent orchestration logic by applying standard application security testing (including SAST, DAST, and dependency scanning) to the framework while addressing unique cognitive vulnerabilities. Implement strict circuit breakers to detect and terminate recursion or runaway action chains, such as an agent endlessly calling the same tool, and design multi-agent architectures to prevent “confused deputy” attacks where low-privilege agents manipulate high-privilege peers into executing unauthorized tasks. The system must maintain secure failure modes by failing “closed,” ensuring that model timeouts or tool errors terminate the session safely without exposing stack traces or falling back to insecure defaults.\r\n\r\nEstablish rigorous hygiene at every interface by validating all tool inputs and outputs to prevent shell injection or the poisoning of the agent’s working memory. Enforce regex-based scrubbing to ensure secrets and credentials are never written to logs, memory, or user outputs. Treat multimodal inputs, including images and audio, as highly untrusted, requiring transcription and safety filtering to detect visual jailbreaks before content enters the reasoning loop. Similarly, protect retrieval pipelines by scanning and sanitizing documents before indexing them into vector stores to prevent knowledge poisoning, where malicious content alters the agent’s future decision-making behavior.\r\n\r\nMandate deterministic defense-in-depth by isolating dangerous capabilities (specifically code interpreters, shell tools, and browser automation) in ephemeral, network-restricted sandboxes. This runtime isolation must be supported by capability stripping, where unused system calls and network ports are hard-disabled to minimize the attack surface. Finally, implement a deterministic policy enforcement layer, or guardrail middleware, to intercept every agent action before execution. This layer must validate tool calls against static policies, such as “Allow Read” or “Deny Write,” and block high-risk requests regardless of the agent’s intent or generated reasoning.",
+   "mcp": "Apply secure design principles to MCP architectures by performing structured threat modeling, identifying trust boundaries across model-to-tool, client-to-server, and server-to-backend integrations, and designing for strict capability minimization. Implement defense-in-depth measures, including OAuth protections, input validation, output filtering, and rate limiting, to ensure MCP components remain resilient against attacks."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -290,6 +295,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

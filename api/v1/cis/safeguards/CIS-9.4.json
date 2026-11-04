@@ -4,7 +4,7 @@
  "id": "CIS-9.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Monitor and control browser extensions or plug-ins that send data to external AI services. Extensions can silently capture page content, forms, and credentials and forward them to AI providers. Extension management, allowlists, and periodic review are critical to prevent unapproved or malicious add-ons from exfiltrating data.",
+   "agent": "Restrict the use of unauthorized extensions or plug-ins in browsers used by agents for automation. Malicious extensions can intercept agent browsing data or inject unauthorized commands; restricting them reduces the attack surface of the agent’s browser environment.",
+   "mcp": "Restrict unauthorized browser extensions used in MCP workflows (e.g., copilot extensions, admin consoles, developer tooling) and block extensions that can access sensitive content or inject scripts into administrative interfaces."
+  },
   "control_title": "Email and Web Browser Protections",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -154,6 +159,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

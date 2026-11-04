@@ -4,7 +4,7 @@
  "id": "CIS-3.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Inventory all data that has been fed into LLMs, especially SaaS-hosted LLMs, as prompts, attachments, or using any other methods (including data that may come from RAG processes, vector databases, etc.), and ensure all this data is properly tracked and annotated in the enterprise data inventory. LLMs processing enterprise data, especially sensitive data that may have regulatory or legal implications, has known and unknown risks that must be accounted for. This is especially true for SaaS-hosted LLMs, which may use such data for model training.",
+   "agent": "Maintain an inventory of agent memory systems, including working memory stores, long-term memory, vector databases, and caching layers. Track data locations, sensitivity, retention behavior, and associated infrastructure.",
+   "mcp": "Inventory all MCP-reachable data sources and data categories. Record the backend system for each tool and the source and URI patterns for each resource. Record resource subscription configurations, including which resources support change notifications and which components receive updates.\r\n\r\nInclude MCP-created data stores such as context caches, task state, sampling logs, and any persisted tool outputs. Record which components receive resource subscription updates and whether each subscription is approved for the data classification involved."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

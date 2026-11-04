@@ -4,7 +4,7 @@
  "id": "CIS-13.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Deploy an EDR on all AI hosts to block malicious execution and scan model-generated code. Model-serving infrastructure (e.g., GPU clusters, inference servers) requires rigorous behavioral monitoring to detect process injection, lateral movement, or tampering with model artifacts. However, in AI environments, the malware often originates from the application itself, as LLMs can generate and attempt to execute dangerous scripts or commands via code interpreters. Therefore, host-based intrusion prevention must be tuned to not only protect the server from external attackers but also to actively scan and block unvalidated model-generated code before execution, effectively acting as a runtime gate that prevents a confused or jailbroken model from launching exploits against its own environment.",
+   "agent": "Contain misbehaving or compromised agents. Use runtime controls to pause, isolate, or disable agents exhibiting harmful behavior. Revoke credentials, restrict network access, and stop tool invocation pathways as needed.",
+   "mcp": "Deploy endpoint protection capable of blocking unauthorized MCP server execution and suspicious process behavior. Not all commercial EDR products include MCP-specific detections. Configure application control policies to prevent unapproved servers from launching and to block access to credential files outside approved workflows."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -913,6 +918,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

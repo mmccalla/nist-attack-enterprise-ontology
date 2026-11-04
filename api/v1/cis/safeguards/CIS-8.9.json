@@ -4,7 +4,7 @@
  "id": "CIS-8.9",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Aggregate logs from all LLM components into a central repository for unified analysis and correlation. Centralization enables the detection of complex attack patterns that span multiple systems and provides a single source of truth for investigations across the AI ecosystem.",
+   "agent": "Forward agent logs to centralized logging or Security Information and Event Management (SIEM) systems. Ensure logs from agent runtimes, tools, memory systems, and retrieval engines are correlated for end-to-end traceability.",
+   "mcp": "Centralize logs from gateways, Streamable HTTP servers, and stdio servers where clients capture `stderr.` Integrate MCP logs with enterprise SIEM before components enter production to enable event correlation, pattern detection, and security monitoring. Correlate logs with declared capabilities to identify deviations from approved baselines."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

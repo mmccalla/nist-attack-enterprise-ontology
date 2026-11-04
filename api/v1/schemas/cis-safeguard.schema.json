@@ -159,6 +159,27 @@
     "attribution": {
      "type": "string",
      "minLength": 1
+    },
+    "ai_guidance": {
+     "type": "object",
+     "description": "CIS guidance for AI LLM systems, AI agents and MCP, from the CIS 8.1.2 AI Guidance workbook. Exact text.",
+     "properties": {
+      "llm": {
+       "type": "string"
+      },
+      "agent": {
+       "type": "string"
+      },
+      "mcp": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "llm",
+      "agent",
+      "mcp"
+     ],
+     "additionalProperties": false
     }
    },
    "required": [
@@ -170,7 +191,8 @@
     "version",
     "licence",
     "licence_url",
-    "attribution"
+    "attribution",
+    "ai_guidance"
    ],
    "additionalProperties": false
   }

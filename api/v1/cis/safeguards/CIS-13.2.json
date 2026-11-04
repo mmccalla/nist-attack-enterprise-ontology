@@ -4,7 +4,7 @@
  "id": "CIS-13.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Deploy an IDS on servers hosting AI models to detect suspicious file changes, process injections, or configuration alterations. Provides early warning of attackers attempting to tamper with models, modify training data, or install persistence mechanisms directly on the host.",
+   "agent": "Monitor agent runtimes for behavioral anomalies, unauthorized tool usage, and unexpected network connections. Agents operate as autonomous processes that can be hijacked to execute commands or open backdoors. A Host-based Intrusion Detection System (HIDS), or a modern equivalent like EDR, is essential to monitor the agent’s internal state. Unlike network firewalls which only see “traffic,” a HIDS sees the process creating that traffic. It can detect if an agent process is spawning unexpected shells, modifying critical system files, or initiating unauthorized outbound connections to unknown IP addresses. By correlating these system-level behaviors with network activity, enterprises can identify compromised agents that are attempting lateral movement or data exfiltration from within the trusted host environment.",
+   "mcp": "Use host-based detection to identify MCP abuse on endpoints that run stdio servers. Alert on anomalies such as unauthorized server processes, capability changes, unusual file access patterns, and credential reads. While some commercial HIDS (Host-based Intrusion Detection System) products are beginning to include MCP-specific signatures, supplement with custom rules to ensure adequate coverage until the tooling ecosystem matures."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

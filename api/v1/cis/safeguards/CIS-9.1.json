@@ -4,7 +4,7 @@
  "id": "CIS-9.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Require supported browsers and managed configurations for any AI web user interface usage and any AI extensions. AI extensions for web browsers or email clients should generally be prohibited due to the risk of prompt injection and\r\nother common vulnerabilities introduced by third-party model integrations.",
+   "agent": "Ensure browsers, AI powered browsers, headless browser engines, HTML parsers, PDF readers, and document processors used by agents are up-to-date and hardened against known exploitation techniques.",
+   "mcp": "MCP servers that wrap web browsing or email processing capabilities must be treated as browser or email clients for the purposes of this Safeguard. Ensure the underlying libraries and runtimes used by these tools are actively maintained, patched, and subject to the same support life cycle requirements as enterprise-approved browsers and email clients.\r\n\r\nUnsupported or unpatched tool wrappers that fetch web content or process email introduce the same phishing, malicious content, and exploit risks as unpatched end-user clients, with the added risk that compromised content enters model context rather than a human-visible interface."
+  },
   "control_title": "Email and Web Browser Protections",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -233,6 +238,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

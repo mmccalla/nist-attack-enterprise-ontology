@@ -4,7 +4,7 @@
  "id": "CIS-15.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "The service provider management policy must enforce a “conservative default” posture by mandating a safe baseline: disabling history retention, opting out of model training, pinning specific model versions, and disabling risky capabilities (e.g., agents) until validated. Policies must also require evidence of tenant isolation, logging clarity, and AI-specific incident notification SLAs. Permissive SaaS defaults may expose sensitive data for training or introduce risks via unmanaged feature updates and code execution. Enforcing these requirements, alongside data residency checks and vendor diversification, ensures that SaaS inference does not compromise data sovereignty, regulatory compliance, or operational resilience.",
+   "agent": "Ensure third-party providers receive access to only required data needed to perform authorized tasks. Prevent agents from sending sensitive or regulated data to providers that lack the necessary protections or authorizations.",
+   "mcp": "Define requirements including code signing, vulnerability disclosure processes, secure authorization behavior (PKCE where applicable, audience binding, scope minimization), accurate capability declarations, signed artifacts, vulnerability disclosure processes, and defined patch SLAs. Describe vetting procedures, approval processes, deployment restrictions, monitoring requirements, and incident coordination."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

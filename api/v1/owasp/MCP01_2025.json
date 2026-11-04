@@ -4,21 +4,26 @@
  "id": "MCP01:2025",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
   "attack_cis": "19.1"
  },
  "key": "MCP01_2025",
- "title": null,
+ "title": "Token Mismanagement & Secret Exposure",
  "list": {
   "title": "OWASP MCP Top 10",
   "licence": "CC BY-NC-SA 4.0",
   "url": "https://owasp.org/www-project-mcp-top-10/"
  },
- "url": "https://owasp.org/www-project-mcp-top-10/",
+ "url": "https://owasp.org/www-project-mcp-top-10/2025/MCP01-2025-Token-Mismanagement-and-Secret-Exposure",
  "related_atlas": [],
+ "title_licence": {
+  "licence": "CC BY-NC-SA 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "attribution": "OWASP MCP Top 10 (2025), OWASP Foundation, licensed under CC BY-NC-SA 4.0. Titles copied exactly; only a leading space in one title is removed. Non-commercial use only. Shares alike: a work that adapts these titles must use the same licence."
+ },
  "links": {
   "self": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/owasp/MCP01_2025.json",
   "html": "https://mmccalla.github.io/nist-attack-enterprise-ontology/#n/owasp_MCP01_2025",

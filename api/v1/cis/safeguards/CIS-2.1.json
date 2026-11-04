@@ -4,7 +4,7 @@
  "id": "CIS-2.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain an inventory of all models and AI-related software components, including model name, version, license, source, and hosting type. This inventory must include base models, fine-tuned variants, model registry exports, container registry manifests, tokenizers, embedding models, SBOM/MBOM, SDKs with versions, and runtimes. Recording model origins and licensing terms is essential for compliance and risk assessment.",
+   "agent": "Maintain a comprehensive inventory of all AI agents’ core software stacks and authorized tools, including LLM dependencies, orchestration frameworks, MCP clients/servers, and execution environments. The inventory must document business owners, license types, and versions for all components, treating tools, whether local or network-hosted, as independent software assets with distinct access privileges. Since agents rely on composite stacks where changes to a SaaS model or a local library can alter decision-making, rigorous tracking of these utilities is essential to manage supply chain risks and prevent the emergence of unmanaged “shadow software” that could be abused by a compromised agent.",
+   "mcp": "Maintain an inventory of MCP software assets: server executables, client libraries and SDKs, gateway components, OAuth libraries, and JSON-RPC frameworks. For each component, record package name and version, source registry or repository, integrity data such as hashes or signatures, and the MCP specification version supported. Include third-party servers with source and approval status.\r\n\r\nFor deployed instances, record transport type, declared capabilities, and authorization configuration. Link deployment-specific capability and configuration details to records maintained under Controls 1 and 4. Maintain an SBOM/dependency manifest for MCP components, including transitive dependencies, to accelerate vulnerability response. Verify integrity at intake and again at provisioning and deployment to detect tampering."
+  },
   "control_title": "Inventory and Control of Software Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

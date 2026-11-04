@@ -4,7 +4,7 @@
  "id": "CIS-11.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Establish a process for the backup and recovery of AI models, training data, and configuration files. Ensures business continuity by enabling the restoration of critical AI capabilities following data loss or corruption events, minimizing downtime and operational impact.",
+   "agent": "Define recovery scopes for persistent agent state and artifacts, strictly excluding sensitive ephemeral data. AI Agents rely on persistent state, such as vector indices, long-term memory profiles, and generated tool artifacts, that is critical for operational continuity. Loss of this context forces costly re-indexing or retraining. However, generic backup procedures pose a security risk if they indiscriminately capture everything, including transient, sensitive data like active session tokens, cached credentials, or decrypted PII in working memory. If these are restored, they can bypass data retention policies or reintroduce security vulnerabilities (e.g., restoring a compromised session). Therefore, the recovery process must utilize precise inclusion/exclusion filters to ensure that while the agent’s knowledge is preserved, its temporary secrets are not inadvertently resurrected. Note: The technical maintenance of backup systems and storage infrastructure is out of scope; however, this Safeguard is included because the persistence and integrity of the agent’s memory are critical to the resilience of the reasoning engine.",
+   "mcp": "Extend the enterprise data recovery process to include MCP-specific assets: server and gateway configurations, capability manifests (tools, resources, prompts), authorization policy versions, registry snapshots, and identity and OAuth configurations.\r\n\r\nDefine recovery sequencing that restores identity and policy enforcement layers (IdP, authorization server, and gateway) before restoring tool execution servers, ensuring authorization controls are fully operational before any tool becomes accessible."
+  },
   "control_title": "Data Recovery",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-13.11",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Tune alert thresholds for AI-specific network traffic to reduce false positives and ensure timely detection of genuine threats. AI traffic patterns can be unique and are changing very fast. Proper tuning ensures security teams aren’t overwhelmed by noise while still catching real attacks effectively.",
+   "agent": "Trigger alerts for abnormal traffic bursts, rapid sequences of tool calls, mass retrievals, or high-volume external requests, as these are indicators of misbehaving or compromised agents.",
+   "mcp": "Tune alerting thresholds based on baseline MCP behavior by environment and role. Adjust sensitivity for tool invocation rates, capability change frequency, and resource access patterns to reduce false positives while detecting anomalies."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

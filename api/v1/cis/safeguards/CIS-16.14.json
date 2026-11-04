@@ -4,7 +4,7 @@
  "id": "CIS-16.14",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Perform threat modeling specifically for AI systems to identify unique attack vectors like adversarial examples or inversion attacks. Proactively identifies design flaws and security gaps in AI systems before they can be exploited in production, improving overall system resilience.",
+   "agent": "Perform threat modeling for agent systems, considering unique threats like prompt injection, goal misalignment, and tool abuse. This proactively identifies security design flaws and attack vectors specific to agents, enabling the implementation of effective mitigations before deployment.",
+   "mcp": "Repeat threat modeling when MCP capability sets, authorization flows, server configurations, or deployment patterns change. New tool registrations, third-party server additions, protocol version updates, and gateway policy changes all expand or shift the attack surface in ways that invalidate prior assessments. Treat capability additions and authorization flow changes as mandatory threat model update triggers, not just development milestones."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

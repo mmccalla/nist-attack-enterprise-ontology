@@ -4,7 +4,7 @@
  "id": "CIS-10.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Apply upload scanning, malware detection, and content inspection to file and image uploads in AI web interfaces. When users upload documents or images to AI tools (internal or external), those uploads must be scanned for malware and inspected for sensitive data according to existing web upload policies.",
+   "agent": "Enforce behavioral monitoring on agent runtimes and strictly scan generated code for malicious patterns. Traditional signature-based antivirus often fails to detect the unique threats posed by AI agents, which can dynamically generate malicious code or execute fileless attacks using legitimate system tools. Security controls must employ behavior-based analysis to monitor the agent’s execution logic, flagging anomalies such as unexpected shell commands, lateral movement attempts, or the generation of obfuscated scripts. By analyzing the intent of the agent’s actions and scanning generated code blocks for known exploit patterns before execution, enterprises can prevent agents from being weaponized as insiders.",
+   "mcp": "No Additional MCP Guidance"
+  },
   "control_title": "Malware Defenses",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -194,6 +199,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

@@ -4,7 +4,7 @@
  "id": "CIS-6.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Establish a process to immediately revoke access to AI platforms, model repositories, and vector databases upon employee termination or role change. Prevents former employees from retaining access to proprietary models\r\nand sensitive training data, mitigating insider threats and unauthorized model exfiltration.",
+   "agent": "Immediately revoke identities and purge entitlements upon agent retirement, reconfiguration, or scope change. Agents leave behind “digital exhaust” in the form of service accounts and API keys. Without a rigorous offboarding process, these credentials become “orphaned” entitlements that persist long after the agent has stopped running. A formal revocation workflow must ensure that whenever an agent is decommissioned or moved to a new environment, its specific identity is disabled and all associated tokens are invalidated/ rotated to prevent “zombie” access by attackers.",
+   "mcp": "Require explicit deprovisioning of MCP access during offboarding by revoking authorizations and disabling refresh mechanisms, terminating active sessions, removing Client ID Metadata Documents where used, and for stdio deployments terminating server processes and removing server executables. Cancel outstanding tasks associated with the revoked identity where the server supports task cancellation, using `tasks/cancel` with the relevant task ID.\r\n\r\nTask handles issued prior to revocation may otherwise allow result retrieval to continue after the authorization grant has been terminated. Invalidate cached authorization decisions and terminate gateway sessions associated with revoked identities."
+  },
   "control_title": "Access Control Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -163,6 +168,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

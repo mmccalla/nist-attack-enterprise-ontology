@@ -4,7 +4,7 @@
  "id": "CIS-13.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Integrate SaaS model provider logs into enterprise SIEM where necessary, correlating them with internal identities and systems. SaaS logs often include visibility into rate limits, errors, or policy violations. Integration enables full end-to-end detection and response.",
+   "agent": "Correlate network telemetry, audit logs, and tool activity to detect anomalous agent behavior. Agents generate complex footprints across application logs and network layers. To detect compromised agents or malicious workflows effectively, security systems must correlate network telemetry with application audit logs (Control 8). Isolated alerts are often insufficient; true detection requires linking a high-risk tool call or memory access event with its corresponding network traffic to identify anomalies. By centralizing these diverse signals, ranging from unexpected API invocations to policy violations, enterprises can contextualize suspicious behavior and differentiate between benign hallucinations and active exploitation or data exfiltration attempts.",
+   "mcp": "Centralize MCP security events from hosts, servers, gateways, and authorization servers. Aggregate tool invocations, capability changes, OAuth events, and session life cycle data to enable correlation across components."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

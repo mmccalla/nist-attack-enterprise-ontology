@@ -391,6 +391,8 @@ def render(poisoned: bool = False) -> str:
         "questions": build_questions(graph),
         # Exact CIS text with its own licence (CC BY-NC-ND 4.0, D29). Kept apart from the CC BY graph.
         "cis": json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8")),
+        # Exact OWASP MCP Top 10 titles with their own licence (CC BY-NC-SA 4.0, D30).
+        "owaspMcp": json.loads((ROOT / "data" / "sources" / "owasp-mcp-top10.json").read_text(encoding="utf-8")),
     }
     if poisoned:
         poison(payload)

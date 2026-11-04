@@ -190,10 +190,11 @@ def build() -> dict[str, str]:
     cis_text = json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8"))
     files["cis-8.1.2-safeguards.csv"] = write_csv([
         [sid, t["title"], sid.split(".")[0], cis_text["controls"][sid.split(".")[0]], t["asset_class"], t["security_function"],
-         *("yes" if g in t["implementation_groups"] else "no" for g in ("IG1", "IG2", "IG3")), len(cis_mit.get(sid, ()))]
+         *("yes" if g in t["implementation_groups"] else "no" for g in ("IG1", "IG2", "IG3")), len(cis_mit.get(sid, ())),
+         t["ai_guidance"]["llm"], t["ai_guidance"]["agent"], t["ai_guidance"]["mcp"]]
         for sid, t in cis_text["safeguards"].items()],
         ["safeguard_id", "safeguard_title", "cis_control", "cis_control_title", "asset_class", "security_function", "ig1", "ig2", "ig3",
-         "attack_19_1_techniques_mapped_by_ctid"])
+         "attack_19_1_techniques_mapped_by_ctid", "cis_ai_llm_guidance", "cis_ai_agent_guidance", "cis_mcp_guidance"])
     cis_model = {
         "techniques": [{"id": tid, "name": str(g.value(t, ONT.techniqueName)), "tactics": []} for t, tid in sorted(techs19.items(), key=lambda kv: tkey(kv[1]))],
         "controls": cis_ctl, "mitigates": {k: sorted(v) for k, v in cis_mit.items()},

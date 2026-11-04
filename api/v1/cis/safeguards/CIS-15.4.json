@@ -4,7 +4,7 @@
  "id": "CIS-15.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Mandate contractual guarantees for data residency, retention limits, and strict model version transparency. Standard cloud agreements often overlook the specific risks of generative AI. Contracts must explicitly enforce data sovereignty and retention limits to prevent providers from silently harvesting sensitive prompts for training or storing regulated data in non-compliant jurisdictions. Equally critical is the requirement for operational transparency regarding model versions. Unlike static software, LLMs are prone to “behavioral drift” where provider updates can inadvertently degrade performance or bypass established safety guardrails. Without contractual rights to pin model versions or receive advance notice of changes, the enterprise risks sudden application failure or security regression. Thus, legal terms must govern not only data privacy but also the stability and integrity of the inference engine itself.",
+   "agent": "Mandate data isolation, strict retention limits, and incident response Service Level Agreements (SLAs) in service provider contracts. AI agents frequently rely on third-party inference providers and hosted tool execution environments, effectively outsourcing critical logic and memory. Contracts must explicitly govern the entire data life cycle, mandating strict retention limits, secure deletion capabilities, and proven cryptographic isolation to prevent cross-tenant data leakage. Furthermore, agreements must define clear SLAs for incident response, requiring providers to proactively notify the enterprise of breaches and participate in coordinated investigations. This ensures that if a third-party tool or model is compromised, the enterprise retains legal and operational recourse to contain the blast radius rather than being reliant on generic consumer terms.",
+   "mcp": "Ensure third-party MCP server providers are required to deliver signed code, record OAuth scopes and capability declarations, follow vulnerability disclosure processes, comply with logging requirements, and support current specification versions. Include contractual terms for data handling and retention, security update timelines, breach notification, log access, rapid authorization revocation during incidents, and exit procedures including workflow migration.\r\n\r\nInclude contract terms for log access and export SLAs, notification of capability changes, and restrictions on retention and secondary use of enterprise data processed through tools and resources."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

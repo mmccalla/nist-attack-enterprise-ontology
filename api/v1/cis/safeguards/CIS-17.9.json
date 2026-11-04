@@ -4,7 +4,7 @@
  "id": "CIS-17.9",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enterprises should define clear security incident thresholds that distinguish normal model behavior from unsafe or compromised behavior and tie those thresholds to rapid-disable mechanisms. This includes identifying what constitutes an “event” versus an “incident” in an LLM context. For example, isolated abnormal outputs, unexpected tool calls, or minor prompt-handling issues may be events, while sustained unsafe outputs, attempts to take unapproved actions through tools, or indications of compromised model behavior should be treated as incidents. When those thresholds are met, enterprises need kill switches or rapiddisable mechanisms for models, endpoints, or tool-enabled capabilities, especially if models are producing unsafe outputs or taking unapproved actions.",
+   "agent": "Define thresholds for agent behavior (e.g., API rate limits, cost spikes) that trigger incident response actions. Enables automated detection and response to anomalous agent activity, ensuring that runaway or compromised agents are identified and contained quickly.",
+   "mcp": "Define escalation thresholds for MCP security events including data exfiltration through tools, privilege escalation via confused deputy attacks, authorization server compromise, successful DNS rebinding, coordinated tool poisoning, and large-scale session hijacking."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

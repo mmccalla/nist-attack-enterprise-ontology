@@ -4,7 +4,7 @@
  "id": "CIS-15.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Classify each approved AI service provider by authorized data classifications. Classification ensures alignment between sensitivity levels and provider assurances.",
+   "agent": "Classify agent-related service providers based on the sensitivity of data they process and the criticality of the agent functions they support. Enable risk-based management of providers. For example, high-risk providers (e.g., those hosting core memory or models) receive more scrutiny and stricter controls.",
+   "mcp": "Classify external service providers and third-party MCP servers by the sensitivity of systems and data they access. Apply proportional security requirements based on classification level."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-18.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Validate that monitoring, alerting, and incident response procedures correctly detect and respond to AI-specific attacks. Penetration tests should confirm that model extraction attempts, injection attacks, or poisoning behaviors generate appropriate telemetry and that incident response teams can act quickly.",
+   "agent": "Ensure security teams can detect and investigate malicious agent activity during testing, including anomalous tool calls, data access, memory writes, outbound connections, or execution events.",
+   "mcp": "After MCP penetration tests identify exploitable paths, validate that remediations are effective through retesting before closing findings. Validation should confirm that gateway policy updates, capability allowlist changes, and OAuth implementation fixes close the specific paths exploited, and that regression test cases have been added to prevent reintroduction through future spec upgrades, SDK updates, or capability changes."
+  },
   "control_title": "Penetration Testing",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-3.13",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Ensure that DLP solutions are examining data being passed to and from LLMs of all types to ensure that data flow is following enterprise policies. LLM interactions represent just as large a vector for data loss as any other application or network data flow and must be given as much attention as these to reduce risk. Assume that DLP and inspection controls may not fully parse image, audio, or video content and require compensating controls or restrictions on these modes.",
+   "agent": "Implement monitoring to detect credentials appearing in prompts, memory, logs, RAG content, tool outputs, or model responses in order to promptly detect and respond to an incident. Rotate exposed credentials immediately and remediate the root cause.",
+   "mcp": "Where DLP tooling is available or can be extended to inspect MCP traffic, apply DLP controls to tool responses and resource retrievals that enter model context. Monitor sampling requests for exposure risk. Filter outputs to prevent leakage.\r\n\r\nFor Streamable HTTP deployments, gateway-based inspection is the most practical enforcement point. stdio deployments may require host-level controls or manual review until MCP-aware DLP tooling matures. Default enforcement for Streamable HTTP should be at the gateway; for stdio deployments, enforce via endpoint DLP/EDR policies and restrict which servers may run locally."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -129,6 +134,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

@@ -4,7 +4,7 @@
  "id": "CIS-18.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Ensure that penetration testing includes all AI components, including model interfaces, pipelines, integrations, and associated application logic. Testing should cover both backend components (model-serving APIs, vector stores, orchestration layers) and user-facing integrations to ensure that full life cycle exposure is assessed. The following should be in scope:\r\n▪ Model gateway/API\r\n▪ RAG ingestion and retrieval\r\n▪ Vector database access controls\r\n▪ Tool execution systems\r\n▪ Prompt/policy management\r\n▪ Tenant/admin consoles for SaaS models",
+   "agent": "Explicitly include AI-agent components, such as tools, memory systems, retrieval pipelines, orchestration logic, and configuration, in penetration testing and red-team exercises. Ensure tests cover both direct and indirect manipulation pathways.",
+   "mcp": "Include MCP environments in the enterprise penetration testing program with explicitly defined scope: gateways, Streamable HTTP servers, authorization flows, stdio endpoints, high-impact tool execution paths, and server registries. MCP-specific attack surfaces including OAuth implementation, capability governance, JSON-RPC parsing robustness, and stdio process boundaries are not covered by standard application or network penetration testing scopes and must be named explicitly to ensure coverage."
+  },
   "control_title": "Penetration Testing",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

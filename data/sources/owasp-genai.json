@@ -105,7 +105,7 @@
    "url": "https://owasp.org/www-project-mcp-top-10/",
    "licence": "CC BY-NC-SA 4.0",
    "status": "beta",
-   "note": "Only IDs and links: the NonCommercial licence does not permit copying titles into this CC BY 4.0 project.",
+   "note": "IDs and links only in this file. The exact titles are in owasp-mcp-top10.json, under their own licence (CC BY-NC-SA 4.0, decision D30).",
    "items": [
     {
      "id": "MCP01:2025",

@@ -4,7 +4,7 @@
  "id": "CIS-14.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Train users not to enter sensitive, regulated, or proprietary data into unapproved AI systems or public AI chat interfaces. Users must understand the differences between enterprise-approved models and consumer-facing tools, and how data retention or reuse in those systems may violate policy.",
+   "agent": "Reinforce safe interaction patterns for end-users. Train business users on safe ways to interact with agents, including verifying outputs, avoiding over-reliance, understanding limitations, and recognizing when agent recommendations may be unsafe or out of scope.",
+   "mcp": "Train staff on data handling rules for prompts and outputs including classification tags, redaction requirements, and clear guidance against pasting secrets. Include guidance on risky input types such as uploaded files, images, and embedded links that may contain embedded prompt injection or manipulation payloads. Ensure staff understand why environment separation matters, using staging for evaluation and keeping production data strictly within defined boundaries."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

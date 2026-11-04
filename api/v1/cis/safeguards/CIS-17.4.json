@@ -4,7 +4,7 @@
  "id": "CIS-17.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Define incident response procedures that address AI-specific attack scenarios, such as unsafe model behavior, leakage, extraction attempts, poisoning, or compromised tools. IR plans must explicitly identify how to detect and respond to incidents involving LLMs, including the unique signals and artifacts (prompts, outputs, logs, embeddings, training data, model versions) associated with such events.",
+   "agent": "Integrate agent-specific threat scenarios and remediation protocols into enterprise incident response plans. Traditional incident response playbooks often fail to address the speed and autonomy of AI agents. Enterprises must update IR frameworks to explicitly cover agent-specific attack vectors, such as prompt injection, hallucinatory data leakage, recursive loop exhaustion, and vector store poisoning. These scenarios must be integrated into the central enterprise incident management system to ensure consistent tracking, escalation, and regulatory reporting. Crucially, the process must define specialized remediation steps for non-deterministic systems, specifically purging poisoned embeddings from memory stores, rotating compromised tool credentials, and rebuilding tainted runtime environments, ensuring that responders can rapidly contain “runaway” agents and restore trusted states.",
+   "mcp": "Define containment procedures for unauthorized invocations including token revocation, tool disabling, and human confirmation enforcement. Specify server isolation steps: process termination for stdio servers, gateway blocking and server disablement procedures for Streamable HTTP. Include revocation of both access and refresh tokens.\r\n\r\nDocument rapid response actions for tool poisoning, data exfiltration, prompt injection, DNS rebinding, and termination of compromised components."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

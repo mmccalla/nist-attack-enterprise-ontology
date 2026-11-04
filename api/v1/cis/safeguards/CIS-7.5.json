@@ -4,7 +4,7 @@
  "id": "CIS-7.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Continuously scan AI-hosting environments (containers, VMs, serverless functions) for outdated or unpatched components, including ML-specific dependencies. AI workloads frequently rely on custom containers or pinned library versions; ensuring\r\nthat these images remain up to date requires deliberate scanning and tracking.",
+   "agent": "Continuously scan agent codebases, containers, model clients, and transitive dependencies for known vulnerabilities. Agent architectures rely on deep, complex dependency trees, including heavy frameworks, model SDKs, vector store connectors, and transport clients (gRPC/REST). These components often introduce significant transitive risk, where a vulnerability in a buried dependency exposes the entire agent. Automated vulnerability scanning must extend beyond the core application code to inspect container images, runtime environments, and the full supply chain of third-party libraries. This is critical because vulnerabilities in low-level inference libraries or communication layers can be exploited to hijack agent logic or exfiltrate sensitive memory. Continuous monitoring ensures that as new CVEs are discovered in the rapidly evolving AI ecosystem, the enterprise can identify and remediate risks in the agent’s stack before they are targeted.",
+   "mcp": "Scan endpoints running stdio servers, hosts running Streamable HTTP servers, gateways, and authorization servers. Identify outdated versions, vulnerable dependencies, and misconfigurations. Standard vulnerability scanners do not cover MCP-specific settings. Add custom checks for bind address exposure, TLS configuration, Origin validation (where applicable), PKCE enforcement, token audience validation, capability drift, and session handling."
+  },
   "control_title": "Continuous Vulnerability Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-14.9",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Train personnel on role-specific AI risks, including data poisoning, safe ingestion pipelines, and recognizing adversarial telemetry. Security awareness must target the specific hazards of the AI life cycle. Data curators and pipeline engineers need training on the risks of “auto-ingestion” and poisoning, understanding that pulling untrusted content or managing unvetted datasets can permanently corrupt the model’s integrity or introduce backdoors. Simultaneously, security operations teams require specialized training to interpret AI-specific telemetry, learning to distinguish between benign usage and subtle behavioral indicators like extraction attempts, prompt injection campaigns, or suspicious vector store access, ensuring they can effectively monitor and defend the unique attack surface of generative systems.",
+   "agent": "Conduct tiered training covering agent risks, data safety, runtime hardening, and anomaly detection. Enterprises must implement a tiered training curriculum. All personnel require foundational education on the unique risks of agent autonomy (e.g., “planning” behaviors) and strict data minimization protocols to prevent sensitive data leakage. Beyond these basics, technical roles demand specialized skills. Administrators must be trained on runtime isolation, credential boundaries, and secure configuration of execution tools. Security teams require specific training on interpreting agent telemetry, learning to distinguish benign hallucinations from malicious tool use, and investigating complex incidents involving agent memory or decision logic.",
+   "mcp": "Train MCP administrators on registry management, capability enablement, rollback procedures, emergency disable actions, and provenance verification including supplier validation, signature verification, and SBOM review. Use sandboxed lab environments for hands-on exercises. Require completion of role-specific training before granting privileges for high-risk actions such as registry writes or third-party server approval."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

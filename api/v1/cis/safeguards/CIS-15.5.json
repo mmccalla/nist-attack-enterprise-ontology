@@ -4,7 +4,7 @@
  "id": "CIS-15.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Evaluate providers for rigorous data isolation, tenant segregation, and cross-modality safety defenses. Standard vendor assessments often miss AI-specific risks. Evaluations must verify that providers enforce strict multi-tenant isolation to prevent “data bleed-through” or inference cache contamination between customers. As models become multi-modal, providers must be assessed based on their ability to isolate multimodal inputs and prevent them from hijacking the model’s text-based system instructions. The assessment must confirm that the provider’s architecture defends against both lateral data leakage across tenants and vertical privilege escalation via non-text injection vectors.",
+   "agent": "Evaluate provider security posture, focusing on runtime isolation and cross-modality safety controls. Before integrating third-party services into agent workflows, enterprises must conduct rigorous security assessments that extend beyond standard compliance checks. Evaluations must specifically validate the provider’s runtime isolation capabilities for tool execution, ensuring sandboxes are truly secure, and ensuring their defense against multimodal attacks. Crucially, if the provider processes non-text inputs (audio, vision), assessments must confirm that safety filters are applied after modality conversion; for example, scanning transcribed text for jailbreaks before it enters the reasoning model. This ensures that third-party integrations do not introduce “backdoor” vulnerabilities where visual or audio inputs can bypass the agent’s primary textual safety policies.",
+   "mcp": "Assess third-party MCP server providers for compliance with security requirements including capability declaration accuracy, OAuth compliance, logging practices, and vulnerability management."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

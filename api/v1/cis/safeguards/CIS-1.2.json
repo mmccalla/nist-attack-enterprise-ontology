@@ -4,7 +4,7 @@
  "id": "CIS-1.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Identify and monitor unapproved or “shadow AI” environments such as personal laptops, unmanaged cloud resources, and unauthorized VMs running local models. Experimentation by analysts, developers, or researchers often leads to unmanaged environments. Shadow assets handling sensitive data create unmanaged risk and must be identified and brought under governance or decommissioned.",
+   "agent": "Identify and quarantine unauthorized AI agent runtimes, including unapproved local agent tools on endpoints or rogue agent workloads in cloud environments. “Shadow agents” running on unmanaged assets can bypass data loss prevention (DLP) controls, exfiltrate sensitive data to external model providers, or execute unauthorized actions on internal networks.",
+   "mcp": "Detect and remove or quarantine unauthorized MCP servers, clients, and gateways, and treat unauthorized capability expansions (new tools, resources, prompts on a known server) as unauthorized assets requiring immediate review and re-approval before production use."
+  },
   "control_title": "Inventory and Control of Enterprise Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

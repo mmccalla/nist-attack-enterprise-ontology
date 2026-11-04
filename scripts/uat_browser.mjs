@@ -238,6 +238,14 @@ const cisText = JSON.parse(readFileSync(new URL("../data/sources/cis-controls-8.
 check(sg.includes(cisText.safeguards["CIS-6.3"].title) && sg.includes("CIS Critical Security Controls® v8.1.2 © Center for Internet Security, Inc., CC BY-NC-ND 4.0"),
   "a Safeguard page shows the exact CIS 8.1.2 title with the CIS notice");
 check((await page.locator('#detail a[href="https://www.cisecurity.org/controls/cis-controls-list"]').count()) === 1, "a Safeguard page links to cisecurity.org");
+const g63 = cisText.safeguards["CIS-6.3"].ai_guidance;
+check(sg.includes("CIS guidance for AI agents") && sg.includes(g63.agent.slice(0, 60)) && sg.includes(g63.mcp.slice(0, 60)), "a Safeguard page shows CIS's own AI agent and MCP guidance");
+const mcpText = JSON.parse(readFileSync(new URL("../data/sources/owasp-mcp-top10.json", import.meta.url), "utf8"));
+await page.goto(url.split("#")[0] + "#n/owasp_MCP03_2025");
+await settle();
+const mcp3 = await page.locator("#detail").textContent();
+check(mcp3.includes(mcpText.items[2].title) && mcp3.includes("CC BY-NC-SA 4.0") && (await page.locator(`#detail a[href="${mcpText.items[2].url}"]`).count()) === 1,
+  "an OWASP MCP risk shows its exact title, its licence and its own OWASP page");
 await page.goto(url.split("#")[0] + "#n/technique_T1685");
 await settle();
 check((await page.locator("#detail .warn").first().textContent()).includes("Only in ATT&CK Enterprise 19.1"), "a technique that is only in ATT&CK 19.1 is flagged");

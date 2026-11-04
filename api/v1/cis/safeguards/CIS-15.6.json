@@ -4,7 +4,7 @@
  "id": "CIS-15.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Continuously monitor AI service providers for changes in security posture, terms of service, or data handling practices. Ensures ongoing compliance with enterprise security requirements and allows for timely reaction to provider-side risks that could impact AI operations.",
+   "agent": "Monitor agent interactions with third-party services, including model calls, tool requests, retrieval pipelines, and file handling. Detect unexpected or excessive provider usage patterns. Conduct periodic reviews of provider controls, certifications, disclosure history, and architecture changes. Reevaluate risk when providers introduce new features or operational behaviors.",
+   "mcp": "Monitor third-party MCP server providers for security-relevant changes, including version updates, capability changes, authorization behavior changes, and advisories affecting MCP frameworks and dependencies. Review provider release notes and track risks introduced by new tools, resources, or prompts."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-6.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enforce strict, role-based separation of duties for training data modification, model retraining, and production promotion. For example, this may introduce new role types including model publisher, model operator, prompt/policy maintainer, data curator, vector store admin, tool owner, application integrator, red team/evaluator. Unauthorized dataset changes or unapproved retraining jobs are the primary vectors for “data poisoning” and supply chain compromise. Training, finetuning, and deployment stages should utilize distinct identities (e.g., just-in-time roles) rather than shared credentials to limit blast radius. By tracking the full life cycle of identities accessing high-value artifacts, enterprises ensure that only authorized personnel can alter the model’s fundamental behavior or promote new versions to production.",
+   "agent": "Assign granular role-based access control (RBAC) roles to agent identities and bind delegated user permissions to ephemeral session contexts. Agent identities must map to defined organizational roles with least-privilege sets, explicitly defining which roles are permitted to invoke specific tools or APIs. When acting on behalf of a human, the framework must enforce Delegated RBAC (where agent authority is cryptographically bound to the user session). High-impact operations, such as modifying production data, executing code, or initiating financial transactions, require Attribute-Based Access Control (ABAC) overlays or Just-in-Time (JIT) role elevation via explicit policy checks or human-in-the-loop approval.\r\n\r\nIn multi-agentic systems, role-defined boundaries must govern peer-to-peer communication and task delegation to prevent low-privilege agents from escalating authority by prompting high-privilege peers. RBAC policies must also enforce data ingress limits, ensuring that agents do not ingest data classified above their role’s clearance level, to prevent agents from exceeding their defined clearance, hallucinating unauthorized write operations, or persisting authority beyond the active workflow.",
+   "mcp": "Conduct routine reviews of MCP roles, OAuth scopes, and actual tool usage. Revoke unused or excessive permissions and adjust assignments to least privilege. Define and maintain roles that govern access to MCP tools and resources, and map OAuth scopes to those roles. Clients must request only the minimum scopes required for their intended operations, using server-advertised scope information where available. Update role definitions and scope mappings as tools and resources change.\r\n\r\nRBAC policies should grant permissions at the level of individual tools or resources and specific action types, including read, write, and irreversible operations, rather than through broad scope assignments."
+  },
   "control_title": "Access Control Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -1745,6 +1750,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

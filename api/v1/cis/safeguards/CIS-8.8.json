@@ -4,7 +4,7 @@
  "id": "CIS-8.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Capture execution logs from “code interpreter” sandboxes and training environments, ensuring transient containers offload logs to central storage before termination. AI systems capable of generating and executing code (e.g., Python agents) act as remote shells; without logs, malicious code execution is untraceable.",
+   "agent": "Log command-line activity within agent execution environments (e.g., code interpreter sandboxes) to track executed scripts and commands. Provides visibility into exactly what code or commands an agent executed, which is critical for identifying malicious or unintended actions taken by the agent.",
+   "mcp": "Collect command-line logs on endpoints hosting stdio servers and on servers executing tools that invoke shells and scripts."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

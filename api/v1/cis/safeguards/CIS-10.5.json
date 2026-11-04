@@ -4,7 +4,7 @@
  "id": "CIS-10.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "No Additional AI LLM Guidance",
+   "agent": "Enable OS-level anti-exploitation features (e.g., Address Space Layout Randomization (ASLR), Data Execution Prevention (DEP)) on agent hosting servers. This hardens the agent runtime against exploitation of memory corruption vulnerabilities, adding a layer of defense for critical agent infrastructure.",
+   "mcp": "Enable OS-level anti-exploitation features on systems running MCP servers, clients, and supporting infrastructure. Apply memory protection, control-flow integrity, and exploit mitigations available on each platform. On Linux, use mandatory access control frameworks, Secure Computing Mode (seccomp) profiles, and capability-dropping to constrain MCP server processes."
+  },
   "control_title": "Malware Defenses",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -178,6 +183,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

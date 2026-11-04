@@ -4,7 +4,7 @@
  "id": "CIS-7.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Remediate identified vulnerabilities in AI software and infrastructure in a timely manner based on risk severity. Prompt remediation closes the window of opportunity for attackers to exploit known flaws in the AI environment, maintaining the security and integrity of AI systems.",
+   "agent": "Remediate vulnerabilities in agent memory and retrieval pipelines. Patch or reconfigure retrieval pipelines, embedding services, indexing jobs, or memory systems affected by vulnerabilities. Validate compatibility before applying upgrades to avoid memory corruption or retrieval errors.",
+   "mcp": "Remediate vulnerabilities based on risk. Critical issues involving tool authorization, OAuth token handling, Origin validation, or JSON-RPC compliance require immediate action. Track progress and verify fixes through rescanning. When patches are unavailable, record compensating controls such as disabling affected tools or restricting network access."
+  },
   "control_title": "Continuous Vulnerability Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -610,6 +615,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

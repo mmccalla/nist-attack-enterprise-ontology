@@ -4,7 +4,7 @@
  "id": "CIS-16.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Conduct adversarial evaluation of AI features, including testing for prompt injection, content leakage, jailbreak attempts, and unsafe output generation. AI systems require\r\nspecialized security testing to identify model-specific weaknesses that normal functional testing would not reveal.",
+   "agent": "Conduct root cause analysis for vulnerabilities discovered in agent code or configurations. Identifying the underlying cause of vulnerabilities (e.g., insecure prompt design, unsafe tool handling) helps prevent recurrence and improves the overall security of agent development practices.",
+   "mcp": "When security vulnerabilities are identified in MCP components, perform root cause analysis to determine the underlying cause, such as missing input validation, incorrect scope enforcement, insufficient Origin checks, unsafe defaults, or dependency weaknesses. Assess whether the defect reflects a systemic gap, such as a pattern of missing server-side authorization checks or repeated reliance on client-side validation, rather than an isolated coding error. Incorporate findings into secure development standards, code review checklists, and testing requirements to prevent recurrence of similar vulnerabilities."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -102,6 +107,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

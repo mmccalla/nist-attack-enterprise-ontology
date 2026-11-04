@@ -4,7 +4,7 @@
  "id": "CIS-3.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Classify LLM-related data (e.g., prompts, completions, embeddings, datasets) according to existing enterprise data classification schemes. Proper classification ensures sensitive information is handled according to enterprise requirements, including restrictions on storage, sharing, retention, and access. LLM-related data should not be treated as ephemeral simply because it originates from a generative model.",
+   "agent": "Classify the data types an agent may ingest, store, retrieve, or generate, including tool responses, memory entries, session artifacts, and intermediate reasoning. Classification enables appropriate protection across agent components.",
+   "mcp": "Classify data accessed through MCP tools and resources, inheriting the classification of underlying databases, file systems, and APIs. Define what data may appear in tool parameters, outputs, and resource payloads by classification level, and enforce these rules at the server or gateway boundary."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

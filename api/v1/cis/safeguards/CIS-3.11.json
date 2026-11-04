@@ -4,7 +4,7 @@
  "id": "CIS-3.11",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Encrypt all model-related data at rest and enforce the use of secure, OS-managed storage for all API credentials and access tokens to prevent plaintext exposure. Unprotected artifacts, including datasets, embeddings, and caches, can leak sensitive semantic information; likewise, exposed API keys allow attackers to easily gain unauthorized access to costly SaaS models and private inference endpoints.",
+   "agent": "Encrypt all agent memory and enforce secure, isolated storage for credentials and sensitive configurations. Agent architectures store highly sensitive “thought processes” in vector databases and session logs, which must be encrypted to prevent context leakage. Treat API keys, tokens, and other credentials as sensitive data that must never exist in unencrypted form within prompts, code, or logs where they can be extracted by the model. To prevent exposure, utilize secure secret management systems to inject credentials only at runtime, ensuring that plaintext secrets are strictly excluded from the agent’s memory and execution traces. This minimizes the presence of sensitive secrets within the agent’s data footprint, including source code and configuration files, to maintain the integrity of all data at rest.",
+   "mcp": "Encrypt sensitive MCP data at rest. This includes server caches, vector stores, file systems exposed by tools and any stored OAuth tokens or session data for HTTP servers. Protect configuration files that may contain authorization metadata, OAuth client credentials, or capability declarations. Store OAuth client secrets and API keys in a secrets manager, not in plaintext configuration files, and restrict filesystem permissions on capability and configuration declarations."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -255,6 +260,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

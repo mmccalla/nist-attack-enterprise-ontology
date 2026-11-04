@@ -4,7 +4,7 @@
  "id": "CIS-17.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Conduct AI-inclusive incident response exercises to validate readiness and clarify cross-team responsibilities. Exercises should incorporate realistic model-specific threats (e.g., injection attempts, data contamination, misuse of tool invocation) and help teams practice coordination between security, data science, and application groups.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Include MCP scenarios in tabletop exercises and ensure lessons learned feed back into registry governance, monitoring, and authorization policy. Threat scenarios may include tool poisoning response, prompt injection handling, and data exfiltration through MCP channels.\r\n\r\nTraining exercises should include simulating a server compromise requiring stdio termination and Streamable HTTP session invalidation, testing token revocation workflows under time pressure, and validating that responders can identify MCP-specific indicators of compromise in logs, including anomalous tool call sequences and unexpected resource access patterns. Coordinate exercises across security operations, AI/ML teams, and MCP server owners."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

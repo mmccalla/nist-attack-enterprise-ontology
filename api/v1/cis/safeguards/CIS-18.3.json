@@ -4,7 +4,7 @@
  "id": "CIS-18.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Prioritize and remediate findings from AI-specific penetration tests and red team exercises. Addressing identified weaknesses prevents real-world attackers from exploiting the same vulnerabilities to compromise AI systems or extract sensitive data.",
+   "agent": "Remediate findings and update agent design. Address vulnerabilities found during agent penetration tests, such as improving prompts, tool definitions, memory protections, retrieval pipelines, and policy enforcement layers. Incorporate findings into future development cycles.",
+   "mcp": "Address weak OAuth configurations, missing human-in-the-loop (HITL) confirmations, inadequate tool parameter validation, and logging deficiencies. Remediate authorization bypass paths, tool poisoning vectors, and prompt injection risks. Correct DNS rebinding, session fixation, and JSON-RPC compliance issues."
+  },
   "control_title": "Penetration Testing",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -370,6 +375,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

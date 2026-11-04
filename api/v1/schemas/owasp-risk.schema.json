@@ -57,6 +57,29 @@
     "type": "string",
     "pattern": "^AML[.]T[0-9]{4}([.][0-9]{3})?$"
    }
+  },
+  "title_licence": {
+   "type": "object",
+   "description": "Present when the title has a licence other than the project licence (OWASP MCP Top 10: CC BY-NC-SA 4.0). Keep the attribution with the title.",
+   "properties": {
+    "licence": {
+     "type": "string"
+    },
+    "licence_url": {
+     "type": "string",
+     "pattern": "^https://creativecommons\\.org/"
+    },
+    "attribution": {
+     "type": "string",
+     "minLength": 1
+    }
+   },
+   "required": [
+    "licence",
+    "licence_url",
+    "attribution"
+   ],
+   "additionalProperties": false
   }
  },
  "required": [

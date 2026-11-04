@@ -110842,7 +110842,7 @@ data:catalogue_owasp-mcp-top10 a :ThreatCatalogue ;
     rdfs:label "OWASP MCP Top 10" ;
     dcterms:license "CC BY-NC-SA 4.0" ;
     dcterms:source <https://owasp.org/www-project-mcp-top-10/> ;
-    rdfs:comment "Only IDs and links: the NonCommercial licence does not permit copying titles into this CC BY 4.0 project." ;
+    rdfs:comment "IDs and links only in this file. The exact titles are in owasp-mcp-top10.json, under their own licence (CC BY-NC-SA 4.0, decision D30)." ;
     prov:wasDerivedFrom data:owaspGenaiExtract ;
     :catalogueDomain "owasp" ;
     :catalogueVersion "2026-11-02" .
@@ -113413,7 +113413,7 @@ data:owaspGenaiExtract a :ReferenceDataset ;
     dcterms:source <https://genai.owasp.org/> ;
     dcterms:title "OWASP GenAI Security Project lists (curated extract)" ;
     owl:versionInfo "2026-11-02" ;
-    :sha256 "f26a38d7a81fdf4766e7ad99639836414c4b91f122a91d98217fb9ae4e00ae69" .
+    :sha256 "215b8b0a83c098a1af1bb6d8759e00d918d22274856fb0e756e045f39149f4f8" .
 
 data:tactic_TA0008 a :Tactic ;
     skos:inScheme :TacticScheme ;

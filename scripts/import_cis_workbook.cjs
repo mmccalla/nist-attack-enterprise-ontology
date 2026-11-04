@@ -1,5 +1,6 @@
 // Writes data/sources/cis-controls-8.1.2.json from a CIS Controls 8.1.2 workbook that the owner downloaded from CIS.
-// Exact CIS text only, unchanged: Control and Safeguard titles, asset classes, security functions, Implementation Groups.
+// Exact CIS text only, unchanged: Control and Safeguard titles, asset classes, security functions, Implementation Groups and the
+// AI LLM, AI Agent and MCP guidance of the AI Guidance workbook.
 // The file has its own licence (CC BY-NC-ND 4.0, decision D29). The workbook itself is not in the repository.
 // Usage: node scripts/import_cis_workbook.cjs <workbook.xlsx> <retrieved YYYY-MM-DD>
 const fs = require("node:fs");
@@ -13,8 +14,9 @@ const bytes = fs.readFileSync(file);
 const byId = (a, b) => a.localeCompare(b, "en", {numeric: true});
 C.readCisFile(bytes).then(r => {
   if (r.version !== "8.1.2") throw new Error(`expected CIS Controls 8.1.2, found ${r.version}`);
+  for (const [id, s] of Object.entries(r.safeguards)) if (s.aiLlm === undefined || s.aiAgent === undefined || s.mcp === undefined) throw new Error(`${id} has no AI guidance columns`);
   const out = {
-    title: "CIS Critical Security Controls v8.1.2: Control and Safeguard titles, asset classes, security functions and Implementation Groups",
+    title: "CIS Critical Security Controls v8.1.2: Control and Safeguard titles, asset classes, security functions, Implementation Groups and AI guidance (AI LLM, AI Agent, MCP)",
     publisher: "Center for Internet Security, Inc. (CIS)",
     licence: "CC BY-NC-ND 4.0",
     licence_url: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
@@ -22,7 +24,8 @@ C.readCisFile(bytes).then(r => {
     source: {workbook: path.basename(file).replace(/^[0-9a-f]{8}-/, ""), sheet: r.sheet, sha256: crypto.createHash("sha256").update(bytes).digest("hex"), retrieved},
     controls: Object.fromEntries(Object.entries(r.controls).sort(([a], [b]) => byId(a, b))),
     safeguards: Object.fromEntries(Object.entries(r.safeguards).sort(([a], [b]) => byId(a, b)).map(([id, s]) =>
-      [id, {title: s.title, asset_class: s.assetType, security_function: s.securityFunction, implementation_groups: s.ig}])),
+      [id, {title: s.title, asset_class: s.assetType, security_function: s.securityFunction, implementation_groups: s.ig,
+            ai_guidance: {llm: s.aiLlm, agent: s.aiAgent, mcp: s.mcp}}])),
   };
   fs.writeFileSync(path.join(__dirname, "..", "data", "sources", "cis-controls-8.1.2.json"), JSON.stringify(out, null, 1) + "\n");
   console.log(`wrote ${Object.keys(out.controls).length} Controls and ${Object.keys(out.safeguards).length} Safeguards`);

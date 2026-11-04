@@ -4,7 +4,7 @@
  "id": "CIS-14.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Train staff to recognize social engineering attacks that leverage AI-generated content, such as deepfakes or convincing phishing emails. AI tools make social engineering more sophisticated; specialized training is needed to help employees identify these advanced threats and avoid manipulation.",
+   "agent": "Train users to treat Prompt Injection as social engineering targeting the agent. Users must scrutinize agent outputs for signs that the agent has been tricked by untrusted content into ignoring its instructions. Agents processing external data (e.g., emails, websites) are vulnerable to Indirect Prompt Injection, a form of phishing where the agent, not the human, is the victim, tricking it into executing malicious commands on the user’s behalf.",
+   "mcp": "Train staff to recognize MCP social engineering vectors including malicious server installation requests, misleading tool descriptions, rug pull attacks, registry typosquatting, and lookalike server names. Include insider risk scenarios such as covert tool creation and data egress via tool outputs."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

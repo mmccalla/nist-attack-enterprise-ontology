@@ -4,7 +4,7 @@
  "id": "CIS-14.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Train users on the risks of accessing AI services or transmitting training data over unsecured public networks. Prevents interception of sensitive AI data and credentials when employees are working remotely or traveling, thus protecting confidentiality.",
+   "agent": "Train users that agents connecting to free or unvetted external tools (e.g., public weather APIs, unverified MCP servers) can expose the agent’s internal memory and reasoning trace to third-parties. Agents often send their entire conversation history (i.e., context window) to tools to get a result. Connecting an agent to an insecure or malicious tool endpoint effectively exfiltrates the entire session’s sensitive data to that provider.",
+   "mcp": "Train remote users and administrators on the risks of operating MCP tooling over insecure networks, including conducting OAuth authorization flows,\r\nadministering gateways, and developing stdio servers on untrusted connections. Token interception and session hijacking are realistic risks for MCP operations performed over public or uncontrolled networks; Virtual Private Network (VPN) or Zero Trust Network Access (ZTNA) use must be enforced before accessing internal MCP servers, gateways, or authorization infrastructure remotely."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-17.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Conduct post-incident reviews focusing on data sources, model changes, prompt changes, policy changes, tool usage, and gaps in monitoring. These reviews should mandate that these assets, at a minimum, are preserved for review:\r\n▪ Prompts/policies versions\r\n▪ Model versions and hashes\r\n▪ RAG corpus snapshots\r\n▪ Vector database logs/snapshots\r\n▪ Gateway logs\r\n▪ Provider admin/audit logs",
+   "agent": "Investigate root causes for agent incidents. Analyze the chain of events leading to the incident, including tool outputs, memory state, retrieval content, reasoning traces, prompt configurations, and policy decisions. Determine whether issues stemmed from an agent system-level issue, such as malicious input, misconfiguration, or corrupted memory, or from larger control framework issues such as gaps in monitoring, policy enforcement, development processes, tool design, or model behavior. Integrate lessons learned into future guardrails, prompts, and agent architectures",
+   "mcp": "Analyze the chain of events leading to the incident, including tool invocations and parameters, resource access patterns, capability changes, authorization decisions, and session activity. Determine whether the incident stemmed from malicious input such as tool poisoning or prompt injection, misconfiguration of servers or authorization policies, compromised dependencies, or gaps in monitoring and policy enforcement. Identify shortcomings in detection coverage, containment speed, and evidence availability.\r\n\r\nIntegrate lessons learned into playbooks, detection rules, authorization policies, server governance processes, and SDLC release gates so that confirmed attack paths are blocked at the development and approval stage before the next capability addition or specification upgrade introduces them again."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]
