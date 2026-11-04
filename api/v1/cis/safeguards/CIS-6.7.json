@@ -4,7 +4,7 @@
  "id": "CIS-6.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Centralize access control decisions for AI resources through a unified policy engine or identity management system (e.g., SSO). This ensures consistent enforcement of security policies across diverse AI tools and platforms, preventing coverage gaps where access rules might be misconfigured locally.",
+   "agent": "Manage agent identities via central directory services or single sign-on (SSO), avoiding scattered local credentials. Agent identities should not exist as “ghost” accounts scattered across local configuration files or proprietary tool databases. Instead, they must be provisioned and managed within the enterprise’s central directory service (e.g., Active Directory, Lightweight Directory Access Protocol (LDAP), or Identity Provider (IdP)) just like human employees. This centralization ensures that agents inherit global security policies, such as password complexity, rotation schedules, and immediate suspension capability, allowing security teams to audit and control agent access through a single pane of glass rather than attempting to manage disparate credentials across the ecosystem.",
+   "mcp": "Use gateway-based authorization to centralize policy enforcement, logging, and OAuth flow management. Consolidate authorization through gateways rather than implementing separate OAuth logic per server. Gateways can enforce consistent Origin validation, rate limiting, and session management. Gateways should support deny-by-default policy and a rapid kill switch to disable high-risk tools or servers during investigation."
+  },
   "control_title": "Access Control Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

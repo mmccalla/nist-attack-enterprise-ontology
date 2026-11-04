@@ -4,7 +4,7 @@
  "id": "CIS-3.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Track network segments and storage systems used to host or serve models, including specialized hardware, inference clusters, dedicated GPU nodes, and model artifact storage. Model data and runtime state may reside across distributed storage systems and network zones. Mapping these ensures proper segmentation, backup, access control, and monitoring.",
+   "agent": "Document all retrieval sources, vector stores, indexing pipelines, document loaders, and embedding services used by agents. Track where retrieval content originates and which agents may access it.",
+   "mcp": "Document end-to-end data flows from tool invocations and resource retrievals through back-end systems into model context. Map servers to their data sources and identify tools that can access sensitive data, noting where content enters prompts. Flag high-risk sources and record resource annotations, including MCP metadata such as audience and priority that indicate intended consumers and handling precedence. Capture transfers outside the enterprise and align retention and deletion with policy.\r\n\r\nDocument where content enters prompts and context and which controls enforce classification, redaction, and retention at each hop. Treat metadata (e.g., audience and priority) as handling signals, not as authorization; enforce access with identity and policy."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

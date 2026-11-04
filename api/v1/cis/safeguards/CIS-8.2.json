@@ -4,7 +4,7 @@
  "id": "CIS-8.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Log all inference traffic, life cycle events, data access, and multi-modal inputs with granular metadata. Comprehensive logging is the backbone of AI forensics. API logs with strict identity attribution reveal abuse patterns, while recording training and fine-tuning events ensures accountability for model evolution and behavioral drift. Crucially, monitoring access to underlying assets, such as training datasets and vector stores, is the only way to detect data poisoning or exfiltration attempts early. Furthermore, as models expand into multi-modal capabilities, logging strategies must adapt to capture images and audio (via hashing or metadata) without violating privacy rules, recognizing that these opaque artifacts can bypass standard text-based inspection tools.",
+   "agent": "Log agent access decisions by recording agent tool calls, data accesses, authorization decisions, and attempted policy violations.",
+   "mcp": "Collect audit logs for MCP initialization, capability negotiation, tool invocation, resource retrieval, prompt expansion, OAuth token events, session life cycle, and JSON-RPC errors. Include user identity where available and MCP client identity. Capture the strongest available identity signal per session and update logging as client identity mechanisms mature.\r\n\r\nServers that declare the logging capability must emit structured notifications with severity and logger names. Log capability baselines (tools, resources, prompts) at initialization and any subsequent capability changes as high-signal audit events."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

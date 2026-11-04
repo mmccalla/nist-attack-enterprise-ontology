@@ -4,7 +4,7 @@
  "id": "CIS-14.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Train employees to recognize and report AI-specific security incidents, such as unexpected model behavior or potential data leaks. Rapid reporting enables faster incident response, minimizing the damage caused by AI-related security breaches.",
+   "agent": "Ensure staff know how to identify suspicious agent behavior or misuse and how to escalate incidents involving agent actions, tool misuse, or data exposure.",
+   "mcp": "Train staff to recognize and report MCP-specific incidents including unusual tool behavior, OAuth phishing, prompt injection attempts, and unauthorized server access. Include detection and reporting of shadow MCP use such as unregistered servers and unapproved capability files."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

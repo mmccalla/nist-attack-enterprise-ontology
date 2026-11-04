@@ -4,7 +4,7 @@
  "id": "CIS-14.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Educate users and enforce policy prohibiting entry of sensitive or regulated data into unapproved AI web interfaces. Policies must clearly differentiate between sanctioned enterprise AI endpoints and consumer AI websites, and users must understand that “just trying something” in a public AI chat can constitute a data breach.",
+   "agent": "Educate users that agents ignore Need to Know boundaries unless explicitly constrained. An agent with database access will retrieve all context it deems relevant, potentially surfacing sensitive data the user shouldn’t see. Agents lack human discretion, and they often treat all accessible data as context for their reasoning loop, leading to “confused deputy” scenarios where the agent extracts and exposes confidential data to fulfill a benign user request.",
+   "mcp": "Train workforce on MCP-specific unintentional exposure paths: evaluating and limiting OAuth scope grants at consent time, recognizing when tool outputs containing sensitive data are entering model context or logs, and avoiding copying MCP artifacts such as tool outputs and resource payloads to unauthorized storage or collaboration platforms.\r\n\r\nTraining should be role-differentiated, as administrators approving OAuth grants require different emphasis than developers handling tool outputs or end users interacting with MCP-enabled applications."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

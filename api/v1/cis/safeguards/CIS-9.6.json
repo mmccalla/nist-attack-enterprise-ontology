@@ -4,7 +4,7 @@
  "id": "CIS-9.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "",
+   "agent": "Block dangerous file downloads and enforce strict sanitization of active content in retrieved data. Agents act as autonomous retrieval systems, often downloading files or scraping web pages without human oversight. This creates a direct pipeline for malware delivery. Controls must strictly block the download of high-risk file types (e.g., executables, archives, scripts) that are not critical to the business function. Furthermore, for allowed file types, such as HTML or PDF, the system must enforce rigorous content sanitization, stripping out active components like JavaScript, embedded objects, or tracking pixels before the content is processed by the agent. This prevents adversaries from using “active content” attacks to execute code within the agent’s runtime or hijack its session.",
+   "mcp": "No Additional MCP Guidance"
+  },
   "control_title": "Email and Web Browser Protections",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -206,6 +211,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

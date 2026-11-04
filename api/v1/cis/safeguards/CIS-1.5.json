@@ -4,7 +4,7 @@
  "id": "CIS-1.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Focus passive discovery on parsing application and cloud logs for model interaction signatures, since AI softwareassets rarely generate the distinct network artifacts captured by traditional DHCP listeners. LLMs, especially LLMs used through APIs from major SaaS providers of AI services, can be a data protection risk and may only show up in their interactions with other systems since they are changing so fast that active discovery may not have methods to probe them.",
+   "agent": "Deploy passive network monitoring to detect traffic patterns indicative of agent communication, such as high-frequency API calls to model endpoints, MCP servers, or vector stores. Passive discovery helps identify “silent” or unmanaged agents that do not respond to active scans but are actively communicating with external tools or internal data systems.",
+   "mcp": "Passive network analysis identifies MCP communications across enterprise segments. Focus on session initialization and capability negotiation messages to confirm exposed server features. Monitor authentication and authorization events associated with MCP access.\r\n\r\nAlert on unknown or unauthorized MCP endpoints and on unusual volumes or sequences of tool invocation. Alert on anomalous tool invocation sequences (new tool names, unusual call order, high-frequency bursts), and on authentication failures that indicate enumeration or replay."
+  },
   "control_title": "Inventory and Control of Enterprise Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

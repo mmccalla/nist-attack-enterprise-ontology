@@ -4,7 +4,7 @@
  "id": "CIS-16.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Isolate development, test, staging, and production environments, with defined steps for reviewing and approving changes before they move into production. Separation prevents accidental exposure of sensitive data in development/testing environments and prevents unverified models from entering production without review.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Maintain separate MCP environments for production and non-production use, including distinct server registries, gateway configurations, authorization server instances or scopes, and credential sets. Prevent non-production servers from accessing production data sources or authorization paths. Use staging environments to evaluate third-party servers and specification upgrades before production deployment."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -642,6 +647,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

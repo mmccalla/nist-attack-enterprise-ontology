@@ -4,7 +4,7 @@
  "id": "CIS-2.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Treat model weights (e.g., Llama, Mistral) as software artifacts that require a clear line of support to be considered authorized for use. This support must be established through either a commercial vendor contract or a formal internal enterprise support program that has technically and financially evaluated specific open-weight or OSS models. Commercial SaaS agreements typically do not extend to self-hosted open models (e.g., Google’s Gemma or OpenAI’s gpt-oss series), even if the open model comes from the vendor you have the commercial agreement with. Models lacking a designated external or internal support path are considered unsupported; relying on these artifacts leaves the enterprise vulnerable to unpatched security flaws, performance degradation, and sudden loss of compatibility with inference runtimes.",
+   "agent": "Remove or update unsupported frameworks, outdated memory libraries, deprecated plug-ins, or obsolete SDKs. Ensure that agents do not rely on discontinued or vulnerable software components.",
+   "mcp": "Use only supported MCP software. Verify active maintenance, vulnerability handling, and update cadence for servers, SDKs, and gateways. Migrate unsupported components to supported alternatives. Track protocol and transport support as part of life cycle management and ensure authorization features required by your deployment pattern are supported and tested.\r\n\r\nDefine an enterprise-supported baseline for MCP spec versions and SDK versions and block production deployments outside this baseline unless an exception is formally approved with documented compensating controls and a defined expiry date."
+  },
   "control_title": "Inventory and Control of Software Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

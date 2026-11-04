@@ -4,7 +4,7 @@
  "id": "CIS-11.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain an isolated (offline or immutable) copy of AI backups to protect against ransomware and destructive attacks. This ensures that a clean, uncorrupted copy of data is available for recovery even if the primary network is compromised or data is encrypted by attackers.",
+   "agent": "Maintain isolated, immutable backups of critical agent memory and configuration data. Protects against ransomware or destructive attacks targeting agent knowledge bases; isolated backups ensure recovery is possible even if the primary environment is compromised.",
+   "mcp": "Maintain isolated backup copies of MCP configurations, authorization policies, and registry state in locations not directly accessible from production MCP infrastructure. Store these backups in securely managed, versioned, and integrity-verified locations to ensure the MCP environment can be accurately and safely restored after an incident."
+  },
   "control_title": "Data Recovery",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -243,6 +248,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

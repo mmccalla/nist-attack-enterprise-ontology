@@ -4,7 +4,7 @@
  "id": "CIS-14.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Educate staff on the importance of keeping AI tools and local environments updated and how to report issues. Ensures that vulnerabilities in decentralized AI tools, such as local LLM runners, are identified and addressed promptly, reducing the attack surface.",
+   "agent": "Train staff to recognize agent drift or tool failure as potential security indicators, not just bugs. An agent failing to use a safety tool or bypassing a guardrail may indicate a compromised runtime. In autonomous systems, a missing update isn’t just an unpatched OS, it’s an agent running an outdated system prompt or deprecated tool definition that lacks current safety constraints, leaving it vulnerable to known jailbreaks.",
+   "mcp": "Train teams operating MCP servers, gateways, and clients to recognize and report pending security updates to MCP SDKs, JSON-RPC libraries, OAuth libraries, and server runtimes. MCP SDK updates can silently change authorization semantics, fix token validation behavior, or patch capability negotiation logic without obvious external symptoms; personnel who do not know to monitor MCP-specific advisories will run vulnerable components indefinitely."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-3.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Retrieved content and long-term memory act as “trusted inputs” that can bypass other controls; unauthorized access or poisoning of these stores allows attackers to manipulate model behavior, exfiltrate sensitive knowledge, or permanently embed malicious instructions. Enforce strict filtering and sanitization on all content retrieved for the model context window from sources such as AI context repositories, including vector databases, retrieval indexes, and persistent memory stores. Ensure that retrieved text is governed by the same classification rigor as the original source before it is provided as an input vector.",
+   "agent": "Enforce strict least-privilege boundaries for agent actions and apply granular Access Control Lists (ACLs) to all memory stores. Agents effectively act as digital employees; their access to tools, APIs, and data sources must be explicitly bounded by policy to prevent any form of unrestricted or overly broad authority. Simultaneously, the data the agent generates, its working memory, vector indexes, and interaction history, accumulates highly sensitive context. These memory repositories must be protected by rigorous ACLs and retention limits to prevent this sensitive “thought process” data from persisting indefinitely or being accessed by unauthorized entities, such as other agents or lower-privileged users.",
+   "mcp": "Enforce access control server-side (and/or at the gateway) for each tool and resource using an ACL scoped by resource, action, and authenticated identity. For Streamable HTTP, validate identity and claims, including scopes and audience, and enforce the ACL so that only permitted principals can act on protected resources. For stdio, bind tool and resource access to the OS identity and restrict file roots and environment access by policy."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -83,6 +88,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

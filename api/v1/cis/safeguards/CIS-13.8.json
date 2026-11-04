@@ -4,7 +4,7 @@
  "id": "CIS-13.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Deploy an IPS to inspect traffic to and from AI environments for known exploit signatures and malicious payloads. An IPS actively blocks network-based attacks against LLM vulnerabilities before they can reach and compromise the target systems.",
+   "agent": "Deploy IPS or equivalent cloud-native threat detection and prevention to agent servers, serverless runtimes, containers, and edge devices. Detect and prevent exploitation attempts against tool adapters, browsers, interpreters, or agent orchestration logic. Enable automated or manual containment for agent runtimes that exhibit confirmed malicious activity. Example implementations include blocking outbound traffic, pausing the agent, rotating credentials, or isolating affected compute environments.",
+   "mcp": "Deploy network-based intrusion prevention to actively block detected MCP traffic anomalies. Apply detection rules from Safeguard 13.3 in prevention mode where confidence levels support inline blocking. For Streamable HTTP traffic, gateway-based enforcement provides the most practical inline prevention point.\r\n\r\nNot all commercial NIPS products include MCP-specific signatures; development of custom prevention rules and reliance on application-layer controls (see Safeguard 13.10) for protocol-level enforcement may be needed."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -993,6 +998,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

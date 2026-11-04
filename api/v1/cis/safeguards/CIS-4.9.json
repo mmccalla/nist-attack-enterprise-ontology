@@ -4,7 +4,7 @@
  "id": "CIS-4.9",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Use enterprise DNS and protect resolution paths for model endpoints, model registries, and dependency sources. Alert on suspicious AI-related domains.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Configure all assets running MCP hosts or clients to use enterprise-managed or trusted DNS resolvers. Untrusted DNS can redirect MCP clients to malicious servers or substitute illegitimate authorization server discovery endpoints, undermining the OAuth authorization chain before a connection is established.\r\n\r\nDNS integrity is a prerequisite for secure server discovery, token issuance, and capability negotiation in Streamable HTTP deployments. For deployments that use registries or dynamic server discovery, treat DNS integrity as part of the discovery trust chain and monitor for unexpected resolution changes."
+  },
   "control_title": "Secure Configuration of Enterprise Assets and Software",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -115,6 +120,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

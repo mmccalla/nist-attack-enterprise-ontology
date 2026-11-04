@@ -170,7 +170,11 @@ const PROPS = new Map(DATA.schema.properties.map(p => [p.id, p]));
 /* Exact CIS Controls 8.1.2 titles (CC BY-NC-ND 4.0, D29): shown as the subtitle of each Safeguard and CIS Control node. */
 const CIS_TEXT = DATA.cis;
 const CIS_ATTRIBUTION = `CIS Critical Security Controls&reg; v8.1.2 &copy; Center for Internet Security, Inc., <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="noopener">CC BY-NC-ND 4.0</a>. Exact text. Non-commercial use only. See <a href="https://www.cisecurity.org/controls/" rel="noopener">cisecurity.org/controls</a> for the current guidance.`;
+/* Exact OWASP MCP Top 10 titles (CC BY-NC-SA 4.0, D30). */
+const MCP_TEXT = Object.fromEntries(DATA.owaspMcp.items.map(i => [i.id, i]));
+const MCP_ATTRIBUTION = `OWASP MCP Top 10 (2025) &copy; OWASP Foundation, <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener">CC BY-NC-SA 4.0</a>. Exact titles. Non-commercial use only.`;
 for (const n of NODES) {
+  if (n.t === "OwaspRisk" && MCP_TEXT[n.l]) { n.s = MCP_TEXT[n.l].title; n.p["source url"] = MCP_TEXT[n.l].url; }
   if (n.t === "CisSafeguard" && CIS_TEXT.safeguards[n.l]) n.s = CIS_TEXT.safeguards[n.l].title;
   if (n.t === "CapabilityGroup" && n.id.startsWith("cisgroup_") && CIS_TEXT.controls[n.l]) n.s = CIS_TEXT.controls[n.l];
 }
@@ -432,7 +436,7 @@ function showNode(id) {
   }
   if (n.t === "OwaspRisk") {
     if (n.p["source url"]) extra += `<p><a href="${esc(n.p["source url"])}" rel="noopener">Open ${esc(n.l)} on the OWASP site</a></p>`;
-    extra += `<p class="note">From ${esc(n.p.catalogue ?? "an OWASP list")}. Links to ATLAS are the ones OWASP itself publishes. OWASP content: CC BY-SA 4.0 (LLM, Agentic) or CC BY-NC-SA 4.0 (MCP, IDs only).</p>`;
+    extra += `<p class="note">From ${esc(n.p.catalogue ?? "an OWASP list")}. Links to ATLAS are the ones OWASP itself publishes. OWASP content: CC BY-SA 4.0 (LLM, Agentic).${MCP_TEXT[n.l] ? ` Title: ${MCP_ATTRIBUTION}` : ""}</p>`;
   }
   if (n.t === "AttackTechnique") {
     if (n.p[":inAttackEnterprise"] === "true") extra += `<p><a href="https://ctid.mitre.org/mappings/attack/attack-16.1/domain-enterprise/techniques/${encodeURIComponent(n.l)}/" rel="noopener">Open ${esc(n.l)} in CTID Mappings Explorer</a> <span class="note">(all CTID mappings on ATT&amp;CK 16.1, for example AWS, Azure, M365 and KEV)</span></p>`;
@@ -456,7 +460,13 @@ function showNode(id) {
   if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
   if (n.t === "NonMappableControlAssertion") extra += `<p class="note">The CIS source row marks this Safeguard as non_mappable. The row names no ATT&amp;CK technique.</p>`;
   if (n.t === "CisSafeguard" && CIS_USER?.safeguards[n.l]) { const sg = CIS_USER.safeguards[n.l]; extra += `<p><b>${esc(sg.title)}</b><br><span class="note">From your CIS file${CIS_USER.version ? ` (version ${esc(CIS_USER.version)})` : ""}: ${esc([sg.assetType, sg.securityFunction, sg.ig.join(" ")].filter(Boolean).join(", "))}. This text stays on this device.</span></p>`; }
-  if (n.t === "CisSafeguard" && CIS_TEXT.safeguards[n.l]) { const t = CIS_TEXT.safeguards[n.l]; extra += `<p class="note">${esc([t.asset_class, t.security_function, t.implementation_groups.join(" ")].filter(Boolean).join(", "))}. Title and attributes: ${CIS_ATTRIBUTION} The full Safeguard text is on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>.</p>`; }
+  if (n.t === "CisSafeguard" && CIS_TEXT.safeguards[n.l]) {
+    const t = CIS_TEXT.safeguards[n.l], gd = t.ai_guidance;
+    const block = (label, text) => `<h3>${label}</h3><p>${text ? esc(text) : '<span class="note">Empty in the CIS workbook.</span>'}</p>`;
+    extra += `<p class="note">${esc([t.asset_class, t.security_function, t.implementation_groups.join(" ")].filter(Boolean).join(", "))}. The full Safeguard text is on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>.</p>`
+      + `<div class="cis-ai">${block("CIS guidance for AI LLM systems", gd.llm)}${block("CIS guidance for AI agents", gd.agent)}${block("CIS guidance for MCP", gd.mcp)}</div>`
+      + `<p class="note">Title, attributes and AI guidance: ${CIS_ATTRIBUTION} The guidance comes from the CIS Controls v8.1.2 AI Guidance workbook. Text in this block is from CIS, not from this project.</p>`;
+  }
   if (n.t === "CisSafeguard") extra += `<p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Claims on techniques that are also in ${esc(M.source.attackVersion)} share the technique node by STIX id.</p><div class="row"><a class="btn" href="#gaps-cis/${encodeURIComponent(n.l)}">Open in CIS gap analysis</a></div>`;
   const nb = neighbourhood(id);
   if (n.t === "SecurityControl" || n.t === "ControlBaseline") {
@@ -549,7 +559,7 @@ function showAbout() {
       <li>MITRE ATLAS: Copyright 2021-2026 MITRE, Apache 2.0.</li>
       <li>CIS Controls&reg; is a registered trademark of the Center for Internet Security. ${CIS_ATTRIBUTION} The graph, claims and other exports hold only CIS IDs. This tool does not assess compliance with the CIS Controls.</li>
       <li>NIST SP 800-53, SP 800-53B and OSCAL content: NIST, public domain in the United States and CC0 1.0. No endorsement by NIST is implied.</li>
-      <li>OWASP Top 10 for LLM Applications 2025: OWASP GenAI Security Project, CC BY-SA 4.0.</li>
+      <li>OWASP Top 10 for LLM Applications 2025: OWASP GenAI Security Project, CC BY-SA 4.0. ${MCP_ATTRIBUTION}</li>
       <li>UCO: Apache 2.0. Graph browser: <a href="https://d3js.org">D3</a> 7.9.0, &copy; 2010-2023 Mike Bostock, ISC.</li>
       <li>No publisher above sponsors or endorses this tool.</li></ul>`;
   overview();
@@ -770,6 +780,7 @@ function showGapsAtlas(list) {
     <p class="note" id="atlas-status" aria-live="polite"></p>
     <h3>Download</h3><div class="row"><button class="btn" id="atlas-csv">Techniques CSV</button><button class="btn" id="atlas-recs-csv">Recommendations CSV</button></div>
     <div id="atlas-recs"></div>
+    <p class="note">CIS also gives guidance for AI LLM systems, AI agents and MCP for each CIS Safeguard (CIS Controls v8.1.2 AI Guidance workbook). Open a Safeguard from the CIS list, for example <a href="#n/cis_CIS-6.3">CIS-6.3</a>.</p>
     <p class="note">The "AI agent" flag is derived by this project from technique names. ATLAS mitigations are linked to techniques by ATLAS itself. A link shows that a mitigation can address a technique, not that it is effective.</p>`;
   const input = document.getElementById("atlas-input"), agentBox = document.getElementById("atlas-agent");
   const run = (updateHash = true) => {

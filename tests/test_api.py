@@ -200,7 +200,9 @@ def test_atlas_and_owasp_files_match_the_raw_sources():
     for item in llm["items"]:
         assert owasp[item["id"]]["related_atlas"] == sorted(item["related_atlas"]), item["id"]
     mcp = [d for d in owasp.values() if d["id"].startswith("MCP")]
-    assert len(mcp) == 10 and all(d["title"] is None for d in mcp), "MCP Top 10 titles must not be copied (CC BY-NC-SA)"
+    mcp_text = {i["id"]: i for i in json.loads((ROOT / "data" / "sources" / "owasp-mcp-top10.json").read_text())["items"]}
+    assert len(mcp) == 10 and all(d["title"] == mcp_text[d["id"]]["title"] and d["title_licence"]["licence"] == "CC BY-NC-SA 4.0" for d in mcp), \
+        "MCP Top 10 titles are exact and carry their CC BY-NC-SA 4.0 attribution (D30)"
 
 
 CIS_TEXT = json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8"))
@@ -259,3 +261,37 @@ def build_population_fetch_cis_metadata():
     import build_population  # noqa: PLC0415
 
     return build_population.fetch("cis")["metadata"]
+
+
+MCP_TEXT = json.loads((ROOT / "data" / "sources" / "owasp-mcp-top10.json").read_text(encoding="utf-8"))
+
+
+def test_mcp_titles_appear_only_where_their_licence_is_stated():
+    """OWASP MCP Top 10 titles (CC BY-NC-SA 4.0) stay out of the CC BY graph and exports (D30)."""
+    # A title that is also part of an ATLAS name (Apache 2.0) is a shared term, for example "Tool Poisoning".
+    atlas = " | ".join(t["name"] for t in sources().atlas_techniques.values()) + " | " + " | ".join(m["name"] for m in sources().atlas_mitigations.values())
+    titles = [i["title"] for i in MCP_TEXT["items"]]
+    assert len(titles) == 10 and MCP_TEXT["licence"] == "CC BY-NC-SA 4.0" and "Non-commercial use only" in MCP_TEXT["attribution"]
+    assert re.fullmatch(r"[0-9a-f]{40}", MCP_TEXT["source"]["commit"]) and re.fullmatch(r"[0-9a-f]{64}", MCP_TEXT["source"]["sha256"])
+    outputs = [ROOT / "llms.txt", ROOT / "data" / "population.ttl", ROOT / "data" / "sources" / "owasp-genai.json"]
+    outputs += [p for p in (ROOT / "exports").rglob("*") if p.is_file()] + [p for p in (ROOT / "api").rglob("*.json") if "/owasp/MCP" not in p.as_posix() and p.name != "index.json"]
+    for p in outputs:
+        text = p.read_text(encoding="utf-8")
+        found = [t for t in titles if len(t.split()) >= 2 and t in text and t not in atlas]
+        assert not found, f"{p.relative_to(ROOT)} holds an MCP Top 10 title outside its licensed places: {found[:2]}"
+    index = json.loads((API / "index.json").read_text())
+    assert all(o.get("title_licence") == "CC BY-NC-SA 4.0" for o in index["owasp_risks"] if o["id"].startswith("MCP"))
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert "OWASP MCP Top 10 (2025) &copy; OWASP Foundation" in html
+
+
+def test_cis_ai_guidance_is_exact_where_it_appears():
+    for p in (API / "cis" / "safeguards").glob("*.json"):
+        doc = json.loads(p.read_text())
+        assert doc["cis_text"]["ai_guidance"] == CIS_TEXT["safeguards"][doc["id"]]["ai_guidance"], p.name
+    with open(ROOT / "exports" / "cis-8.1.2-safeguards.csv", newline="", encoding="utf-8") as h:
+        rows = {r["safeguard_id"]: r for r in csv.DictReader(h)}
+    for sid, t in CIS_TEXT["safeguards"].items():
+        assert (rows[sid]["cis_ai_llm_guidance"], rows[sid]["cis_ai_agent_guidance"], rows[sid]["cis_mcp_guidance"]) == (t["ai_guidance"]["llm"], t["ai_guidance"]["agent"], t["ai_guidance"]["mcp"]), sid
+    filled = {k: sum(1 for t in CIS_TEXT["safeguards"].values() if t["ai_guidance"][k]) for k in ("llm", "agent", "mcp")}
+    assert filled == {"llm": 152, "agent": 153, "mcp": 153}

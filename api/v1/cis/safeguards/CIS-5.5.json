@@ -4,7 +4,7 @@
  "id": "CIS-5.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Inventory and track all service accounts used for automated model training, data pipelines, and API integrations. This should include all API keys, tokens, and other identity bearing assets that are used in non-human workflows. Service accounts and similar non-human identities often have high privileges and long lifespans; tracking them prevents unauthorized automation from accessing or exfiltrating sensitive data and helps identify anomalous machine behavior.",
+   "agent": "Manage tool and API credentials used by agents. Ensure any credentials used to invoke tools, APIs, or MCP capabilities are managed securely. Bind credentials to specific capabilities, rotate them regularly, and store them using secure mechanisms.",
+   "mcp": "Inventory all service accounts supporting MCP deployments: accounts used by server processes to access backend APIs, gateways connecting to authorization servers, automated deployment processes, and server-to-server operations such as sampling requests. For each account, record the business purpose, account owner or responsible department, associated components, systems accessed, credential rotation schedule, authorized scopes, environment (e.g., development, staging, production), the tools and resources the account is authorized to access, and the approved secrets system or location used to store credentials. Cross-environment credential reuse must be explicitly prohibited.\r\n\r\nConduct reviews at least a quarterly cadence to verify that each account remains necessary, correctly scoped, and aligned with current operational requirements. Reduce privileges for high-impact tool accounts between reviews when scope drift is detected rather than waiting for the next scheduled cycle."
+  },
   "control_title": "Account Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

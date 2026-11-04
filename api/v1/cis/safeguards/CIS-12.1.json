@@ -4,7 +4,7 @@
  "id": "CIS-12.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "No Additional AI LLM Guidance",
+   "agent": "Treat software-defined AI networking components, specifically AI Gateways (L7 proxies) and Container Network Interfaces (CNIs), as critical infrastructure. Maintain strict, rapid patch cycles for these layers to mitigate protocol-level vulnerabilities common in these rapidly evolving, open-source network stacks.",
+   "mcp": "Maintain network infrastructure supporting MCP Streamable HTTP servers and gateways at current, vendor-supported versions. Ensure reverse proxies, load balancers, and TLS termination points support session management headers and OAuth authorization flows. Migrate legacy SSE servers to Streamable HTTP and replace components that cannot meet current transport requirements."
+  },
   "control_title": "Network Infrastructure Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -115,6 +120,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

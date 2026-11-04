@@ -4,7 +4,7 @@
  "id": "CIS-7.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Establish a process to continuously assess vulnerabilities in AI frameworks (e.g., PyTorch, TensorFlow), libraries, model dependencies, and SaaS services where LLMs are sourced. AI software stacks are complex and rapidly evolving; a formal process ensures that new vulnerabilities are identified and addressed systematically before they can be exploited.",
+   "agent": "Inventory vulnerability sources for agent components. Identify the sources of vulnerabilities affecting agent frameworks, tool adapters, memory systems, SDKs, and runtime environments. Track disclosure channels such as vendor advisories, package-manager feeds, Common Vulnerabilities and Exposures (CVE) databases, or upstream repositories.",
+   "mcp": "Implement vulnerability management for MCP servers, client libraries, OAuth implementations, JSON-RPC frameworks, and transport layers. Be aware of security advisories for MCP server runtimes, client SDKs, gateway plugins, specification updates, third-party server disclosures, and dependency vulnerabilities, and apply updates or compensating controls as issues are disclosed."
+  },
   "control_title": "Continuous Vulnerability Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

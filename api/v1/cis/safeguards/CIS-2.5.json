@@ -4,7 +4,7 @@
  "id": "CIS-2.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Validate ML frameworks and runtime environments to prevent unsafe loading or evaluation of untrusted code or model extensions. Some AI frameworks auto-discover operations or extensions; without validation, attackers may introduce malicious components or achieve arbitrary code execution.",
+   "agent": "Authorize and approve all agent stack components, including frameworks, memory, tools, and LLMs/SLMs, ensuring that dependencies reflect authorized, monitored services. Enforce controlled deployment via pipelines or container images to prevent ad-hoc library or plug-in installations on runtimes or endpoint devices. Promptly remove deprecated or unapproved software from runtimes to ensure only validated, allowlisted components exist within the agent’s execution boundary.",
+   "mcp": "Enforce an allowlist for MCP servers and tool wrappers using versioned entries with integrity verification, deny-by-default per Control 1. Install only from enterprise approved registries or vetted artifact repositories, block direct URL, personal registry, and local source installs in production, and verify signatures or hashes at intake and again at provisioning.\r\n\r\nAllowlisting must cover both the server artifact and the approved capability set; capability expansions are blocked until reviewed and promoted."
+  },
   "control_title": "Inventory and Control of Software Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -431,6 +436,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

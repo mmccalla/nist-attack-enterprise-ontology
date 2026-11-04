@@ -4,7 +4,7 @@
  "id": "CIS-16.9",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Train builders on AI-specific attack vectors and secure integration patterns, emphasizing guardrails and validation. Developers and data scientists often treat models as trusted components, unaware that input channels are vectors for prompt injection and output streams can carry malicious payloads. Technical staff must be trained to recognize these model-specific threats, such as extraction and leakage, and to implement “defensive programming” for AI. This includes mastering safe integration patterns where model outputs are never trusted implicitly but are instead subject to rigorous input validation, output filtering, and business logic guardrails. Without this specialized training, naive integrations will lack the necessary verification layers to prevent a compromised model from manipulating downstream systems.",
+   "agent": "Train developers on secure agent design and tool use. Ensure developers understand safe tool integration, prompt and policy design, memory handling, RAG boundaries, execution tool risks, and how to avoid embedding sensitive data in prompts or memory.",
+   "mcp": "Train developers building MCP servers, gateways, and tool handlers on secure coding practices specific to the protocol: OAuth 2.1 implementation including PKCE and token audience binding, safe JSON-RPC parsing and error handling, server-side authorization enforcement, confused-deputy risk patterns, and input validation for tool parameters. MCP server developers who lack this training will produce insecure authorization implementations regardless of surrounding policy controls."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

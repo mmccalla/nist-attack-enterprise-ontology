@@ -4,7 +4,7 @@
  "id": "CIS-14.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Incorporate AI-specific risks, such as prompt injection and data leakage, into the enterprise security awareness program. Educated users are the first line of defense; understanding AI risks helps prevent accidental data exposure and misuse of AI tools.",
+   "agent": "Provide training on risks of agent autonomy. Educate personnel about the risks associated with autonomous task execution, recursive loops, and tool-driven chain-of-actions. Emphasize when human review or overrides are required.",
+   "mcp": "Build role-based curricula aligned to MCP responsibilities such as server approver, tool publisher, registry maintainer, and incident responder. Track behavioral metrics including declined excessive scope requests, time to revoke risky consent, and completion of scenario-based labs. Refresh content when registry governance, capability policies, or specification versions change."
+  },
   "control_title": "Security Awareness and Skills Training",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

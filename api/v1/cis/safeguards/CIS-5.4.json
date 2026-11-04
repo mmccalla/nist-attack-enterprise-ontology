@@ -4,7 +4,7 @@
  "id": "CIS-5.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Restrict administrative access to AI infrastructure and model registries to dedicated accounts, separate from daily user or developer accounts. This prevents attackers who compromise a standard developer account from gaining full control over critical AI models and infrastructure, limiting the potential damage of a phishing attack.",
+   "agent": "Restrict administrative access to agent orchestration platforms and memory stores to dedicated admin accounts, distinct from standard user or agent identities. Prevents a compromised agent or user account from having full control over the agent ecosystem, limiting the potential damage of a privilege escalation attack.",
+   "mcp": "Use dedicated accounts for all administrative activities involving MCP infrastructure, including gateway configuration, authorization server administration, server registry management, and OAuth client registration. Administrative and operational privileges must be handled on entirely separate accounts. Protect configuration files that define server capabilities and authorization metadata to prevent unauthorized modification. Require MFA and privileged access management (PAM) controls for administrative accounts, including break-glass procedures with enhanced logging."
+  },
   "control_title": "Account Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -179,6 +184,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

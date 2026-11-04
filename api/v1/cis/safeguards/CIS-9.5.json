@@ -4,7 +4,7 @@
  "id": "CIS-9.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "While DMARC is not directly applicable to LLMs, DMARC reduces spoofing used to trick users into granting AI access, installing AI plugins, or sending sensitive data to fake AI portals and should be considered a protective layer to ensure LLM safety.",
+   "agent": "While DMARC is not directly applicable to AI Agents, DMARC reduces spoofing used to trick agents into granting malicious access, installing malware, or sending sensitive data to unauthorized destinations and should be considered a protective layer to ensure robust agent safety.",
+   "mcp": "Implement DMARC on enterprise email domains to reduce spoofed emails that target MCP administrators and users. Phishing campaigns may distribute malicious MCP server configuration files, direct recipients to install trojanized server packages, or impersonate internal teams to obtain OAuth consent approvals for unauthorized servers."
+  },
   "control_title": "Email and Web Browser Protections",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -141,6 +146,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

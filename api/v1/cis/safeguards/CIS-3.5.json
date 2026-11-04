@@ -4,7 +4,7 @@
  "id": "CIS-3.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Apply secure disposal policies to model-related artifacts. Implement secure deletion processes for model interaction logs, embeddings, cached outputs, and transient artifacts to ensure sensitive or residual content is irreversibly removed when no longer required.",
+   "agent": "Implement secure disposal processes for agent memory stores, vector databases, and cached retrieval content when no longer needed or when an agent is decommissioned. Residual data in vector stores or long-term memory can retain sensitive information indefinitely. Secure disposal prevents data recovery and leakage from retired agent systems.",
+   "mcp": "Securely delete server caches, sensitive logs, and temporary files. Clear OAuth tokens stored by HTTP servers. Remove session data such as `MCP-Session-Id` mappings. Ensure cleanup on normal shutdown and on failure paths for both stdio and Streamable HTTP deployments.\r\n\r\nClear refresh tokens and any stored client credentials where applicable. Use crash-safe deletion patterns or envelope encryption with key shredding for sensitive caches."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -179,6 +184,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

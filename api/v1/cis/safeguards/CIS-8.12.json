@@ -4,7 +4,7 @@
  "id": "CIS-8.12",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Integrate SaaS model API telemetry (if available) with network monitoring to detect suspicious or abnormal usage patterns. Provider-side logs often reflect rate limits, warnings, or policy issues. Correlating this data with network telemetry improves detection of misuse or compromise.",
+   "agent": "Collect and ingest logs from third-party agent platforms and model providers to maintain a complete audit trail. Provider logs contain essential visibility into the hosted portion of agent execution; without them, the enterprise has blind spots in agent activity and decision-making.",
+   "mcp": "Collect logs from third-party MCP servers, authorization servers, and cloud-hosted gateways. Logs support incident investigations and security monitoring. Verify service agreements include retention commitments and access procedures."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

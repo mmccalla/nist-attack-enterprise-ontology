@@ -4,7 +4,7 @@
  "id": "CIS-1.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "No Additional AI LLM Guidance",
+   "agent": "Scan all hosts discovered through DHCP for evidence of AI agent activity. Agents running in dynamic containerized environments may grab temporary IP addresses; DHCP logging provides a trail of where agent workloads have executed, aiding in asset tracking and incident investigation.",
+   "mcp": "DHCP logging is not a primary inventory signal for MCP stdio deployments; for network-based deployments, use gateway logs, service discovery inventories, and passive network monitoring to identify MCP endpoints."
+  },
   "control_title": "Inventory and Control of Enterprise Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

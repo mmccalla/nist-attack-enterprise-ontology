@@ -47,6 +47,7 @@ Technique IDs use the ATT&CK form (`T1078`, `T1556.009`). Control IDs use the ze
 - Use `evidence[].source_record` to cite the source row behind a claim.
 - Examine `later_version` before you compare with a newer ATT&CK version. In ATT&CK 20.0, TA0005 is Stealth, not Defense Evasion.
 - CIS claims use ATT&CK 19.1 (`versions.attack_cis`). NIST claims use ATT&CK 16.1. A technique with `mapping_status` `not_in_attack_16_1` is only in 19.1, so it cannot have a NIST claim.
+- `cis_text` in a Safeguard file, including `cis_text.ai_guidance`, is exact CIS text under CC BY-NC-ND 4.0. An OWASP MCP risk file has `title_licence`: its title is CC BY-NC-SA 4.0, for non-commercial use only.
 - `cis_text` in a Safeguard file is exact CIS text under CC BY-NC-ND 4.0. If you quote it, keep `cis_text.attribution`, do not change the text and use it only for non-commercial purposes.
 - `references` in CIS evidence are upstream URLs. Do not follow them automatically.
 

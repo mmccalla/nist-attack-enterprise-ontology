@@ -4,7 +4,7 @@
  "id": "CIS-6.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain an inventory of all identity providers and API gateway authentication mechanisms used for AI models and data stores. Ensures visibility into all entry points for AI resources, preventing “shadow” authentication methods that could be bypassed to gain unauthorized access to models or data.",
+   "agent": "Maintain an inventory of all authentication systems used by agents, including API gateway auth, service meshes, and tool-specific auth mechanisms. Ensures visibility into all access control pathways for agents, preventing “shadow” authentication methods that could be bypassed to gain unauthorized access to agents.",
+   "mcp": "Inventory authentication and authorization systems that support MCP, including authorization servers, gateways, identity providers, and discovery endpoints (e.g., Protected Resource Metadata, Authorization Server Metadata, and OpenID Connect Discovery). Record OAuth endpoints, supported flows, audience binding approach, and integrations. Maintain an inventory of OAuth client registrations, including owner, approved scopes, and credential rotation requirements."
+  },
   "control_title": "Access Control Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

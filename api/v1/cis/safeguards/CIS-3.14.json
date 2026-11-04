@@ -4,7 +4,7 @@
  "id": "CIS-3.14",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Monitor all LLM logging for indications of access to known sensitive data.",
+   "agent": "Log all instances where an agent accesses sensitive data stores, including vector databases, internal APIs, and regulated file systems. Agents can access data at high speed and scale; logging sensitive access provides the necessary audit trail to detect unauthorized data harvesting or policy violations by autonomous agents.",
+   "mcp": "Log tool and resource access with enough metadata for audit while avoiding sensitive content. Record tool or resource identifiers, identity, server, session, timestamp and request IDs. Capture full parameters only under defined workflows and protect those records accordingly.\r\n\r\nUse two-tier logging: metadata logs by default, and tightly controlled full-content capture only for approved investigations with elevated access, short retention, and audit trails."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

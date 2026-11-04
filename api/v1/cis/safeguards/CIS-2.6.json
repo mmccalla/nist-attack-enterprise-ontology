@@ -4,7 +4,7 @@
  "id": "CIS-2.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Allowlist/load-control for runtime libraries (CUDA, cuDNN, PyTorch extensions, kernel modules, native deps) and block unknown shared objects in model-serving processes.",
+   "agent": "Enforce allowlists for agent-related libraries, including specific versions of orchestration frameworks (e.g., LangChain), tool adapters, MCP clients and servers, and vector store clients. Agents often pull dependencies dynamically; unauthorized libraries can introduce supply-chain vulnerabilities or malicious tool capabilities that compromise the agent’s autonomy and security.",
+   "mcp": "Allowlist software libraries and package dependencies used by MCP components, including JSON-RPC frameworks, OAuth libraries, transport libraries, SDKs, and any native modules loaded into MCP server\r\nor client processes. Prefer reproducible builds and continuous integration (CI) enforcement that blocks unapproved dependency changes before artifacts are produced."
+  },
   "control_title": "Inventory and Control of Software Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -231,6 +236,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

@@ -4,7 +4,7 @@
  "id": "CIS-12.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Use dedicated, hardened workstations for administrative tasks on AI clusters and sensitive model infrastructure. Reduces the risk of admin credentials being stolen by malware on a general-purpose workstation and used to compromise critical AI systems.",
+   "agent": "Use dedicated admin workstations for managing production agent environments. Reduces the risk of credential theft or malware infection from general-purpose devices compromising high-privilege agent administration accounts.",
+   "mcp": "Use dedicated workstations for administration of MCP gateways, authorization servers, and server registries. These functions collectively control which tools and capabilities are available to all users and agents in a deployment, making them high-value targets. Compromise of an administrative workstation through credential theft, phishing, or a browser exploit on a general-purpose device can cascade into full gateway policy compromise. Administrative workstations used for these functions should not be used for email, browsing, or development work."
+  },
   "control_title": "Network Infrastructure Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -337,6 +342,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

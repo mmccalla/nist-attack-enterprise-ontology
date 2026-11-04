@@ -4,7 +4,7 @@
  "id": "CIS-13.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Monitor AI-related network traffic for anomalous patterns that may indicate model extraction, brute-force prompting, or data exfiltration. Model extraction activity often involves rapid, systematic, or repetitive queries. Network monitoring tools must detect these behaviors and correlate them with identities and systems.",
+   "agent": "Monitor agent network traffic for exploitation, lateral movement, and unauthorized egress. Agents introduce unique traffic patterns that require rigorous inspection via Network Intrusion Detection Systems (NIDS) or cloud-native equivalents. Security teams must configure these systems to detect threats across three specific vectors: Inbound exploitation attempts targeting vulnerable agent frameworks or tool adapters; East-West lateral movement where a compromised agent attempts to scan or probe internal memory systems and databases; and North-South anomalous egress indicating data exfiltration or communication with Command and Control (C2) servers. This network-level visibility is the final backstop to detect when an agent has been successfully weaponized, even if host-level logs are silenced.",
+   "mcp": "Deploy network-based detection to identify traffic anomalies affecting MCP infrastructure. Not all commercial products include MCP-specific signatures; develop custom rules to monitor for connection rate spikes, traffic to unauthorized destinations, and unencrypted traffic where TLS is required.\r\n\r\nContent-based detection of MCP protocol semantics requires application-layer inspection (see Safeguard 13.10)."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

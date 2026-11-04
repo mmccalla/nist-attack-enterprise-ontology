@@ -4,7 +4,7 @@
  "id": "CIS-8.11",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Review logs for adversarial interaction patterns, excessive errors, and unexpected behavioral drift. Behavioral signals, such as rapid sequences of adversarial prompts or excessive error rates, often serve as the earliest indicators of an active exploitation attempt, model extraction campaign, or automated probing for jailbreaks. Simultaneously, “silent” failures manifested as behavioral drift, where model outputs\r\ndegrade or bypass safety filters following updates, fine-tuning, or configuration changes can reveal unintentional side effects that introduce critical vulnerabilities. Treating these anomalies as security signals requires rigorous investigation to\r\ndistinguish between benign operational noise and malicious tradecraft, ensuring that both active attacks and passive degradation of safety posture are identified and remediated before they result in data leakage or service compromise.",
+   "agent": "Regularly review logs to detect identity misuse, behavioral anomalies, and unexpected decision paths. Agents operate with significant autonomy, making standard log reviews insufficient. Security teams must analyze logs not just for error rates, but for “behavioral drift.” This involves detecting anomalies in identity usage (e.g., unexpected privilege elevation or delegated access misuse) and operational logic (e.g., accessing sensitive memory retrieval paths or invoking tools in unapproved sequences). Unlike deterministic software, agents may “decide” to take high-risk actions that technically succeed but violate intent. Regular reviews are essential to identify these subtle patterns of misuse, hallucination, or prompt injection, allowing enterprises to tune access policies and interrupt potential “confused deputy” attacks before they escalate into full compromises.",
+   "mcp": "Conduct regular audit log reviews for MCP interactions to detect anomalies, unauthorized activity, and deviations from approved capabilities. Verify that logs contain validated data fields, appropriate severity levels, correlation identifiers, and structured JSON-RPC records. Confirm that logs exclude credentials, secrets, and PII."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

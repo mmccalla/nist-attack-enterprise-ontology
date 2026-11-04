@@ -4,7 +4,7 @@
  "id": "CIS-6.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Require MFA for administrative access to model registries, cloud-based AI consoles, and centralized orchestration platforms. Compromise of an administrative AI account can lead to total system takeover, including the ability to poison models, delete datasets, or incur massive compute costs.",
+   "agent": "Enforce MFA for all administrative actions within agent platforms, including policy changes and configuration updates. Protects critical agent governance functions from compromise, ensuring that only authorized and verified administrators can modify agent behavior or security settings.",
+   "mcp": "Require MFA for administrative access to MCP infrastructure, including gateway administration, authorization server configuration, server registry management, and OAuth client registration."
+  },
   "control_title": "Access Control Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -634,6 +639,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

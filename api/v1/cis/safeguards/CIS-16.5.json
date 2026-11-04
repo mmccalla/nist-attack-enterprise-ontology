@@ -4,7 +4,7 @@
  "id": "CIS-16.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enforce strict integrity verification for all training data, model weights, and runtime components. In the AI supply chain, data functions as code. Using unvetted datasets invites “poisoning” attacks where adversaries embed backdoors directly into model logic. Equally critical is the runtime environment; model weights and custom operators (e.g., PyTorch pickles) are often capable of executing arbitrary code upon loading. Therefore, the SDLC must enforce a rigorous “chain of trust” that validates the cryptographic integrity and provenance of every asset, from the raw fine-tuning corpora to the final inference binaries, ensuring that the application never loads compromised artifacts or malicious dynamic kernels.",
+   "agent": "Validate software integrity for agent components. Ensure agent frameworks, tool adapters, retrieval modules, and model clients are sourced from trusted repositories and validated through checksums, signatures, or supply-chain security controls. Apply software provenance checks where supported.",
+   "mcp": "Use current, actively maintained versions of third-party MCP components including server frameworks, client SDKs, JSON-RPC libraries, OAuth libraries, and transport dependencies. Obtain components only from trusted sources such as enterprise-approved registries or verified repositories. Monitor for upstream deprecation, maintainer abandonment, and known vulnerabilities. Replace unmaintained components before they become liabilities."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -89,6 +94,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

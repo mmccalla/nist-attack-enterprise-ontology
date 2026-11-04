@@ -4,7 +4,7 @@
  "id": "CIS-17.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Define specific roles and responsibilities for AI incident response, including data scientists, legal representatives, and privacy officers. Ensures a coordinated effort where all aspects of an AI incident (e.g., technical, legal, reputational) are addressed efficiently by the appropriate stakeholders.",
+   "agent": "Define roles and responsibilities for detecting, triaging, containing, and remediating agent-driven incidents. Ensure that development, security, and operations teams understand their duties during agent-specific events.",
+   "mcp": "Define MCP-specific incident response roles before incidents occur: gateway operator responsible for blocking servers and enforcing policy changes, authorization server operator responsible for revoking tokens and terminating sessions, server owner responsible for disabling or rolling back specific tool servers, registry administrator responsible for freezing or rolling back capability registrations, and provider liaison responsible for coordinating with third-party MCP server vendors.\r\n\r\nPre-assign these responsibilities to named individuals and verify them through tabletop exercises."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-4.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "No Additional AI LLM Guidance",
+   "agent": "Enforce hardened, least-privilege network configurations and strict microsegmentation for all agent runtimes. Agents function as high-risk execution nodes that connect disparate systems, effectively bridging internal data with external tools. Their underlying network infrastructure, whether on-premises Virtual Local Area Networks (VLANs) or Virtual Private Clouds (VPCs), must be hardened to prevent them from becoming pivot points for attackers. This requires applying strict microsegmentation to isolate agent workloads, enforcing private subnet usage to deny direct internet exposure, and maintaining rigorous control over security groups. By treating the network configuration as a primary security boundary, enterprises limit the agent’s ability to traverse the network or exfiltrate data if compromised.",
+   "mcp": "Apply secure configuration practices to network infrastructure that carries MCP traffic, including reverse proxies, load balancers, and Domain Name System (DNS) infrastructure. Ensure TLS termination, header forwarding, and session affinity configurations support Streamable HTTP requirements. Ensure proxy and gateway configurations preserve required auth headers and do not introduce insecure header rewriting or caching of sensitive responses."
+  },
   "control_title": "Secure Configuration of Enterprise Assets and Software",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

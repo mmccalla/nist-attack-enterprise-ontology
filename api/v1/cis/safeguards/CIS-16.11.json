@@ -4,7 +4,7 @@
  "id": "CIS-16.11",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Implement vetted, code-based safety frameworks (e.g., NeMo Guardrails, Llama Guard) to enforce security policies, rather than relying solely on system prompts or natural language instructions as security controls. System prompts are easily bypassed via injection and lack deterministic enforcement; external, vetted safety modules provide a necessary layer of verifiable, code-level defense against adversarial inputs.",
+   "agent": "Use vetted, standard security modules for agent authentication, encryption, and input validation. This avoids rolling your own security crypto or logic, which is prone to errors. Vetted modules provide a higher level of assurance and reduce the risk of implementation flaws.",
+   "mcp": "Use vetted API-validation libraries and schema-enforcement modules to ensure all MCP requests conform to the MCP specification and declared tool schemas. Implement content screening modules to inspect resource payloads and tool outputs for indirect prompt injection or hidden instructions embedded in external content before they are committed to the LLM context.\r\n\r\nFor Streamable HTTP, rely on hardened, third-party request validation services to enforce method, path, header, and payload correctness rather than ad-hoc parsers."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -178,6 +183,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

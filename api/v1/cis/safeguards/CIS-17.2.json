@@ -4,7 +4,7 @@
  "id": "CIS-17.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain up-to-date contact information for reporting AIrelated security incidents to internal teams and external AI providers. Facilitates rapid communication during a crisis, ensuring that the right people are alerted immediately to contain the incident.",
+   "agent": "Maintain contact info for reporting agent incidents to internal teams and external providers (e.g., model/tool vendors). This ensures rapid communication and coordination during an incident, enabling quicker containment and remediation of agent-related issues.",
+   "mcp": "Maintain contacts for server maintainers, authorization server operators, LLM providers, gateway operators, specification maintainers, and library maintainers for coordinated response."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

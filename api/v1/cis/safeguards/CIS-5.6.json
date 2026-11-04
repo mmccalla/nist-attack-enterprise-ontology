@@ -4,7 +4,7 @@
  "id": "CIS-5.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Leverage federated identity and non-password authentication, such as Certificate Authorities (CAs) or OAuth with refresh tokens, for all LLM-related systems, applications, and services, especially SaaS-hosted LLMs. Centralization simplifies revocation and monitoring, reducing the risk of orphaned accounts retaining access to critical AI assets and providing a single point of control for security policies. Where passwordless methods cannot be implemented, passwords must expire on a defined schedule and be regularly rotated to maintain account security.",
+   "agent": "Manage all agent and tool identities through a centralized identity provider (IdP), prioritizing federated identity and passwordless authentication, such as Certificate Authorities or OAuth with refresh tokens, to mitigate the risks of exploiting passwords or other credentials, including API keys, tokens, and secrets. Centralization provides a single point of control for automated provisioning and simplified revocation, which reduces the risk of orphaned accounts or leaked secrets retaining access to AI assets. Where passwordless methods cannot be implemented, all credentials, including passwords, keys, and tokens, must be rotated on a defined schedule to maintain account security. In multi-agentic architectures, the system must propagate the invoking user’s identity and privilege context across the entire agent chain. This propagation prevents unintentional privilege escalation that occurs when interconnected agents utilize service accounts with higher permissions than the end user. Each agent must be restricted to the user’s specific authorization, performing nothing more or less than the user is permitted to do. For non-repudiation, every interaction must be identifiable as either a human action or a non-human (agent) action performed on behalf of a user, ensuring that security personnel can distinguish between human intent and autonomous execution traces within the centralized audit log.",
+   "mcp": "Integrate Streamable HTTP deployments with enterprise authorization servers. Configure OAuth flows to authenticate through enterprise identity providers. Authorization servers should use enterprise IdP and standard discovery mechanisms where available. stdio deployments inherit the account management model of their host endpoints.\r\n\r\nThird-party servers accessed through gateways can use centralized authorization with Protected Resource Metadata discovery. Prefer centralized authorization via gateway or shared auth services to avoid per-server credential sprawl and inconsistent policy."
+  },
   "control_title": "Account Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

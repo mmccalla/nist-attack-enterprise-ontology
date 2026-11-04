@@ -4,7 +4,7 @@
  "id": "CIS-12.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Isolate AI assets behind strict network boundaries, enforcing least-privilege access and allowlisted egress. Vector stores and model artifacts often contain the enterprise’s most sensitive intellectual property; they must be isolated from general networks to prevent unauthorized discovery. Enforcing least-privilege access at the network layer limits the blast radius, ensuring that only specific, authorized systems can reach these high-value targets. Crucially, restricting outbound connectivity is the primary defense against autonomous data exfiltration; without strict egress filtering to approved domains, a compromised or hallucinating model could send proprietary outputs to external endpoints or retrieve malicious content that fundamentally alters its safety alignment.",
+   "agent": "Segment agent runtimes and enforce private, authenticated connectivity for memory and model services. Agents act as the central orchestrator, integrating highly sensitive components like vector databases (memory) and LLM inference endpoints. A secure network architecture must place the agent runtime in a dedicated trust zone, enforcing strict ingress filtering, via ACLs/firewalls, to prevent unauthorized entities from invoking the agent. Furthermore, the connections between the agent and its “brain” (models) or “memory” (retrieval systems) must function over private, authenticated backbones (e.g., PrivateLink, mTLS) rather than public networks. This segmentation ensures that the agent’s core logic is shielded from direct internet exposure and protects sensitive retrieval traffic from interception.\r\n\r\nFurthermore, isolate high-risk execution tools in restricted network sandboxes to prevent lateral movement. Tools that execute dynamic code or interact with the open web (e.g., Python interpreters, headless browsers) inherently introduce high risk. These components must be treated as untrusted and placed in isolated network sandboxes with zero trust access to the internal corporate network. This containment strategy is critical to prevent “breakout” attacks; if an adversary successfully executes malicious code within the interpreter or exploits a browser vulnerability, the strict network isolation ensures they remain trapped in the sandbox, unable to pivot laterally to compromise the host system or inspect internal topology.",
+   "mcp": "Place servers and gateways in dedicated segments protected by firewall rules. Isolate third-party servers from enterprise-developed servers. Where Origin validation is applicable (e.g., browser-mediated clients), enforce strict Origin allowlists; for non-browser clients, enforce client identity using gateway controls, mTLS, or signed workload identity.\r\n\r\nRestrict local-only servers to `127.0.0.1`. Record network paths for OAuth authorization flows."
+  },
   "control_title": "Network Infrastructure Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -479,6 +484,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

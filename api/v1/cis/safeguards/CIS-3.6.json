@@ -4,7 +4,7 @@
  "id": "CIS-3.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Ensure that all endpoints used for AI work are using encrypted storage to ensure all the LLM assets on such endpoints (e.g., local prompt/output caches and local vector stores) are properly protected and require MDM controls to enforce this.",
+   "agent": "Enforce encryption for local agent memory, logs, and tool caches stored on end-user devices running embedded agents. Local agents may cache sensitive retrieval content or conversation history. Encryption protects this data from physical theft or unauthorized access on the device.",
+   "mcp": "Use full-disk encryption on endpoints that run stdio servers which may access sensitive data or cache resources. stdio servers run with user privileges and can read files and environment variables. Define allowed data classes for (a) tool parameters, (b) tool outputs, (c) resource payloads, and (d) prompt/context injection, and enforce these rules at the server or gateway boundary.\r\n\r\nNOTE: These Safeguards represent “Compensating Controls” for local stdio deployments where protocol-level network isolation is not possible."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -83,6 +88,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

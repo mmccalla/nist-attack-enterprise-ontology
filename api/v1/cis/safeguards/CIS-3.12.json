@@ -4,7 +4,7 @@
  "id": "CIS-3.12",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enforce strict network and storage segmentation between AI training environments, inference pipelines, and retrieval corpora, isolating high-trust model components from untrusted external inputs and general enterprise networks. Without explicit trust boundaries, low-trust external content (like emails) can contaminate core knowledge bases, and compromised training pipelines can be used to inject backdoors; segmentation limits the blast radius and prevents lateral movement into sensitive model systems.",
+   "agent": "Separate sensitive data across agent workspaces and contexts. Ensure that agents serving different departments, workflows, or trust zones cannot access or leak data across boundaries. Segregate memory stores, retrieval scopes, tool permissions, and execution environments.",
+   "mcp": "Isolate servers that access highly sensitive data. Separate third-party servers from enterprise-developed servers. Limit sampling to approved model endpoints and match provider contracts to data handling needs. Consider dedicated gateways with tighter authorization for high-risk groups."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -82,6 +87,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

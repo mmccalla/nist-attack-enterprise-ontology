@@ -4,7 +4,7 @@
  "id": "CIS-8.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Synchronize clocks across all AI infrastructure components to ensure accurate correlation of events in logs. Accurate timestamps are essential for reconstructing the timeline of an attack that spans multiple AI systems and services, enabling effective root cause analysis.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Standardize time synchronization across MCP clients, servers, gateways, and supporting authorization infrastructure to support consistent timestamps for audit log correlation and investigations."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

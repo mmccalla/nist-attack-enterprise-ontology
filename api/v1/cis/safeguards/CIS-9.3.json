@@ -4,7 +4,7 @@
  "id": "CIS-9.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Enforce strict URL filtering on agent egress traffic and block access to unapproved external AI services. AI agents functioning as autonomous web clients must operate behind the same Secure Web Gateway (SWG) and DLP controls as human users. Without strict egress filtering, a compromised agent could be manipulated via prompt injection to exfiltrate data to arbitrary URLs or communicate with command-and-control servers, bypassing standard browser protections. Furthermore, network-based filtering is the primary defense against “Shadow AI.” By treating external generative AI services as a restricted category, enterprises ensure that neither internal agents nor human employees can transmit sensitive data to unvetted public models, enforcing a “default-deny” posture for all unauthorized inference endpoints.",
+   "agent": "Enforce strict domain via allowlisting and active content inspection for all agent outbound network traffic. Agents often act as autonomous browsers or API clients, making them susceptible to interacting with malicious infrastructure. Unlike human users who might notice a suspicious URL, agents will blindly execute instructions. Therefore, network policy must rely on strict allowlists rather than blacklists, permitting access only to explicitly authorized APIs and domains required for the workflow. Beyond simple connectivity, employ active content inspection and safe browsing filters to analyze the payload of retrieved data. This prevents agents from inadvertently downloading malware, communicating with command-and-control servers, or exfiltrating data to unapproved endpoints.",
+   "mcp": "Apply network-based URL filtering to MCP tool egress that retrieves web content or calls external HTTP(S) endpoints. Use allowlists for approved categories and destinations, and block high-risk and unapproved destinations to reduce prompt-injection, data exfiltration, and command-and-control paths."
+  },
   "control_title": "Email and Web Browser Protections",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -219,6 +224,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

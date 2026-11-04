@@ -4,7 +4,7 @@
  "id": "CIS-5.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Remove dormant, stale, or unused identities in AI development, training, and model-management environments. Service accounts and API keys often remain active long after projects end. Regular cleanup prevents exploitation of forgotten credentials.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Disable user and service accounts that no longer require MCP access, and revoke OAuth access and refresh tokens for any account marked dormant. Use an inactivity threshold without MCP authentication or tool invocation to identify dormant accounts for review and disabling.\r\n\r\nIdentify dormant access by both authentication events and tool invocation history; revoke grants even if the user account remains active. Include role change as a revocation review trigger alongside offboarding and dormancy: a change in job function can invalidate existing OAuth grants and tool access paths without the account becoming inactive."
+  },
   "control_title": "Account Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -147,6 +152,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

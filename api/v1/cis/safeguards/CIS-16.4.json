@@ -4,7 +4,7 @@
  "id": "CIS-16.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain an AI-Bill of Materials (BOM)/Model BOM documenting provenance, integrity, and dependencies of all model artifacts. A Model BOM allows enterprises to understand upstream dependencies, verify authenticity, and trace vulnerabilities or harmful behavior back to specific sources or versions.",
+   "agent": "Maintain a detailed inventory of all third-party libraries and components used in agent applications (e.g., AI-BOM). Enables rapid identification of vulnerable components (e.g., a flawed vector store client) and facilitates effective patch management and risk assessment.",
+   "mcp": "Maintain an inventory of third-party MCP servers and review each component before deployment by recording its declared capabilities including tool schemas, resource URIs, and prompt definitions. As part of the inventory process, verify OAuth scope minimization, assess JSON-RPC quality, confirm logging compliance expectations, and record initialization test results to ensure only vetted components are approved for use."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

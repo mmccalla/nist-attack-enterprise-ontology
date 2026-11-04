@@ -4,7 +4,7 @@
  "id": "CIS-17.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Define a clear process for employees to report suspected AI security incidents, including specific indicators to look for. Encourages timely reporting of anomalies, enabling the security team to investigate and contain threats earlier in the attack life cycle.",
+   "agent": "Define a process for reporting suspected agent misbehavior, autonomy failures, or unexpected tool usage. Encourages timely reporting of anomalies by users and operators, allowing security teams to detect and respond to agent incidents early in the kill chain.",
+   "mcp": "Establish and maintain a process for reporting MCP-related security incidents that covers internal discovery, external disclosure from upstream providers, and user-reported anomalies. Define reporting channels, required information such as affected server, tool, identity, and scope, and escalation criteria. Ensure the process integrates with the enterprise incident reporting workflow and accounts for incidents involving third-party MCP servers where provider coordination\r\nis required."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-16.13",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Test for multimodal injection vectors and validate application fail-safes against malicious model outputs. Standard penetration testing often misses the unique “blind spots” of generative AI. Testers must explicitly target the model’s perception layers using adversarial images (visual jailbreaks) and steganographic audio commands to determine if non-text inputs can bypass textual safety guardrails. However, testing\r\nthe input is only half the battle; the assessment must also validate the application’s output handling. It is critical to confirm that if a model is successfully duped into generating malicious code or policy-violating text, the downstream application logic correctly identifies the unsafe payload and triggers a fail-safe “deny” state, rather than blindly executing the compromised instruction.",
+   "agent": "Test agent workflows using automated tests, adversarial inputs, evaluation harnesses, and red-team scenarios. Validate that agents behave safely even with malformed inputs or unexpected outputs.",
+   "mcp": "Perform structured security testing during the SDLC across MCP runtime components, tool wrappers, and transport layers, including abuse case execution and adversarial prompt testing. Verify authentication and authorization enforcement, message ID uniqueness, and logging compliance. Remediate high and critical findings before release."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

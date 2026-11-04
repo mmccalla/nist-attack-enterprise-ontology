@@ -4,7 +4,7 @@
  "id": "CIS-8.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Log and attribute outbound HTTP/API requests initiated by models or agents, specifically distinguishing “tool use” traffic from standard infrastructure updates. Models used in conjunction with browsing or URL fetching tool capabilities can be manipulated (e.g., via a Server-Side Request Forgery (SSRF) vulnerability) to access internal metadata services or exfiltrate data to unauthorized external APIs. Collecting the prompt response data from the LLM about what URLs or information from URLs the LLM is requesting tools to fetch completes the picture needed for IR and other investigations of suspicious activity.",
+   "agent": "Log agent-driven browsing and URL-fetch activity to detect suspicious patterns, unexpected domains, anomalous downloads, or attempted access to blocked content.",
+   "mcp": "Collect URL request logs for MCP tool egress and server and gateway outbound calls to providers and registries."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

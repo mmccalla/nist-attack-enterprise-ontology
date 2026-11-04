@@ -4,7 +4,7 @@
  "id": "CIS-4.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Configure host-based firewalls on model hosting servers to strictly limit inbound inference requests to authorized internal gateways and block all unauthorized outbound connections to public repositories where such connections are not pre-authorized. Compromised model runtimes often attempt to establish reverse shells or exfiltrate training data; strict egress filtering prevents attackers from moving stolen IP to external command-and-control servers.",
+   "agent": "Configure host-based firewalls on agent orchestration servers to restrict inbound access to authorized users and outbound access to approved LLM APIs and tools. Firewalls prevent unauthorized command-and-control connections and limit the agent’s ability to communicate with malicious external services or unapproved internal systems.",
+   "mcp": "Restrict inbound access to approved clients and/or the enterprise gateway, and enforce outbound egress allowlists to only required back-end systems, identity providers, and logging destinations."
+  },
   "control_title": "Secure Configuration of Enterprise Assets and Software",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -584,6 +589,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

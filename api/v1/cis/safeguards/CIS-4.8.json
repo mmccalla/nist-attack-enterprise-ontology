@@ -4,7 +4,7 @@
  "id": "CIS-4.8",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Disable all tools, plugins, and non-text modalities by default; enable only with explicit approval. Tools and plugins empower models to execute real-world actions that can bypass standard application policies, while non-text modalities (e.g., images, audio) introduce complex attack vectors, like visual jailbreaks or steganography, that exceed the capabilities of standard text-based safety filters. Enabling these features without review opens the door to unauthorized command execution and unmonitored data processing. A default-deny posture ensures that these high-risk capabilities are only active when the specific security controls required to protect them are confirmed to be in place.",
+   "agent": "Restrict browser automation tools to approved domains and disable unnecessary plugins or JavaScript capabilities. Agents utilizing “headless” browsers for research or navigation present a massive attack surface. These tools should not have unrestricted access to the open web. To prevent drive-by downloads, cross-site scripting (XSS) exploitation, or data exfiltration, administrators must disable unnecessary features, like file uploads or experimental APIs, and enforce “Safe Browsing” policies that allowlist only essential domains. This reduces the risk of an external site hijacking the agent’s session. Note: These configurations specifically target the browser tools invoked by the agent. While the agent’s decision to browse is in scope, the fundamental hardening of the browser engine should follow established web security standards.",
+   "mcp": "Expose only the tools, resources, and prompts required as defined in the approved enterprise MCP registry entry. Remove overly broad tools and limit resource URI patterns to the registry-validated baseline.\r\n\r\nDo not expose unnecessary debugging tools or overly permissive resource patterns; implement required security logging centrally while minimizing sensitive content in logs. Reducing declared capabilities by enforcing that the tools, resources, and prompts a server exposes during initialization match its registered profile lowers attack surface."
+  },
   "control_title": "Secure Configuration of Enterprise Assets and Software",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -635,6 +640,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

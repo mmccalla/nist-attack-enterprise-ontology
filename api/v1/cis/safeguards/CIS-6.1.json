@@ -4,7 +4,7 @@
  "id": "CIS-6.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Implement a formal, documented process for granting access to AI models, datasets, and computing resources based on business need and least privilege. Explicit approval workflows prevent unauthorized users or shadow teams from accessing sensitive model weights or training data, reducing the risk of IP theft and data leakage.",
+   "agent": "Provision persistent, unique identities for agents, using ephemeral credentials where possible or managed secrets where necessary. Agents must operate as distinct digital entities with a persistent identity (e.g., a unique Client ID) to ensure accountability and traceability. While the identity persists, the access methods should ideally be ephemeral (short-lived tokens) to eliminate credential theft risks. Where infrastructure limitations require static credentials (e.g., legacy API keys), these must be strictly governed via secure secret management systems with automated rotation policies. This ensures that every agent action is attributable to a specific identity, regardless of the underlying authentication method.",
+   "mcp": "Implement a formal, documented process for granting access to MCP servers, tools, and data sources. Authenticate the client on every request and enforce authorization that matches the formally approved grant. Deny or revoke any request outside the approved tool, resource, scope, or time window.\r\n\r\nFor Streamable HTTP servers, require OAuth access tokens with PKCE; clients must include the `resource` parameter in token requests to bind each token to a specific MCP server, and servers must reject tokens whose audience does not match their resource identifier. Validate issuer, expiry, and scopes on every request.\r\n\r\nFor stdio servers, validate the server executable against an approved allowlist using integrity checks such as cryptographic hashes or path-based restrictions. For proxy servers connecting to third-party APIs, implement per-client consent verification before initiating authorization flows.\r\n\r\nTo counter tool poisoning, the consent process must include ‘full tool transparency,’ displaying the complete, un-summarized tool manifest (including descriptions and parameters) to the user before a server is authorized."
+  },
   "control_title": "Access Control Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

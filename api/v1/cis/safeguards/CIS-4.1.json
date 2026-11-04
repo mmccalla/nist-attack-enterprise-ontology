@@ -4,7 +4,7 @@
  "id": "CIS-4.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Establish managed configuration baselines for all AI components, enforcing version control for system prompts and model parameters, strict version pinning for model artifacts, and hardened defaults for inference environments. System prompts, token limits, and decoding parameters define model behavior as critical as any compiled code; treating them as unmanaged text leads to silent behavioral drift or security bypasses. Without strict version pinning (avoiding “latest” tags), enterprises risk implicit upgrades that introduce new vulnerabilities or break existing guardrails. Furthermore, hardene baselines for serving environments, including rate limits and authentication, are essential to ensure consistency and prevent model extraction or denial-of-service attacks from abusive traffic patterns.",
+   "agent": "Maintain an inventory of agent configurations including prompts, tool lists, operational parameters, and policy settings. Version configurations and ensure they are traceable to specific agents and deployments.",
+   "mcp": "Create versioned secure configuration baselines for MCP servers, clients, and gateways. For stdio, restrict file access to declared roots, minimize process privileges, and ensure standard output (stdout) is reserved for protocol messages and standard error (stderr) for diagnostics, and prevent sensitive data from being written to either stream without redaction controls. This process should utilize the Enterprise MCP Registry to define the authorized schema and functional baseline for every approved server.\r\n\r\nFor Streamable HTTP, enforce OAuth with PKCE, validate the Origin header, bind local-only servers to `127.0.0.1`, and treat `MCP-Session-Id` as a session state rather than an authorization mechanism. Do not treat session identifiers (MCP-Session-Id) as identity or authorization claims. See Appendix A for transport-specific hardening details."
+  },
   "control_title": "Secure Configuration of Enterprise Assets and Software",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

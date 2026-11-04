@@ -4,7 +4,7 @@
  "id": "CIS-11.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Test recovery procedures for all AI components, verifying the integrity of restored artifacts and maintaining rollback capabilities. Restoring a corrupted or poisoned model checkpoint can reintroduce vulnerabilities or unsafe behaviors. Therefore, recovery tests must go beyond simple file availability to include cryptographic integrity verification and behavioral validation of restored datasets, embeddings, and weights. Furthermore, effective resilience requires granular rollback capabilities, allowing teams to revert not just the model, but also its specific configuration, training data, and stored memory states, ensuring that the system can be returned to a precise “known-good” baseline following contamination or an adversarial compromise.",
+   "agent": "Regularly test restoration procedures for agent memory, retrieval pipelines, and tool-generated artifacts. Confirm that agents function correctly after data recovery, including tasks to verify the semantic integrity of backups related to agent memory, vector stores, and retrieval systems, and that restored data aligns with enterprise policies. Ensure that restoring a backup does not reintroduce poisoned or adversarial content that could hijack agent decision-making or degrade reasoning.",
+   "mcp": "Establish recovery time objectives (RTOs) for MCP infrastructure. Critical services require rapid restoration.\r\n\r\nTest recovery procedures on at least a quarterly cadence for critical MCP infrastructure, including full rebuild from known-good sources and verification that capability negotiation after restore matches the approved baseline. Test backup procedures for servers, gateways, authorization configurations, and session state. Recovery must account for transport differences between stdio and Streamable HTTP.\r\n\r\nVerify restored servers complete initialization with correct capability negotiation. Include tests for token revocation, refresh-token invalidation, and gateway session termination as part of recovery exercises."
+  },
   "control_title": "Data Recovery",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

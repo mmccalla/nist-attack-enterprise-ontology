@@ -4,7 +4,7 @@
  "id": "CIS-16.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Use hardened configuration templates for the infrastructure supporting AI applications (e.g., servers, containers, databases). Reduces the attack surface of the underlying infrastructure, making it harder for attackers to compromise the AI application or its environment.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Apply standard hardening templates when deploying MCP servers and supporting infrastructure, including baseline configuration of runtime environments, network settings, authentication mechanisms, and logging policies. Ensure these templates enforce package-integrity requirements, restrict installations to verified repositories, validate specification-version compatibility (including PKCE and Client ID Metadata Documents), and mandate hash/signature checks during provisioning."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -244,6 +249,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

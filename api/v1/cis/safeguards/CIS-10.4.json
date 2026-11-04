@@ -4,7 +4,7 @@
  "id": "CIS-10.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "No Additional AI LLM Guidance",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "No Additional MCP Guidance"
+  },
   "control_title": "Malware Defenses",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -82,6 +87,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

@@ -4,7 +4,7 @@
  "id": "CIS-16.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Integrate security controls into the life cycle of AI application development, from model selection to hosting decisions to deployment. Build security in from the start, reducing the likelihood of vulnerabilities in the final AI-enabled application and lowering long-term maintenance costs.",
+   "agent": "Implement secure deployment pipelines for agents by using CI/CD pipelines that enforce code quality checks, dependency scanning, environment hardening, and secret stripping before deployment. Ensure agent updates follow controlled release processes.",
+   "mcp": "Establish a secure Software Development Lifecycle (SDLC) incorporating threat modeling across tools, resources, and prompts. Apply secure coding to JSON-RPC handlers, implement OAuth correctly, protect communications with TLS, maintain accurate capability declarations, and configure privacy-preserving logging. Perform security testing before deployment."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

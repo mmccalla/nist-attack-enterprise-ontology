@@ -4,7 +4,7 @@
  "id": "CIS-2.4",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Use automated tools to track inference servers, runtimes, fine-tuning libraries, and embedding models used in production, development, and research environments. These components are often updated independently of the models they serve, and untracked updates may introduce vulnerabilities or break compatibility.",
+   "agent": "Use automated scanning, registration workflows, or deployment pipelines to detect new agents, tool integrations, state stores, or configuration changes. Reconcile discovered assets with the established inventory.",
+   "mcp": "Use automated discovery to identify MCP server files, JSON configuration files that declare servers and capabilities, and active MCP processes. Scan common installation paths and package manager records such as `npm` for TypeScript and `pip` for Python. Parse process command lines that indicate MCP server execution.\r\n\r\nFor Streamable HTTP deployments, detect JSON-RPC traffic patterns to MCP endpoints and associated streaming responses where applicable, and correlate observed servers to the approved MCP registry."
+  },
   "control_title": "Inventory and Control of Software Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

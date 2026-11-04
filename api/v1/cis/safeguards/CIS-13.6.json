@@ -4,7 +4,7 @@
  "id": "CIS-13.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Collect flow logs from networks hosting AI workloads to analyze traffic patterns and detect anomalies. Essential for identifying data exfiltration attempts, unusual volume spikes, and unauthorized connections to/from AI systems that may indicate a breach.",
+   "agent": "Continuously monitor network activity from agent runtimes for anomalies and deviations, including unexpected domains, high-risk traffic, unusual request patterns, or repeated failed connections. When agents collaborate, monitor inter-agent traffic for privilege escalation, data exposure, or unintended delegation patterns. Ensure multi-agent routing cannot bypass segmentation controls.",
+   "mcp": "Collect and retain network traffic flow logs for all MCP servers and tool hosts to identify unexpected communication paths, validate egress and segmentation policies, and correlate anomalies detected at the application layer with underlying traffic behaviors."
+  },
   "control_title": "Network Monitoring and Defense",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

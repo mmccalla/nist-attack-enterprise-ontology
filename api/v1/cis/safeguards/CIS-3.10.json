@@ -4,7 +4,7 @@
  "id": "CIS-3.10",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Encrypt sensitive model-related data, including datasets, embeddings, outputs, and intermediate representations, while in transit to protect confidentiality and integrity during network transfer.",
+   "agent": "Encrypt all agent tool communication channels and agent-to-agent messaging in transit using approved cryptographic standards.",
+   "mcp": "Require TLS 1.2 or later for Streamable HTTP. Validate certificates and reject weak ciphers and downgrade attempts. For stdio, protect data via OS process isolation, least-privilege execution, and endpoint encryption; treat any subsequent network calls from the server to backend APIs as in-transit data requiring TLS. Ensure back-end API calls from servers also use TLS.\r\n\r\nGateways must terminate TLS with proper certificate management and can use mutual TLS for higher security. For high-risk deployments, use mutual\r\nTLS between gateway and server and enforce strict certificate validation."
+  },
   "control_title": "Data Protection",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -82,6 +87,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

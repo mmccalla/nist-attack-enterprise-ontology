@@ -4,7 +4,7 @@
  "id": "CIS-7.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Automatically scan externally exposed AI API endpoints and web interfaces for vulnerabilities on a regular basis. Public-facing AI services are constant targets; scanning identifies weaknesses that could be exploited to access models or data before attackers can find them.",
+   "agent": "Regularly scan externally-exposed agent APIs and interfaces for vulnerabilities. Agents exposing public endpoints are prime targets; scanning identifies vulnerabilities in the agent interface or underlying stack before attackers can exploit them.",
+   "mcp": "Scan externally accessible MCP servers and gateways for OAuth misconfigurations such as missing PKCE, weak scope enforcement, and token passthrough, as well as TLS, Origin validation, and authorization policy issues. Include testing for unauthorized tool invocation, scope escalation, and correct Protected Resource Metadata.\r\n\r\nWhile some commercial scanners are beginning to include MCP protocol compliance checks, supplement with custom checks for MCP-specific exposures until tooling coverage matures. Scan third-party MCP server artifacts and container images during intake, including SBOM review and malware scanning, before approval for production use."
+  },
   "control_title": "Continuous Vulnerability Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

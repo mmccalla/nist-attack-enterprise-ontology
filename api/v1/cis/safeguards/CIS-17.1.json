@@ -4,7 +4,7 @@
  "id": "CIS-17.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Assign specific personnel with AI expertise to manage incidents involving LLMs and generative AI systems. AI incidents require specialized knowledge to diagnose and\r\nmitigate; designated experts ensure an effective and informed response.",
+   "agent": "Designate personnel with specific expertise in AI agents and their failure modes to manage agent-related incidents. Agent incidents require specialized knowledge (e.g., understanding autonomy loops, tool logs). Designated experts ensure a rapid and effective response to complex AI failures.",
+   "mcp": "Assign specific personnel or teams to manage MCP-related incident handling, with clear roles and authority to act. Ensure they are prepared to respond to MCP-specific incidents including unauthorized tool invocations, compromised servers, OAuth token theft, tool poisoning, prompt injection, credential exposure in logs, session hijacking, and DNS rebinding."
+  },
   "control_title": "Incident Response Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

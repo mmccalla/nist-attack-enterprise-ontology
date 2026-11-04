@@ -2,13 +2,17 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
-## Unreleased
+## 2.7.0 (2026-11-04)
 
-- **Exact CIS Controls 8.1.2 text**: Safeguard and Control titles, asset classes, security functions and Implementation Groups from the CIS workbook, under CC BY-NC-ND 4.0, in `data/sources/cis-controls-8.1.2.json`, the page, the `cis_text` part of the Safeguard API files and `exports/cis-8.1.2-safeguards.csv`. Each place has the CIS notice. The graph and claims stay IDs only. "Start from IG1, IG2 or IG3" works without a file.
-- The CTID rationale and the CIS reference URLs are no longer changed. CTID writes five Safeguard titles differently from CIS (CIS-3.11, 12.5, 12.7, 13.5, 16.1); the tool uses the CIS titles.
+Ontology 2.3.0, unchanged.
 
-- **Your own CIS file**: the CIS gap analysis reads a CIS Controls XLSX (or CSV) from the user's device. It adds Safeguard titles, asset types, security functions and Implementation Groups, with "Start from IG1, IG2 or IG3" buttons and CSV columns. The file stays on the device, in memory only. The project still distributes no CIS text.
-- CI: Python 3.14 (the version of the hash lock), and JavaScript test files passed by name.
+- **CIS Controls 8.1.2 text**: the exact Safeguard and Control titles, asset classes, security functions and Implementation Groups from the CIS workbook, under CC BY-NC-ND 4.0, in `data/sources/cis-controls-8.1.2.json`. The page, the `cis_text` part of each Safeguard API file and `exports/cis-8.1.2-safeguards.csv` show them with the CIS notice. The graph and the claims stay IDs only.
+- **Implementation Groups**: "Start from IG1, IG2 or IG3" in the CIS gap analysis, with no file needed.
+- **CIS guidance for AI**: each Safeguard page, Safeguard API file (`cis_text.ai_guidance`) and `cis-8.1.2-safeguards.csv` has CIS's own guidance for AI LLM systems, AI agents and MCP, from the CIS Controls v8.1.2 AI Guidance workbook. The AI gap analysis points to it.
+- **OWASP MCP Top 10 titles**: the exact 2025 titles and item links (CC BY-NC-SA 4.0) in `data/sources/owasp-mcp-top10.json`, the page and the API (`title_licence`).
+- **Your own CIS file**: the CIS gap analysis reads a CIS Controls XLSX or CSV from the user's device, for users of another CIS version. The file stays on the device, in memory only. When it is loaded, the page uses it alone and does not mix it with the 8.1.2 data.
+- The CTID rationale and the CIS reference URLs are no longer changed. CTID writes five Safeguard titles differently from CIS (CIS-3.11, 12.5, 12.7, 13.5 and 16.1). The tool uses the CIS titles.
+- CI runs on GitHub on each push: Python 3.14 (the version of the hash lock), and the JavaScript test files are passed by name.
 
 ## 2.6.0 (2026-11-03)
 

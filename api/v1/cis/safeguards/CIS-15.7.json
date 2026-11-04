@@ -4,7 +4,7 @@
  "id": "CIS-15.7",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Establish a process for securely removing data and revoking access when terminating AI service provider contracts. Prevents residual data exposure and ensures that former providers no longer have access to enterprise AI assets or proprietary information.",
+   "agent": "Mandate the verifiable destruction of Derived AI Artifacts, specifically Vector Embeddings, Fine-Tuned Model Weights, and Session Logs, in addition to raw source data. Immediately revoke all federated identities and API keys to prevent the provider’s runtime from retaining “zombie access” to enterprise tools. Note: Although model fine-tuning processes are out of scope for this guide, the management and destruction of the resulting model weights are included here to ensure complete decommissioning of the service provider relationship.",
+   "mcp": "Securely decommission MCP service providers by removing approvals and allowlist entries, revoking OAuth authorizations and tokens, terminating data flows, and validating enterprise data removal from provider systems. Ensure workflows are migrated without leaving residual tool access paths."
+  },
   "control_title": "Service Provider Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -88,6 +93,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale"

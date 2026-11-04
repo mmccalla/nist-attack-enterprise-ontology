@@ -4,7 +4,7 @@
  "id": "CIS-11.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Back up model registry states, prompt/policy configurations, evaluation datasets, RAG corpora, and the CI/CD artifacts (including embedding pipelines) required to rebuild or verify AI-enabled systems. These assets represent core intellectual property and must be recoverable for disaster recovery, compliance, and incident response. Backups must reflect appropriate sensitivity and retention requirements.\r\n\r\nVersion and back up model artifacts, including checkpoints, tokenizer files, configuration metadata, and evaluation results. Model artifacts allow enterprises to revert to trusted versions and validate changes. Backup processes should ensure that all elements needed to reproduce a model’s behavior are preserved.",
+   "agent": "Implement backups for critical agent data, including long-term memory stores, vector databases, and retrieval corpora using secure, policy-compliant mechanisms. Ensure backups include required metadata for indexing and retrieval.",
+   "mcp": "Back up MCP server configurations, authorization policies, tool definitions and schemas, resource URI registries, prompt templates, and OAuth client registrations. Include gateway policies and any required session state so that identity, trust, and integration boundaries can be fully restored. Backups must be integrity-verified (hash or signature) and paired with reproducible rebuild steps for servers and gateways."
+  },
   "control_title": "Data Recovery",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -237,6 +242,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

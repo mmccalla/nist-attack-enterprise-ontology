@@ -4,7 +4,7 @@
  "id": "CIS-18.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -23,6 +23,11 @@
   "implementation_groups": [
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Conduct internal penetration tests targeting AI infrastructure and models to identify insider threat vectors. Verifies the effectiveness of internal controls and segmentation, ensuring that lateral movement to AI assets is difficult even for attackers inside the network.",
+   "agent": "Simulate adversarial prompts, memory poisoning, and autonomous workflow exploits to validate reasoning limits, noting that standard penetration tests often miss an agent’s unique cognitive vulnerabilities. Internal testing must target the reasoning engine using Red Team scenarios that simulate adversarial prompts, ambiguous instructions, and recursive logic traps designed to force policy bypasses. Testers must attack the agent’s memory by injecting conflicting or malicious content into retrieval corpora, such as RAG poisoning, to verify if the agent hallucinates or acts on untrusted data.\r\n\r\nBeyond the prompt, testers must treat tool interfaces, including Python interpreters, API connectors, and browser drivers, as hostile entry points. Tests should attempt to manipulate API parameters to force unauthorized tool calls, escape sandboxes, or escalate privileges within the execution environment. This includes assessing integration boundaries between the runtime and model endpoints to ensure the agent cannot be coerced into performing unauthorized file system operations, network scans, or “confused deputy” attacks that exceed its permission scope. Finally, testing must stress-test autonomy by attempting to trigger unbounded loops or multi-step chains, ensuring behavioral guardrails effectively arrest unsafe decision paths before they spiral out of control.",
+   "mcp": "Test stdio servers for privilege escalation, filesystem access beyond declared roots, and environment variable exposure. Test internal Streamable HTTP servers for authorization bypass. Assess gateways for policy bypass and session weaknesses. Attempt tool invocation without required scopes, bypass human confirmation, access resources outside approved URIs, and test for confused deputy behavior. Review logs for credential exposure."
+  },
   "control_title": "Penetration Testing",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -50,6 +55,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

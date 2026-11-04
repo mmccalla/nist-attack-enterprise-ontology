@@ -4,7 +4,7 @@
  "id": "CIS-8.3",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Provision sufficient storage to retain logs from LLM systems, including high-volume inference logs, for the required retention period. Prevents the loss of critical forensic data due to storage exhaustion, ensuring logs are available for post-incident analysis even for high-throughput AI applications.",
+   "agent": "No Additional AI Agent Guidance",
+   "mcp": "Size and monitor audit log storage to support the enterprise audit log management process for MCP components (clients, servers, gateways, and supporting auth infrastructure). Account for MCP protocol event volume, including initialization and capability negotiation, tool and resource operations, OAuth and session life cycle events, and JSON-RPC errors."
+  },
   "control_title": "Audit Log Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

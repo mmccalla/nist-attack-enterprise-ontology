@@ -4,7 +4,7 @@
  "id": "CIS-1.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain an inventory of all AI LLM enterprise assets, including compute (e.g., GPUs/inference/training), control plane (e.g., model gateways, registries, prompt/config stores), data plane (e.g., vector databases, retrieval corpora, log\r\nstores), and integration assets (e.g., API proxies, SDK clients, service identities). Record owner, environment (development/ staging/production), hosting type, data sensitivity handled, and approved use case. Note: Some data and systems are included here because they should be included in a robust inventory even if they are not in scope for these controls specifically.",
+   "agent": "Establish and maintain a detailed inventory of all agent assets, covering cloud-hosted platforms, on-premises orchestration servers, and embedded edge runtimes. The\r\ninventory must record the business owner responsible for the agent’s actions, its approved connectivity paths to internal data stores (e.g., vector databases (DBs)) and external SaaS models (e.g., OpenAI, Anthropic), and the specific tools it is authorized to invoke. This includes tracking ephemeral agent workloads (serverless functions) and verifying that all agent instances map back to an authorized deployment pipeline and identity. Agents function as autonomous identities that bridge critical internal systems with external inference providers; without a comprehensive inventory that maps ownership, connectivity, and tool authorization, enterprises cannot effectively monitor for “shadow agents,” manage the blast radius of a compromised agent, or enforce data egress policies across distributed and often ephemeral agentinfrastructure.",
+   "mcp": "Maintain an enterprise inventory of MCP components and a server registry as the authoritative record. Establish the registry and keep it current through routine reviews and updates when changes occur. Track all hosts, clients, servers, and gateways. Include named owner, escalation contact, and decommission planning for each component.\r\n\r\nFor each component, record the deployment type, declared capabilities, authorization details, transport and supported protocol versions, and version. For third-party servers, record the source and approval status. For each server, also record: risk tier (read-only vs. write vs. irreversible), containment lever owner (who can disable tools, server, gateway), and capability baseline snapshot (hash or versioned export of tools, resources, prompts)."
+  },
   "control_title": "Inventory and Control of Enterprise Assets",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

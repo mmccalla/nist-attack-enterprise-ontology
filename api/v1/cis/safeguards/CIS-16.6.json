@@ -4,7 +4,7 @@
  "id": "CIS-16.6",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Establish a system for rating the severity of vulnerabilities in AI models and applications to prioritize remediation. This ensures that the most critical AI risks are addressed first, optimizing the use of limited security resources and reducing\r\nexposure.",
+   "agent": "Establish a severity rating system for agent-specific vulnerabilities, considering factors like autonomy and tool access. This helps prioritize remediation efforts by identifying the most critical risks to agent security and operations, ensuring resources are focused on the most dangerous flaws.",
+   "mcp": "Establish a vulnerability severity rating approach for MCP defects that accounts for exploitability, impact on agent logic, capability misuse potential, data-exposure risk, and cross-component propagation. Apply severity-based SLAs with accelerated response for vulnerabilities affecting OAuth flows or capability negotiation."
+  },
   "control_title": "Application Software Security",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -51,6 +56,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

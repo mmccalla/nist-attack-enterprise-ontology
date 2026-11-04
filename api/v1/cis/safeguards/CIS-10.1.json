@@ -4,7 +4,7 @@
  "id": "CIS-10.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Deploy and maintain anti-malware software on all servers and workstations used for AI development and inference. This protects the underlying infrastructure from malware infections that could compromise AI models and sensitive data, ensuring\r\nthe availability and integrity of AI services.",
+   "agent": "Enforce malware scanning and active content sanitization for all agent retrieval and storage subsystems. Agents act as automated ingestion pipelines, frequently retrieving documents, code, and web content that may contain malware or exploit payloads. Anti-malware defenses must be applied effectively at the point of ingress, scanning all downloads before they are processed. However, scanning alone is insufficient against zero-day exploits targeting the agent’s parsing tools (e.g., PDF readers, HTML renderers). Therefore, defenses must include Content Disarm and Reconstruction (CDR) to strip active content, such as malicious JavaScript or embedded macros, before the data enters the agent’s reasoning loop. This hygiene must extend to storage, ensuring that vector databases and memory stores do not inadvertently become repositories for dormant malware.",
+   "mcp": "Deploy anti-malware on endpoints running MCP stdio servers and scan server executables and dependencies before deployment. Malicious servers from registries may execute arbitrary code with user privileges, access environment variables, or read sensitive files. Include MCP installation directories in scheduled scan paths and monitor server processes for suspicious behavior such as unexpected file access, outbound connections, or credential reads.\r\n\r\nScan MCP server artifacts and container images during intake and before deployment, not only after installation on endpoints."
+  },
   "control_title": "Malware Defenses",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -163,6 +168,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",

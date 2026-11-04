@@ -391,6 +391,8 @@ def render(poisoned: bool = False) -> str:
         "questions": build_questions(graph),
         # Exact CIS text with its own licence (CC BY-NC-ND 4.0, D29). Kept apart from the CC BY graph.
         "cis": json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8")),
+        # Exact OWASP MCP Top 10 titles with their own licence (CC BY-NC-SA 4.0, D30).
+        "owaspMcp": json.loads((ROOT / "data" / "sources" / "owasp-mcp-top10.json").read_text(encoding="utf-8")),
     }
     if poisoned:
         poison(payload)
@@ -419,7 +421,13 @@ def content_security_policy(html: str) -> str:
     import base64
     import hashlib
 
-    scripts = re.findall(r"<script>(.*?)</script>", html, flags=re.S)
+    # Hash every inline script block, read in order, in any letter case and with any attributes. Text inside a block (for
+    # example "<script" in the page data) is not a tag. Stop if a block loads a file, or if a script tag is left outside.
+    blocks = list(re.finditer(r"<script\b([^>]*)>(.*?)</script\b[^>]*>", html, flags=re.S | re.I))
+    outside = re.sub(r"<script\b[^>]*>.*?</script\b[^>]*>", "", html, flags=re.S | re.I)
+    if re.search(r"<script\b", outside, flags=re.I) or any(re.search(r"\bsrc\s*=", b.group(1), flags=re.I) for b in blocks):
+        raise SystemExit("each script must be an inline block with no src, and closed")
+    scripts = [b.group(2) for b in blocks]
     hashes = " ".join(f"'sha256-{base64.b64encode(hashlib.sha256(s.encode('utf-8')).digest()).decode()}'" for s in scripts)
     return (
         f"default-src 'none'; script-src {hashes}; style-src 'unsafe-inline'; img-src data: blob:; "

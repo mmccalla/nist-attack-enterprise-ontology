@@ -4,7 +4,7 @@
  "id": "CIS-5.1",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain an inventory of all user, administrator, and service accounts with access to AI models, training data, and inference pipelines for all model hosting and deployment types. Unmanaged accounts can be exploited to access sensitive models or poison training data. A complete inventory ensures only authorized access exists and facilitates swift revocation during offboarding.",
+   "agent": "Inventory all user accounts, service accounts, API keys, or delegated credentials used by the agent, including those attached to tools or retrieval systems.",
+   "mcp": "Maintain an inventory of all user and service accounts that install, operate, or run MCP servers. For Streamable HTTP, include service accounts tied to authorization servers and resource owner accounts with OAuth grants. For stdio, include endpoint accounts that run servers.\r\n\r\nLink each identity to the MCP component it serves (host, client, server, gateway), the tools and resources it can access, and its risk tier (read-only vs. write vs. irreversible)."
+  },
   "control_title": "Account Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

@@ -4,7 +4,7 @@
  "id": "CIS-7.2",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -25,6 +25,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Maintain a patch and update strategy for AI runtimes, serving frameworks, GPU drivers, and related dependencies. Patching must account for compatibility testing, model behavior evaluation, and risk-based prioritization to avoid introducing instability while resolving vulnerabilities.",
+   "agent": "Conduct risk-based prioritization of agent vulnerabilities. Prioritize remediation based on exploitability, agent privileges, sensitivity of accessed data, and potential operational impact. High-risk tools and execution environments should receive expedited remediation.",
+   "mcp": "Define SLAs for remediating MCP vulnerabilities by severity. Prioritize critical vulnerabilities in internet-accessible Streamable HTTP servers, such as Origin validation bypass, OAuth token theft, or session hijacking. Remediation actions may include patching components, reconfiguring authorization metadata, or temporarily disabling vulnerable tools until fixes are available."
+  },
   "control_title": "Continuous Vulnerability Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -52,6 +57,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title"
  ]

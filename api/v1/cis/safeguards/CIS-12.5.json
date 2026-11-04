@@ -4,7 +4,7 @@
  "id": "CIS-12.5",
  "versions": {
   "api": "1",
-  "release": "2.6.0",
+  "release": "2.7.0",
   "ontology": "2.3.0",
   "attack": "16.1",
   "attack_later": "20.0",
@@ -24,6 +24,11 @@
    "IG2",
    "IG3"
   ],
+  "ai_guidance": {
+   "llm": "Centralize network authorization to bind identity to permitted network paths for AI workloads. Define and centrally enforce network allowlists per user, administrator, or service account to dictate exactly where an identity can authenticate from and which specific AI services or model APIs it is authorized  to call, preventing unintended or unauthorized crossplatform access.",
+   "agent": "Centralize network AAA for all agent-to-agent and agent-to-tool communications by integrating agent identities and user roles into network-layer access policies. In multi-agent architectures, enforce zero-trust network segmentation to strictly govern task delegation, state sharing, and data ingestion. Network controls must be context-aware, mapping specific agent RBAC roles to authorized network boundaries, to prevent low-privilege agents from laterally communicating with or prompting high-privilege peers.\r\n\r\nFurthermore, implement data-aware network filtering to enforce ingress limits, blocking the transmission of data classified above an agent’s defined security tier. By ensuring the network layer is informed by the session’s privilege context, the enterprise can prevent unauthorized escalation and maintain auditability of all autonomous traffic flows within the agentic environment.",
+   "mcp": "No Additional MCP Guidance"
+  },
   "control_title": "Network Infrastructure Management",
   "version": "8.1.2",
   "licence": "CC BY-NC-ND 4.0",
@@ -130,6 +135,9 @@
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
  ],
  "untrusted_text_fields": [
+  "cis_text.ai_guidance.agent",
+  "cis_text.ai_guidance.llm",
+  "cis_text.ai_guidance.mcp",
   "cis_text.control_title",
   "cis_text.title",
   "claims[].evidence[].rationale",
