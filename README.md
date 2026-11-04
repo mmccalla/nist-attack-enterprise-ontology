@@ -81,8 +81,8 @@ The tool also includes the CTID mapping of CIS Controls 8.1.2 to ATT&CK Enterpri
 Read these limits for CIS coverage:
 
 - The CIS mapping uses ATT&CK 19.1. The NIST mapping uses ATT&CK 16.1. The tool joins the two by STIX id. 29 techniques that CIS maps are only in 19.1, so they cannot have a NIST claim (CQ22).
-- CIS licenses the titles and text of the CIS Controls under CC BY-NC-ND 4.0. Thus, the tool shows only Safeguard IDs. Read the titles on [cisecurity.org](https://www.cisecurity.org/controls/cis-controls-list).
-- The mapping file has no Implementation Groups. To get titles and Implementation Groups, load your own CIS Controls file (XLSX from cisecurity.org, or CSV) in the CIS gap analysis. The file stays on your device, in memory only. Your use of it must follow the CIS licence.
+- The Safeguard titles and Implementation Groups are exact CIS text from CIS Controls 8.1.2, © Center for Internet Security, under CC BY-NC-ND 4.0. Use them for non-commercial purposes only, and do not change them. They are kept apart from the CC BY data (see [`NOTICE.md`](NOTICE.md)).
+- Click IG1, IG2 or IG3 to start from an Implementation Group. If you use another CIS version, load your own CIS Controls file (XLSX or CSV). It stays on your device, in memory only.
 
 ## Coverage for AI systems and AI agents
 
@@ -180,6 +180,6 @@ The original ontology bundle is in [`ontology/v2/`](ontology/v2). It has no chan
 - [`NOTICE.md`](NOTICE.md) gives the copyright notice, the licence and the changes for each source. The full licence texts are in [`LICENSES/`](LICENSES).
 - If you copy the data, keep the notices with it. For example, the ATT&CK terms of use require MITRE's copyright notice and the licence in each copy.
 - MITRE ATT&CK® is a registered trademark of The MITRE Corporation. CIS Controls® is a registered trademark of the Center for Internet Security. No publisher sponsors or endorses this tool.
-- The tool copies no CIS Controls text and no CSA Cloud Controls Matrix content.
+- The CIS Controls 8.1.2 titles and Implementation Groups are exact CIS text under CC BY-NC-ND 4.0 (non-commercial use only), in separate, labelled places. The tool copies no CSA Cloud Controls Matrix content.
 
 The full attribution is in [`ATTRIBUTION.md`](ATTRIBUTION.md).

@@ -4,6 +4,9 @@ Repository releases are numbered separately from the ontology version (`owl:vers
 
 ## Unreleased
 
+- **Exact CIS Controls 8.1.2 text**: Safeguard and Control titles, asset classes, security functions and Implementation Groups from the CIS workbook, under CC BY-NC-ND 4.0, in `data/sources/cis-controls-8.1.2.json`, the page, the `cis_text` part of the Safeguard API files and `exports/cis-8.1.2-safeguards.csv`. Each place has the CIS notice. The graph and claims stay IDs only. "Start from IG1, IG2 or IG3" works without a file.
+- The CTID rationale and the CIS reference URLs are no longer changed. CTID writes five Safeguard titles differently from CIS (CIS-3.11, 12.5, 12.7, 13.5, 16.1); the tool uses the CIS titles.
+
 - **Your own CIS file**: the CIS gap analysis reads a CIS Controls XLSX (or CSV) from the user's device. It adds Safeguard titles, asset types, security functions and Implementation Groups, with "Start from IG1, IG2 or IG3" buttons and CSV columns. The file stays on the device, in memory only. The project still distributes no CIS text.
 - CI: Python 3.14 (the version of the hash lock), and JavaScript test files passed by name.
 

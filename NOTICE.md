@@ -34,7 +34,7 @@ Changes:
 
 - Rows are converted to RDF assertions, claims, API files and CSV files. Each keeps its source record number.
 - Control titles are replaced by the titles of the NIST OSCAL catalog. The source titles are kept where they differ.
-- CIS mapping: CIS Safeguard and Control titles are not copied. In the CTID rationale text, a CIS title of three words or more is replaced by the marker `[title of CIS-x.y]` (one row on 2026-11-03). In CIS reference URLs, the part after `#` is removed, because it is the Safeguard title as a slug.
+- CIS mapping: the CTID file's Safeguard titles are not used. The exact titles come from the CIS workbook (see CIS Controls below). The CTID rationale and reference URLs are not changed.
 
 ## MITRE ATLAS
 
@@ -46,9 +46,15 @@ Changes: converted to RDF, JSON and CSV. Mitigation "use" text is not imported. 
 
 ## CIS Controls
 
-CIS Controls® is a registered trademark of the Center for Internet Security, Inc. (CIS). CIS licenses the CIS Controls under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) ([CIS terms of use](https://cas.docs.cisecurity.org/en/latest/source/terms-of-use/)).
+CIS Controls® is a registered trademark of the Center for Internet Security, Inc. (CIS).
 
-This project does not copy, change or distribute CIS Controls content. It uses only the Safeguard and Control numbers that the CTID mapping uses to identify them, and links to [cisecurity.org](https://www.cisecurity.org/controls/cis-controls-list). Read the CIS Controls there. The gap analysis shows which ATT&CK techniques the CTID mapping links to the Safeguards that you select. It does not represent or assess compliance with the CIS Controls.
+> CIS Critical Security Controls® v8.1.2 © Center for Internet Security, Inc. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Exact text, not changed. Use for non-commercial purposes only. Commercial use needs the prior approval of CIS. Refer to [cisecurity.org/controls](https://www.cisecurity.org/controls/) for the most up-to-date guidance. CIS does not sponsor or endorse this project.
+
+Used: the Control and Safeguard titles, asset classes, security functions and Implementation Groups from the CIS workbook `CIS_Controls_v8_1_2_AI_Guidance_Combined_Workbook_20260714.xlsx`, sheet "Controls v8.1.2 AI Guidance" (SHA-256 `4cba315d91eb2f22bff54492149058a6d862fbba9d7b906368feab341b792079`), retrieved on 2026-11-04. They are in `data/sources/cis-controls-8.1.2.json`, exact and not changed. The workbook licence permits copies and redistribution for non-commercial purposes, with credit to CIS and a link to the licence. This project is free and non-commercial.
+
+This CIS text is not under the project licences. It appears only in places that state its licence: `data/sources/cis-controls-8.1.2.json`, the page, the `cis_text` part of each `api/v1/cis/safeguards/` file and `exports/cis-8.1.2-safeguards.csv`. The graph, the claims and the other exports hold only CIS IDs. If you reuse the CIS text, keep the notice above, use it only for non-commercial purposes and do not change it.
+
+The gap analysis shows which ATT&CK techniques the CTID mapping links to the Safeguards that you select. It does not represent or assess compliance with the CIS Controls.
 
 ## Cloud Security Alliance Cloud Controls Matrix
 
