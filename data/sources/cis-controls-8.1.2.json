@@ -1,0 +1,1445 @@
+{
+ "title": "CIS Critical Security Controls v8.1.2: Control and Safeguard titles, asset classes, security functions and Implementation Groups",
+ "publisher": "Center for Internet Security, Inc. (CIS)",
+ "licence": "CC BY-NC-ND 4.0",
+ "licence_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+ "attribution": "CIS Critical Security Controls® v8.1.2 © Center for Internet Security, Inc. Licensed under CC BY-NC-ND 4.0. Exact text, not changed. Use for non-commercial purposes only. Commercial use needs the prior approval of CIS. Refer to https://www.cisecurity.org/controls/ for the most up-to-date guidance. CIS does not sponsor or endorse this project.",
+ "source": {
+  "workbook": "CIS_Controls_v8_1_2_AI_Guidance_Combined_Workbook_20260714.xlsx",
+  "sheet": "Controls v8.1.2 AI Guidance",
+  "sha256": "4cba315d91eb2f22bff54492149058a6d862fbba9d7b906368feab341b792079",
+  "retrieved": "2026-11-04"
+ },
+ "controls": {
+  "CIS-1": "Inventory and Control of Enterprise Assets",
+  "CIS-2": "Inventory and Control of Software Assets",
+  "CIS-3": "Data Protection",
+  "CIS-4": "Secure Configuration of Enterprise Assets and Software",
+  "CIS-5": "Account Management",
+  "CIS-6": "Access Control Management",
+  "CIS-7": "Continuous Vulnerability Management",
+  "CIS-8": "Audit Log Management",
+  "CIS-9": "Email and Web Browser Protections",
+  "CIS-10": "Malware Defenses",
+  "CIS-11": "Data Recovery",
+  "CIS-12": "Network Infrastructure Management",
+  "CIS-13": "Network Monitoring and Defense",
+  "CIS-14": "Security Awareness and Skills Training",
+  "CIS-15": "Service Provider Management",
+  "CIS-16": "Application Software Security",
+  "CIS-17": "Incident Response Management",
+  "CIS-18": "Penetration Testing"
+ },
+ "safeguards": {
+  "CIS-1.1": {
+   "title": "Establish and Maintain Detailed Enterprise Asset Inventory",
+   "asset_class": "Devices",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-1.2": {
+   "title": "Address Unauthorized Assets",
+   "asset_class": "Devices",
+   "security_function": "Respond",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-1.3": {
+   "title": "Utilize an Active Discovery Tool",
+   "asset_class": "Devices",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-1.4": {
+   "title": "Use Dynamic Host Configuration Protocol (DHCP) Logging to Update Enterprise Asset Inventory",
+   "asset_class": "Devices",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-1.5": {
+   "title": "Use a Passive Asset Discovery Tool",
+   "asset_class": "Devices",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-2.1": {
+   "title": "Establish and Maintain a Software Inventory",
+   "asset_class": "Software",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-2.2": {
+   "title": "Ensure Authorized Software is Currently Supported",
+   "asset_class": "Software",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-2.3": {
+   "title": "Address Unauthorized Software",
+   "asset_class": "Software",
+   "security_function": "Respond",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-2.4": {
+   "title": "Utilize Automated Software Inventory Tools",
+   "asset_class": "Software",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-2.5": {
+   "title": "Allowlist Authorized Software",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-2.6": {
+   "title": "Allowlist Authorized Libraries",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-2.7": {
+   "title": "Allowlist Authorized Scripts",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-3.1": {
+   "title": "Establish and Maintain a Data Management Process",
+   "asset_class": "Data",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.2": {
+   "title": "Establish and Maintain a Data Inventory",
+   "asset_class": "Data",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.3": {
+   "title": "Configure Data Access Control Lists",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.4": {
+   "title": "Enforce Data Retention",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.5": {
+   "title": "Securely Dispose of Data",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.6": {
+   "title": "Encrypt Data on End-User Devices",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.7": {
+   "title": "Establish and Maintain a Data Classification Scheme",
+   "asset_class": "Data",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.8": {
+   "title": "Document Data Flows",
+   "asset_class": "Data",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.9": {
+   "title": "Encrypt Data on Removable Media",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.10": {
+   "title": "Encrypt Sensitive Data in Transit",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.11": {
+   "title": "Encrypt Sensitive Data at Rest",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.12": {
+   "title": "Segment Data Processing and Storage Based on Sensitivity",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-3.13": {
+   "title": "Deploy a Data Loss Prevention Solution",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-3.14": {
+   "title": "Log Sensitive Data Access",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-4.1": {
+   "title": "Establish and Maintain a Secure Configuration Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.2": {
+   "title": "Establish and Maintain a Secure Configuration Process for Network Infrastructure",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.3": {
+   "title": "Configure Automatic Session Locking on Enterprise Assets",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.4": {
+   "title": "Implement and Manage a Firewall on Servers",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.5": {
+   "title": "Implement and Manage a Firewall on End-User Devices",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.6": {
+   "title": "Securely Manage Enterprise Assets and Software",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.7": {
+   "title": "Manage Default Accounts on Enterprise Assets and Software",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.8": {
+   "title": "Uninstall or Disable Unnecessary Services on Enterprise Assets and Software",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.9": {
+   "title": "Configure Trusted DNS Servers on Enterprise Assets",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.10": {
+   "title": "Enforce Automatic Device Lockout on Portable End-User Devices",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.11": {
+   "title": "Enforce Remote Wipe Capability on Portable End-User Devices",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-4.12": {
+   "title": "Separate Enterprise Workspaces on Mobile End-User Devices",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-5.1": {
+   "title": "Establish and Maintain an Inventory of Accounts",
+   "asset_class": "Users",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-5.2": {
+   "title": "Use Unique Passwords",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-5.3": {
+   "title": "Disable Dormant Accounts",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-5.4": {
+   "title": "Restrict Administrator Privileges to Dedicated Administrator Accounts",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-5.5": {
+   "title": "Establish and Maintain an Inventory of Service Accounts",
+   "asset_class": "Users",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-5.6": {
+   "title": "Centralize Account Management",
+   "asset_class": "Users",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.1": {
+   "title": "Establish an Access Granting Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.2": {
+   "title": "Establish an Access Revoking Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.3": {
+   "title": "Require MFA for Externally-Exposed Applications",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.4": {
+   "title": "Require MFA for Remote Network Access",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.5": {
+   "title": "Require MFA for Administrative Access",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.6": {
+   "title": "Establish and Maintain an Inventory of Authentication and Authorization Systems",
+   "asset_class": "Software",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.7": {
+   "title": "Centralize Access Control",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-6.8": {
+   "title": "Define and Maintain Role-Based Access Control",
+   "asset_class": "Users",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-7.1": {
+   "title": "Establish and Maintain a Vulnerability Management Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-7.2": {
+   "title": "Establish and Maintain a Remediation Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-7.3": {
+   "title": "Perform Automated Operating System Patch Management",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-7.4": {
+   "title": "Perform Automated Application Patch Management",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-7.5": {
+   "title": "Perform Automated Vulnerability Scans of Internal Enterprise Assets",
+   "asset_class": "Software",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-7.6": {
+   "title": "Perform Automated Vulnerability Scans of Externally-Exposed Enterprise Assets",
+   "asset_class": "Software",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-7.7": {
+   "title": "Remediate Detected Vulnerabilities",
+   "asset_class": "Software",
+   "security_function": "Respond",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.1": {
+   "title": "Establish and Maintain an Audit Log Management Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.2": {
+   "title": "Collect Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.3": {
+   "title": "Ensure Adequate Audit Log Storage",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.4": {
+   "title": "Standardize Time Synchronization",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.5": {
+   "title": "Collect Detailed Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.6": {
+   "title": "Collect DNS Query Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.7": {
+   "title": "Collect URL Request Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.8": {
+   "title": "Collect Command-Line Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.9": {
+   "title": "Centralize Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.10": {
+   "title": "Retain Audit Logs",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.11": {
+   "title": "Conduct Audit Log Reviews",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-8.12": {
+   "title": "Collect Service Provider Logs",
+   "asset_class": "Data",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-9.1": {
+   "title": "Ensure Use of Only Fully Supported Browsers and Email Clients",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-9.2": {
+   "title": "Use DNS Filtering Services",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-9.3": {
+   "title": "Maintain and Enforce Network-Based URL Filters",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-9.4": {
+   "title": "Restrict Unnecessary or Unauthorized Browser and Email Client Extensions",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-9.5": {
+   "title": "Implement DMARC",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-9.6": {
+   "title": "Block Unnecessary File Types",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-9.7": {
+   "title": "Deploy and Maintain Email Server Anti-Malware Protections",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-10.1": {
+   "title": "Deploy and Maintain Anti-Malware Software",
+   "asset_class": "Devices",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-10.2": {
+   "title": "Configure Automatic Anti-Malware Signature Updates",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-10.3": {
+   "title": "Disable Autorun and Autoplay for Removable Media",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-10.4": {
+   "title": "Configure Automatic Anti-Malware Scanning of Removable Media",
+   "asset_class": "Devices",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-10.5": {
+   "title": "Enable Anti-Exploitation Features",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-10.6": {
+   "title": "Centrally Manage Anti-Malware Software",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-10.7": {
+   "title": "Use Behavior-Based Anti-Malware Software",
+   "asset_class": "Devices",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-11.1": {
+   "title": "Establish and Maintain a Data Recovery Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-11.2": {
+   "title": "Perform Automated Backups",
+   "asset_class": "Data",
+   "security_function": "Recover",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-11.3": {
+   "title": "Protect Recovery Data",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-11.4": {
+   "title": "Establish and Maintain an Isolated Instance of Recovery Data",
+   "asset_class": "Data",
+   "security_function": "Recover",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-11.5": {
+   "title": "Test Data Recovery",
+   "asset_class": "Data",
+   "security_function": "Recover",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.1": {
+   "title": "Ensure Network Infrastructure is Up-to-Date",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.2": {
+   "title": "Establish and Maintain a Secure Network Architecture",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.3": {
+   "title": "Securely Manage Network Infrastructure",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.4": {
+   "title": "Establish and Maintain Architecture Diagram(s)",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.5": {
+   "title": "Centralize Network Authentication, Authorization, and Auditing (AAA)",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.6": {
+   "title": "Use of Secure Network Management and Communication Protocols",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.7": {
+   "title": "Ensure Remote Devices Utilize a VPN and are Connecting to an Enterprise’s AAA Infrastructure",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-12.8": {
+   "title": "Establish and Maintain Dedicated Computing Resources for All Administrative Work",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-13.1": {
+   "title": "Centralize Security Event Alerting",
+   "asset_class": "Network",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-13.2": {
+   "title": "Deploy a Host-Based Intrusion Detection Solution",
+   "asset_class": "Devices",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-13.3": {
+   "title": "Deploy a Network Intrusion Detection Solution",
+   "asset_class": "Network",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-13.4": {
+   "title": "Perform Traffic Filtering Between Network Segments",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-13.5": {
+   "title": "Manage Access Control for Remote Assets",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-13.6": {
+   "title": "Collect Network Traffic Flow Logs",
+   "asset_class": "Network",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-13.7": {
+   "title": "Deploy a Host-Based Intrusion Prevention Solution",
+   "asset_class": "Devices",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-13.8": {
+   "title": "Deploy a Network Intrusion Prevention Solution",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-13.9": {
+   "title": "Deploy Port-Level Access Control",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-13.10": {
+   "title": "Perform Application Layer Filtering",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-13.11": {
+   "title": "Tune Security Event Alerting Thresholds",
+   "asset_class": "Network",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-14.1": {
+   "title": "Establish and Maintain a Security Awareness Program",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.2": {
+   "title": "Train Workforce Members to Recognize Social Engineering Attacks",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.3": {
+   "title": "Train Workforce Members on Authentication Best Practices",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.4": {
+   "title": "Train Workforce on Data Handling Best Practices",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.5": {
+   "title": "Train Workforce Members on Causes of Unintentional Data Exposure",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.6": {
+   "title": "Train Workforce Members on Recognizing and Reporting Security Incidents",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.7": {
+   "title": "Train Workforce on How to Identify and Report if Their Enterprise Assets are Missing Security Updates",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.8": {
+   "title": "Train Workforce on the Dangers of Connecting to and Transmitting Enterprise Data Over Insecure Networks",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-14.9": {
+   "title": "Conduct Role-Specific Security Awareness and Skills Training",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-15.1": {
+   "title": "Establish and Maintain an Inventory of Service Providers",
+   "asset_class": "Users",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-15.2": {
+   "title": "Establish and Maintain a Service Provider Management Policy",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-15.3": {
+   "title": "Classify Service Providers",
+   "asset_class": "Users",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-15.4": {
+   "title": "Ensure Service Provider Contracts Include Security Requirements",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-15.5": {
+   "title": "Assess Service Providers",
+   "asset_class": "Users",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-15.6": {
+   "title": "Monitor Service Providers",
+   "asset_class": "Data",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-15.7": {
+   "title": "Securely Decommission Service Providers",
+   "asset_class": "Data",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-16.1": {
+   "title": "Establish and Maintain a Secure Application Development Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.2": {
+   "title": "Establish and Maintain a Process to Accept and Address Software Vulnerabilities",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.3": {
+   "title": "Perform Root Cause Analysis on Security Vulnerabilities",
+   "asset_class": "Software",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.4": {
+   "title": "Establish and Manage an Inventory of Third-Party Software Components",
+   "asset_class": "Software",
+   "security_function": "Identify",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.5": {
+   "title": "Use Up-to-Date and Trusted Third-Party Software Components",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.6": {
+   "title": "Establish and Maintain a Severity Rating System and Process for Application Vulnerabilities",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.7": {
+   "title": "Use Standard Hardening Configuration Templates for Application Infrastructure",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.8": {
+   "title": "Separate Production and Non-Production Systems",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.9": {
+   "title": "Train Developers in Application Security Concepts and Secure Coding",
+   "asset_class": "Users",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.10": {
+   "title": "Apply Secure Design Principles in Application Architectures",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.11": {
+   "title": "Leverage Vetted Modules or Services for Application Security Components",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-16.12": {
+   "title": "Implement Code-Level Security Checks",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-16.13": {
+   "title": "Conduct Application Penetration Testing",
+   "asset_class": "Software",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-16.14": {
+   "title": "Conduct Threat Modeling",
+   "asset_class": "Software",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-17.1": {
+   "title": "Designate Personnel to Manage Incident Handling",
+   "asset_class": "Users",
+   "security_function": "Respond",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.2": {
+   "title": "Establish and Maintain Contact Information for Reporting Security Incidents",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.3": {
+   "title": "Establish and Maintain an Enterprise Process for Reporting Incidents",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG1",
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.4": {
+   "title": "Establish and Maintain an Incident Response Process",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.5": {
+   "title": "Assign Key Roles and Responsibilities",
+   "asset_class": "Users",
+   "security_function": "Respond",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.6": {
+   "title": "Define Mechanisms for Communicating During Incident Response",
+   "asset_class": "Users",
+   "security_function": "Respond",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.7": {
+   "title": "Conduct Routine Incident Response Exercises",
+   "asset_class": "Users",
+   "security_function": "Recover",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.8": {
+   "title": "Conduct Post-Incident Reviews",
+   "asset_class": "Users",
+   "security_function": "Recover",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-17.9": {
+   "title": "Establish and Maintain Security Incident Thresholds",
+   "asset_class": "Documentation",
+   "security_function": "Recover",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-18.1": {
+   "title": "Establish and Maintain a Penetration Testing Program",
+   "asset_class": "Documentation",
+   "security_function": "Govern",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-18.2": {
+   "title": "Perform Periodic External Penetration Tests",
+   "asset_class": "Network",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-18.3": {
+   "title": "Remediate Penetration Test Findings",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG2",
+    "IG3"
+   ]
+  },
+  "CIS-18.4": {
+   "title": "Validate Security Measures",
+   "asset_class": "Network",
+   "security_function": "Protect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  },
+  "CIS-18.5": {
+   "title": "Perform Periodic Internal Penetration Tests",
+   "asset_class": "Network",
+   "security_function": "Detect",
+   "implementation_groups": [
+    "IG3"
+   ]
+  }
+ }
+}

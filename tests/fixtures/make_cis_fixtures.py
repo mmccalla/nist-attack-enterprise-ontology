@@ -30,6 +30,7 @@ def full(row):
 
 def workbook(rows, inline_last=False):
     rows = [full(r) for r in rows]
+    header = [h if h != "Asset Type" else "Asset Class" for h in HEADER]  # 8.1 names the column "Asset Class"
     strings, index = [], {}
 
     def sid(s):
@@ -39,7 +40,7 @@ def workbook(rows, inline_last=False):
         return index[s]
 
     out = []
-    for n, row in enumerate([HEADER] + rows, start=1):
+    for n, row in enumerate([header] + rows, start=1):
         cells = []
         for i, v in enumerate(row):
             if v in (None, ""):
@@ -57,7 +58,7 @@ def workbook(rows, inline_last=False):
     si = [f"<si><t>{xml_escape(s)}</t></si>" for s in strings]
     si[0] = "<si><r><t>CIS </t></r><r><t>Control</t></r><rPh><t>ignored</t></rPh></si>"
     shared = f'<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">{"".join(si)}</sst>'
-    book = '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheets><sheet name="Introduction" sheetId="1"/><sheet name="Controls V8.1" sheetId="2"/></sheets></workbook>'
+    book = '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheets><sheet name="Introduction" sheetId="1"/><sheet name="Controls v8.1.2 AI Guidance" sheetId="2"/></sheets></workbook>'
     intro = '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Synthetic</t></is></c></row></sheetData></worksheet>'
     return {"xl/workbook.xml": book, "xl/sharedStrings.xml": shared, "xl/worksheets/sheet1.xml": intro, "xl/worksheets/sheet2.xml": sheet}
 

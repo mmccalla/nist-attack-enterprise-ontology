@@ -167,6 +167,13 @@ for (const [s, pi, o] of DATA.edges) {
   IN.get(NODES[o].id).push([p, NODES[s].id]);
 }
 const PROPS = new Map(DATA.schema.properties.map(p => [p.id, p]));
+/* Exact CIS Controls 8.1.2 titles (CC BY-NC-ND 4.0, D29): shown as the subtitle of each Safeguard and CIS Control node. */
+const CIS_TEXT = DATA.cis;
+const CIS_ATTRIBUTION = `CIS Critical Security Controls&reg; v8.1.2 &copy; Center for Internet Security, Inc., <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="noopener">CC BY-NC-ND 4.0</a>. Exact text. Non-commercial use only. See <a href="https://www.cisecurity.org/controls/" rel="noopener">cisecurity.org/controls</a> for the current guidance.`;
+for (const n of NODES) {
+  if (n.t === "CisSafeguard" && CIS_TEXT.safeguards[n.l]) n.s = CIS_TEXT.safeguards[n.l].title;
+  if (n.t === "CapabilityGroup" && n.id.startsWith("cisgroup_") && CIS_TEXT.controls[n.l]) n.s = CIS_TEXT.controls[n.l];
+}
 const TYPES = {
   SecurityControl: ["NIST 800-53 control", "control", d3.symbolCircle, 260],
   CisSafeguard: ["CIS Safeguard", "cis", d3.symbolCircle, 220],
@@ -249,7 +256,7 @@ function renderBrowse() {
       <p class="note">Count: mitigating NIST controls. n/m: the source marks it non-mappable. no row: the NIST mapping does not mention it. 19.1 only: in ATT&amp;CK ${CIS_ATTACK}, which the CIS mapping uses, but not in 16.1.</p>` + listItems(items, current);
     document.getElementById("tech-filter").addEventListener("change", renderBrowse);
   } else if (tab === "cis") {
-    browse.innerHTML = `<p class="note">CIS Controls 8.1.2 Safeguards. Count: ATT&amp;CK ${CIS_ATTACK} techniques mitigated. The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}.</p>` + listItems(ofType("CisSafeguard").sort(byLabel).map(n => ({...n, c: mitigated(n.id)})), current);
+    browse.innerHTML = `<p class="note">CIS Controls 8.1.2 Safeguards. Count: ATT&amp;CK ${CIS_ATTACK} techniques mitigated. The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Titles: ${CIS_ATTRIBUTION}</p>` + listItems(ofType("CisSafeguard").sort(byLabel).map(n => ({...n, c: mitigated(n.id)})), current);
   } else if (tab === "tactics") {
     const items = ofType("Tactic").filter(n => (n.p.catalogue ?? "").startsWith("ATT&CK")).sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
     browse.innerHTML = `<p class="note">ATT&amp;CK matrix order. Count: Enterprise techniques in the tactic.</p>` + listItems(items, current);
@@ -449,7 +456,8 @@ function showNode(id) {
   if (n.t === "NonMappableAssertion") extra += `<p class="note">The source says this technique has no NIST 800-53 mapping.</p>`;
   if (n.t === "NonMappableControlAssertion") extra += `<p class="note">The CIS source row marks this Safeguard as non_mappable. The row names no ATT&amp;CK technique.</p>`;
   if (n.t === "CisSafeguard" && CIS_USER?.safeguards[n.l]) { const sg = CIS_USER.safeguards[n.l]; extra += `<p><b>${esc(sg.title)}</b><br><span class="note">From your CIS file${CIS_USER.version ? ` (version ${esc(CIS_USER.version)})` : ""}: ${esc([sg.assetType, sg.securityFunction, sg.ig.join(" ")].filter(Boolean).join(", "))}. This text stays on this device.</span></p>`; }
-  if (n.t === "CisSafeguard") extra += `<p class="note">CIS licenses the titles and text of the CIS Controls under CC BY-NC-ND 4.0, so this page shows only the ID. Read the Safeguard on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>.</p><p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Claims on techniques that are also in ${esc(M.source.attackVersion)} share the technique node by STIX id.</p><div class="row"><a class="btn" href="#gaps-cis/${encodeURIComponent(n.l)}">Open in CIS gap analysis</a></div>`;
+  if (n.t === "CisSafeguard" && CIS_TEXT.safeguards[n.l]) { const t = CIS_TEXT.safeguards[n.l]; extra += `<p class="note">${esc([t.asset_class, t.security_function, t.implementation_groups.join(" ")].filter(Boolean).join(", "))}. Title and attributes: ${CIS_ATTRIBUTION} The full Safeguard text is on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>.</p>`; }
+  if (n.t === "CisSafeguard") extra += `<p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Claims on techniques that are also in ${esc(M.source.attackVersion)} share the technique node by STIX id.</p><div class="row"><a class="btn" href="#gaps-cis/${encodeURIComponent(n.l)}">Open in CIS gap analysis</a></div>`;
   const nb = neighbourhood(id);
   if (n.t === "SecurityControl" || n.t === "ControlBaseline") {
     const ids = n.t === "SecurityControl" ? [n.l] : [...CONTROLS].filter(([, c]) => baselinesOf(c.id).includes(n.l)).map(([c]) => c).sort();
@@ -509,7 +517,7 @@ function showOverview() {
       <li><a href="#n/technique_T1521.003">T1521.003</a>: a source row outside ATT&amp;CK Enterprise (CQ08)</li>
       <li><a href="#questions">The ${QUESTIONS.length} competency questions</a> and their answers</li>
       <li><a href="#gaps">Gap analysis</a>: paste your controls or load an OSCAL SSP and see what is uncovered</li>
-      <li><a href="#n/cis_CIS-6.3">CIS Safeguard CIS-6.3</a> and the <a href="#gaps-cis">CIS gap analysis</a> on ATT&amp;CK 19.1</li>
+      <li><a href="#n/cis_CIS-6.3">CIS Safeguard CIS-6.3 ${esc(CIS_TEXT.safeguards["CIS-6.3"].title)}</a> and the <a href="#gaps-cis">CIS gap analysis</a> on ATT&amp;CK 19.1</li>
       <li><a href="#n/atlastechnique_AML.T0053">AML.T0053 AI Agent Tool Invocation</a> and the <a href="#gaps-atlas">ATLAS gap analysis</a> for AI agents</li>
       <li><a href="#n/owasp_LLM01_2025">LLM01:2025 Prompt Injection</a> with its ATLAS techniques and mitigations (CQ19)</li>
       <li><a href="#class/:MitigationClaim">The MitigationClaim class</a></li></ul>`;
@@ -539,7 +547,7 @@ function showAbout() {
       <li>MITRE ATT&amp;CK 16.1: ${esc(C2.ATTACK_NOTICES["16"])} ATT&amp;CK 19.1 and 20.0: ${esc(C2.ATTACK_NOTICES["19"])} MITRE ATT&amp;CK and ATT&amp;CK are registered trademarks of The MITRE Corporation.</li>
       <li>Mappings: MITRE Center for Threat-Informed Defense, <a href="https://ctid.mitre.org/mappings/">Mappings Explorer</a>, Apache 2.0. &copy; 2024 MITRE. Approved for public release. Document number(s) CT0104.</li>
       <li>MITRE ATLAS: Copyright 2021-2026 MITRE, Apache 2.0.</li>
-      <li>CIS Controls&reg; is a registered trademark of the Center for Internet Security. CIS licenses the CIS Controls under CC BY-NC-ND 4.0. This tool copies no CIS text and does not assess compliance with the CIS Controls.</li>
+      <li>CIS Controls&reg; is a registered trademark of the Center for Internet Security. ${CIS_ATTRIBUTION} The graph, claims and other exports hold only CIS IDs. This tool does not assess compliance with the CIS Controls.</li>
       <li>NIST SP 800-53, SP 800-53B and OSCAL content: NIST, public domain in the United States and CC0 1.0. No endorsement by NIST is implied.</li>
       <li>OWASP Top 10 for LLM Applications 2025: OWASP GenAI Security Project, CC BY-SA 4.0.</li>
       <li>UCO: Apache 2.0. Graph browser: <a href="https://d3js.org">D3</a> 7.9.0, &copy; 2010-2023 Mike Bostock, ISC.</li>
@@ -823,7 +831,9 @@ let cisSelected = new Set();
 /* The user's own CIS Controls file (lib/cisfile.cjs). In memory only: never stored, never sent, never in a URL. */
 let CIS_USER = null;
 const CF = NistAttackCisFile;
-const cisTitle = id => CIS_USER?.safeguards[id]?.title ?? "";
+// With the user's own file loaded, use that file only: never mix two CIS versions.
+const cisTitle = id => (CIS_USER ? CIS_USER.safeguards[id]?.title : CIS_TEXT.safeguards[id]?.title) ?? "";
+const cisIg = id => (CIS_USER ? CIS_USER.safeguards[id]?.ig : CIS_TEXT.safeguards[id]?.implementation_groups) ?? [];
 const cisLink = c => `<a href="#n/cis_${encodeURIComponent(c)}">${esc(c)}</a>${cisTitle(c) ? ` <span class="sub">${esc(cisTitle(c))}</span>` : ""}`;
 function showGapsCis(list) {
   detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <b>CIS Safeguards and ATT&amp;CK</b> | <a href="#gaps-atlas">ATLAS mitigations and AI techniques</a></p>
@@ -833,12 +843,12 @@ function showGapsCis(list) {
     <textarea id="cis-input" spellcheck="false" placeholder="1.1, 2.3, 4.1 ...">${esc(list ?? [...cisSelected].sort().join(", "))}</textarea>
     <div class="row"><button class="btn" id="cis-all">All mapped Safeguards</button><button class="btn" id="cis-clear">Clear</button><span id="cis-ig"></span></div>
     <div class="row"><label class="btn" for="cis-file">Load your CIS Controls file</label><input id="cis-file" type="file" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden>
-      <span class="note">XLSX from <a href="https://www.cisecurity.org/controls" rel="noopener">cisecurity.org</a>, or CSV saved from it. It adds titles and Implementation Groups.</span></div>
+      <span class="note">XLSX from <a href="https://www.cisecurity.org/controls" rel="noopener">cisecurity.org</a>, or CSV saved from it. Use it if you work with another CIS version than 8.1.2.</span></div>
     <p class="note" id="cis-file-status" aria-live="polite">The file stays on this device. The page reads only Safeguard numbers, titles, asset types, security functions and Implementation Groups, and keeps them in memory until you close the page. CIS licenses the file under CC BY-NC-ND 4.0: your use of it, and of the CSV files that you make from it, must follow that licence.</p>
     <p class="note" id="cis-status" aria-live="polite"></p>
     <h3>Download</h3><div class="row"><button class="btn" id="cis-layer">ATT&amp;CK Navigator layer (ATT&amp;CK 19)</button><button class="btn" id="cis-csv">Techniques CSV</button><button class="btn" id="cis-recs-csv">Recommendations CSV</button></div>
     <div id="cis-recs"></div>
-    <p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}, not ${esc(M.source.attackVersion)}. Implementation Groups are not in the mapping file, so this page does not filter by them. CIS licenses the Safeguard titles and text under CC BY-NC-ND 4.0, so this page shows only IDs. Read them on <a href="https://www.cisecurity.org/controls/cis-controls-list" rel="noopener">cisecurity.org</a>. A mapping says a Safeguard can mitigate a technique. It does not show that the Safeguard is implemented well or that it stops the technique. This page does not assess compliance with the CIS Controls. CIS does not sponsor or endorse this tool.</p>`;
+    <p class="note">The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}, not ${esc(M.source.attackVersion)}. Implementation Groups are not in the mapping file, so this page does not filter by them. Safeguard titles and Implementation Groups: ${CIS_ATTRIBUTION} Your own file, if you load one, replaces them on this device only. A mapping says a Safeguard can mitigate a technique. It does not show that the Safeguard is implemented well or that it stops the technique. This page does not assess compliance with the CIS Controls. CIS does not sponsor or endorse this tool.</p>`;
   const input = document.getElementById("cis-input");
   const run = (updateHash = true) => {
     const r = cisIds(input.value);
@@ -846,7 +856,7 @@ function showGapsCis(list) {
     const model = cisModel(), cov = C2.coverage(model, cisSelected), counts = C2.counts(cov);
     const recs = C2.recommendations(model, cisSelected);
     document.getElementById("cis-status").innerHTML = `${cisSelected.size} mapped Safeguard${cisSelected.size === 1 ? "" : "s"} recognised.` + (r.unmapped.length ? ` Not in the CIS mapping: <code>${esc(r.unmapped.slice(0, 20).join(" "))}</code>.` : "");
-    document.getElementById("cis-recs").innerHTML = recs.length ? `<h3>Safeguards that would close the most gaps</h3><ol>${recs.map(([c, n]) => `<li>${cisLink(c)} <span class="count">+${n}</span>${CIS_USER?.safeguards[c] ? ` <span class="note">${esc(CIS_USER.safeguards[c].ig.join(" ") || "no IG")}</span>` : ""}</li>`).join("")}</ol><p class="note">Greedy order: each Safeguard is ranked by the gaps it closes after the ones above it are added.</p>` : "";
+    document.getElementById("cis-recs").innerHTML = recs.length ? `<h3>Safeguards that would close the most gaps</h3><ol>${recs.map(([c, n]) => `<li>${cisLink(c)} <span class="count">+${n}</span> <span class="note">${esc(cisIg(c).join(" ") || "no IG")}</span></li>`).join("")}</ol><p class="note">Greedy order: each Safeguard is ranked by the gaps it closes after the ones above it are added.</p>` : "";
     const total = cov.size, pct = n => total ? Math.round(100 * n / total) : 0;
     const gaps = [...cov].filter(([, [st]]) => st === "gap").sort(([a], [b]) => byTid(a, b));
     const row = ([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(cisLink).join("<br>")}</td></tr>`;
@@ -866,9 +876,9 @@ function showGapsCis(list) {
   document.getElementById("cis-clear").addEventListener("click", () => { input.value = ""; run(); });
   const showIg = () => {
     const mapped = new Set(Object.keys(cisModel().mitigates).filter(c => cisModel().mitigates[c].length));
-    document.getElementById("cis-ig").innerHTML = CIS_USER ? " Start from: " + ["IG1", "IG2", "IG3"].map(g => `<button class="btn" data-ig="${g}">${g}</button>`).join("") : "";
+    document.getElementById("cis-ig").innerHTML = " Start from: " + ["IG1", "IG2", "IG3"].map(g => `<button class="btn" data-ig="${g}">${g}</button>`).join("");
     detail.querySelectorAll("[data-ig]").forEach(b => b.addEventListener("click", () => {
-      input.value = Object.entries(CIS_USER.safeguards).filter(([id, sg]) => sg.ig.includes(b.dataset.ig) && mapped.has(id)).map(([id]) => id)
+      input.value = [...mapped].filter(id => cisIg(id).includes(b.dataset.ig))
         .sort((a, b2) => a.localeCompare(b2, "en", {numeric: true})).join(", ");
       run();
     }));
@@ -898,15 +908,13 @@ function showGapsCis(list) {
   });
   document.getElementById("cis-csv").addEventListener("click", () => {
     const {cov} = run(false);
-    const titles = CIS_USER ? [["safeguard_titles_from_your_cis_file"], cs => cs.map(c => `${c} ${cisTitle(c)}`).join(" | ")] : [[], null];
-    download("cis-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "status", "cis_safeguards", ...titles[0]],
-      [...cov].sort(([a], [b]) => byTid(a, b)).map(([tid, [st, cs]]) => [tid, BY_ID.get("technique_" + tid).s, st, cs.join(" "), ...(titles[1] ? [titles[1](cs)] : [])])), "text/csv");
+    download("cis-coverage-techniques.csv", toCsv(["technique_id", "technique_name", "status", "cis_safeguards", CIS_USER ? "safeguard_titles_from_your_cis_file" : "safeguard_titles_cis_8.1.2_cc_by_nc_nd_4.0"],
+      [...cov].sort(([a], [b]) => byTid(a, b)).map(([tid, [st, cs]]) => [tid, BY_ID.get("technique_" + tid).s, st, cs.join(" "), cs.map(c => `${c} ${cisTitle(c)}`).join(" | ")])), "text/csv");
   });
   document.getElementById("cis-recs-csv").addEventListener("click", () => {
     const {model} = run(false);
-    const extra = CIS_USER ? ["safeguard_title_from_your_cis_file", "implementation_groups"] : [];
-    download("cis-recommended-safeguards.csv", toCsv(["rank", "safeguard_id", "gaps_closed", ...extra],
-      C2.recommendations(model, cisSelected, 50).map(([c, n], i) => [i + 1, c, n, ...(CIS_USER ? [cisTitle(c), (CIS_USER.safeguards[c]?.ig ?? []).join(" ")] : [])])), "text/csv");
+    download("cis-recommended-safeguards.csv", toCsv(["rank", "safeguard_id", "gaps_closed", CIS_USER ? "safeguard_title_from_your_cis_file" : "safeguard_title_cis_8.1.2_cc_by_nc_nd_4.0", "implementation_groups"],
+      C2.recommendations(model, cisSelected, 50).map(([c, n], i) => [i + 1, c, n, cisTitle(c), cisIg(c).join(" ")])), "text/csv");
   });
   run(list != null);
 }

@@ -70,6 +70,6 @@ def test_page_and_guides_carry_the_notices():
         assert "NOTICE.md" in (ROOT / name).read_text(encoding="utf-8"), name
 
 
-def test_cis_rationale_markers_are_counted_in_the_notice():
-    markers = (ROOT / "data" / "population.ttl").read_text(encoding="utf-8").count("[title of CIS-")
-    assert markers == 1 and "(one row on 2026-11-03)" in NOTICE
+def test_cis_rationale_is_not_changed():
+    assert (ROOT / "data" / "population.ttl").read_text(encoding="utf-8").count("[title of CIS-") == 0
+    assert "CC BY-NC-ND 4.0" in NOTICE and "cis-controls-8.1.2.json" in NOTICE

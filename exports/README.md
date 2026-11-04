@@ -18,7 +18,8 @@ These files hold third-party content. Each part keeps its own licence. Keep the 
 - ATT&CK identifiers and names: ATT&CK terms of use. Keep the MITRE copyright notice and the licence ([`LICENSES/`](../LICENSES)).
 - CTID mappings and rationale (`claims.csv`, `cis-claims.csv`): Apache 2.0.
 - `owasp-llm-atlas-links.csv`: CC BY-SA 4.0.
-- `cis-claims.csv` has CIS Safeguard numbers only, not CIS text. The CIS Controls are CC BY-NC-ND 4.0.
+- `cis-claims.csv` has CIS Safeguard numbers only, not CIS text.
+- `cis-8.1.2-safeguards.csv` is exact CIS text: CIS Critical Security Controls® v8.1.2 © Center for Internet Security, Inc., CC BY-NC-ND 4.0. Non-commercial use only. Do not change it. It is not under the project licence.
 
 Each Navigator layer holds the ATT&CK notice and a link to the notices in its metadata.
 

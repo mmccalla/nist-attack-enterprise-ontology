@@ -542,20 +542,8 @@ def add_atlas(g: Graph, atlas: dict, attack_techniques: dict, attack_mitigations
 
 CIS_URL = "https://www.cisecurity.org/controls/cis-controls-list"
 CIS_RIGHTS = ("CIS Controls content is licensed by the Center for Internet Security under CC BY-NC-ND 4.0. "
-              "This graph keeps only CIS Safeguard and Control IDs and links. Read the titles and text at cisecurity.org.")
-
-
-def cis_safe_text(text: str, titles: dict) -> str:
-    """CTID rationale with each CIS title (three words or more) replaced by a marker (decision D25, modification noted in NOTICE.md)."""
-    for cid, title in sorted(titles.items(), key=lambda kv: -len(kv[1])):
-        if len(title.split()) >= 3:
-            text = re.sub(re.escape(title), f"[title of {cid}]", text, flags=re.IGNORECASE)
-    return text
-
-
-def cis_safe_url(url: str) -> str:
-    """Drop the fragment of a CIS URL: it is the Safeguard title as a slug (decision D25)."""
-    return url.split("#", 1)[0] if "cisecurity.org" in url else url
+              "This graph keeps only CIS Safeguard and Control IDs and links. The exact CIS titles are in a separate file with "
+              "their own licence: data/sources/cis-controls-8.1.2.json (decision D29).")
 
 
 def add_cis(g: Graph, cis: dict, attack: dict, attack16: dict) -> dict:
@@ -651,8 +639,6 @@ def add_cis(g: Graph, cis: dict, attack: dict, attack16: dict) -> dict:
             g.add((node, ONT.inCapabilityGroup, DATA[f"cisgroup_{r['capability_group']}"]))
             g.add((node, ONT.inFramework, framework))
             g.add((node, PROV.wasDerivedFrom, ds))
-    cis_titles = {r["capability_id"]: r["capability_description"] for r in rows if r["capability_id"] and r["capability_description"]}
-    cis_titles.update(meta["capability_groups"])
     seen, pairs = defaultdict(int), defaultdict(list)
     for number, r in enumerate(rows, start=1):
         cid, tid = r["capability_id"], r["attack_object_id"]
@@ -682,8 +668,8 @@ def add_cis(g: Graph, cis: dict, attack: dict, attack16: dict) -> dict:
         g.add((node, PROV.wasDerivedFrom, ds))
         g.add((ds, ONT.containsAssertion, node))
         if r.get("comments"):
-            g.add((node, ONT.rationaleText, lit(cis_safe_text(r["comments"], cis_titles))))
-        for ref in sorted({cis_safe_url(u) for u in r.get("references") or []}):
+            g.add((node, ONT.rationaleText, lit(r["comments"])))
+        for ref in r.get("references") or []:
             g.add((node, ONT.referenceUrl, lit(ref, XSD.anyURI)))
     for (cid, tid), support in sorted(pairs.items()):
         claim = DATA[f"claim_{cid}_{tid}"]

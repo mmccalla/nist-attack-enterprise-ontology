@@ -12,8 +12,8 @@ const HEADER = "CIS Control,CIS Safeguard,Asset Type,Security Function,Title,Des
 test("XLSX and CSV give the same Safeguards", async () => {
   const x = await C.readCisFile(fixture("cis-synthetic.xlsx")), c = await C.readCisFile(fixture("cis-synthetic.csv"));
   assert.deepEqual(x.safeguards, c.safeguards);
-  assert.equal(x.version, "8.1");
-  assert.equal(x.sheet, "Controls V8.1");
+  assert.equal(x.version, "8.1.2");
+  assert.equal(x.sheet, "Controls v8.1.2 AI Guidance");
   assert.equal(Object.keys(x.safeguards).length, 17);
 });
 
@@ -79,4 +79,9 @@ test("a file above the size limit is refused", async () => {
 test("too many rows are refused", async () => {
   const lines = [HEADER]; for (let i = 0; i < C.LIMITS.rows + 1; i++) lines.push("");
   await assert.rejects(C.readCisFile(csv(lines)), /too many rows/);
+});
+
+test("Control titles come from the rows without a Safeguard number", async () => {
+  const r = await C.readCisFile(fixture("cis-synthetic.xlsx"));
+  assert.deepEqual(r.controls, {"CIS-3": "Synthetic control three", "CIS-6": "Synthetic control six"});
 });

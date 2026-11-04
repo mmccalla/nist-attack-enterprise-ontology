@@ -389,6 +389,8 @@ def render(poisoned: bool = False) -> str:
         "schema": build_schema(graph),
         "shapes": build_shapes(),
         "questions": build_questions(graph),
+        # Exact CIS text with its own licence (CC BY-NC-ND 4.0, D29). Kept apart from the CC BY graph.
+        "cis": json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8")),
     }
     if poisoned:
         poison(payload)

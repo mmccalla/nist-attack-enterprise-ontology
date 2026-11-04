@@ -2,6 +2,7 @@
 the raw sources, fully linked and small; the schemas reject bad documents."""
 
 import copy
+import csv
 import json
 import re
 import subprocess
@@ -202,29 +203,55 @@ def test_atlas_and_owasp_files_match_the_raw_sources():
     assert len(mcp) == 10 and all(d["title"] is None for d in mcp), "MCP Top 10 titles must not be copied (CC BY-NC-SA)"
 
 
-def test_no_cis_text_is_copied():
-    """CIS licenses the CIS Controls under CC BY-NC-ND 4.0, so no output may hold a Safeguard or Control title, in any
-    letter case, inside other text or as a URL slug (D25). Titles of one or two words are common phrases and are left."""
-    src = sources()
-    meta = build_population_fetch_cis_metadata()
-    titles = {r["capability_description"] for r in src.cis_rows if r["capability_description"]} | set(meta["capability_groups"].values())
-    nist = {n for n in src.family_names.values()} | {r["capability_description"] for r in src.rows if r["capability_description"]}
-    titles = {t for t in titles - nist if len(t.split()) >= 3}
-    assert len(titles) > 140
-    slug = lambda t: re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-")  # noqa: E731
-    needles = {t.lower() for t in titles} | {slug(t) for t in titles}
-    outputs = [ROOT / "index.html", ROOT / "llms.txt", ROOT / "data" / "population.ttl"]
-    outputs += [p for p in (ROOT / "api").rglob("*.json")] + [p for p in (ROOT / "exports").rglob("*") if p.is_file()]
-    texts = {p: p.read_text(encoding="utf-8") for p in outputs}
-    for name in ("cis-synthetic.csv",):
-        texts[ROOT / "tests" / "fixtures" / name] = (ROOT / "tests" / "fixtures" / name).read_text(encoding="utf-8")
-    for name in ("cis-synthetic.xlsx",):
-        with zipfile.ZipFile(ROOT / "tests" / "fixtures" / name) as z:
-            texts[ROOT / "tests" / "fixtures" / name] = " ".join(z.read(n).decode("utf-8") for n in z.namelist())
+CIS_TEXT = json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8"))
+CIS_ALLOWED = {"data/sources/cis-controls-8.1.2.json", "index.html", "exports/cis-8.1.2-safeguards.csv"}
+
+
+def cis_titles():
+    titles = {t["title"] for t in CIS_TEXT["safeguards"].values()} | set(CIS_TEXT["controls"].values())
+    nist = set(sources().family_names.values()) | {r["capability_description"] for r in sources().rows if r["capability_description"]}
+    return {t for t in titles - nist if len(t.split()) >= 3}
+
+
+def test_cis_text_appears_only_where_its_licence_is_stated():
+    """CIS text (CC BY-NC-ND 4.0) stays out of the CC BY graph, the claims and the other API files (D29)."""
+    titles = cis_titles()
+    assert len(titles) > 150
+    outputs = [ROOT / "llms.txt", ROOT / "data" / "population.ttl"] + list((ROOT / "api").rglob("*.json")) + [p for p in (ROOT / "exports").rglob("*") if p.is_file()]
+    texts = {p: p.read_text(encoding="utf-8") for p in outputs if p.relative_to(ROOT).as_posix() not in CIS_ALLOWED and "cis/safeguards" not in p.as_posix()}
+    texts[ROOT / "tests/fixtures/cis-synthetic.csv"] = (ROOT / "tests" / "fixtures" / "cis-synthetic.csv").read_text(encoding="utf-8")
+    with zipfile.ZipFile(ROOT / "tests" / "fixtures" / "cis-synthetic.xlsx") as z:
+        texts[ROOT / "tests/fixtures/cis-synthetic.xlsx"] = " ".join(z.read(n).decode("utf-8") for n in z.namelist())
     for p, text in texts.items():
-        text = text.lower()
-        found = [t for t in needles if t in text]
-        assert not found, f"{p.relative_to(ROOT)} holds CIS text: {found[:3]}"
+        found = [t for t in titles if t in text]
+        assert not found, f"{p.relative_to(ROOT)} holds CIS text outside its licensed places: {found[:3]}"
+
+
+def test_cis_text_is_exact_and_attributed_where_it_appears():
+    assert CIS_TEXT["licence"] == "CC BY-NC-ND 4.0"
+    assert all(t in CIS_TEXT["attribution"] for t in ("© Center for Internet Security", "CC BY-NC-ND 4.0", "non-commercial purposes only", "not changed"))
+    assert re.fullmatch(r"[0-9a-f]{64}", CIS_TEXT["source"]["sha256"]) and CIS_TEXT["source"]["sheet"] == "Controls v8.1.2 AI Guidance"
+    for p in (API / "cis" / "safeguards").glob("*.json"):
+        doc = json.loads(p.read_text())
+        t, own = doc["cis_text"], CIS_TEXT["safeguards"][doc["id"]]
+        assert (t["title"], t["implementation_groups"], t["attribution"]) == (own["title"], own["implementation_groups"], CIS_TEXT["attribution"]), p.name
+        assert "cis_text.title" in doc["untrusted_text_fields"], p.name
+    with open(ROOT / "exports" / "cis-8.1.2-safeguards.csv", newline="", encoding="utf-8") as h:
+        rows = list(csv.DictReader(h))
+    assert {r["safeguard_id"]: r["safeguard_title"] for r in rows} == {k: v["title"] for k, v in CIS_TEXT["safeguards"].items()}
+    assert "CC BY-NC-ND 4.0" in (ROOT / "exports" / "README.md").read_text(encoding="utf-8")
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert "Center for Internet Security, Inc., <a href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\"" in html
+
+
+def test_cis_text_covers_the_mapping_and_records_the_ctid_title_differences():
+    """Each Safeguard in the CTID file is in the CIS 8.1.2 workbook. CTID writes five titles differently (D29)."""
+    src = sources()
+    ctid = {r["capability_id"]: r["capability_description"] for r in src.cis_rows if r["capability_id"]}
+    assert set(ctid) <= set(CIS_TEXT["safeguards"]) and len(CIS_TEXT["safeguards"]) == 153 and len(CIS_TEXT["controls"]) == 18
+    differ = sorted(k for k in ctid if CIS_TEXT["safeguards"][k]["title"] != ctid[k])
+    assert differ == ["CIS-12.5", "CIS-12.7", "CIS-13.5", "CIS-16.1", "CIS-3.11"]
+    assert [len([1 for t in CIS_TEXT["safeguards"].values() if g in t["implementation_groups"]]) for g in ("IG1", "IG2", "IG3")] == [56, 130, 153]
 
 
 def build_population_fetch_cis_metadata():

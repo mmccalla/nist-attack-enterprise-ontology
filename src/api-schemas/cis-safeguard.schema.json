@@ -2,7 +2,7 @@
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "$id": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/schemas/cis-safeguard.schema.json",
  "title": "cis-safeguard",
- "description": "A CIS Controls 8.1.2 Safeguard ID and the ATT&CK 19.1 techniques that CTID maps it to, with evidence. No CIS title or text: CIS licenses them under CC BY-NC-ND 4.0.",
+ "description": "A CIS Controls 8.1.2 Safeguard and the ATT&CK 19.1 techniques that CTID maps it to, with evidence. cis_text holds the exact CIS text under CC BY-NC-ND 4.0.",
  "allOf": [
   {
    "$ref": "common.schema.json#/$defs/envelope"
@@ -117,7 +117,62 @@
   },
   "rights": {
    "type": "string",
-   "description": "Why the file has no CIS title or text: CIS licenses them under CC BY-NC-ND 4.0."
+   "description": "Licence of the CIS content: why the graph keeps only IDs, and where the exact CIS text is."
+  },
+  "cis_text": {
+   "type": "object",
+   "description": "Exact CIS text, not changed. Licence CC BY-NC-ND 4.0: non-commercial use only, keep the attribution. Commercial use needs CIS approval.",
+   "properties": {
+    "title": {
+     "type": "string",
+     "minLength": 1
+    },
+    "control_title": {
+     "type": "string",
+     "minLength": 1
+    },
+    "asset_class": {
+     "type": "string"
+    },
+    "security_function": {
+     "type": "string"
+    },
+    "implementation_groups": {
+     "type": "array",
+     "items": {
+      "enum": [
+       "IG1",
+       "IG2",
+       "IG3"
+      ]
+     }
+    },
+    "version": {
+     "const": "8.1.2"
+    },
+    "licence": {
+     "const": "CC BY-NC-ND 4.0"
+    },
+    "licence_url": {
+     "const": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    },
+    "attribution": {
+     "type": "string",
+     "minLength": 1
+    }
+   },
+   "required": [
+    "title",
+    "control_title",
+    "asset_class",
+    "security_function",
+    "implementation_groups",
+    "version",
+    "licence",
+    "licence_url",
+    "attribution"
+   ],
+   "additionalProperties": false
   }
  },
  "required": [
@@ -128,7 +183,8 @@
   "attack_version",
   "technique_count",
   "claims",
-  "non_mappable_records"
+  "non_mappable_records",
+  "cis_text"
  ],
  "unevaluatedProperties": false
 }

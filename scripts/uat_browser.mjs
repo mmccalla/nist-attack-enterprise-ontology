@@ -190,13 +190,25 @@ await settle();
 const cisStatus = await page.locator("#cis-status").textContent();
 check(cisStatus.startsWith("1 mapped Safeguard recognised") && cisStatus.includes("CIS-99.9"), "a bare Safeguard number is recognised and an unknown ID is reported");
 check(page.url().endsWith("#gaps-cis/CIS-6.3"), "the CIS selection is kept in the address bar");
+// Implementation Groups from the shipped CIS 8.1.2 data, with no file loaded
+await page.goto(url.split("#")[0] + "#gaps-cis");
+await settle();
+await page.locator('[data-ig="IG1"]').click();
+await settle();
+const ig1 = (await page.locator("#cis-input").inputValue()).split(", ");
+const cis812 = JSON.parse(readFileSync(new URL("../data/sources/cis-controls-8.1.2.json", import.meta.url), "utf8"));
+const ig1Expected = await page.evaluate(ids => ids.filter(id => cisModel().mitigates[id]?.length), Object.entries(cis812.safeguards).filter(([, t]) => t.implementation_groups.includes("IG1")).map(([id]) => id));
+check(JSON.stringify([...ig1].sort()) === JSON.stringify([...ig1Expected].sort()) && ig1.length > 20, `without a file, IG1 selects the ${ig1.length} mapped Safeguards that CIS 8.1.2 puts in IG1`);
+
 // The user's own CIS file (lib/cisfile.cjs), with synthetic fixtures: no CIS text in the repository
 await page.goto(url.split("#")[0] + "#gaps-cis");
 await settle();
 await page.setInputFiles("#cis-file", new URL("cis-synthetic.xlsx", fixtures).pathname);
 await settle();
 const fileStatus = await page.locator("#cis-file-status").textContent();
-check(fileStatus.startsWith("Read 17 Safeguards from cis-synthetic.xlsx (CIS Controls version 8.1)") && fileStatus.includes("version 8.1.2"), "a CIS file loads, and the page reports its version against 8.1.2");
+check(fileStatus.startsWith("Read 17 Safeguards from cis-synthetic.xlsx (CIS Controls version 8.1.2)") && !fileStatus.includes("can differ"), "a CIS 8.1.2 file loads, with no version warning");
+const igBefore = await page.evaluate(() => cisIg("CIS-1.1"));
+check(igBefore.length === 0, "with a file loaded, Safeguards that are not in the file get no Implementation Group from the shipped 8.1.2 data");
 await page.locator('[data-ig="IG2"]').click();
 await settle();
 const ig2 = (await page.locator("#cis-input").inputValue()).split(", ");
@@ -222,8 +234,10 @@ check(await page.evaluate(() => CIS_USER === null && localStorage.length === 0 &
 await page.goto(url.split("#")[0] + "#n/cis_CIS-6.3");
 await settle();
 const sg = await page.locator("#detail").textContent();
-check(sg.includes("CC BY-NC-ND 4.0") && (await page.locator('#detail a[href="https://www.cisecurity.org/controls/cis-controls-list"]').count()) === 1, "a Safeguard page explains the CIS licence and links to cisecurity.org");
-check(!sg.includes("Require MFA"), "a Safeguard page does not show the CIS title");
+const cisText = JSON.parse(readFileSync(new URL("../data/sources/cis-controls-8.1.2.json", import.meta.url), "utf8"));
+check(sg.includes(cisText.safeguards["CIS-6.3"].title) && sg.includes("CIS Critical Security Controls® v8.1.2 © Center for Internet Security, Inc., CC BY-NC-ND 4.0"),
+  "a Safeguard page shows the exact CIS 8.1.2 title with the CIS notice");
+check((await page.locator('#detail a[href="https://www.cisecurity.org/controls/cis-controls-list"]').count()) === 1, "a Safeguard page links to cisecurity.org");
 await page.goto(url.split("#")[0] + "#n/technique_T1685");
 await settle();
 check((await page.locator("#detail .warn").first().textContent()).includes("Only in ATT&CK Enterprise 19.1"), "a technique that is only in ATT&CK 19.1 is flagged");

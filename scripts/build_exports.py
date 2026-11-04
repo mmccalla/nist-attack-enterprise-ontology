@@ -186,6 +186,14 @@ def build() -> dict[str, str]:
                          " ".join(sorted({str(u) for a in rows_ for u in g.objects(a, ONT.referenceUrl)}))])
     files["cis-claims.csv"] = write_csv(sorted(cis_rows, key=lambda r: ([int(x) for x in re.findall(r"\d+", r[0])], tkey(r[3]))),
         ["safeguard_id", "cis_control", "technique_id_19_1", "technique_name", "in_attack_16_1", "source_record_numbers", "rationale", "references"])
+    # Exact CIS 8.1.2 text in its own file, with its own licence (CC BY-NC-ND 4.0, D29). The claims file above holds only IDs.
+    cis_text = json.loads((ROOT / "data" / "sources" / "cis-controls-8.1.2.json").read_text(encoding="utf-8"))
+    files["cis-8.1.2-safeguards.csv"] = write_csv([
+        [sid, t["title"], sid.split(".")[0], cis_text["controls"][sid.split(".")[0]], t["asset_class"], t["security_function"],
+         *("yes" if g in t["implementation_groups"] else "no" for g in ("IG1", "IG2", "IG3")), len(cis_mit.get(sid, ()))]
+        for sid, t in cis_text["safeguards"].items()],
+        ["safeguard_id", "safeguard_title", "cis_control", "cis_control_title", "asset_class", "security_function", "ig1", "ig2", "ig3",
+         "attack_19_1_techniques_mapped_by_ctid"])
     cis_model = {
         "techniques": [{"id": tid, "name": str(g.value(t, ONT.techniqueName)), "tactics": []} for t, tid in sorted(techs19.items(), key=lambda kv: tkey(kv[1]))],
         "controls": cis_ctl, "mitigates": {k: sorted(v) for k, v in cis_mit.items()},
