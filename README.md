@@ -82,7 +82,7 @@ Read these limits for CIS coverage:
 
 - The CIS mapping uses ATT&CK 19.1. The NIST mapping uses ATT&CK 16.1. The tool joins the two by STIX id. 29 techniques that CIS maps are only in 19.1, so they cannot have a NIST claim (CQ22).
 - CIS licenses the titles and text of the CIS Controls under CC BY-NC-ND 4.0. Thus, the tool shows only Safeguard IDs. Read the titles on [cisecurity.org](https://www.cisecurity.org/controls/cis-controls-list).
-- The mapping file has no Implementation Groups. Thus, the tool cannot filter by them.
+- The mapping file has no Implementation Groups. To get titles and Implementation Groups, load your own CIS Controls file (XLSX from cisecurity.org, or CSV) in the CIS gap analysis. The file stays on your device, in memory only. Your use of it must follow the CIS licence.
 
 ## Coverage for AI systems and AI agents
 

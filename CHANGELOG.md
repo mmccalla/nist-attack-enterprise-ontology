@@ -2,6 +2,11 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## Unreleased
+
+- **Your own CIS file**: the CIS gap analysis reads a CIS Controls XLSX (or CSV) from the user's device. It adds Safeguard titles, asset types, security functions and Implementation Groups, with "Start from IG1, IG2 or IG3" buttons and CSV columns. The file stays on the device, in memory only. The project still distributes no CIS text.
+- CI: Python 3.14 (the version of the hash lock), and JavaScript test files passed by name.
+
 ## 2.6.0 (2026-11-03)
 
 Ontology 2.3.0, unchanged. Licence and attribution release.
