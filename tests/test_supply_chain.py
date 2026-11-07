@@ -81,6 +81,15 @@ def test_no_file_sync_duplicates_in_the_tree():
     assert not dups, dups
 
 
+def test_no_file_sync_duplicates_in_git_refs():
+    """Sync copies can also appear inside .git (for example 'refs/heads/main 2'). They break git fetch (2026-11-04)."""
+    git = ROOT / ".git"
+    if not git.is_dir():
+        return
+    dups = [p.relative_to(ROOT).as_posix() for p in list((git / "refs").rglob("*")) + list(git.glob("*")) if re.search(r" \d+(\.[^/]+)?$", p.name)]
+    assert not dups, dups
+
+
 def test_yaml_is_only_read_with_the_safe_loader():
     for path in list((ROOT / "scripts").glob("*.py")) + list((ROOT / "tests").glob("*.py")):
         text = path.read_text()
