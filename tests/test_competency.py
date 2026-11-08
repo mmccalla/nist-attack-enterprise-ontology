@@ -226,3 +226,18 @@ def test_cq22_cis_techniques_only_in_19_1(graph, src):
     expected = {t: (len(cs), src.replaced_by19.get(t, set())) for t, cs in src.cis_for.items() if t not in src.to16}
     actual = {t: (n, set((r or "").split()) - {""}) for t, _, n, r in ask(graph, "cq22")}
     assert actual == expected and len(expected) == 29
+
+
+def test_atlas_agent_counts_and_their_wording_agree(src):
+    """26 agent techniques (derived), 19 with no direct ATLAS link, 14 with none on the technique or its parent (a project rule).
+    The README must state the same figures and must not say that 14 have no ATLAS mitigation without the parent rule."""
+    agent = src.atlas_agent
+    no_direct = {t for t in agent if not src.atlas_mitigated_by.get(t)}
+    parent = lambda t: src.atlas_techniques[t].get("specializes")  # noqa: E731
+    no_direct_or_parent = {t for t in no_direct if not (parent(t) and src.atlas_mitigated_by.get(parent(t)))}
+    assert (len(agent), len(no_direct), len(no_direct_or_parent)) == (26, 19, 14)
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "19 of the 26 agent techniques have no direct mitigation link" in readme
+    assert "so 14 have none on the technique or its parent" in readme
+    assert "14 of the 26 agent techniques have no ATLAS mitigation" not in readme
+    assert "not current coverage" in readme

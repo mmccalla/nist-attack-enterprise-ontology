@@ -168,6 +168,7 @@ const [aCov, aGap, aNone, aTotal] = (await page.locator("#report .stat b").allTe
 const agentCount = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true").length);
 check(aGap === 0 && aCov + aNone === aTotal && aTotal === agentCount, `with all ATLAS mitigations, ${aCov} of ${aTotal} agent techniques are covered and ${aNone} have no mitigation`);
 check(page.url().includes("#gaps-atlas/AML.M"), "the ATLAS selection is kept in the address bar");
+check(aNone === 19 && (await page.locator("#detail .warn").first().textContent()).includes("is not current coverage"), "the ATLAS view counts 19 agent techniques with no direct link and says that ATLAS 5.6.0 is not current");
 if (shots) await page.screenshot({ path: `${shots}/gaps-atlas.png` });
 const parentNote = await page.locator("#report").textContent();
 const noParent = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true" && !atlasMitigationsOf(n.id).length && !atlasParentMitigated(n.id)).length);

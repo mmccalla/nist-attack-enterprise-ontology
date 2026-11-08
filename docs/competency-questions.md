@@ -65,7 +65,7 @@ Answers below were produced on 2026-11-01 from the pinned sources listed in [sem
 
 **CQ15** (added 2026-11-02). ATT&CK 20.0 divides Defense Evasion. 134 of its techniques move to Stealth, which now has the ID TA0005, and 41 move to Defense Impairment (TA0112). A report that joins on tactic IDs across the two versions gives wrong results.
 
-**CQ16** (added 2026-11-02). 14 of the 26 ATLAS techniques against AI agents have no ATLAS mitigation on the technique or on its parent. Examples are AML.T0104 Publish Poisoned AI Agent Tool, AML.T0083 Credentials from AI Agent Configuration and the four sub-techniques of AML.T0084 Discover AI Agent Configuration. The "AI agent" flag is derived from technique names; ATLAS does not publish it.
+**CQ16** (added 2026-11-02). 14 of the 26 ATLAS techniques against AI agents have no ATLAS mitigation on the technique or on its parent. Examples are AML.T0104 Publish Poisoned AI Agent Tool, AML.T0083 Credentials from AI Agent Configuration and the four sub-techniques of AML.T0084 Discover AI Agent Configuration. The "AI agent" flag is derived from technique names; ATLAS does not publish it. With the direct links only, 19 of the 26 have no mitigation; 5 of these have one on their parent. Counting the parent's mitigation is a rule of this project, not ATLAS data. No link does not mean that no mitigation exists. The answer describes ATLAS 5.6.0, not the current release (v2026.10 on 2026-11-08).
 
 **CQ17** (added 2026-11-02). Five mitigations each address four agent techniques: AML.M0024 AI Telemetry Logging, AML.M0026 Privileged AI Agent Permissions Configuration, AML.M0027 Single-User AI Agent Permissions Configuration, AML.M0028 AI Agent Tools Permissions Configuration and AML.M0032 Segmentation of AI Agent Components.
 

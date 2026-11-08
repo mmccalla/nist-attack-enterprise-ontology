@@ -270,7 +270,7 @@ function renderBrowse() {
       .filter(n => filter === "all" || (filter === "agent" && n.p[":isAgentRelated"] === "true") || (filter === "none" && n.p[":isAgentRelated"] === "true" && !atlasMitigationsOf(n.id).length && !atlasParentMitigated(n.id)));
     const risks = ofType("OwaspRisk").sort(byLabel).map(n => ({...n, c: OUT.get(n.id).filter(([p]) => p === ":relatedAtlasTechnique").length || ""}));
     browse.innerHTML = `<label class="note" for="atlas-filter">MITRE ATLAS techniques</label> <select id="atlas-filter">
-      ${[["agent", "Techniques against AI agents"], ["none", "Agent techniques with no mitigation (CQ16)"], ["all", "All ATLAS techniques"]].map(([v, l]) => `<option value="${v}"${v === filter ? " selected" : ""}>${l}</option>`).join("")}
+      ${[["agent", "Techniques against AI agents"], ["none", "Agent techniques with no ATLAS mitigation link, on the technique or its parent (CQ16)"], ["all", "All ATLAS techniques"]].map(([v, l]) => `<option value="${v}"${v === filter ? " selected" : ""}>${l}</option>`).join("")}
       </select> <span class="note">${items.length} shown. Count: ATLAS mitigations.</span>` + listItems(items, current)
       + `<h3>OWASP GenAI risks</h3><p class="note">Count: ATLAS techniques that OWASP links to the risk.</p>` + listItems(risks, current);
     document.getElementById("atlas-filter").addEventListener("change", renderBrowse);
@@ -432,7 +432,7 @@ function showNode(id) {
   if (n.t === "AtlasTechnique") {
     if (n.p[":isAgentRelated"] === "true") extra += `<p class="note">Related to AI agents. This project derives the flag from the name; ATLAS does not publish it.</p>`;
     for (const [p, o] of OUT.get(id)) if (p === ":derivedFromAttack") extra += `<p class="note">ATLAS adapts this technique from ATT&amp;CK ${link(o)}. The NIST claims on that ATT&amp;CK technique do not transfer automatically (CQ18).</p>`;
-    if (!atlasMitigationsOf(id).length) extra += `<p class="warn">ATLAS lists no mitigation for this technique${atlasParentMitigated(id) ? ", but it lists one for the parent technique" : " or its parent"}.</p>`;
+    if (!atlasMitigationsOf(id).length) extra += `<p class="warn">ATLAS ${esc(DATA.meta.atlasVersion)} links no mitigation to this technique${atlasParentMitigated(id) ? ", but it links one to the parent technique" : " or to its parent"}. No link does not mean that no mitigation exists.</p>`;
   }
   if (n.t === "OwaspRisk") {
     if (n.p["source url"]) extra += `<p><a href="${esc(n.p["source url"])}" rel="noopener">Open ${esc(n.l)} on the OWASP site</a></p>`;
@@ -772,6 +772,7 @@ let atlasSelected = new Set(), atlasUnmapped = [];
 function showGapsAtlas(list) {
   detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <a href="#gaps-cis">CIS Safeguards and ATT&amp;CK</a> | <b>ATLAS mitigations and AI techniques</b></p>
     <h2>Gap analysis for AI systems</h2>
+    <p class="warn">This view uses MITRE ATLAS ${esc(DATA.meta.atlasVersion)}, the legacy ATLAS file. MITRE's current release (v2026.10 on 2026-11-08) has more techniques and mitigations, in a format that this tool does not read yet. Thus, the result is not current coverage.</p>
     <p>Which MITRE ATLAS techniques do your AI safeguards leave uncovered? Paste the ATLAS mitigation IDs that you have, for example <code>AML.M0026, AML.M0029</code>. <b>Everything runs in this page; nothing is uploaded.</b></p>
     <label class="field" for="atlas-input">Your ATLAS mitigations</label>
     <textarea id="atlas-input" spellcheck="false" placeholder="AML.M0024, AML.M0026 ...">${esc(list ?? [...atlasSelected].sort().join(", "))}</textarea>
@@ -796,13 +797,13 @@ function showGapsAtlas(list) {
     document.getElementById("report").innerHTML = `<h2>Coverage of ${agentBox.checked ? "AI agent techniques" : "all ATLAS techniques"} in MITRE ATLAS ${esc(DATA.meta.atlasVersion)}</h2>
       <div><span class="stat"><b>${counts.covered}</b>&#10003; covered (${pct(counts.covered)}%)</span>
         <span class="stat"><b>${counts.gap}</b>! gaps an ATLAS mitigation would close</span>
-        <span class="stat"><b>${counts.none}</b>&#9675; no ATLAS mitigation</span><span class="stat"><b>${total}</b>techniques</span></div>
+        <span class="stat"><b>${counts.none}</b>&#9675; no direct ATLAS mitigation link</span><span class="stat"><b>${total}</b>techniques</span></div>
       <h3>Gaps an ATLAS mitigation would close (${gaps.length})</h3>${gaps.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>ATLAS mitigations</th></tr></thead><tbody>${gaps.map(row).join("")}</tbody></table>` : "<p>None.</p>"}
-      <h3>Techniques with no ATLAS mitigation listed on them (${none.length})</h3>${none.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>Parent technique</th></tr></thead><tbody>${none.map(([tid]) => {
+      <h3>Techniques with no direct ATLAS mitigation link (${none.length})</h3>${none.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>Parent technique</th></tr></thead><tbody>${none.map(([tid]) => {
         const node = BY_ID.get("atlastechnique_" + tid), parent = OUT.get(node.id).find(([p]) => p === ":subTechniqueOf");
         const pm = parent ? atlasMitigationsOf(parent[1]).map(m => BY_ID.get(m).l) : [];
         return `<tr><td>${link(node.id).split("</a>")[0]}</a></td><td>${esc(node.s)}</td><td>${parent ? `${link(parent[1]).split("</a>")[0]}</a>${pm.length ? `: ${pm.map(m => `<a href="#n/atlasmitigation_${m}">${m}</a>`).join(" ")}` : ": none"}` : ""}</td></tr>`;
-      }).join("")}</tbody></table><p class="note">${none.filter(([tid]) => atlasParentMitigated("atlastechnique_" + tid)).length} of these have a mitigation on their parent technique. For the others, an agent design needs its own safeguards (<a href="#q/CQ16">CQ16</a>).</p>` : "<p>None.</p>"}`;
+      }).join("")}</tbody></table><p class="note">${none.filter(([tid]) => atlasParentMitigated("atlastechnique_" + tid)).length} of these have a mitigation on their parent technique (this project counts it for the sub-technique; ATLAS does not say so). For the others, an agent design needs its own safeguards (<a href="#q/CQ16">CQ16</a>).</p>` : "<p>None.</p>"}`;
     if (updateHash) history.replaceState(null, "", "#gaps-atlas/" + [...atlasSelected].sort().join(","));
     crumb(`ATLAS gap analysis: ${atlasSelected.size} mitigations, ${counts.covered} of ${total} techniques covered`);
     return {model, cov};
