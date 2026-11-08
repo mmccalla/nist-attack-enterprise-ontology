@@ -88,7 +88,7 @@ Read these limits for CIS coverage:
 
 ATT&CK and NIST 800-53 do not describe attacks on AI agents. Thus, the tool also includes:
 
-- **MITRE ATLAS 5.6.0:** 170 techniques and 35 mitigations for AI systems. 26 techniques concern AI agents and their tools, for example tool poisoning and agent configuration theft.
+- **MITRE ATLAS 5.6.0:** 170 techniques and sub-techniques and 35 mitigations for AI systems. By a rule of this project (names that contain "AI Agent" or "Agentic", and their sub-techniques), 26 of them concern AI agents and their tools, for example tool poisoning and agent configuration theft.
 - **OWASP GenAI lists:** the LLM Top 10 (2025) with the ATLAS techniques that OWASP links to each risk, and the MCP Top 10 (2025) titles (CC BY-NC-SA 4.0, non-commercial use only). The Agentic Top 10 is a reference.
 - **CIS guidance for AI:** each CIS Safeguard page shows CIS's own guidance for AI LLM systems, AI agents and MCP, from the CIS Controls v8.1.2 AI Guidance workbook (CC BY-NC-ND 4.0).
 - **[Gap analysis for AI systems](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps-atlas):** type your ATLAS mitigations and see which agent techniques stay open.
@@ -97,7 +97,9 @@ Read these limits for AI coverage:
 
 - The "AI agent" flag comes from the technique names. ATLAS does not publish it.
 - No published mapping exists from ATLAS to NIST 800-53. The tool shows the ATT&CK technique that an ATLAS technique adapts, but NIST claims do not transfer.
-- 14 of the 26 agent techniques have no ATLAS mitigation. For these, an agent design needs its own safeguards.
+- ATLAS 5.6.0 is out of date. It is the legacy file `dist/ATLAS.yaml`, which MITRE no longer updates. The current release, v2026.10 (checked on 2026-11-08), has 129 techniques, 92 sub-techniques and 44 mitigations, in a new format that the tool does not read yet. Thus, the ATLAS results here describe version 5.6.0. They are not current coverage.
+- In ATLAS 5.6.0, 19 of the 26 agent techniques have no direct mitigation link. 5 of the 19 have a mitigation on their parent technique, so 14 have none on the technique or its parent. Counting a parent's mitigation for its sub-techniques is a rule of this project. ATLAS does not publish it.
+- No mitigation link in ATLAS does not mean that no mitigation exists. It means that ATLAS 5.6.0 records none.
 - The Agentic Top 10 item titles are not included. The official document is behind a download form, and the tool does not copy titles from secondary sources.
 
 ## Use with AI agents and scripts
@@ -117,7 +119,7 @@ The tool joins five public sources. The build downloads exact versions of each s
 | --- | --- | --- |
 | [MITRE CTID Mappings Explorer](https://ctid.mitre.org/mappings/) | NIST 800-53 Rev. 5 to ATT&CK 16.1, updated 16 April 2025. CIS Controls 8.1.2 to ATT&CK 19.1, updated 25 September 2026 | 5,410 NIST mapping rows and 1,225 CIS mapping rows |
 | [MITRE ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data) | Enterprise 16.1, 19.1 and 20.0 | 656 techniques, 14 tactics, platforms, ATT&CK mitigations and later-version changes |
-| [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) | 5.6.0 | 170 techniques, 35 mitigations and 16 tactics for AI systems |
+| [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) | 5.6.0 (legacy file; the current release is v2026.10) | 170 techniques and sub-techniques, 35 mitigations and 16 tactics for AI systems |
 | [OWASP GenAI Security Project](https://genai.owasp.org/) | Retrieved 2 November 2026 | LLM Top 10 risks and their ATLAS links (CC BY-SA 4.0) |
 | [NIST OSCAL content](https://github.com/usnistgov/oscal-content) | SP 800-53 Rev. 5 catalog 5.2.0 | Control titles, families and the SP 800-53B baselines |
 
@@ -141,7 +143,8 @@ Read these limits before you use a result in a decision.
 
 - The page cannot send data anywhere. Its Content Security Policy blocks all network requests.
 - The page runs only its own scripts. It shows all source data as text.
-- To report a vulnerability, read [`SECURITY.md`](SECURITY.md).
+- Each change to `main` goes through a pull request. GitHub runs the tests, the browser checks, the dependency audits and CodeQL on it, and requires signed commits.
+- To report a vulnerability privately, read [`SECURITY.md`](SECURITY.md).
 - The threat model and the controls are in [`docs/security.md`](docs/security.md).
 
 ## Get help or report a problem
@@ -150,11 +153,11 @@ Read these limits before you use a result in a decision.
 - To ask for a new question, use the competency question form on the same page.
 - For other problems, open a [blank issue](https://github.com/mmccalla/nist-attack-enterprise-ontology/issues/new).
 
-If the source row is incorrect, the project records the finding in [`docs/upstream-findings.md`](docs/upstream-findings.md). These findings are for a report to MITRE CTID.
+If the source row is incorrect, the project records the finding in [`docs/upstream-findings.md`](docs/upstream-findings.md) and reports it to MITRE CTID. The findings of 2026-11-02 are [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).
 
 ## Cite this tool
 
-Use the data in [`CITATION.cff`](CITATION.cff). GitHub shows a **Cite this repository** link for this file. The changes in each release are in [`CHANGELOG.md`](CHANGELOG.md).
+Use the data in [`CITATION.cff`](CITATION.cff). GitHub shows a **Cite this repository** link for this file. Each release is on the [Releases page](https://github.com/mmccalla/nist-attack-enterprise-ontology/releases), and the changes are in [`CHANGELOG.md`](CHANGELOG.md).
 
 ## For maintainers and contributors
 
@@ -163,7 +166,7 @@ These documents give the design and the tests:
 | Document | Content |
 | --- | --- |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to build the tool and run the tests |
-| [`docs/competency-questions.md`](docs/competency-questions.md) | The 13 questions, their personas and their answers |
+| [`docs/competency-questions.md`](docs/competency-questions.md) | The 22 questions, their personas and their answers |
 | [`docs/semantic-decisions.md`](docs/semantic-decisions.md) | Scope, source terms, ambiguities and design decisions |
 | [`docs/vocabulary-alignment.md`](docs/vocabulary-alignment.md) | The alignment to ATT&CK STIX, NIST OSCAL and UCO |
 | [`docs/evaluation.md`](docs/evaluation.md) | The test gates and their most recent results |

@@ -186,3 +186,14 @@ Phase 4a added the CTID mapping of CIS Controls 8.1.2 on ATT&CK 19.1, three comp
 | Start | For each source, read the licence file at the pinned commit, copy the exact notice and test that each output keeps it. |
 | Start | Where a licence forbids redistribution, deliver value with links to the publisher (CSA CCM), not with copies. |
 | Keep | Negative probes that first assert that the probe changed the input. One probe in this review did not match, and the assertion showed it. |
+
+# Retrospective, CI, rule set and release 2.7.0 (2026-11-08)
+
+| Type | Learning |
+| --- | --- |
+| Keep | CI on GitHub found three faults that the Mac did not show: the lock was resolved for Python 3.14 but CI used 3.12, Node 24 does not accept a folder for `node --test`, and a new build guard counted script text in the poisoned page as tags. |
+| Start | Run the browser checks locally with the poisoned page, as CI does. |
+| Start | Make every comparison with other tools verified and dated. The owner found two tools that a "unique" claim in an analysis had missed. A test now checks the copy. |
+| Stop | Restrictions that are stricter than the licence text. CIS titles were left out although the licence permits exact, non-commercial copies with credit. Read the licence text first, then restrict. |
+| Keep | Meet a control, do not remove it. Signed commits blocked the merge, so the commits were signed with a dedicated key, not the rule removed. |
+| Keep | Prove that content is identical before a reset. The local, signed and merged trees had the same hash, so a soft reset changed no file. |
