@@ -63,9 +63,9 @@ All files are free. Each file has a stable address. Thus, a script can get the m
 | [`navigator/`](exports/navigator) | Navigator layers for each baseline, for all controls and for all CIS Safeguards (ATT&CK 19) |
 | [`cis-claims.csv`](exports/cis-claims.csv) | Each CIS Safeguard and ATT&CK 19.1 technique claim, with source row numbers and the CTID rationale |
 | [`questions/`](exports/questions) | The answer to each of the 22 questions |
-| [`attack-16.1-to-20.0.csv`](exports/attack-16.1-to-20.0.csv) | Each technique that ATT&CK 20.0 changes, with its replacement and its new tactics |
+| [`attack-16.1-to-20.1.csv`](exports/attack-16.1-to-20.1.csv) | Each technique that ATT&CK 20.1 changes, with its replacement and its new tactics |
 | [`atlas-techniques.csv`](exports/atlas-techniques.csv), [`atlas-mitigations.csv`](exports/atlas-mitigations.csv) | MITRE ATLAS techniques and mitigations |
-| [`owasp-llm-atlas-links.csv`](exports/owasp-llm-atlas-links.csv) | The ATLAS techniques that OWASP links to each LLM Top 10 risk (CC BY-SA 4.0) |
+| [`owasp-llm-atlas-links.csv`](exports/owasp-llm-atlas-links.csv) | The ATLAS techniques that OWASP links to each LLM Top 10 risk, and whether ATLAS 2026.10 still has each ID (CC BY-SA 4.0) |
 | [`ontology/core.ttl`](ontology/core.ttl), [`data/population.ttl`](data/population.ttl) | The full knowledge graph in RDF, for a graph database or SPARQL |
 
 For a file address, add the path to `https://mmccalla.github.io/nist-attack-enterprise-ontology/`. For example: `https://mmccalla.github.io/nist-attack-enterprise-ontology/exports/claims.csv`.
@@ -88,7 +88,7 @@ Read these limits for CIS coverage:
 
 ATT&CK and NIST 800-53 do not describe attacks on AI agents. Thus, the tool also includes:
 
-- **MITRE ATLAS 5.6.0:** 170 techniques and sub-techniques and 35 mitigations for AI systems. By a rule of this project (names that contain "AI Agent" or "Agentic", and their sub-techniques), 26 of them concern AI agents and their tools, for example tool poisoning and agent configuration theft.
+- **MITRE ATLAS 2026.10** (released on 28 October 2026): 129 techniques, 92 sub-techniques and 44 mitigations for AI systems. By a rule of this project (names that contain "AI Agent" or "Agentic", and their sub-techniques), 39 of them concern AI agents and their tools, for example tool poisoning and agent configuration theft.
 - **OWASP GenAI lists:** the LLM Top 10 (2025) with the ATLAS techniques that OWASP links to each risk, and the MCP Top 10 (2025) titles (CC BY-NC-SA 4.0, non-commercial use only). The Agentic Top 10 is a reference.
 - **CIS guidance for AI:** each CIS Safeguard page shows CIS's own guidance for AI LLM systems, AI agents and MCP, from the CIS Controls v8.1.2 AI Guidance workbook (CC BY-NC-ND 4.0).
 - **[Gap analysis for AI systems](https://mmccalla.github.io/nist-attack-enterprise-ontology/#gaps-atlas):** type your ATLAS mitigations and see which agent techniques stay open.
@@ -97,9 +97,10 @@ Read these limits for AI coverage:
 
 - The "AI agent" flag comes from the technique names. ATLAS does not publish it.
 - No published mapping exists from ATLAS to NIST 800-53. The tool shows the ATT&CK technique that an ATLAS technique adapts, but NIST claims do not transfer.
-- ATLAS 5.6.0 is out of date. It is the legacy file `dist/ATLAS.yaml`, which MITRE no longer updates. The current release, v2026.10 (checked on 2026-11-08), has 129 techniques, 92 sub-techniques and 44 mitigations, in a new format that the tool does not read yet. Thus, the ATLAS results here describe version 5.6.0. They are not current coverage.
-- In ATLAS 5.6.0, 19 of the 26 agent techniques have no direct mitigation link. 5 of the 19 have a mitigation on their parent technique, so 14 have none on the technique or its parent. Counting a parent's mitigation for its sub-techniques is a rule of this project. ATLAS does not publish it.
-- No mitigation link in ATLAS does not mean that no mitigation exists. It means that ATLAS 5.6.0 records none.
+- ATLAS changes often. MITRE published ten ATLAS releases in 2026, from 2026.01 to 2026.10, and a later release can add techniques and mitigations. The figures here are for ATLAS 2026.10.
+- In ATLAS 2026.10, 8 of the 39 agent techniques have no direct mitigation link. 4 of the 8 have a mitigation on their parent technique, so 4 have none on the technique or its parent. Counting a parent's mitigation for its sub-techniques is a rule of this project. ATLAS does not publish it.
+- No mitigation link in ATLAS does not mean that no mitigation exists. It means that ATLAS 2026.10 records none.
+- OWASP links LLM02:2025 to three ATLAS IDs (AML.T0024.000, AML.T0024.001 and AML.T0024.002) that ATLAS 2026.10 no longer has. The tool keeps these links as OWASP published them and marks them. It does not map them to new IDs.
 - The Agentic Top 10 item titles are not included. The official document is behind a download form, and the tool does not copy titles from secondary sources.
 
 ## Use with AI agents and scripts
@@ -113,14 +114,15 @@ Each file has a JSON Schema and the fixed limits of the data. The [OpenAPI descr
 
 ## Where the data comes from
 
-The tool joins five public sources. The build downloads exact versions of each source. It then compares each file with a known SHA-256 digest.
+The tool joins these public sources. The build downloads an exact version of each source, pinned to a commit, and compares each file with a known SHA-256 digest. The CIS workbook and the curated OWASP extract are in the repository, with their digests recorded.
 
 | Source | Version | Gives |
 | --- | --- | --- |
 | [MITRE CTID Mappings Explorer](https://ctid.mitre.org/mappings/) | NIST 800-53 Rev. 5 to ATT&CK 16.1, updated 16 April 2025. CIS Controls 8.1.2 to ATT&CK 19.1, updated 25 September 2026 | 5,410 NIST mapping rows and 1,225 CIS mapping rows |
-| [MITRE ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data) | Enterprise 16.1, 19.1 and 20.0 | 656 techniques, 14 tactics, platforms, ATT&CK mitigations and later-version changes |
-| [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) | 5.6.0 (legacy file; the current release is v2026.10) | 170 techniques and sub-techniques, 35 mitigations and 16 tactics for AI systems |
-| [OWASP GenAI Security Project](https://genai.owasp.org/) | Retrieved 2 November 2026 | LLM Top 10 risks and their ATLAS links (CC BY-SA 4.0) |
+| [MITRE ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data) | Enterprise 16.1, 19.1 and 20.1 | 656 techniques, 14 tactics, platforms, ATT&CK mitigations and the changes in 20.1 |
+| [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) | 2026.10 | 129 techniques, 92 sub-techniques, 44 mitigations and 16 tactics for AI systems |
+| [OWASP GenAI Security Project](https://genai.owasp.org/) | LLM Top 10 retrieved 2 November 2026; MCP Top 10 index at a pinned commit | LLM Top 10 risks and their ATLAS links (CC BY-SA 4.0); MCP Top 10 titles (CC BY-NC-SA 4.0) |
+| [CIS Critical Security Controls](https://www.cisecurity.org/controls) | 8.1.2, AI Guidance workbook | Safeguard titles, Implementation Groups and AI guidance (CC BY-NC-ND 4.0) |
 | [NIST OSCAL content](https://github.com/usnistgov/oscal-content) | SP 800-53 Rev. 5 catalog 5.2.0 | Control titles, families and the SP 800-53B baselines |
 
 The tool keeps each source row separate from the claim that it supports. A claim is a statement that a control mitigates a technique. Each claim shows the source rows behind it.
@@ -134,7 +136,7 @@ Read these limits before you use a result in a decision.
 - A claim shows that a control **can** mitigate a technique. It does not show that your implementation is effective.
 - The mapping covers 109 technical base controls in 11 families. It does not include policy controls or control enhancements.
 - Some control families are not in the mapping, for example Awareness and Training.
-- The mapping uses ATT&CK 16.1. ATT&CK 20.0 revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.0.csv`](exports/attack-16.1-to-20.0.csv) lists them.
+- The mapping uses ATT&CK 16.1. ATT&CK 20.1, the newest release, revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.1.csv`](exports/attack-16.1-to-20.1.csv) lists them.
 - 91 ATT&CK Enterprise techniques do not have a row in the mapping. The tool shows these techniques as "no mapped control". That result does not mean that no defence exists.
 - The control titles come from the OSCAL catalog 5.2.0. The mapping uses an older Rev. 5 release. Three titles are different.
 - The IRIs in the knowledge graph use the `w3id.org/example` namespace. These IRIs do not resolve.

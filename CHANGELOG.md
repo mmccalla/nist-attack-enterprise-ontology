@@ -2,6 +2,22 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.8.0 (2026-11-08)
+
+Ontology 2.4.0 (backward compatible): adds `:relatedAtlasIdNotInCatalogue`.
+
+- **MITRE ATLAS 2026.10**, read from MITRE's format 6 file (`dist/v6/ATLAS-2026.10.yaml`). Until now the tool read the legacy `dist/ATLAS.yaml`, which MITRE left at version 5.6.0. ATLAS 2026.10 has 129 techniques, 92 sub-techniques, 44 mitigations and 16 tactics, as MITRE's release notes state. A test checks these counts.
+- AI agent figures (agent flag derived by this project): 39 agent techniques, 8 with no direct ATLAS mitigation link, 4 with none on the technique or its parent (ATLAS 5.6.0: 26, 19 and 14). The README, page, API and CQ16 to CQ19 give the version and say that no link does not mean no mitigation.
+- OWASP links LLM02:2025 to three ATLAS IDs that ATLAS 2026.10 no longer has (AML.T0024.000, .001 and .002). The tool keeps them as OWASP published them and marks them (`related_atlas_not_in_atlas` in the API, `in_atlas_2026_10` in the export). It does not map them to new IDs.
+- ATLAS maturity values are kept as ATLAS writes them: Feasible, Demonstrated and Realized.
+- **ATT&CK 20.1** is the later version for the comparison (released on 2026-11-05). The export is renamed to `attack-16.1-to-20.1.csv`, with columns for 20.1. The 208 changed techniques are the same as in 20.0.
+- API: new field `versions.atlas`. The ATLAS limit statement names the release from the data.
+- Fixed: combined answer cells were split on spaces, so CQ17 showed the ATLAS category "Technical - AI" as "- AI Technical". They are now split on the query's own separator, and CQ09 record numbers are sorted too.
+- Fixed: the CQ19 answer said "7 of the 10 risks" and "13 techniques". The data gives 6 risks and 12 techniques (13 links).
+- Fixed: the export guide did not list seven of the export files.
+- New tests: ATLAS counts against MITRE's release notes, the figures in the README and the competency answers recomputed from the data, each pinned source listed in `SOURCE-MANIFEST.md`, each export file listed in the export guide, and iCloud copies inside `.git`.
+- Security: two-factor authentication on the maintainer account is confirmed by the owner (IA-02).
+
 ## 2.7.0 (2026-11-04)
 
 Ontology 2.3.0, unchanged.

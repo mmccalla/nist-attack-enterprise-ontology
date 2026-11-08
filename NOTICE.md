@@ -8,13 +8,13 @@ This project is not affiliated with, sponsored by or endorsed by any publisher b
 
 ## MITRE ATT&CK
 
-Used: technique, tactic, platform and mitigation identifiers, names and relationships from the ATT&CK Enterprise STIX 2.1 bundles 16.1, 19.1 and 20.0 (`mitre-attack/attack-stix-data`). Licence: the ATT&CK terms of use, reproduced in full in [`LICENSES/MITRE-ATTACK-terms-16.1.txt`](LICENSES/MITRE-ATTACK-terms-16.1.txt) and [`LICENSES/MITRE-ATTACK-terms-19.1-20.0.txt`](LICENSES/MITRE-ATTACK-terms-19.1-20.0.txt).
+Used: technique, tactic, platform and mitigation identifiers, names and relationships from the ATT&CK Enterprise STIX 2.1 bundles 16.1, 19.1 and 20.1 (`mitre-attack/attack-stix-data`). Licence: the ATT&CK terms of use, reproduced in full in [`LICENSES/MITRE-ATTACK-terms-16.1.txt`](LICENSES/MITRE-ATTACK-terms-16.1.txt) and [`LICENSES/MITRE-ATTACK-terms-19.1-20.1.txt`](LICENSES/MITRE-ATTACK-terms-19.1-20.1.txt).
 
 ATT&CK 16.1:
 
 > © 2024 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.
 
-ATT&CK 19.1 and 20.0:
+ATT&CK 19.1 and 20.1:
 
 > © 2026 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.
 
@@ -38,7 +38,7 @@ Changes:
 
 ## MITRE ATLAS
 
-Used: tactics, techniques, mitigations and their links from ATLAS 5.6.0 (`mitre-atlas/atlas-data`, commit `da9ebf9`). Licence: Apache 2.0, in [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt).
+Used: tactics, techniques, mitigations, their links and their ATT&CK references from ATLAS 2026.10 (`mitre-atlas/atlas-data`, file `dist/v6/ATLAS-2026.10.yaml`, commit `f56c146`, tag `v2026.10`). Licence: Apache 2.0, in [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt).
 
 > Copyright 2021-2026 MITRE
 
