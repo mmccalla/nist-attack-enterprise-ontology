@@ -40,7 +40,7 @@ Strength: **exact** means the formal meanings match and an OWL axiom or an ident
 | Local term | External term | Relation used | Strength | Reason |
 | --- | --- | --- | --- | --- |
 | `:AtlasTechnique`, `:AtlasMitigation`, `:Tactic` (ATLAS) | MITRE ATLAS technique, mitigation, tactic | IDs (`AML.T`, `AML.M`, `AML.TA`) from the pinned ATLAS data | exact | ATLAS publishes these objects with stable IDs. |
-| `:derivedFromAttack` | ATLAS `ATT&CK-reference` | object property to the ATT&CK technique | exact (published) | ATLAS states which ATT&CK technique it adapts. It is not an equivalence. |
+| `:derivedFromAttack` | ATLAS `attack-reference` (format 6; `ATT&CK-reference` before) | object property to the ATT&CK technique | exact (published) | ATLAS states which ATT&CK technique it adapts. It is not an equivalence. |
 | `:OwaspRisk`, `:relatedAtlasTechnique` | OWASP LLM Top 10 2025 "Related Frameworks and Taxonomies" | object property to the ATLAS technique | exact (published) | OWASP lists these ATLAS IDs on each risk page. |
 
 ## CIS Controls (release 2.5.0)

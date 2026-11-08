@@ -103,3 +103,11 @@ def test_ci_uses_the_python_version_of_the_lock():
     ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text()
     versions = re.findall(r'python-version: "([^"]+)"', ci)
     assert versions and set(versions) == {locked}, (versions, locked)
+
+
+def test_manifest_lists_each_pinned_source_exactly():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_population  # noqa: PLC0415
+
+    for key, (url, digest) in build_population.SOURCES.items():
+        assert f"| {key} | <{url}> | `{digest}` |" in MANIFEST, key

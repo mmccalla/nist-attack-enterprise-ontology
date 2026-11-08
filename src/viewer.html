@@ -554,7 +554,7 @@ function showAbout() {
       <li>A mapping is not evidence that a system has the control in place or that the control stops the technique.</li>
       <li>OSCAL titles come from catalog 5.2.0; the mapping was built against an earlier Rev. 5 release.</li></ul>
     <h3>Notices and attribution</h3><p class="note">Third-party content keeps its own licence. The full notices and licence texts are in <a href="NOTICE.md">NOTICE.md</a> and <a href="https://github.com/mmccalla/nist-attack-enterprise-ontology/tree/main/LICENSES">LICENSES/</a>. Keep them with any copy of the data.</p><ul class="note">
-      <li>MITRE ATT&amp;CK 16.1: ${esc(C2.ATTACK_NOTICES["16"])} ATT&amp;CK 19.1 and 20.0: ${esc(C2.ATTACK_NOTICES["19"])} MITRE ATT&amp;CK and ATT&amp;CK are registered trademarks of The MITRE Corporation.</li>
+      <li>MITRE ATT&amp;CK 16.1: ${esc(C2.ATTACK_NOTICES["16"])} ATT&amp;CK 19.1 and 20.1: ${esc(C2.ATTACK_NOTICES["19"])} MITRE ATT&amp;CK and ATT&amp;CK are registered trademarks of The MITRE Corporation.</li>
       <li>Mappings: MITRE Center for Threat-Informed Defense, <a href="https://ctid.mitre.org/mappings/">Mappings Explorer</a>, Apache 2.0. &copy; 2024 MITRE. Approved for public release. Document number(s) CT0104.</li>
       <li>MITRE ATLAS: Copyright 2021-2026 MITRE, Apache 2.0.</li>
       <li>CIS Controls&reg; is a registered trademark of the Center for Internet Security. ${CIS_ATTRIBUTION} The graph, claims and other exports hold only CIS IDs. This tool does not assess compliance with the CIS Controls.</li>
@@ -772,7 +772,7 @@ let atlasSelected = new Set(), atlasUnmapped = [];
 function showGapsAtlas(list) {
   detail.innerHTML = `<p class="note"><a href="#gaps">NIST controls and ATT&amp;CK</a> | <a href="#gaps-cis">CIS Safeguards and ATT&amp;CK</a> | <b>ATLAS mitigations and AI techniques</b></p>
     <h2>Gap analysis for AI systems</h2>
-    <p class="warn">This view uses MITRE ATLAS ${esc(DATA.meta.atlasVersion)}, the legacy ATLAS file. MITRE's current release (v2026.10 on 2026-11-08) has more techniques and mitigations, in a format that this tool does not read yet. Thus, the result is not current coverage.</p>
+    <p class="warn">This view uses MITRE ATLAS ${esc(DATA.meta.atlasVersion)}, released on ${esc(DATA.meta.atlasModified)}. ATLAS changes often, and a later release can add techniques and mitigations. A missing link means that this release records none. It does not mean that no mitigation exists.</p>
     <p>Which MITRE ATLAS techniques do your AI safeguards leave uncovered? Paste the ATLAS mitigation IDs that you have, for example <code>AML.M0026, AML.M0029</code>. <b>Everything runs in this page; nothing is uploaded.</b></p>
     <label class="field" for="atlas-input">Your ATLAS mitigations</label>
     <textarea id="atlas-input" spellcheck="false" placeholder="AML.M0024, AML.M0026 ...">${esc(list ?? [...atlasSelected].sort().join(", "))}</textarea>

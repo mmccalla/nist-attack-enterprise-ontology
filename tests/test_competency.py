@@ -6,7 +6,10 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import pytest
-from rdflib import Graph
+from rdflib import Graph, Namespace
+
+ONT = Namespace("https://w3id.org/example/nist-attack-mapping/ontology/1.0#")
+NO_MITIGATION_CQ19 = ["AML.T0048.002"]
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tests"))
@@ -133,7 +136,7 @@ def test_cq13_naming_differences_from_oscal(graph, src):
     assert {(k, i): (s, o) for k, i, s, o in ask(graph, "cq13")} == expected
 
 
-def test_cq14_claims_on_techniques_revoked_or_renamed_in_20_0(graph, src):
+def test_cq14_claims_on_techniques_revoked_or_renamed_in_later_version(graph, src):
     expected = {
         t: len(src.controls_for[t])
         for t, v in src.later.items()
@@ -147,7 +150,7 @@ def test_cq14_claims_on_techniques_revoked_or_renamed_in_20_0(graph, src):
             assert later_id in src.later[t]["replacement"]
 
 
-def test_cq15_tactic_moves_from_16_1_to_20_0(graph, src):
+def test_cq15_tactic_moves_from_16_1_to_later_version(graph, src):
     pairs = defaultdict(set)
     for t, v in src.later.items():
         if not v["tacticsChanged"]:
@@ -167,24 +170,27 @@ def test_cq16_agent_techniques_without_atlas_mitigation(graph, src):
         parent = src.atlas_techniques[tid].get("specializes")
         return not src.atlas_mitigated_by[tid] and not (parent and src.atlas_mitigated_by[parent])
     expected = {t for t in src.atlas_agent if none(t)}
-    assert {t for t, _, _ in ask(graph, "cq16")} == expected and len(expected) == 14
-    assert len(src.atlas_agent) == 26  # quoted in the docs
+    assert {t for t, _, _ in ask(graph, "cq16")} == expected and len(expected) == 4
+    assert len(src.atlas_agent) == 39  # quoted in the docs (ATLAS v2026.10)
 
 
 def test_cq17_mitigations_for_agent_techniques(graph, src):
     expected = {m: sum(1 for t in src.atlas_agent if m in src.atlas_mitigated_by[t]) for m in src.atlas_mitigations}
     expected = {m: n for m, n in expected.items() if n}
     assert {m: n for m, _, _, n in ask(graph, "cq17")} == expected
-    assert sorted(m for m, n in expected.items() if n == max(expected.values())) == ["AML.M0024", "AML.M0026", "AML.M0027", "AML.M0028", "AML.M0032"]
+    assert sorted(m for m, n in expected.items() if n == max(expected.values())) == ["AML.M0020"] and max(expected.values()) == 13
 
 
 def test_cq18_atlas_techniques_derived_from_attack(graph, src):
     expected = {
-        tid: (t["ATT&CK-reference"]["id"], len(src.controls_for.get(t["ATT&CK-reference"]["id"], ())))
-        for tid, t in src.atlas_techniques.items() if t.get("ATT&CK-reference")
+        tid: (t["attack-reference"]["id"], len(src.controls_for.get(t["attack-reference"]["id"], ())))
+        for tid, t in src.atlas_techniques.items() if t.get("attack-reference") and t["attack-reference"]["id"] in src.techniques
     }
-    assert {a: (t, n) for a, _, t, _, n in ask(graph, "cq18")} == expected and len(expected) == 34
-    assert sum(1 for _, n in expected.values() if n) == 18 and expected["AML.T0055"] == ("T1552", 32)
+    # 48 ATLAS techniques cite ATT&CK; 47 cite a technique in ATT&CK 16.1. AML.T0073 cites T1684.001, which 16.1 does not have.
+    unresolved = {tid: t["attack-reference"]["id"] for tid, t in src.atlas_techniques.items() if t.get("attack-reference") and t["attack-reference"]["id"] not in src.techniques}
+    assert unresolved == {"AML.T0073": "T1684.001"}
+    assert {a: (t, n) for a, _, t, _, n in ask(graph, "cq18")} == expected and len(expected) == 47
+    assert sum(1 for _, n in expected.values() if n) == 28 and expected["AML.T0055"] == ("T1552", 32)
 
 
 def test_cq19_owasp_llm_risks_to_atlas_mitigations(graph, src):
@@ -192,10 +198,14 @@ def test_cq19_owasp_llm_risks_to_atlas_mitigations(graph, src):
     expected = {}
     for item in llm["items"]:
         for aid in item["related_atlas"]:
-            expected[(f"{item['id']} {item['title']}", aid)] = src.atlas_mitigated_by[aid]
+            if aid in src.atlas_techniques:
+                expected[(f"{item['id']} {item['title']}", aid)] = src.atlas_mitigated_by[aid]
     actual = {(r, a): set((m or "").split()) - {""} for r, a, _, m in ask(graph, "cq19")}
-    assert actual == expected and len(expected) == 13
-    assert sorted(a for (_, a), ms in expected.items() if not ms) == ["AML.T0048.002"]
+    assert actual == expected and len(expected) == 10
+    assert sorted(a for (_, a), ms in expected.items() if not ms) == NO_MITIGATION_CQ19
+    # OWASP links to three IDs that ATLAS v2026.10 no longer has. The graph keeps them as published, not as links (D32).
+    retired = {str(o) for o in graph.objects(None, ONT.relatedAtlasIdNotInCatalogue)}
+    assert retired == {a for i in llm["items"] for a in i["related_atlas"] if a not in src.atlas_techniques} == {"AML.T0024.000", "AML.T0024.001", "AML.T0024.002"}
 
 
 def test_cq20_nist_controls_overlapping_cis_13_7(graph, src):
@@ -229,15 +239,42 @@ def test_cq22_cis_techniques_only_in_19_1(graph, src):
 
 
 def test_atlas_agent_counts_and_their_wording_agree(src):
-    """26 agent techniques (derived), 19 with no direct ATLAS link, 14 with none on the technique or its parent (a project rule).
-    The README must state the same figures and must not say that 14 have no ATLAS mitigation without the parent rule."""
+    """ATLAS v2026.10: 39 agent techniques (derived), 8 with no direct ATLAS link, 4 with none on the technique or its parent
+    (a project rule). The README must state the same figures, with the version and the parent rule."""
     agent = src.atlas_agent
     no_direct = {t for t in agent if not src.atlas_mitigated_by.get(t)}
     parent = lambda t: src.atlas_techniques[t].get("specializes")  # noqa: E731
     no_direct_or_parent = {t for t in no_direct if not (parent(t) and src.atlas_mitigated_by.get(parent(t)))}
-    assert (len(agent), len(no_direct), len(no_direct_or_parent)) == (26, 19, 14)
+    assert (len(agent), len(no_direct), len(no_direct_or_parent)) == (39, 8, 4)
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    assert "19 of the 26 agent techniques have no direct mitigation link" in readme
-    assert "so 14 have none on the technique or its parent" in readme
-    assert "14 of the 26 agent techniques have no ATLAS mitigation" not in readme
-    assert "not current coverage" in readme
+    assert "8 of the 39 agent techniques have no direct mitigation link" in readme
+    assert "so 4 have none on the technique or its parent" in readme
+    assert "have no ATLAS mitigation." not in readme
+    assert "ATLAS 2026.10" in readme
+
+
+def test_atlas_release_matches_mitre_release_notes(src):
+    """MITRE's notes for v2026.10: 16 tactics, 129 techniques, 92 sub-techniques and 44 mitigations."""
+    subs = sum(1 for t in src.atlas_techniques.values() if "specializes" in t)
+    assert src.atlas_version == "2026.10"
+    assert (len(src.atlas_tactics), len(src.atlas_techniques) - subs, subs, len(src.atlas_mitigations)) == (16, 129, 92, 44)
+
+
+def test_combined_cells_keep_each_value_whole(src):
+    """A GROUP_CONCAT cell is sorted on its own separator. Before 2026-11-08 it was split on spaces, which turned the ATLAS
+    category "Technical - AI" into "- AI Technical" in CQ17."""
+    import re  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_graph  # noqa: PLC0415
+
+    questions = {q["id"]: q for q in build_graph.build_questions(build_graph.load())}
+    cq17 = questions["CQ17"]
+    i = cq17["columns"].index("categories")
+    for row in cq17["rows"]:
+        expected = sorted(src.atlas_mitigations[row[0]]["categories"])
+        assert row[i].split(", ") == expected, row[0]
+    for path in sorted((ROOT / "queries").glob("cq*.rq")):
+        text = path.read_text(encoding="utf-8")
+        found = re.findall(r"GROUP_CONCAT\(((?:[^()]|\([^()]*\))*)\)\s*AS\s*\?(\w+)", text)
+        assert len(found) == text.count("GROUP_CONCAT"), path.name

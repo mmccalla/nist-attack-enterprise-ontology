@@ -1,4 +1,4 @@
-technique_id,technique_name,change_in_20_0,replacement_ids,name_in_20_0,tactics_in_20_0,claims
+technique_id,technique_name,change_in_20_1,replacement_ids,name_in_20_1,tactics_in_20_1,claims
 T1006,Direct Volume Access,tactics changed,,,Stealth (TA0005),0
 T1014,Rootkit,tactics changed,,,Stealth (TA0005),0
 T1027,Obfuscated Files or Information,tactics changed,,,Stealth (TA0005),8

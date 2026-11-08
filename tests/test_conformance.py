@@ -117,11 +117,11 @@ PROBES = {
         "Result Path: :inFramework",
     ),
     "revoked technique record without a replacement": (
-        lambda g: g.remove((DATA["laterversion_T1070.001_20.0"], ONT.laterId, None)),
+        lambda g: g.remove((DATA["laterversion_T1070.001_20.1"], ONT.laterId, None)),
         "replacement of a revoked technique",
     ),
     "later-version record in the same catalogue as its technique": (
-        lambda g: g.set((DATA["laterversion_T1070.001_20.0"], ONT.inCatalogue, DATA["catalogue_attack-enterprise-16.1"])),
+        lambda g: g.set((DATA["laterversion_T1070.001_20.1"], ONT.inCatalogue, DATA["catalogue_attack-enterprise-16.1"])),
         "different catalogue",
     ),
     "ATLAS technique with an ATT&CK-style id": (

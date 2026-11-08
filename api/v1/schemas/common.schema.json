@@ -37,6 +37,10 @@
       "attack_cis": {
        "type": "string",
        "description": "ATT&CK version of the CIS Controls mapping."
+      },
+      "atlas": {
+       "type": "string",
+       "description": "MITRE ATLAS release of the ATLAS data, for example 2026.10."
       }
      },
      "required": [
@@ -45,7 +49,8 @@
       "ontology",
       "attack",
       "attack_later",
-      "attack_cis"
+      "attack_cis",
+      "atlas"
      ],
      "additionalProperties": false
     },

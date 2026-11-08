@@ -26,7 +26,7 @@ The 2.0.0 population reads control titles, families and SP 800-53B baseline memb
 
 ## MITRE ATLAS
 
-The population reads tactics, techniques and mitigations from [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) 5.6.0, © MITRE, Apache 2.0.
+The population reads tactics, techniques and mitigations from [MITRE ATLAS](https://github.com/mitre-atlas/atlas-data) 2026.10 (format 6), © MITRE, Apache 2.0.
 
 ## OWASP GenAI Security Project
 

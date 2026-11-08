@@ -14,16 +14,16 @@
 <https://w3id.org/example/nist-attack-mapping/ontology/1.0> a owl:Ontology ;
     dcterms:title "Enterprise ontology for NIST 800-53 Rev.5 to MITRE ATT&CK Enterprise mapping" ;
     dcterms:description "Schema-first ontology that separates source assertions from interpreted mitigation claims, links controls to OSCAL baselines and techniques to ATT&CK tactics, platforms and mitigations, and supports validation, provenance and controlled vocabularies." ;
-    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.3.0> ;
-    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/2.2.0> ;
-    owl:backwardCompatibleWith <https://w3id.org/example/nist-attack-mapping/ontology/2.2.0> ;
-    owl:versionInfo "2.3.0" ;
+    owl:versionIRI <https://w3id.org/example/nist-attack-mapping/ontology/2.4.0> ;
+    owl:priorVersion <https://w3id.org/example/nist-attack-mapping/ontology/2.3.0> ;
+    owl:backwardCompatibleWith <https://w3id.org/example/nist-attack-mapping/ontology/2.3.0> ;
+    owl:versionInfo "2.4.0" ;
     dcterms:creator "OpenAI" ;
     dcterms:contributor "Mark McCalla" ;
     dcterms:created "2026-04-13"^^xsd:date ;
-    dcterms:modified "2026-11-02"^^xsd:date ;
+    dcterms:modified "2026-11-08"^^xsd:date ;
     dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
-    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. Version 2.1.0 adds catalogues, frameworks and later-version records. Version 2.2.0 adds MITRE ATLAS and OWASP GenAI risks. Version 2.3.0 adds the CIS Controls, control-level non-mappable rows and catalogue versions per source. All are backward compatible. See docs/semantic-decisions.md." ;
+    rdfs:comment "Version 2.0.0 is not backward compatible with 1.0.0: non-mappable rows now carry a mapping status instead of a mapping type. Version 2.1.0 adds catalogues, frameworks and later-version records. Version 2.2.0 adds MITRE ATLAS and OWASP GenAI risks. Version 2.3.0 adds the CIS Controls, control-level non-mappable rows and catalogue versions per source. Version 2.4.0 adds relatedAtlasIdNotInCatalogue for OWASP links to ATLAS IDs that the pinned ATLAS release no longer has. All are backward compatible. See docs/semantic-decisions.md." ;
     dcterms:conformsTo <https://www.w3.org/TR/owl2-syntax/> ,
         <https://www.w3.org/TR/shacl/> ,
         <https://www.w3.org/TR/skos-reference/> ,
@@ -332,6 +332,10 @@
     rdfs:domain :OwaspRisk ; rdfs:range :AtlasTechnique ;
     rdfs:label "related ATLAS technique" ;
     skos:definition "An ATLAS technique that OWASP itself lists under Related Frameworks and Taxonomies for the risk." .
+:relatedAtlasIdNotInCatalogue a owl:DatatypeProperty ;
+    rdfs:domain :OwaspRisk ; rdfs:range xsd:string ;
+    rdfs:label "related ATLAS ID not in the catalogue" ;
+    skos:definition "An ATLAS ID that OWASP lists for the risk, but that the pinned ATLAS release no longer has. The link is kept as OWASP published it. The project does not map it to a new ID." .
 :attackMitigationFor a owl:ObjectProperty ;
     rdfs:subPropertyOf :threatMitigationFor ;
     rdfs:domain :AttackMitigation ; rdfs:range :AttackTechnique ;
@@ -390,7 +394,7 @@
     rdfs:label "AI agent related" ;
     skos:definition "Derived by this project, not published by ATLAS: true when the technique name contains 'AI Agent' or 'Agentic', or when its parent technique is agent related." .
 :atlasMaturity a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain :AtlasTechnique ; rdfs:range xsd:string ;
-    skos:definition "ATLAS maturity: feasible, demonstrated or realized." .
+    skos:definition "ATLAS maturity, as ATLAS writes it: Feasible, Demonstrated or Realized (capitalised since ATLAS format 6)." .
 :atlasCategory a owl:DatatypeProperty ; rdfs:domain :AtlasMitigation ; rdfs:range xsd:string ;
     skos:definition "ATLAS mitigation category, for example Technical - Cyber. A mitigation can have more than one." .
 :attackReferenceId a owl:DatatypeProperty ; rdfs:range xsd:string ;

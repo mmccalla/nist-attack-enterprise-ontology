@@ -15,7 +15,7 @@ The API gives the knowledge graph as small JSON files. AI agents, scripts and ot
 
 | Endpoint | Content |
 | --- | --- |
-| `techniques/{id}.json` | An ATT&CK technique: tactics, platforms, ATT&CK mitigations, NIST claims with evidence, CIS claims with evidence, changes in ATT&CK 20.0 |
+| `techniques/{id}.json` | An ATT&CK technique: tactics, platforms, ATT&CK mitigations, NIST claims with evidence, CIS claims with evidence, changes in the later ATT&CK release (20.1) |
 | `controls/{id}.json` | A NIST SP 800-53 control: OSCAL ID, family, baselines, the techniques that it mitigates, with evidence |
 | `tactics/{id}.json` | An ATT&CK 16.1 tactic and its techniques |
 | `mitigations/{id}.json` | An ATT&CK mitigation and its techniques |
@@ -45,7 +45,8 @@ Technique IDs use the ATT&CK form (`T1078`, `T1556.009`). Control IDs use the ze
 - Keep the `limits` statements with each answer that you give. A claim shows that a control **can** mitigate a technique. It does not show that an implementation is effective.
 - The status `none`, `no_row` or `non_mappable` does not mean that no defence exists.
 - Use `evidence[].source_record` to cite the source row behind a claim.
-- Examine `later_version` before you compare with a newer ATT&CK version. In ATT&CK 20.0, TA0005 is Stealth, not Defense Evasion.
+- Examine `later_version` before you compare with a newer ATT&CK version. Since ATT&CK 19.1, TA0005 is Stealth, not Defense Evasion.
+- ATLAS files use the ATLAS release in `versions.atlas`. An empty mitigation list means that this release links no mitigation, not that no mitigation exists. An OWASP risk file lists in `related_atlas_not_in_atlas` the ATLAS IDs that OWASP published but that this ATLAS release no longer has.
 - CIS claims use ATT&CK 19.1 (`versions.attack_cis`). NIST claims use ATT&CK 16.1. A technique with `mapping_status` `not_in_attack_16_1` is only in 19.1, so it cannot have a NIST claim.
 - `cis_text` in a Safeguard file, including `cis_text.ai_guidance`, is exact CIS text under CC BY-NC-ND 4.0. An OWASP MCP risk file has `title_licence`: its title is CC BY-NC-SA 4.0, for non-commercial use only.
 - `cis_text` in a Safeguard file is exact CIS text under CC BY-NC-ND 4.0. If you quote it, keep `cis_text.attribution`, do not change the text and use it only for non-commercial purposes.

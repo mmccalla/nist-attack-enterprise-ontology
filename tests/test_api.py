@@ -198,7 +198,9 @@ def test_atlas_and_owasp_files_match_the_raw_sources():
     owasp = {json.loads(p.read_text())["id"]: json.loads(p.read_text()) for p in (API / "owasp").glob("*.json")}
     llm = next(l for l in src.owasp["lists"] if l["id"] == "owasp-llm-top10-2025")
     for item in llm["items"]:
-        assert owasp[item["id"]]["related_atlas"] == sorted(item["related_atlas"]), item["id"]
+        published = sorted(item["related_atlas"])
+        assert owasp[item["id"]]["related_atlas"] == [a for a in published if a in src.atlas_techniques], item["id"]
+        assert owasp[item["id"]]["related_atlas_not_in_atlas"] == [a for a in published if a not in src.atlas_techniques], item["id"]
     mcp = [d for d in owasp.values() if d["id"].startswith("MCP")]
     mcp_text = {i["id"]: i for i in json.loads((ROOT / "data" / "sources" / "owasp-mcp-top10.json").read_text())["items"]}
     assert len(mcp) == 10 and all(d["title"] == mcp_text[d["id"]]["title"] and d["title_licence"]["licence"] == "CC BY-NC-SA 4.0" for d in mcp), \

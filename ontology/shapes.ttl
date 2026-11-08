@@ -112,7 +112,7 @@
     sh:property [ sh:path :techniqueName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
     sh:property [ sh:path :inCatalogue ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :ThreatCatalogue ] ;
     sh:property [ sh:path :isAgentRelated ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
-    sh:property [ sh:path :atlasMaturity ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "feasible" "demonstrated" "realized" ) ] ;
+    sh:property [ sh:path :atlasMaturity ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "Feasible" "Demonstrated" "Realized" ) ] ;
     sh:property [ sh:path :subTechniqueOf ; sh:maxCount 1 ; sh:class :AtlasTechnique ] ;
     sh:property [ sh:path :inTactic ; sh:class :Tactic ] ;
     sh:property [ sh:path :derivedFromAttack ; sh:maxCount 1 ; sh:class :AttackTechnique ] ;
@@ -130,7 +130,8 @@
     sh:property [ sh:path :owaspId ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^(LLM|MCP|ASI)[0-9]{2}:20[0-9]{2}$" ] ;
     sh:property [ sh:path :inCatalogue ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :ThreatCatalogue ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
-    sh:property [ sh:path :relatedAtlasTechnique ; sh:class :AtlasTechnique ] .
+    sh:property [ sh:path :relatedAtlasTechnique ; sh:class :AtlasTechnique ] ;
+    sh:property [ sh:path :relatedAtlasIdNotInCatalogue ; sh:datatype xsd:string ; sh:pattern "^AML[.]T[0-9]{4}([.][0-9]{3})?$" ] .
 
 :AttackMitigationShape a sh:NodeShape ;
     sh:targetClass :AttackMitigation ;

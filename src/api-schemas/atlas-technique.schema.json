@@ -28,9 +28,9 @@
   },
   "maturity": {
    "enum": [
-    "feasible",
-    "demonstrated",
-    "realized"
+    "Feasible",
+    "Demonstrated",
+    "Realized"
    ]
   },
   "parent": {

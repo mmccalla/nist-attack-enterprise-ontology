@@ -40,7 +40,7 @@ The ATT&CK techniques come from this project's own data. The controls are NIST S
 | 1 | Tampered or substituted source file (Tampering) | T1565.001 Stored Data Manipulation | SI-07, SR-04, SR-11 | Each source URL names a commit. The build compares each file with a SHA-256 digest and stops on a difference. It accepts only the pinned host and refuses files above 200 MB. Evidence: `tests/test_supply_chain.py`. |
 | 2 | Compromised dependency or build tool (Tampering) | T1195.001 Compromise Software Dependencies and Development Tools | SR-04, SR-11, CM-02, SA-11, SI-07 | Python dependencies install with `--require-hashes`. npm uses a lockfile with sha512 integrity. Actions are pinned to commits. D3 and UCO are vendored with digests. Evidence: `tests/test_supply_chain.py`. |
 | 2 | Known-vulnerable dependency (Elevation of privilege) | T1195.002 Compromise Software Supply Chain | RA-05, SI-02, SA-22 (partial) | CI runs `pip-audit` and `npm audit` on each push and pull request. CodeQL scans the Python, JavaScript and workflow code. Dependabot alerts and security updates are on. `pip-audit` found no known vulnerability on 2026-11-07. |
-| 3 | Unauthorised change to the site (Tampering) | T1078.004 Cloud Accounts | IA-05, CM-07, CM-03, CM-05; IA-02 is an owner action | Secret scanning and push protection are on. The build needs no secret. The rule set "Protect Trunk" on `main` requires a pull request, the CI and CodeQL checks, signed commits and linear history, and has no bypass. Two-factor authentication is an owner action (below). |
+| 3 | Unauthorised change to the site (Tampering) | T1078.004 Cloud Accounts | IA-05, CM-07, CM-03, CM-05, IA-02 | Secret scanning and push protection are on. The build needs no secret. The rule set "Protect Trunk" on `main` requires a pull request, the CI and CodeQL checks, signed commits and linear history, and has no bypass. The owner confirmed two-factor authentication on the maintainer account on 2026-11-08. |
 | 4 | Script injection through data or the address bar (Tampering, Elevation of privilege) | T1059.007 JavaScript, T1189 Drive-by Compromise | SC-18, SI-10, SI-07, CM-07 | The page escapes all data before it writes HTML. A Content Security Policy permits only the page's own scripts, by SHA-256 hash. Evidence: the browser checks put HTML and script payloads into the data and into the address bar, and none runs. A test with escaping removed showed that the policy alone stops the payloads. |
 | 4, 5 | User data sent off the machine (Information disclosure) | T1557 Adversary-in-the-Middle | SC-08, CM-07, SC-07 (partial) | The policy has `connect-src 'none'`, so the page cannot send data anywhere. Pages enforces HTTPS. Evidence: a browser check tries a network request and the browser blocks it. |
 | 5 | Malicious OSCAL file or pasted text (Tampering, Denial of service) | T1204.002 Malicious File | SI-10 | The page reads only control IDs that match a strict pattern. It never shows other text from the file. Text is limited to 200,000 characters, files to 20 MB and IDs to 5,000. Evidence: `tests/js/coverage.test.cjs`, including prompt injection and HTML in OSCAL fields. |
@@ -54,9 +54,8 @@ The project ran its own gap logic (`lib/coverage.cjs`) over the 10 techniques ab
 The test `tests/test_security_doc.py` reads this block and runs the same analysis again:
 
 ```text
-implemented: SA-08 SA-11 SI-07 SI-10 SC-08 SC-18 SR-04 SR-11 CM-02 CM-07 IA-05 CM-03 CM-05 RA-05
+implemented: SA-08 SA-11 SI-07 SI-10 SC-08 SC-18 SR-04 SR-11 CM-02 CM-07 IA-05 CM-03 CM-05 RA-05 IA-02
 partial: SA-10 SA-15 SA-22 SI-02 SC-07 SR-05 CM-06 AC-03 AC-06 CA-02 CA-07
-owner actions: IA-02
 threat techniques: T1195.001 T1195.002 T1189 T1059.007 T1565.001 T1552.001 T1078.004 T1098.001 T1204.002 T1557
 ```
 
@@ -70,7 +69,7 @@ Only the repository owner can make these changes. Status on 2026-11-08:
 2. Done: private vulnerability reporting is on, so [`SECURITY.md`](../SECURITY.md) has a private channel.
 3. Done: Dependabot alerts and security updates are on (SI-02).
 4. Done: the CI workflow runs on each push and pull request. CodeQL default setup scans the Actions, JavaScript and Python code (CA-07, RA-05, AC-06). The site still deploys with the Pages branch build.
-5. Open, not verified by the project: two-factor authentication on the maintainer account (IA-02).
+5. Done: two-factor authentication on the maintainer account (IA-02), confirmed by the owner on 2026-11-08. GitHub shows this setting only to the account owner, so the project cannot examine it.
 
 ## Risks that stay
 

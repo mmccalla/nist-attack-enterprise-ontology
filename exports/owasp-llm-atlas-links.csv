@@ -1,14 +1,14 @@
-owasp_id,owasp_risk,atlas_technique_id,atlas_technique_name
-LLM01:2025,LLM01:2025 Prompt Injection,AML.T0051.000,Direct
-LLM01:2025,LLM01:2025 Prompt Injection,AML.T0051.001,Indirect
-LLM01:2025,LLM01:2025 Prompt Injection,AML.T0054,LLM Jailbreak
-LLM02:2025,LLM02:2025 Sensitive Information Disclosure,AML.T0024.000,Infer Training Data Membership
-LLM02:2025,LLM02:2025 Sensitive Information Disclosure,AML.T0024.001,Invert AI Model
-LLM02:2025,LLM02:2025 Sensitive Information Disclosure,AML.T0024.002,Extract AI Model
-LLM04:2025,LLM04:2025 Data and Model Poisoning,AML.T0018,Manipulate AI Model
-LLM07:2025,LLM07:2025 System Prompt Leakage,AML.T0051.000,Direct
-LLM09:2025,LLM09:2025 Misinformation,AML.T0048.002,Societal Harm
-LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0024,Exfiltration via AI Inference API
-LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0025,Exfiltration via Cyber Means
-LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0029,Denial of AI Service
-LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0034,Cost Harvesting
+owasp_id,owasp_risk,atlas_technique_id,atlas_technique_name,in_atlas_2026_10
+LLM01:2025,LLM01:2025 Prompt Injection,AML.T0051.000,Direct,yes
+LLM01:2025,LLM01:2025 Prompt Injection,AML.T0051.001,Indirect,yes
+LLM01:2025,LLM01:2025 Prompt Injection,AML.T0054,LLM Jailbreak,yes
+LLM02:2025,LLM02:2025 Sensitive Information Disclosure,AML.T0024.000,,no
+LLM02:2025,LLM02:2025 Sensitive Information Disclosure,AML.T0024.001,,no
+LLM02:2025,LLM02:2025 Sensitive Information Disclosure,AML.T0024.002,,no
+LLM04:2025,LLM04:2025 Data and Model Poisoning,AML.T0018,Manipulate AI Model,yes
+LLM07:2025,LLM07:2025 System Prompt Leakage,AML.T0051.000,Direct,yes
+LLM09:2025,LLM09:2025 Misinformation,AML.T0048.002,Societal Harm,yes
+LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0024,Exfiltration via AI Inference API,yes
+LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0025,Exfiltration via Cyber Means,yes
+LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0029,Denial of AI Service,yes
+LLM10:2025,LLM10:2025 Unbounded Consumption,AML.T0034,Cost Harvesting,yes

@@ -53,12 +53,13 @@ SOURCES = {
         "bdf1ce86a4e604214c5076d37ae4dcb322678afc528df8492e6fdc1b554f5da3",
     ),
     "attack_latest": (
-        f"{GH}/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json",
-        "81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352",
+        f"{GH}/mitre-attack/attack-stix-data/f59b03ecf828579d5f9e93683ce25b7e2e5fd9d7/enterprise-attack/enterprise-attack-20.1.json",
+        "539a843a7b53ed9749740b2123dddae3726b1a4831841c32aca740b011b910b5",
     ),
     "atlas": (
-        f"{GH}/mitre-atlas/atlas-data/da9ebf9b66e6902ad97c267e2a20af0bd996a60f/dist/ATLAS.yaml",
-        "c9c23971d0db07e2782423d795a20e78d5c2c9bcdc78fc67e24530657daaec41",
+        # ATLAS v2026.10 (release tag v2026.10), format 6.1.0. The legacy dist/ATLAS.yaml stays at 5.6.0 and is not used.
+        f"{GH}/mitre-atlas/atlas-data/f56c1468731d6428e5bf875263b4643b46d67437/dist/v6/ATLAS-2026.10.yaml",
+        "ac41ee9f99a47084ba5fdfc77ae83a28687e12390240fffeb37df7914ffe142d",
     ),
     "catalog": (
         f"{OSCAL}/NIST_SP-800-53_rev5_catalog.json",
@@ -70,7 +71,7 @@ SOURCES = {
     "PRIVACY": (f"{OSCAL}/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json", "c0e3d54d9f474bc6c33338a8e524bc52ad070f94f9274db7ec48242242fecacc"),
 }
 BASELINES = ["LOW", "MODERATE", "HIGH", "PRIVACY"]
-LATER_ATTACK = "20.0"
+LATER_ATTACK = "20.1"
 MAX_SOURCE_BYTES = 200 * 1024 * 1024  # refuse anything larger than any expected source
 
 
@@ -373,9 +374,9 @@ def build() -> tuple[Graph, dict]:
             g.add((claim, PROV.wasDerivedFrom, node))
         g.add((DATA[f"control_{cid}"], ONT.mitigatesTechnique, DATA[f"technique_{tid}"]))
     checks["claimsWithheld"] = withheld
-    checks["atlas"] = add_atlas(g, fetch("atlas"), stix_techniques, mitigations)
+    checks["atlas"] = add_atlas(g, atlas_v6(fetch("atlas")), stix_techniques, mitigations)
     checks["cis"] = add_cis(g, fetch("cis"), fetch("attack_19_1"), stix_techniques)
-    checks["owasp"] = add_owasp(g)
+    checks["owasp"] = add_owasp(g, {str(o) for o in g.objects(None, ONT.techniqueId) if str(o).startswith("AML.")})
     checks["counts"] = {
         "sourceRows": len(rows),
         "mitigatesRows": sum(1 for r in rows if r["status"] == "complete"),
@@ -398,7 +399,7 @@ def reconcile(g: Graph, techniques: dict, later: dict, later_catalogue) -> dict:
     """Record what the later ATT&CK version changed for each technique of the pinned version.
 
     The match uses the STIX id, which ATT&CK keeps stable across versions; the ATT&CK ID and the tactic IDs
-    can change meaning (in 20.0, TA0005 is Stealth, not Defense Evasion).
+    can change meaning (since 19.1, TA0005 is Stealth, not Defense Evasion).
     """
     objects = later["objects"]
     by_stix = {o["id"]: o for o in objects if o["type"] == "attack-pattern"}
@@ -452,6 +453,43 @@ def reconcile(g: Graph, techniques: dict, later: dict, later_catalogue) -> dict:
 
 
 AGENT_NAME = re.compile(r"AI Agent|Agentic")
+
+
+def atlas_v6(d: dict) -> dict:
+    """ATLAS format 6 (collection, techniques and relationships keyed by ID) in the shape that add_atlas reads.
+
+    Tactics come from "achieves", parents from "specializes", mitigation links from "mitigates" and the tactic order from
+    the "sequences" positions of the matrix. Only the objects that the graph uses are read.
+    """
+    if not str(d.get("format-version", "")).startswith("6."):
+        raise SystemExit(f"ATLAS: expected format 6, found {d.get('format-version')!r}")
+    tactics_of, parent, mitigates, position = defaultdict(list), {}, defaultdict(list), {}
+    for groups in d["relationships"].values():
+        for kind, items in groups.items():
+            for r in items:
+                if kind == "achieves":
+                    tactics_of[r["source"]].append(r["target"])
+                elif kind == "specializes":
+                    parent[r["source"]] = r["target"]
+                elif kind == "mitigates":
+                    mitigates[r["source"]].append(r["target"])
+                elif kind == "sequences" and r["source"] == d["matrix"]["id"]:
+                    position[r["target"]] = r["position"]
+    if set(position) != set(d["tactics"]):
+        raise SystemExit("ATLAS: the matrix does not give a position for each tactic")
+    techniques = []
+    for tid, t in d["techniques"].items():
+        x = {"id": tid, "name": t["name"], "maturity": t["maturity"], "tactics": sorted(tactics_of[tid])}
+        if tid in parent:
+            x["specializes"] = parent[tid]
+        if t.get("attack-reference"):
+            x["ATT&CK-reference"] = t["attack-reference"]
+        techniques.append(x)
+    mitigations = [{"id": mid, "name": m["name"], "category": m["categories"], "techniques": [{"id": t} for t in sorted(mitigates[mid])],
+                    **({"ATT&CK-reference": m["attack-reference"]} if m.get("attack-reference") else {})} for mid, m in d["mitigations"].items()]
+    tactics = [{"id": tid, "name": t["name"]} for tid, t in sorted(d["tactics"].items(), key=lambda kv: position[kv[0]])]
+    return {"version": d["collection"]["version"], "modified": d["collection"]["modified-date"],
+            "matrices": [{"tactics": tactics, "techniques": techniques, "mitigations": mitigations}]}
 
 
 def add_atlas(g: Graph, atlas: dict, attack_techniques: dict, attack_mitigations: dict) -> dict:
@@ -531,6 +569,7 @@ def add_atlas(g: Graph, atlas: dict, attack_techniques: dict, attack_mitigations
             unresolved.append(f"{m['id']} {ref['id']}")
     return {
         "version": atlas["version"],
+        "modified": atlas["modified"],
         "tactics": len(matrix["tactics"]),
         "techniques": len(matrix["techniques"]),
         "agentRelatedTechniques": sum(agent.values()),
@@ -697,7 +736,7 @@ def add_cis(g: Graph, cis: dict, attack: dict, attack16: dict) -> dict:
     }
 
 
-def add_owasp(g: Graph) -> dict:
+def add_owasp(g: Graph, atlas_ids: set) -> dict:
     """OWASP GenAI lists from the curated extract in data/sources/owasp-genai.json (CC BY-SA 4.0 parts)."""
     raw = OWASP.read_bytes()
     doc = json.loads(raw)
@@ -707,7 +746,7 @@ def add_owasp(g: Graph) -> dict:
     g.add((dataset, DCTERMS.source, URIRef("https://genai.owasp.org/")))
     g.add((dataset, ONT.sha256, lit(hashlib.sha256(raw).hexdigest())))
     g.add((dataset, OWL.versionInfo, lit(doc["retrieved"])))
-    counts = {}
+    counts, retired = {}, []
     for lst in doc["lists"]:
         catalogue = DATA[f"catalogue_{lst['id']}"]
         g.add((catalogue, RDF.type, ONT.ThreatCatalogue))
@@ -728,8 +767,14 @@ def add_owasp(g: Graph) -> dict:
             g.add((node, ONT.inCatalogue, catalogue))
             g.add((node, PROV.wasDerivedFrom, dataset))
             for aid in item.get("related_atlas", []):
-                g.add((node, ONT.relatedAtlasTechnique, DATA[f"atlastechnique_{aid}"]))
+                if aid in atlas_ids:
+                    g.add((node, ONT.relatedAtlasTechnique, DATA[f"atlastechnique_{aid}"]))
+                else:
+                    # Kept as OWASP published it; the pinned ATLAS release has no such ID (decision D32).
+                    g.add((node, ONT.relatedAtlasIdNotInCatalogue, lit(aid)))
+                    retired.append(f"{item['id']} {aid}")
         counts[lst["id"]] = {"items": len(lst["items"]), "atlasLinks": sum(len(i.get("related_atlas", [])) for i in lst["items"])}
+    counts["linksToAtlasIdsNotInCatalogue"] = sorted(retired)
     return counts
 
 

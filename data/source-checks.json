@@ -1,12 +1,15 @@
 {
   "atlas": {
-    "agentRelatedTechniques": 26,
-    "attackReferencesNotInGraph": [],
-    "mitigationLinks": 246,
-    "mitigations": 35,
+    "agentRelatedTechniques": 39,
+    "attackReferencesNotInGraph": [
+      "AML.T0073 T1684.001"
+    ],
+    "mitigationLinks": 494,
+    "mitigations": 44,
+    "modified": "2026-10-28",
     "tactics": 16,
-    "techniques": 170,
-    "version": "5.6.0"
+    "techniques": 221,
+    "version": "2026.10"
   },
   "cis": {
     "attackVersion": "19.1",
@@ -52,7 +55,7 @@
     "tactics": 14,
     "techniquesInAttackEnterprise": 656,
     "techniquesInMapping": 566,
-    "triples": 119482
+    "triples": 120417
   },
   "duplicateRows": [
     "CM-02 T1021.001",
@@ -120,9 +123,14 @@
       "unchanged": 448
     },
     "techniquesOnlyInLaterVersion": 66,
-    "version": "20.0"
+    "version": "20.1"
   },
   "owasp": {
+    "linksToAtlasIdsNotInCatalogue": [
+      "LLM02:2025 AML.T0024.000",
+      "LLM02:2025 AML.T0024.001",
+      "LLM02:2025 AML.T0024.002"
+    ],
     "owasp-agentic-top10-2026": {
       "atlasLinks": 0,
       "items": 0
@@ -154,8 +162,8 @@
       "url": "https://raw.githubusercontent.com/usnistgov/oscal-content/5006f18c8047643eaa70e35dd0d20a58bcc41856/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_PRIVACY-baseline_profile.json"
     },
     "atlas": {
-      "sha256": "c9c23971d0db07e2782423d795a20e78d5c2c9bcdc78fc67e24530657daaec41",
-      "url": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/da9ebf9b66e6902ad97c267e2a20af0bd996a60f/dist/ATLAS.yaml"
+      "sha256": "ac41ee9f99a47084ba5fdfc77ae83a28687e12390240fffeb37df7914ffe142d",
+      "url": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/f56c1468731d6428e5bf875263b4643b46d67437/dist/v6/ATLAS-2026.10.yaml"
     },
     "attack": {
       "sha256": "8423d8dac3fc2feb825bb07d26e5f5d905e08a88f6fe4652cc20834cbe982813",
@@ -166,8 +174,8 @@
       "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/6c3719993d0401de199203ecc3f369544d9e091c/enterprise-attack/enterprise-attack-19.1.json"
     },
     "attack_latest": {
-      "sha256": "81113ba98afa2928f3dcff62022539f7ce30c315c32e14422f11ff95ce534352",
-      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/20664a889568dce884a1dac0ec7b12ae3a199f51/enterprise-attack/enterprise-attack-20.0.json"
+      "sha256": "539a843a7b53ed9749740b2123dddae3726b1a4831841c32aca740b011b910b5",
+      "url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/f59b03ecf828579d5f9e93683ce25b7e2e5fd9d7/enterprise-attack/enterprise-attack-20.1.json"
     },
     "catalog": {
       "sha256": "64ca6b4161de51ab6af098a7d101d326f14c95e1abf721396cd8a049e8115eeb",

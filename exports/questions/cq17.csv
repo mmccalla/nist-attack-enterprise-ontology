@@ -1,13 +1,27 @@
 mitigation,name,categories,agentTechniques
-AML.M0024,AI Telemetry Logging,- Cyber Technical,4
-AML.M0026,Privileged AI Agent Permissions Configuration,- Cyber Technical,4
-AML.M0027,Single-User AI Agent Permissions Configuration,- Cyber Technical,4
-AML.M0028,AI Agent Tools Permissions Configuration,- Cyber Technical,4
-AML.M0032,Segmentation of AI Agent Components,- Cyber Technical,4
-AML.M0029,Human In-the-Loop for AI Agent Actions,- ML Technical,3
-AML.M0030,Restrict AI Agent Tool Invocation on Untrusted Data,- ML Technical,3
-AML.M0031,Memory Hardening,- ML Technical,2
-AML.M0033,Input and Output Validation for AI Agent Components,- ML Technical,2
-AML.M0020,Generative AI Guardrails,- ML Technical,1
-AML.M0021,Generative AI Guidelines,- ML Technical,1
-AML.M0022,Generative AI Model Alignment,- ML Technical,1
+AML.M0020,Generative AI Guardrails,Technical - AI,13
+AML.M0026,Manage AI Agent Service Access,Technical - Cyber,8
+AML.M0027,Manage User-Delegated AI Agent Access,Technical - Cyber,8
+AML.M0028,Enforce Access Controls for AI Agent Tools,Technical - Cyber,8
+AML.M0032,Segmentation of AI Agent Components,Technical - Cyber,8
+AML.M0035,AI Red Team,"Policy, Technical - AI, Technical - Cyber",8
+AML.M0024,AI Telemetry Logging and Monitoring,Technical - Cyber,6
+AML.M0000,Limit Public Release of Information,Policy,4
+AML.M0038,AI Agent Scope Drift Detection,Technical - AI,4
+AML.M0022,Generative AI Model Alignment,Technical - AI,3
+AML.M0029,Human In-the-Loop for AI Agent Actions,Technical - AI,3
+AML.M0030,Restrict AI Agent Tool Invocation on Untrusted Data,Technical - AI,3
+AML.M0039,AI Honeypots,"Technical - AI, Technical - Cyber",3
+AML.M0021,Generative AI Guidelines,Technical - AI,2
+AML.M0031,Memory Hardening,Technical - AI,2
+AML.M0033,Input and Output Validation for AI Agent Components,Technical - AI,2
+AML.M0037,AI Agent Authority Expansion Controls,Technical - AI,2
+AML.M0042,Threat Intelligence Program,Policy,2
+AML.M0043,AI Agent External Resource Lifecycle Management,"Policy, Technical - AI, Technical - Cyber",2
+AML.M0007,Sanitize Training Data,Technical - AI,1
+AML.M0008,Validate AI Model,Technical - AI,1
+AML.M0013,Code Signing,Technical - Cyber,1
+AML.M0016,Vulnerability Scanning,Technical - Cyber,1
+AML.M0023,Maintain an AI Bill of Materials,Policy,1
+AML.M0025,Maintain AI Dataset Provenance,Technical - AI,1
+AML.M0036,Limit AI Workload Resource Consumption,Technical - AI,1

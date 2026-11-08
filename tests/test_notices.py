@@ -15,7 +15,7 @@ def attack_notice(name):
     return re.search(r'"(© \d{4} The MITRE Corporation\. [^"]+)"', (LICENSES / name).read_text(encoding="utf-8")).group(1)
 
 
-NOTICES = {"16": attack_notice("MITRE-ATTACK-terms-16.1.txt"), "19": attack_notice("MITRE-ATTACK-terms-19.1-20.0.txt")}
+NOTICES = {"16": attack_notice("MITRE-ATTACK-terms-16.1.txt"), "19": attack_notice("MITRE-ATTACK-terms-19.1-20.1.txt")}
 
 
 def test_licence_texts_are_present():
