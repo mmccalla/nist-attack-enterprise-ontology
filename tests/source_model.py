@@ -66,7 +66,7 @@ class Sources:
                 for prop in control.get("props", []):
                     if prop["name"] == "label" and prop.get("class") == "zero-padded":
                         self.oscal[prop["value"]] = control
-        # ATT&CK 20.0, matched by STIX id (independent of the build's reconcile()).
+        # The later ATT&CK release (20.1), matched by STIX id (independent of the build's reconcile()).
         later = build_population.fetch("attack_latest")["objects"]
         later_by_stix = {o["id"]: o for o in later if o["type"] == "attack-pattern"}
         later_tactics = {o["x_mitre_shortname"]: f"{o['name']} ({_mitre_id(o)})" for o in later if o["type"] == "x-mitre-tactic"}
@@ -94,13 +94,20 @@ class Sources:
                 self.controls_for[r["attack_object_id"]].add(r["capability_id"])
 
         # MITRE ATLAS and the curated OWASP extract, read directly.
-        atlas = build_population.fetch("atlas")["matrices"][0]
-        self.atlas_techniques = {t["id"]: t for t in atlas["techniques"]}
-        self.atlas_mitigations = {m["id"]: m for m in atlas["mitigations"]}
+        # ATLAS format 6, read here without the build's converter: techniques, mitigations and relationships keyed by ID.
+        atlas = build_population.fetch("atlas")
+        self.atlas_version = atlas["collection"]["version"]
+        self.atlas_techniques = {tid: dict(t) for tid, t in atlas["techniques"].items()}
+        self.atlas_mitigations = dict(atlas["mitigations"])
+        self.atlas_tactics = dict(atlas["tactics"])
         self.atlas_mitigated_by = defaultdict(set)
-        for m in atlas["mitigations"]:
-            for use in m["techniques"]:
-                self.atlas_mitigated_by[use["id"]].add(m["id"])
+        for groups in atlas["relationships"].values():
+            for r in groups.get("specializes", []):
+                self.atlas_techniques[r["source"]]["specializes"] = r["target"]
+            for r in groups.get("achieves", []):
+                self.atlas_techniques[r["source"]].setdefault("tactics", []).append(r["target"])
+            for r in groups.get("mitigates", []):
+                self.atlas_mitigated_by[r["target"]].add(r["source"])
 
         def agent(tid):
             t = self.atlas_techniques[tid]

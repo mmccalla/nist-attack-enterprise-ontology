@@ -1,171 +1,222 @@
 technique_id,technique_name,agent_related_derived,maturity,parent,atlas_mitigations,derived_from_attack
-AML.T0000,Search Open Technical Databases,false,demonstrated,,AML.M0000,T1596
-AML.T0000.000,Journals and Conference Proceedings,false,feasible,AML.T0000,,
-AML.T0000.001,Pre-Print Repositories,false,demonstrated,AML.T0000,,
-AML.T0000.002,Technical Blogs,false,feasible,AML.T0000,,
-AML.T0001,Search Open AI Vulnerability Analysis,false,demonstrated,,,
-AML.T0002,Acquire Public AI Artifacts,false,realized,,AML.M0000,
-AML.T0002.000,Datasets,false,demonstrated,AML.T0002,AML.M0001,
-AML.T0002.001,Models,false,demonstrated,AML.T0002,AML.M0001 AML.M0014,
-AML.T0002.002,AI Agent Configuration,true,demonstrated,AML.T0002,,
-AML.T0003,Search Victim-Owned Websites,false,demonstrated,,AML.M0000,T1594
-AML.T0004,Search Application Repositories,false,demonstrated,,AML.M0000,
-AML.T0005,Create Proxy AI Model,false,demonstrated,,AML.M0000 AML.M0001 AML.M0002 AML.M0004 AML.M0019,
-AML.T0005.000,Train Proxy via Gathered AI Artifacts,false,demonstrated,AML.T0005,AML.M0000 AML.M0001,
-AML.T0005.001,Train Proxy via Replication,false,demonstrated,AML.T0005,AML.M0002 AML.M0004 AML.M0024,
-AML.T0005.002,Use Pre-Trained Model,false,feasible,AML.T0005,AML.M0000,
-AML.T0006,Active Scanning,false,realized,,,T1595
-AML.T0007,Discover AI Artifacts,false,demonstrated,,AML.M0005 AML.M0012,
-AML.T0008,Acquire Infrastructure,false,realized,,,
-AML.T0008.000,AI Development Workspaces,false,demonstrated,AML.T0008,,
-AML.T0008.001,Consumer Hardware,false,realized,AML.T0008,,
-AML.T0008.002,Domains,false,demonstrated,AML.T0008,,T1583.001
-AML.T0008.003,Physical Countermeasures,false,demonstrated,AML.T0008,,
-AML.T0008.004,Serverless,false,feasible,AML.T0008,,T1583.007
-AML.T0008.005,AI Service Proxies,false,realized,AML.T0008,,
-AML.T0010,AI Supply Chain Compromise,false,realized,,AML.M0014 AML.M0020 AML.M0023,
-AML.T0010.000,Hardware,false,feasible,AML.T0010,,
-AML.T0010.001,AI Software,false,realized,AML.T0010,AML.M0006 AML.M0013,
-AML.T0010.002,Data,false,realized,AML.T0010,AML.M0005 AML.M0007 AML.M0014 AML.M0025,
-AML.T0010.003,Model,false,realized,AML.T0010,AML.M0005 AML.M0006 AML.M0008 AML.M0013 AML.M0017,
-AML.T0010.004,Container Registry,false,demonstrated,AML.T0010,,
-AML.T0010.005,AI Agent Tool,true,realized,AML.T0010,,
-AML.T0011,User Execution,false,realized,,AML.M0011 AML.M0014 AML.M0016 AML.M0018 AML.M0023,T1204
-AML.T0011.000,Unsafe AI Artifacts,false,realized,AML.T0011,AML.M0011 AML.M0013 AML.M0014 AML.M0016 AML.M0018 AML.M0023,
-AML.T0011.001,Malicious Package,false,realized,AML.T0011,AML.M0011 AML.M0013 AML.M0016 AML.M0018 AML.M0023,
-AML.T0011.002,Poisoned AI Agent Tool,true,realized,AML.T0011,,
-AML.T0011.003,Malicious Link,false,demonstrated,AML.T0011,,T1204
-AML.T0012,Valid Accounts,false,realized,,,T1078
-AML.T0013,Discover AI Model Ontology,false,demonstrated,,AML.M0002 AML.M0004,
-AML.T0014,Discover AI Model Family,false,feasible,,AML.M0002 AML.M0004 AML.M0006,
-AML.T0015,Evade AI Model,false,realized,,AML.M0003 AML.M0006 AML.M0009 AML.M0010 AML.M0015 AML.M0034,
-AML.T0016,Obtain Capabilities,false,realized,,,T1588
-AML.T0016.000,Adversarial AI Attack Implementations,false,realized,AML.T0016,,
-AML.T0016.001,Software Tools,false,realized,AML.T0016,,T1588.002
-AML.T0016.002,Generative AI,false,realized,AML.T0016,,
-AML.T0017,Develop Capabilities,false,realized,,,T1587
-AML.T0017.000,Adversarial AI Attacks,false,demonstrated,AML.T0017,,
-AML.T0018,Manipulate AI Model,false,realized,,AML.M0005 AML.M0008 AML.M0013,
-AML.T0018.000,Poison AI Model,false,demonstrated,AML.T0018,AML.M0005 AML.M0007 AML.M0008 AML.M0013 AML.M0025,
-AML.T0018.001,Modify AI Model Architecture,false,demonstrated,AML.T0018,AML.M0005 AML.M0008 AML.M0013,
-AML.T0018.002,Embed Malware,false,realized,AML.T0018,AML.M0013,
-AML.T0019,Publish Poisoned Datasets,false,demonstrated,,AML.M0014 AML.M0023 AML.M0025,
-AML.T0020,Poison Training Data,false,realized,,AML.M0001 AML.M0005 AML.M0007 AML.M0008 AML.M0023 AML.M0025,
-AML.T0021,Establish Accounts,false,realized,,,T1585
-AML.T0024,Exfiltration via AI Inference API,false,realized,,AML.M0004 AML.M0019 AML.M0024,
-AML.T0024.000,Infer Training Data Membership,false,feasible,AML.T0024,AML.M0002 AML.M0004 AML.M0024,
-AML.T0024.001,Invert AI Model,false,feasible,AML.T0024,AML.M0002 AML.M0004 AML.M0024,
-AML.T0024.002,Extract AI Model,false,realized,AML.T0024,AML.M0002 AML.M0004 AML.M0024,
-AML.T0025,Exfiltration via Cyber Means,false,realized,,AML.M0005,
-AML.T0029,Denial of AI Service,false,demonstrated,,AML.M0004 AML.M0015 AML.M0019,
-AML.T0031,Erode AI Model Integrity,false,realized,,AML.M0003 AML.M0006 AML.M0010 AML.M0015,
-AML.T0034,Cost Harvesting,false,feasible,,AML.M0004 AML.M0019,
-AML.T0034.000,Excessive Queries,false,feasible,AML.T0034,,
-AML.T0034.001,Resource-Intensive Queries,false,feasible,AML.T0034,,
-AML.T0034.002,Agentic Resource Consumption,true,feasible,AML.T0034,,
-AML.T0035,AI Artifact Collection,false,realized,,AML.M0001 AML.M0005 AML.M0012 AML.M0017,
-AML.T0036,Data from Information Repositories,false,realized,,,T1213
-AML.T0037,Data from Local System,false,realized,,,T1005
-AML.T0040,AI Model Inference API Access,false,realized,,AML.M0019 AML.M0024,
-AML.T0041,Physical Environment Access,false,demonstrated,,AML.M0009,
-AML.T0042,Verify Attack,false,demonstrated,,AML.M0002 AML.M0004 AML.M0005 AML.M0019,
-AML.T0043,Craft Adversarial Data,false,realized,,AML.M0002 AML.M0003 AML.M0004 AML.M0006 AML.M0008 AML.M0010 AML.M0015 AML.M0019,
-AML.T0043.000,White-Box Optimization,false,demonstrated,AML.T0043,AML.M0003 AML.M0005 AML.M0006 AML.M0010 AML.M0015 AML.M0017,
-AML.T0043.001,Black-Box Optimization,false,demonstrated,AML.T0043,AML.M0002 AML.M0003 AML.M0004 AML.M0006 AML.M0010 AML.M0015 AML.M0019,
-AML.T0043.002,Black-Box Transfer,false,demonstrated,AML.T0043,AML.M0003 AML.M0006 AML.M0010 AML.M0015,
-AML.T0043.003,Manual Modification,false,realized,AML.T0043,AML.M0003 AML.M0004 AML.M0006 AML.M0010 AML.M0015,
-AML.T0043.004,Insert Backdoor Trigger,false,demonstrated,AML.T0043,AML.M0003 AML.M0006 AML.M0008 AML.M0010 AML.M0015,
-AML.T0044,Full AI Model Access,false,demonstrated,,AML.M0005 AML.M0017,
-AML.T0046,Spamming AI System with Chaff Data,false,feasible,,AML.M0004 AML.M0019,
-AML.T0047,AI-Enabled Product or Service,false,realized,,AML.M0024,
-AML.T0048,External Harms,false,realized,,,
-AML.T0048.000,Financial Harm,false,realized,AML.T0048,,
-AML.T0048.001,Reputational Harm,false,demonstrated,AML.T0048,,
-AML.T0048.002,Societal Harm,false,realized,AML.T0048,,
-AML.T0048.003,User Harm,false,realized,AML.T0048,,
-AML.T0048.004,AI Intellectual Property Theft,false,realized,AML.T0048,AML.M0005 AML.M0012 AML.M0017,
-AML.T0049,Exploit Public-Facing Application,false,realized,,,T1190
-AML.T0050,Command and Scripting Interpreter,false,demonstrated,,,T1059
-AML.T0051,LLM Prompt Injection,false,realized,,AML.M0019 AML.M0020 AML.M0021 AML.M0022 AML.M0024 AML.M0033,
-AML.T0051.000,Direct,false,realized,AML.T0051,AML.M0024 AML.M0033,
-AML.T0051.001,Indirect,false,demonstrated,AML.T0051,AML.M0024 AML.M0033,
-AML.T0051.002,Triggered,false,demonstrated,AML.T0051,AML.M0024 AML.M0033,
-AML.T0052,Phishing,false,realized,,AML.M0018 AML.M0034,T1566
-AML.T0052.000,Spearphishing via Social Engineering LLM,false,demonstrated,AML.T0052,AML.M0018 AML.M0034,
-AML.T0052.001,Deepfake-Assisted Phishing,false,feasible,AML.T0052,AML.M0018 AML.M0034,
-AML.T0053,AI Agent Tool Invocation,true,demonstrated,,AML.M0020 AML.M0021 AML.M0022 AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0029 AML.M0030 AML.M0032 AML.M0033,
-AML.T0054,LLM Jailbreak,false,demonstrated,,AML.M0020 AML.M0021 AML.M0022,
-AML.T0055,Unsecured Credentials,false,realized,,,T1552
-AML.T0056,Extract LLM System Prompt,false,feasible,,AML.M0020 AML.M0021 AML.M0022,
-AML.T0057,LLM Data Leakage,false,demonstrated,,AML.M0008 AML.M0020 AML.M0021 AML.M0022,
-AML.T0058,Publish Poisoned Models,false,realized,,AML.M0023,
-AML.T0059,Erode Dataset Integrity,false,demonstrated,,AML.M0007 AML.M0025,
-AML.T0060,Publish Hallucinated Entities,false,demonstrated,,,
-AML.T0061,LLM Prompt Self-Replication,false,demonstrated,,AML.M0020 AML.M0021 AML.M0022,
-AML.T0062,Discover LLM Hallucinations,false,demonstrated,,AML.M0004 AML.M0020 AML.M0021 AML.M0022,
-AML.T0063,Discover AI Model Outputs,false,demonstrated,,AML.M0002 AML.M0012 AML.M0017 AML.M0019,
-AML.T0064,Gather RAG-Indexed Targets,false,demonstrated,,,
-AML.T0065,LLM Prompt Crafting,false,realized,,,
-AML.T0066,Retrieval Content Crafting,false,demonstrated,,,
-AML.T0067,LLM Trusted Output Components Manipulation,false,demonstrated,,,
-AML.T0067.000,Citations,false,demonstrated,AML.T0067,,
-AML.T0068,LLM Prompt Obfuscation,false,demonstrated,,,
-AML.T0069,Discover LLM System Information,false,demonstrated,,,
-AML.T0069.000,Special Character Sets,false,demonstrated,AML.T0069,,
-AML.T0069.001,System Instruction Keywords,false,demonstrated,AML.T0069,,
-AML.T0069.002,System Prompt,false,demonstrated,AML.T0069,,
-AML.T0070,RAG Poisoning,false,demonstrated,,,
-AML.T0071,False RAG Entry Injection,false,demonstrated,,,
-AML.T0072,Reverse Shell,false,realized,,,
-AML.T0073,Impersonation,false,realized,,,T1656
-AML.T0074,Masquerading,false,realized,,,T1036
-AML.T0075,Cloud Service Discovery,false,realized,,,T1526
-AML.T0076,Corrupt AI Model,false,realized,,,
-AML.T0077,LLM Response Rendering,false,demonstrated,,,
-AML.T0078,Drive-by Compromise,false,demonstrated,,,T1189
-AML.T0079,Stage Capabilities,false,demonstrated,,,T1608
-AML.T0080,AI Agent Context Poisoning,true,demonstrated,,AML.M0031,
-AML.T0080.000,Memory,true,demonstrated,AML.T0080,AML.M0031,
-AML.T0080.001,Thread,true,demonstrated,AML.T0080,,
-AML.T0081,Modify AI Agent Configuration,true,demonstrated,,,
-AML.T0082,RAG Credential Harvesting,false,demonstrated,,AML.M0026 AML.M0027,
-AML.T0083,Credentials from AI Agent Configuration,true,demonstrated,,,
-AML.T0084,Discover AI Agent Configuration,true,demonstrated,,,
-AML.T0084.000,Embedded Knowledge,true,demonstrated,AML.T0084,,
-AML.T0084.001,Tool Definitions,true,demonstrated,AML.T0084,,
-AML.T0084.002,Activation Triggers,true,demonstrated,AML.T0084,,
-AML.T0084.003,Call Chains,true,demonstrated,AML.T0084,,
-AML.T0085,Data from AI Services,false,demonstrated,,AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0032,
-AML.T0085.000,RAG Databases,false,demonstrated,AML.T0085,AML.M0024 AML.M0026 AML.M0027 AML.M0032,
-AML.T0085.001,AI Agent Tools,true,demonstrated,AML.T0085,AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0032,
-AML.T0086,Exfiltration via AI Agent Tool Invocation,true,realized,,AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0029 AML.M0030 AML.M0032 AML.M0033,
-AML.T0087,Gather Victim Identity Information,false,realized,,,T1589
-AML.T0088,Generate Deepfakes,false,realized,,AML.M0009 AML.M0034,
-AML.T0089,Process Discovery,false,demonstrated,,,T1057
-AML.T0090,OS Credential Dumping,false,demonstrated,,,T1003
-AML.T0091,Use Alternate Authentication Material,false,demonstrated,,,T1550
-AML.T0091.000,Application Access Token,false,demonstrated,AML.T0091,,T1550.001
-AML.T0092,Manipulate User LLM Chat History,false,demonstrated,,,
-AML.T0093,Prompt Infiltration via Public-Facing Application,false,demonstrated,,,
-AML.T0094,Delay Execution of LLM Instructions,false,demonstrated,,,
-AML.T0095,Search Open Websites/Domains,false,demonstrated,,,T1593
-AML.T0095.000,Code Repositories,false,demonstrated,AML.T0095,,T1593.003
-AML.T0096,AI Service API,false,realized,,,
-AML.T0097,Virtualization/Sandbox Evasion,false,realized,,,T1497
-AML.T0098,AI Agent Tool Credential Harvesting,true,demonstrated,,AML.M0032,
-AML.T0099,AI Agent Tool Data Poisoning,true,feasible,,,
-AML.T0100,AI Agent Clickbait,true,demonstrated,,,
-AML.T0101,Data Destruction via AI Agent Tool Invocation,true,realized,,AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0029 AML.M0030,
-AML.T0102,Generate Malicious Commands,false,realized,,,
-AML.T0103,Deploy AI Agent,true,realized,,,
-AML.T0104,Publish Poisoned AI Agent Tool,true,realized,,,
-AML.T0105,Escape to Host,false,demonstrated,,,T1611
-AML.T0106,Exploitation for Credential Access,false,demonstrated,,,T1211
-AML.T0107,Exploitation for Defense Evasion,false,demonstrated,,,T1211
-AML.T0108,AI Agent,true,demonstrated,,,
-AML.T0109,AI Supply Chain Rug Pull,false,realized,,,
-AML.T0110,AI Agent Tool Poisoning,true,realized,,,
-AML.T0111,AI Supply Chain Reputation Inflation,false,demonstrated,,,
-AML.T0112,Machine Compromise,false,demonstrated,,,
-AML.T0112.000,Local AI Agent,true,demonstrated,AML.T0112,,
-AML.T0112.001,AI Artifacts,false,feasible,AML.T0112,,
+AML.T0000,Search Open Technical Databases,false,Realized,,AML.M0000 AML.M0039,T1596
+AML.T0000.000,Journals and Conference Proceedings,false,Feasible,AML.T0000,,
+AML.T0000.001,Pre-Print Repositories,false,Demonstrated,AML.T0000,,
+AML.T0000.002,Technical Blogs,false,Feasible,AML.T0000,,
+AML.T0000.003,Scan Databases,false,Realized,AML.T0000,AML.M0039,T1596.005
+AML.T0001,Search Open AI Vulnerability Analysis,false,Demonstrated,,AML.M0000,
+AML.T0002,Acquire Public AI Artifacts,false,Realized,,AML.M0000,
+AML.T0002.000,Datasets,false,Demonstrated,AML.T0002,AML.M0001,
+AML.T0002.001,Models,false,Demonstrated,AML.T0002,AML.M0001,
+AML.T0002.002,AI Agent Configuration,true,Demonstrated,AML.T0002,,
+AML.T0003,Search Victim-Owned Websites,false,Demonstrated,,AML.M0000,T1594
+AML.T0004,Search Application Repositories,false,Demonstrated,,AML.M0000,
+AML.T0005,Replicate AI Model Behavior,false,Realized,,AML.M0000 AML.M0001 AML.M0002 AML.M0004 AML.M0019 AML.M0040,
+AML.T0005.000,Replicate Behavior from Gathered AI Artifacts,false,Demonstrated,AML.T0005,AML.M0000 AML.M0001,
+AML.T0005.001,Replicate Behavior from Model Outputs,false,Realized,AML.T0005,AML.M0002 AML.M0004 AML.M0024 AML.M0040,
+AML.T0005.002,Adapt Existing Model to Replicate Behavior,false,Feasible,AML.T0005,AML.M0000,
+AML.T0006,Active Scanning,false,Realized,,AML.M0019 AML.M0032 AML.M0039,T1595
+AML.T0006.000,Enumerate Hosted AI Resources,false,Feasible,AML.T0006,AML.M0039,
+AML.T0006.001,Query Platform Metadata APIs,false,Feasible,AML.T0006,AML.M0039,
+AML.T0006.002,Scan for Exposed AI Infrastructure,false,Feasible,AML.T0006,AML.M0039,
+AML.T0006.003,Probe AI Agent Trigger Channels,true,Demonstrated,AML.T0006,AML.M0039,
+AML.T0007,Discover AI Artifacts,false,Demonstrated,,AML.M0005 AML.M0012,
+AML.T0008,Acquire Infrastructure,false,Realized,,AML.M0043,T1583
+AML.T0008.000,AI Development Workspaces,false,Demonstrated,AML.T0008,,
+AML.T0008.001,Consumer Hardware,false,Realized,AML.T0008,,
+AML.T0008.002,Domains,false,Demonstrated,AML.T0008,,T1583.001
+AML.T0008.003,Physical Countermeasures,false,Demonstrated,AML.T0008,,
+AML.T0008.004,Serverless,false,Feasible,AML.T0008,,T1583.007
+AML.T0008.005,AI Service Proxies,false,Realized,AML.T0008,,
+AML.T0010,Supply Chain Compromise,false,Realized,,AML.M0014 AML.M0023 AML.M0035 AML.M0042,T1195
+AML.T0010.000,Hardware,false,Feasible,AML.T0010,AML.M0042,T1195.003
+AML.T0010.001,Software,false,Realized,AML.T0010,AML.M0013 AML.M0014 AML.M0023 AML.M0035 AML.M0042,T1195.002
+AML.T0010.002,Data Repository,false,Realized,AML.T0010,AML.M0005 AML.M0007 AML.M0014 AML.M0023 AML.M0025 AML.M0035 AML.M0042,
+AML.T0010.003,Model Repository,false,Realized,AML.T0010,AML.M0005 AML.M0008 AML.M0013 AML.M0014 AML.M0017 AML.M0023 AML.M0035 AML.M0042,
+AML.T0010.004,Container Registry,false,Demonstrated,AML.T0010,AML.M0014 AML.M0023 AML.M0042,
+AML.T0010.005,AI Agent Tool,true,Realized,AML.T0010,AML.M0023 AML.M0035 AML.M0042,
+AML.T0011,User Execution,false,Realized,,AML.M0011 AML.M0014 AML.M0016 AML.M0018,
+AML.T0011.000,Unsafe AI Artifacts,false,Realized,AML.T0011,AML.M0011 AML.M0013 AML.M0014 AML.M0016 AML.M0018,
+AML.T0011.001,Malicious Package,false,Realized,AML.T0011,AML.M0011 AML.M0013 AML.M0016 AML.M0018,
+AML.T0011.002,Poisoned AI Agent Tool,true,Realized,AML.T0011,,
+AML.T0011.003,Malicious Link,false,Demonstrated,AML.T0011,,T1204
+AML.T0012,Valid Accounts,false,Realized,,AML.M0005 AML.M0019 AML.M0043,T1078
+AML.T0013,Discover AI Model Ontology,false,Demonstrated,,AML.M0002 AML.M0004,
+AML.T0014,Discover AI Model Family,false,Feasible,,AML.M0002 AML.M0004 AML.M0006,
+AML.T0015,Evade AI Model,false,Realized,,AML.M0003 AML.M0006 AML.M0008 AML.M0009 AML.M0010 AML.M0015 AML.M0034 AML.M0035,
+AML.T0016,Obtain Capabilities,false,Realized,,AML.M0001,T1588
+AML.T0016.000,Adversarial AI Attack Implementations,false,Realized,AML.T0016,,
+AML.T0016.001,Software Tools,false,Realized,AML.T0016,,T1588.002
+AML.T0016.002,Generative AI,false,Realized,AML.T0016,AML.M0001 AML.M0022,
+AML.T0016.003,Exploits,false,Realized,AML.T0016,,T1588.005
+AML.T0016.004,AI Agent Tools,true,Realized,AML.T0016,,
+AML.T0017,Develop Capabilities,false,Realized,,,T1587
+AML.T0017.000,Adversarial AI Attacks,false,Demonstrated,AML.T0017,,
+AML.T0017.001,Autonomous Exploit Development,false,Realized,AML.T0017,AML.M0035 AML.M0042,
+AML.T0017.002,AI Agent Tools,true,Realized,AML.T0017,,
+AML.T0017.003,Malware,false,Realized,AML.T0017,,T1587.001
+AML.T0018,Manipulate AI Model,false,Realized,,AML.M0005 AML.M0008 AML.M0013 AML.M0035,
+AML.T0018.000,Poison AI Model,false,Demonstrated,AML.T0018,AML.M0005 AML.M0007 AML.M0008 AML.M0013 AML.M0014 AML.M0023 AML.M0025 AML.M0035,
+AML.T0018.001,Modify AI Model Architecture,false,Demonstrated,AML.T0018,AML.M0005 AML.M0008 AML.M0013 AML.M0014 AML.M0035,
+AML.T0018.002,Embed Malware,false,Realized,AML.T0018,AML.M0013 AML.M0014,
+AML.T0018.003,Modify Prompt Construction Logic,false,Demonstrated,AML.T0018,AML.M0008 AML.M0014,
+AML.T0020,Training Data Poisoning,false,Realized,,AML.M0001 AML.M0005 AML.M0007 AML.M0008 AML.M0014 AML.M0023 AML.M0025 AML.M0035,
+AML.T0021,Establish Accounts,false,Realized,,AML.M0005 AML.M0019 AML.M0043,T1585
+AML.T0024,Exfiltration via AI Inference API,false,Realized,,AML.M0004 AML.M0019 AML.M0024 AML.M0035,
+AML.T0025,Exfiltration via Cyber Means,false,Realized,,AML.M0005,
+AML.T0029,Denial of AI Service,false,Demonstrated,,AML.M0004 AML.M0015 AML.M0019 AML.M0035 AML.M0036,
+AML.T0031,Erode AI Model Integrity,false,Realized,,AML.M0003 AML.M0006 AML.M0010 AML.M0015,
+AML.T0034,Cost Harvesting,false,Feasible,,AML.M0004 AML.M0019 AML.M0035 AML.M0036,
+AML.T0034.000,Excessive Queries,false,Feasible,AML.T0034,AML.M0035,
+AML.T0034.001,Resource-Intensive Queries,false,Feasible,AML.T0034,AML.M0035 AML.M0036,
+AML.T0034.002,Agentic Resource Consumption,true,Feasible,AML.T0034,AML.M0035 AML.M0036,
+AML.T0035,AI Artifact Collection,false,Realized,,AML.M0001 AML.M0005 AML.M0012 AML.M0017,
+AML.T0036,Data from Information Repositories,false,Realized,,,T1213
+AML.T0037,Data from Local System,false,Realized,,,T1005
+AML.T0040,AI Model Inference API Access,false,Realized,,AML.M0019 AML.M0024 AML.M0039,
+AML.T0041,Physical Environment Access,false,Demonstrated,,AML.M0009,
+AML.T0042,Verify Attack,false,Realized,,AML.M0002 AML.M0004 AML.M0005 AML.M0019 AML.M0040,
+AML.T0043,Craft Adversarial Data,false,Realized,,AML.M0002 AML.M0003 AML.M0004 AML.M0006 AML.M0010 AML.M0015 AML.M0019 AML.M0040,
+AML.T0043.000,White-Box Optimization,false,Demonstrated,AML.T0043,AML.M0003 AML.M0005 AML.M0006 AML.M0010 AML.M0015 AML.M0017,
+AML.T0043.001,Black-Box Optimization,false,Demonstrated,AML.T0043,AML.M0002 AML.M0003 AML.M0004 AML.M0006 AML.M0010 AML.M0015 AML.M0019 AML.M0040,
+AML.T0043.002,Black-Box Transfer,false,Demonstrated,AML.T0043,AML.M0003 AML.M0006 AML.M0010 AML.M0015,
+AML.T0043.003,Manual Modification,false,Realized,AML.T0043,AML.M0003 AML.M0004 AML.M0006 AML.M0010 AML.M0015,
+AML.T0043.004,Insert Backdoor Trigger,false,Demonstrated,AML.T0043,AML.M0003 AML.M0006 AML.M0008 AML.M0010 AML.M0015,
+AML.T0044,Full AI Model Access,false,Demonstrated,,AML.M0005 AML.M0017,
+AML.T0046,Spamming AI System with Chaff Data,false,Feasible,,AML.M0004 AML.M0019,
+AML.T0047,AI-Enabled Product or Service,false,Realized,,AML.M0024,
+AML.T0048,External Harms,false,Realized,,,
+AML.T0048.000,Financial Harm,false,Realized,AML.T0048,,
+AML.T0048.001,Reputational Harm,false,Demonstrated,AML.T0048,,
+AML.T0048.002,Societal Harm,false,Realized,AML.T0048,,
+AML.T0048.003,User Harm,false,Realized,AML.T0048,,
+AML.T0048.004,AI Intellectual Property Theft,false,Realized,AML.T0048,AML.M0005 AML.M0012 AML.M0017,
+AML.T0049,Exploit Public-Facing Application,false,Realized,,AML.M0039 AML.M0042,T1190
+AML.T0050,Command and Scripting Interpreter,false,Realized,,AML.M0011,T1059
+AML.T0051,LLM Prompt Injection,false,Realized,,AML.M0008 AML.M0019 AML.M0020 AML.M0021 AML.M0022 AML.M0024 AML.M0033 AML.M0035,
+AML.T0051.000,Direct,false,Realized,AML.T0051,AML.M0024 AML.M0033 AML.M0035,
+AML.T0051.001,Indirect,false,Realized,AML.T0051,AML.M0024 AML.M0033 AML.M0035,
+AML.T0051.002,Triggered,false,Demonstrated,AML.T0051,AML.M0024 AML.M0033 AML.M0035,
+AML.T0052,Phishing,false,Realized,,AML.M0018 AML.M0034,T1566
+AML.T0052.000,Spearphishing via Social Engineering LLM,false,Realized,AML.T0052,AML.M0018 AML.M0034,
+AML.T0052.001,Deepfake-Assisted Phishing,false,Realized,AML.T0052,AML.M0018 AML.M0034,
+AML.T0053,AI Agent Tool Invocation,true,Demonstrated,,AML.M0020 AML.M0021 AML.M0022 AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0029 AML.M0030 AML.M0032 AML.M0033 AML.M0035 AML.M0038,
+AML.T0054,LLM Jailbreak,false,Realized,,AML.M0008 AML.M0020 AML.M0021 AML.M0022 AML.M0035,
+AML.T0055,Unsecured Credentials,false,Realized,,,T1552
+AML.T0059,Erode Dataset Integrity,false,Demonstrated,,AML.M0007 AML.M0025,
+AML.T0060,Publish Hallucinated Entities,false,Demonstrated,,,
+AML.T0061,LLM Prompt Self-Replication,false,Demonstrated,,AML.M0020 AML.M0021 AML.M0022,
+AML.T0062,Discover LLM Hallucinations,false,Demonstrated,,AML.M0004 AML.M0020 AML.M0021 AML.M0022,
+AML.T0063,Discover AI Model Outputs,false,Realized,,AML.M0002 AML.M0012 AML.M0017 AML.M0019,
+AML.T0064,Gather RAG-Indexed Targets,false,Demonstrated,,AML.M0000,
+AML.T0065,LLM Prompt Crafting,false,Realized,,,
+AML.T0066,Retrieval Content Crafting,false,Demonstrated,,,
+AML.T0067,LLM Trusted Output Components Manipulation,false,Demonstrated,,AML.M0020,
+AML.T0067.000,Citations,false,Demonstrated,AML.T0067,AML.M0020,
+AML.T0068,LLM Prompt Obfuscation,false,Realized,,AML.M0020 AML.M0035,
+AML.T0069,Discover LLM System Information,false,Demonstrated,,AML.M0000 AML.M0005 AML.M0019 AML.M0020,
+AML.T0069.000,Special Character Sets,false,Demonstrated,AML.T0069,AML.M0005 AML.M0019 AML.M0020,
+AML.T0069.001,System Instruction Keywords,false,Demonstrated,AML.T0069,AML.M0005 AML.M0020,
+AML.T0069.002,System Prompt,false,Demonstrated,AML.T0069,AML.M0005 AML.M0019 AML.M0020,
+AML.T0070,RAG Poisoning,false,Demonstrated,,AML.M0020 AML.M0035,
+AML.T0071,False RAG Entry Injection,false,Demonstrated,,AML.M0020,
+AML.T0072,Cyber Communication Channel,false,Realized,,AML.M0043,
+AML.T0073,Impersonation,false,Realized,,AML.M0042,
+AML.T0074,Masquerading,false,Realized,,AML.M0011 AML.M0025,T1036
+AML.T0075,Enterprise Resource Discovery,false,Realized,,,
+AML.T0076,Corrupt AI Model,false,Realized,,,
+AML.T0077,LLM Response Rendering,false,Demonstrated,,AML.M0020,
+AML.T0078,Drive-by Compromise,false,Demonstrated,,AML.M0020,T1189
+AML.T0079,Stage Capabilities,false,Realized,,AML.M0043,
+AML.T0080,AI Agent Context Poisoning,true,Realized,,AML.M0020 AML.M0031 AML.M0035,
+AML.T0080.000,Memory,true,Realized,AML.T0080,AML.M0020 AML.M0031 AML.M0035,
+AML.T0080.001,Thread,true,Demonstrated,AML.T0080,AML.M0020 AML.M0035,
+AML.T0081,Modify AI Agent Configuration,true,Demonstrated,,AML.M0035,
+AML.T0082,RAG Credential Harvesting,false,Demonstrated,,AML.M0020 AML.M0026 AML.M0027,
+AML.T0083,Credentials from AI Agent Configuration,true,Demonstrated,,,
+AML.T0084,Discover AI Agent Configuration,true,Demonstrated,,AML.M0000 AML.M0039,
+AML.T0084.000,Embedded Knowledge,true,Demonstrated,AML.T0084,,
+AML.T0084.001,Tool Definitions,true,Demonstrated,AML.T0084,AML.M0000,
+AML.T0084.002,Activation Triggers,true,Demonstrated,AML.T0084,AML.M0000,
+AML.T0084.003,Call Chains,true,Demonstrated,AML.T0084,AML.M0000,
+AML.T0085,Data from AI Services,false,Demonstrated,,AML.M0022 AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0032,
+AML.T0085.000,RAG Databases,false,Demonstrated,AML.T0085,AML.M0022 AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0032,
+AML.T0085.001,AI Agent Tools,true,Demonstrated,AML.T0085,AML.M0022 AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0032,
+AML.T0085.002,Conversation Context and Memory,false,Demonstrated,AML.T0085,AML.M0008 AML.M0020 AML.M0021 AML.M0022 AML.M0035,
+AML.T0085.003,System Instructions,false,Feasible,AML.T0085,AML.M0008 AML.M0020 AML.M0021 AML.M0022 AML.M0035,
+AML.T0086,Exfiltration via AI Agent Tool Invocation,true,Realized,,AML.M0020 AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0029 AML.M0030 AML.M0032 AML.M0033,
+AML.T0087,Gather Victim Identity Information,false,Realized,,,T1589
+AML.T0088,Generate Deepfakes,false,Realized,,AML.M0009 AML.M0034,
+AML.T0089,Enterprise Environment Discovery,false,Realized,,,
+AML.T0090,OS Credential Dumping,false,Demonstrated,,AML.M0011,T1003
+AML.T0091,Use Alternate Authentication Material,false,Realized,,AML.M0019,T1550
+AML.T0091.000,Application Access Token,false,Realized,AML.T0091,AML.M0019 AML.M0043,T1550.001
+AML.T0091.001,Web Session Cookie,false,Demonstrated,AML.T0091,,T1550.004
+AML.T0092,Manipulate User LLM Chat History,false,Demonstrated,,,
+AML.T0093,Prompt Infiltration via Public-Facing Application,false,Realized,,AML.M0039,
+AML.T0094,Delay Execution of LLM Instructions,false,Demonstrated,,AML.M0020,
+AML.T0095,Search Open Websites/Domains,false,Realized,,AML.M0000 AML.M0039,T1593
+AML.T0095.000,Code Repositories,false,Realized,AML.T0095,AML.M0039,T1593.003
+AML.T0096,AI Service API,false,Realized,,AML.M0019,
+AML.T0097,Virtualization/Sandbox Evasion,false,Realized,,,T1497
+AML.T0098,AI Agent Tool Credential Harvesting,true,Demonstrated,,AML.M0032,
+AML.T0099,AI Agent Tool Data Poisoning,true,Feasible,,AML.M0020,
+AML.T0100,AI Agent Clickbait,true,Demonstrated,,AML.M0020 AML.M0021,
+AML.T0101,Data Destruction via AI Agent Tool Invocation,true,Realized,,AML.M0024 AML.M0026 AML.M0027 AML.M0028 AML.M0029 AML.M0030,
+AML.T0102,Generate Malicious Commands,false,Realized,,AML.M0020 AML.M0022,
+AML.T0103,Deploy AI Agent,true,Realized,,AML.M0013,
+AML.T0105,Escape to Host,false,Realized,,,T1611
+AML.T0106,Exploitation for Credential Access,false,Realized,,AML.M0016 AML.M0042,T1212
+AML.T0107,Exploitation for Defense Evasion,false,Demonstrated,,AML.M0016 AML.M0042,T1211
+AML.T0108,AI Agent,true,Demonstrated,,AML.M0020 AML.M0024,
+AML.T0109,AI Supply Chain Rug Pull,false,Realized,,AML.M0014 AML.M0023,
+AML.T0110,AI Agent Tool Poisoning,true,Realized,,,
+AML.T0110.000,Definition and Instructions,true,Demonstrated,AML.T0110,AML.M0020,
+AML.T0110.001,Implementation,true,Realized,AML.T0110,,
+AML.T0110.002,Runtime Response,true,Feasible,AML.T0110,AML.M0020,
+AML.T0111,AI Supply Chain Reputation Inflation,false,Demonstrated,,,
+AML.T0112,Machine Compromise,false,Demonstrated,,,
+AML.T0112.000,Local AI Agent,true,Demonstrated,AML.T0112,AML.M0020 AML.M0024,
+AML.T0112.001,AI Artifacts,false,Feasible,AML.T0112,AML.M0005,
+AML.T0113,Steal Web Session Cookie,false,Demonstrated,,,T1539
+AML.T0114,AI Service Web Interface,false,Demonstrated,,AML.M0024,
+AML.T0115,Publish Poisoned AI Artifacts,false,Realized,,AML.M0007 AML.M0016 AML.M0042,
+AML.T0115.000,Datasets,false,Demonstrated,AML.T0115,AML.M0007 AML.M0042,
+AML.T0115.001,Models,false,Realized,AML.T0115,AML.M0008 AML.M0016 AML.M0042,
+AML.T0115.002,AI Agent Tools,true,Realized,AML.T0115,AML.M0016 AML.M0042,
+AML.T0116,Autonomous Reconnaissance,false,Realized,,AML.M0000 AML.M0001 AML.M0037 AML.M0038 AML.M0039 AML.M0042,
+AML.T0117,Autonomous Attack-Path Adaptation,false,Realized,,AML.M0037 AML.M0038 AML.M0039 AML.M0042,
+AML.T0118,Autonomous AI Agent Communication,true,Realized,,AML.M0026 AML.M0027 AML.M0028 AML.M0032 AML.M0037 AML.M0038,
+AML.T0118.000,Communication via Shared Artifacts,true,Realized,AML.T0118,AML.M0026 AML.M0027 AML.M0028 AML.M0032 AML.M0038 AML.M0043,
+AML.T0118.001,Direct Agent Communication,true,Realized,AML.T0118,AML.M0026 AML.M0027 AML.M0028 AML.M0032 AML.M0038,
+AML.T0119,Exploit Automated Artifact Processing Pipeline,false,Realized,,AML.M0011 AML.M0016 AML.M0042,
+AML.T0120,AI Artifact Repository,false,Realized,,AML.M0005 AML.M0024,
+AML.T0121,AI Agent Environment Reconstruction,true,Realized,,AML.M0026 AML.M0027 AML.M0028 AML.M0032 AML.M0037 AML.M0043,
+AML.T0122,Exploitation of Remote Services,false,Realized,,AML.M0000 AML.M0016 AML.M0039 AML.M0042,T1210
+AML.T0123,Obfuscated Files or Information,false,Realized,,,T1027
+AML.T0124,Autonomous Attack Orchestration,false,Realized,,AML.M0028 AML.M0029 AML.M0032 AML.M0036 AML.M0037 AML.M0038 AML.M0042,
+AML.T0125,Create Account,false,Realized,,AML.M0043,T1136
+AML.T0126,Automated Collection,false,Realized,,AML.M0005 AML.M0039,T1119
+AML.T0127,Data Staged,false,Realized,,AML.M0043,T1074
+AML.T0128,Compromise Infrastructure,false,Realized,,AML.M0016,T1584
+AML.T0129,Triggers in Multimodal Inputs,false,Feasible,,AML.M0008 AML.M0020,
+AML.T0130,AI Agent Response Biasing,true,Realized,,AML.M0020,
+AML.T0131,Crafted AI Assistant Links,false,Realized,,,
+AML.T0132,Misconfigured or Publicly Exposed AI Services,false,Demonstrated,,AML.M0039,
+AML.T0133,Discover AI Agent Runtime Capabilities,true,Feasible,,AML.M0039,
+AML.T0134,AI Targeted Cloaking,false,Feasible,,,
+AML.T0135,Outputs from AI Models,false,Realized,,AML.M0040,
+AML.T0136,Exfiltration via AI User Interface,false,Realized,,,
+AML.T0137,Training Data Information from AI Models,false,Demonstrated,,AML.M0040 AML.M0041,
+AML.T0137.000,Infer Membership,false,Feasible,AML.T0137,AML.M0002 AML.M0004 AML.M0008 AML.M0024 AML.M0035 AML.M0040 AML.M0041,
+AML.T0137.001,Infer Properties,false,Feasible,AML.T0137,AML.M0040 AML.M0041,
+AML.T0137.002,Invert AI Model,false,Feasible,AML.T0137,AML.M0002 AML.M0004 AML.M0008 AML.M0024 AML.M0035 AML.M0040 AML.M0041,
+AML.T0137.003,Extract Memorized Data,false,Demonstrated,AML.T0137,AML.M0008 AML.M0020 AML.M0040 AML.M0041,
+AML.T0138,Indicator Removal,false,Realized,,,T1070
+AML.T0139,Compromise Accounts,false,Realized,,,T1586
+AML.T0140,Centralized AI Service Request Routing,false,Realized,,AML.M0042,
+AML.T0141,AI Service Request Metadata Sanitization,false,Realized,,,
+AML.T0142,Event Triggered Execution,false,Realized,,AML.M0011 AML.M0013,T1546
+AML.T0143,LLM Prompt Propagation,false,Demonstrated,,AML.M0026 AML.M0027 AML.M0028 AML.M0030 AML.M0032 AML.M0033,
+AML.T0144,Recover AI Model Internals,false,Feasible,,AML.M0040,
+AML.T0145,Poison AI Agent Learning Environment,true,Feasible,,AML.M0007 AML.M0008 AML.M0020 AML.M0022 AML.M0025 AML.M0035,

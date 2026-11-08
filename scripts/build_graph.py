@@ -313,11 +313,16 @@ def build_questions(graph: Graph) -> list:
         text_ = path.read_text(encoding="utf-8")
         head = dict(re.findall(r"^# (id|persona|question|decision|evidence): (.+)$", text_, re.M))
         result = graph.query(text_)
-        # SPARQL leaves GROUP_CONCAT order undefined; sort the tokens so the build is reproducible.
-        concat = set(re.findall(r"GROUP_CONCAT\([^)]*\) AS \?(\w+)", text_))
+        # SPARQL leaves GROUP_CONCAT order undefined; sort the items so the build is reproducible. Split on the query's own
+        # separator (a space when none is given): a value such as "Technical - AI" must stay whole.
+        concat = {}
+        for m in re.finditer(r"GROUP_CONCAT\(((?:[^()]|\([^()]*\))*)\)\s*AS\s*\?(\w+)", text_):
+            sep = re.search(r'separator\s*=\s*"([^"]*)"', m.group(1))
+            concat[m.group(2)] = sep.group(1) if sep else " "
         columns = [str(v) for v in result.vars]
+        key = lambda t: (0, int(t), "") if t.isdigit() else (1, 0, t)  # noqa: E731
         rows = [
-            [" ".join(sorted(c.split(), key=lambda t: (0, int(t), "") if t.isdigit() else (1, 0, t))) if c and columns[i] in concat else c for i, c in enumerate(map(cell, row))]
+            [concat[columns[i]].join(sorted(c.split(concat[columns[i]]), key=key)) if c and columns[i] in concat else c for i, c in enumerate(map(cell, row))]
             for row in result
         ]
         out.append({
@@ -354,6 +359,7 @@ def build_meta(graph: Graph, nodes: list) -> dict:
         "checks": {k: v for k, v in checks.items() if k not in ("sources", "counts")},
         "sourceCounts": checks["counts"],
         "atlasVersion": checks["atlas"]["version"],
+        "atlasModified": checks["atlas"]["modified"],
         "counts": dict(sorted(Counter(n["t"] for n in nodes).items())),
         "triples": len(graph),
     }

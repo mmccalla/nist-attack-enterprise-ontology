@@ -18,7 +18,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from rdflib import Graph, Literal
-from rdflib.namespace import PROV, RDF, SKOS
+from rdflib.namespace import OWL, PROV, RDF, SKOS
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -136,9 +136,11 @@ def build() -> dict[str, str]:
             " | ".join(sorted(str(x) for x in g.objects(record, ONT.laterTactic))),
             len(by[tid]),
         ])
-    files["attack-16.1-to-20.0.csv"] = write_csv(
+    later = str(g.value(DATA.attackEnterpriseStixLatest, OWL.versionInfo))
+    v = later.replace(".", "_")
+    files[f"attack-16.1-to-{later}.csv"] = write_csv(
         sorted(later_rows, key=lambda r: tkey(r[0])),
-        ["technique_id", "technique_name", "change_in_20_0", "replacement_ids", "name_in_20_0", "tactics_in_20_0", "claims"],
+        ["technique_id", "technique_name", f"change_in_{v}", "replacement_ids", f"name_in_{v}", f"tactics_in_{v}", "claims"],
     )
     atlas_rows, mit_rows, owasp_rows = [], [], []
     tid = lambda n: str(g.value(n, ONT.techniqueId))  # noqa: E731
@@ -153,10 +155,15 @@ def build() -> dict[str, str]:
         mit_rows.append([str(g.value(mit, ONT.mitigationId)), str(g.value(mit, SKOS.prefLabel)), " | ".join(sorted(str(c) for c in g.objects(mit, ONT.atlasCategory))), len(techs), " ".join(techs)])
     for r in g.subjects(ONT.relatedAtlasTechnique, None):
         for a in g.objects(r, ONT.relatedAtlasTechnique):
-            owasp_rows.append([str(g.value(r, ONT.owaspId)), str(g.value(r, SKOS.prefLabel)), tid(a), str(g.value(a, ONT.techniqueName))])
+            owasp_rows.append([str(g.value(r, ONT.owaspId)), str(g.value(r, SKOS.prefLabel)), tid(a), str(g.value(a, ONT.techniqueName)), "yes"])
     files["atlas-techniques.csv"] = write_csv(sorted(atlas_rows), ["technique_id", "technique_name", "agent_related_derived", "maturity", "parent", "atlas_mitigations", "derived_from_attack"])
     files["atlas-mitigations.csv"] = write_csv(sorted(mit_rows), ["mitigation_id", "mitigation_name", "categories", "technique_count", "techniques"])
-    files["owasp-llm-atlas-links.csv"] = write_csv(sorted(set(map(tuple, owasp_rows))), ["owasp_id", "owasp_risk", "atlas_technique_id", "atlas_technique_name"])
+    # Links that OWASP published to ATLAS IDs that the pinned ATLAS release no longer has stay in the file, marked "no" (D32).
+    for r, aid in g.subject_objects(ONT.relatedAtlasIdNotInCatalogue):
+        owasp_rows.append([str(g.value(r, ONT.owaspId)), str(g.value(r, SKOS.prefLabel)), str(aid), "", "no"])
+    atlas_version = str(g.value(DATA.atlasData, OWL.versionInfo)).replace(".", "_")
+    files["owasp-llm-atlas-links.csv"] = write_csv(sorted(set(map(tuple, owasp_rows))),
+        ["owasp_id", "owasp_risk", "atlas_technique_id", "atlas_technique_name", f"in_atlas_{atlas_version}"])
     specs = [{"file": "navigator/all-controls.json", "name": "NIST 800-53: all mapped controls",
               "description": "Techniques mitigated by any NIST 800-53 Rev. 5 control in the CTID mapping. Score is the number of controls.",
               "selected": sorted(m["controls"])}]

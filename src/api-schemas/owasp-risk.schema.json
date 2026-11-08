@@ -80,13 +80,22 @@
     "attribution"
    ],
    "additionalProperties": false
+  },
+  "related_atlas_not_in_atlas": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^AML[.]T[0-9]{4}([.][0-9]{3})?$"
+   },
+   "description": "ATLAS IDs that OWASP lists for the risk but that the pinned ATLAS release no longer has. Kept as published; this project does not map them to new IDs."
   }
  },
  "required": [
   "key",
   "list",
   "url",
-  "related_atlas"
+  "related_atlas",
+  "related_atlas_not_in_atlas"
  ],
  "unevaluatedProperties": false
 }

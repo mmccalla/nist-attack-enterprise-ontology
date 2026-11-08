@@ -91,7 +91,7 @@ check((await page.locator('#detail a[href^="https://attack.mitre.org/versions/v1
 
 await page.goto(url.split("#")[0] + "#n/technique_T1070.001");
 await settle();
-check((await page.locator("#detail").textContent()).includes("Replaced by T1685.005"), "a technique revoked in ATT&CK 20.0 shows its replacement");
+check((await page.locator("#detail").textContent()).includes("Replaced by T1685.005"), "a technique revoked in ATT&CK 20.1 shows its replacement");
 
 await page.goto(url.split("#")[0] + "#n/technique_T1521.003");
 await settle();
@@ -168,11 +168,11 @@ const [aCov, aGap, aNone, aTotal] = (await page.locator("#report .stat b").allTe
 const agentCount = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true").length);
 check(aGap === 0 && aCov + aNone === aTotal && aTotal === agentCount, `with all ATLAS mitigations, ${aCov} of ${aTotal} agent techniques are covered and ${aNone} have no mitigation`);
 check(page.url().includes("#gaps-atlas/AML.M"), "the ATLAS selection is kept in the address bar");
-check(aNone === 19 && (await page.locator("#detail .warn").first().textContent()).includes("is not current coverage"), "the ATLAS view counts 19 agent techniques with no direct link and says that ATLAS 5.6.0 is not current");
+check(aNone === 8 && (await page.locator("#detail .warn").first().textContent()).includes("MITRE ATLAS 2026.10, released on 2026-10-28"), "the ATLAS view counts 8 agent techniques with no direct link and names the ATLAS release and its date");
 if (shots) await page.screenshot({ path: `${shots}/gaps-atlas.png` });
 const parentNote = await page.locator("#report").textContent();
 const noParent = await page.evaluate(() => ofType("AtlasTechnique").filter(n => n.p[":isAgentRelated"] === "true" && !atlasMitigationsOf(n.id).length && !atlasParentMitigated(n.id)).length);
-check(parentNote.includes(`${aNone - noParent} of these have a mitigation on their parent technique`) && noParent === 14, "the ATLAS view explains parent mitigations and agrees with CQ16 (14)");
+check(parentNote.includes(`${aNone - noParent} of these have a mitigation on their parent technique`) && noParent === 4, "the ATLAS view explains parent mitigations and agrees with CQ16 (4)");
 
 // CIS Controls on ATT&CK 19.1 (phase 4a)
 const cisLayer = exported("cis-all-safeguards");

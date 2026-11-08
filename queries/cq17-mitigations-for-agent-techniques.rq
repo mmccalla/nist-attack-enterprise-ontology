@@ -2,7 +2,7 @@
 # persona: AI agent builder
 # question: Which ATLAS mitigations address the most techniques against AI agents?
 # decision: Which safeguards to build first into an agent that uses tools, MCP servers or other agents.
-# evidence: MITRE ATLAS 5.6.0 mitigations and their techniques; agent flag derived from technique names.
+# evidence: MITRE ATLAS 2026.10 mitigations and their techniques; agent flag derived from technique names.
 PREFIX : <https://w3id.org/example/nist-attack-mapping/ontology/1.0#>
 PREFIX data: <https://w3id.org/example/nist-attack-mapping/data/1.0#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

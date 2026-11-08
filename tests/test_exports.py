@@ -92,3 +92,11 @@ def test_question_csvs_match_the_browser_answers():
         cq = path.name.split("-")[0]
         assert (EXPORTS / "questions" / f"{cq}.csv").exists(), cq
     assert len(read_csv("questions/cq01.csv")) == 25 and len(read_csv("questions/cq12.csv")) == 91
+
+
+def test_export_guide_lists_each_file():
+    guide = (EXPORTS / "README.md").read_text(encoding="utf-8")
+    for p in EXPORTS.rglob("*"):
+        rel = p.relative_to(EXPORTS).as_posix()
+        if p.is_file() and p.name != "README.md" and not rel.startswith("questions/") and not rel.startswith("navigator/baseline-"):
+            assert f"`{rel}`" in guide, rel

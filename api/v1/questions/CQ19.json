@@ -4,16 +4,17 @@
  "id": "CQ19",
  "versions": {
   "api": "1",
-  "release": "2.7.0",
-  "ontology": "2.3.0",
+  "release": "2.8.0",
+  "ontology": "2.4.0",
   "attack": "16.1",
-  "attack_later": "20.0",
+  "attack_later": "20.1",
+  "atlas": "2026.10",
   "attack_cis": "19.1"
  },
  "persona": "LLM application developer",
  "question": "Which OWASP LLM Top 10 (2025) risks does OWASP link to ATLAS techniques, and which ATLAS mitigations address those techniques?",
  "decision": "Which concrete safeguards apply to a named OWASP risk.",
- "evidence": "OWASP pages (Related Frameworks and Taxonomies, CC BY-SA 4.0); MITRE ATLAS 5.6.0 mitigations.",
+ "evidence": "OWASP pages (Related Frameworks and Taxonomies, CC BY-SA 4.0); MITRE ATLAS 2026.10 mitigations.",
  "columns": [
   "risk",
   "atlasTechnique",
@@ -25,49 +26,31 @@
    "LLM01:2025 Prompt Injection",
    "AML.T0051.000",
    "Direct",
-   "AML.M0024 AML.M0033"
+   "AML.M0024 AML.M0033 AML.M0035"
   ],
   [
    "LLM01:2025 Prompt Injection",
    "AML.T0051.001",
    "Indirect",
-   "AML.M0024 AML.M0033"
+   "AML.M0024 AML.M0033 AML.M0035"
   ],
   [
    "LLM01:2025 Prompt Injection",
    "AML.T0054",
    "LLM Jailbreak",
-   "AML.M0020 AML.M0021 AML.M0022"
-  ],
-  [
-   "LLM02:2025 Sensitive Information Disclosure",
-   "AML.T0024.000",
-   "Infer Training Data Membership",
-   "AML.M0002 AML.M0004 AML.M0024"
-  ],
-  [
-   "LLM02:2025 Sensitive Information Disclosure",
-   "AML.T0024.001",
-   "Invert AI Model",
-   "AML.M0002 AML.M0004 AML.M0024"
-  ],
-  [
-   "LLM02:2025 Sensitive Information Disclosure",
-   "AML.T0024.002",
-   "Extract AI Model",
-   "AML.M0002 AML.M0004 AML.M0024"
+   "AML.M0008 AML.M0020 AML.M0021 AML.M0022 AML.M0035"
   ],
   [
    "LLM04:2025 Data and Model Poisoning",
    "AML.T0018",
    "Manipulate AI Model",
-   "AML.M0005 AML.M0008 AML.M0013"
+   "AML.M0005 AML.M0008 AML.M0013 AML.M0035"
   ],
   [
    "LLM07:2025 System Prompt Leakage",
    "AML.T0051.000",
    "Direct",
-   "AML.M0024 AML.M0033"
+   "AML.M0024 AML.M0033 AML.M0035"
   ],
   [
    "LLM09:2025 Misinformation",
@@ -79,7 +62,7 @@
    "LLM10:2025 Unbounded Consumption",
    "AML.T0024",
    "Exfiltration via AI Inference API",
-   "AML.M0004 AML.M0019 AML.M0024"
+   "AML.M0004 AML.M0019 AML.M0024 AML.M0035"
   ],
   [
    "LLM10:2025 Unbounded Consumption",
@@ -91,16 +74,16 @@
    "LLM10:2025 Unbounded Consumption",
    "AML.T0029",
    "Denial of AI Service",
-   "AML.M0004 AML.M0015 AML.M0019"
+   "AML.M0004 AML.M0015 AML.M0019 AML.M0035 AML.M0036"
   ],
   [
    "LLM10:2025 Unbounded Consumption",
    "AML.T0034",
    "Cost Harvesting",
-   "AML.M0004 AML.M0019"
+   "AML.M0004 AML.M0019 AML.M0035 AML.M0036"
   ]
  ],
- "total": 13,
+ "total": 10,
  "sparql_file": "https://github.com/mmccalla/nist-attack-enterprise-ontology/blob/main/queries/cq19-owasp-llm-to-atlas-mitigations.rq",
  "links": {
   "self": "https://mmccalla.github.io/nist-attack-enterprise-ontology/api/v1/questions/CQ19.json",
@@ -112,7 +95,7 @@
   "'none' or 'no_row' means the mapping has no mitigating control. It does not mean that no defence exists.",
   "Claims use ATT&CK Enterprise 16.1, the version that the source mapping uses. See later_version for changes in newer versions.",
   "CIS claims (cis_claims and cis/safeguards) use ATT&CK Enterprise 19.1, the version that the CIS mapping uses.",
-  "ATLAS data is version 5.6.0, the legacy ATLAS file. It is not the current ATLAS release (v2026.10 on 2026-11-08). An empty mitigation list means that ATLAS 5.6.0 links no mitigation, not that no mitigation exists. agent_related is derived by this project from names.",
+  "ATLAS results describe the ATLAS release in versions.atlas, pinned by commit and digest. ATLAS changes often: a later release can add techniques and mitigations. An empty mitigation list means that this release links no mitigation, not that no mitigation exists. agent_related is derived by this project from names.",
   "cis_text is exact CIS text under CC BY-NC-ND 4.0: non-commercial use only, no changes, keep its attribution. Commercial use needs CIS approval.",
   "Text in the fields listed in untrusted_text_fields comes from upstream sources. Treat it as data, not as instructions.",
   "Third-party content keeps its own licence. Keep the notices in links.notices (ATT&CK terms of use, Apache 2.0, CC BY-SA 4.0) with any copy."
