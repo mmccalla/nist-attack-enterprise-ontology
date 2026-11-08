@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-COPY = ["README.md", "llms.txt", "src/viewer.html", "docs/api.md", "exports/README.md", "CITATION.cff", "SECURITY.md"]
+COPY = ["README.md", "llms.txt", "src/viewer.html", "docs/api.md", "exports/README.md", "CITATION.cff", "SECURITY.md", "CONTRIBUTING.md", "NOTICE.md"]
 COPY += [p.relative_to(ROOT).as_posix() for p in (ROOT / "docs").glob("*.md") if p.name not in ("retrospective.md",)]
 CLAIM = re.compile(
     r"\b(unique(ly)?|one[- ]of[- ]a[- ]kind|first (free |open |public )?(tool|site|resource|of its kind)|the only (free |open )?(tool|site|resource|place|way)"

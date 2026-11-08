@@ -141,7 +141,8 @@ Read these limits before you use a result in a decision.
 
 - The page cannot send data anywhere. Its Content Security Policy blocks all network requests.
 - The page runs only its own scripts. It shows all source data as text.
-- To report a vulnerability, read [`SECURITY.md`](SECURITY.md).
+- Each change to `main` goes through a pull request. GitHub runs the tests, the browser checks, the dependency audits and CodeQL on it, and requires signed commits.
+- To report a vulnerability privately, read [`SECURITY.md`](SECURITY.md).
 - The threat model and the controls are in [`docs/security.md`](docs/security.md).
 
 ## Get help or report a problem
@@ -150,11 +151,11 @@ Read these limits before you use a result in a decision.
 - To ask for a new question, use the competency question form on the same page.
 - For other problems, open a [blank issue](https://github.com/mmccalla/nist-attack-enterprise-ontology/issues/new).
 
-If the source row is incorrect, the project records the finding in [`docs/upstream-findings.md`](docs/upstream-findings.md). These findings are for a report to MITRE CTID.
+If the source row is incorrect, the project records the finding in [`docs/upstream-findings.md`](docs/upstream-findings.md) and reports it to MITRE CTID. The findings of 2026-11-02 are [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).
 
 ## Cite this tool
 
-Use the data in [`CITATION.cff`](CITATION.cff). GitHub shows a **Cite this repository** link for this file. The changes in each release are in [`CHANGELOG.md`](CHANGELOG.md).
+Use the data in [`CITATION.cff`](CITATION.cff). GitHub shows a **Cite this repository** link for this file. Each release is on the [Releases page](https://github.com/mmccalla/nist-attack-enterprise-ontology/releases), and the changes are in [`CHANGELOG.md`](CHANGELOG.md).
 
 ## For maintainers and contributors
 
@@ -163,7 +164,7 @@ These documents give the design and the tests:
 | Document | Content |
 | --- | --- |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to build the tool and run the tests |
-| [`docs/competency-questions.md`](docs/competency-questions.md) | The 13 questions, their personas and their answers |
+| [`docs/competency-questions.md`](docs/competency-questions.md) | The 22 questions, their personas and their answers |
 | [`docs/semantic-decisions.md`](docs/semantic-decisions.md) | Scope, source terms, ambiguities and design decisions |
 | [`docs/vocabulary-alignment.md`](docs/vocabulary-alignment.md) | The alignment to ATT&CK STIX, NIST OSCAL and UCO |
 | [`docs/evaluation.md`](docs/evaluation.md) | The test gates and their most recent results |
