@@ -102,3 +102,33 @@ def test_cq19_text_matches_the_owasp_and_atlas_data(src):
     with_mit = sum(1 for a in present if src.atlas_mitigated_by[a])
     assert f"OWASP links {risks} of the 10 LLM risks to {len(set(ids))} ATLAS techniques, in {len(ids)} links" in CQ
     assert f"ATLAS {src.atlas_version} has {len(present)} of the {len(set(ids))} and gives mitigations for {with_mit} of them" in CQ
+
+
+def test_oscal_release_statement_matches_the_catalogs():
+    """The README and the page explain the title differences. They are not caused by the catalog release: catalog 5.2.0
+    changes no title of a mapped control (checked against 5.1.1+u4, current when CTID last updated the file)."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import verify_upstream_findings as v  # noqa: PLC0415 - pinned by commit and digest
+
+    def controls(name):
+        cat = v.load(name)["catalog"]
+        out, stack = {}, list(cat["groups"])
+        while stack:
+            g = stack.pop()
+            for c in g.get("controls", []):
+                label = next((p["value"] for p in c.get("props", []) if p["name"] == "label" and p.get("class") == "zero-padded"), None)
+                if label:
+                    out[label] = c["title"]
+                stack.append(c)
+        return out
+
+    old, new = controls("oscal_2024_02.json"), controls("oscal_5_2_0.json")
+    ctid = v.load("ctid_nist_16_1.json")
+    mapped = {r["capability_id"] for r in ctid["mapping_objects"] if r["capability_id"]}
+    assert ctid["metadata"]["mapping_framework_version"] == "rev5" and ctid["metadata"]["last_update"] == "04/16/2025"
+    assert len(mapped) == 109 and not [c for c in mapped if old.get(c) != new.get(c)]
+    added_base = sorted(k for k in new if k not in old and "(" not in k)
+    assert added_base == ["SA-24"] and "SA-24" not in mapped
+    statement = "Catalog 5.2.0 changes no title of the 109 mapped controls. It adds one base control, SA-24, which the mapping does not cover."
+    assert statement in README and statement in (ROOT / "src" / "viewer.html").read_text(encoding="utf-8")
+    assert "The mapping uses an older Rev. 5 release" not in README

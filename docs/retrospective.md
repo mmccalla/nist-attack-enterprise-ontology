@@ -197,3 +197,12 @@ Phase 4a added the CTID mapping of CIS Controls 8.1.2 on ATT&CK 19.1, three comp
 | Stop | Restrictions that are stricter than the licence text. CIS titles were left out although the licence permits exact, non-commercial copies with credit. Read the licence text first, then restrict. |
 | Keep | Meet a control, do not remove it. Signed commits blocked the merge, so the commits were signed with a dedicated key, not the rule removed. |
 | Keep | Prove that content is identical before a reset. The local, signed and merged trees had the same hash, so a soft reset changed no file. |
+
+## Addendum, 2026-11-08: releases 2.8.0 and the OSCAL wording
+
+| Type | Learning |
+| --- | --- |
+| Stop | Switching branches in place in the iCloud folder. A merge and two branch switches rewrote about 1,400 files, and iCloud made 47 " 2" copies, one of them of the Git index. The guards found them before a commit. Do branch work in a `/tmp` worktree. |
+| Keep | Pin the newest release of each source and check each pin against the publisher. ATLAS had stayed at the legacy 5.6.0 file, and ATT&CK 20.1 came out three days after 20.0 was pinned. |
+| Keep | Recompute each figure in the docs with a test. Three wrong figures and one wrong explanation (the OSCAL release) were in the docs before these tests. |
+| Start | Read a full answer before you state a figure from it. A first draft named two tied mitigations where five are tied. |

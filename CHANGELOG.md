@@ -2,6 +2,10 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## Unreleased
+
+- Fixed: the README and the page said that the mapping "uses an older Rev. 5 release" to explain three title differences. CTID's file names only "rev5". Catalog 5.2.0 changes no title of the 109 mapped controls, and adds one base control, SA-24, which the mapping does not cover. The three differences come from Rev. 4 wording (SC-32, CA family) and letter case (IA-08). A test checks the new text against both pinned catalogs.
+
 ## 2.8.0 (2026-11-08)
 
 Ontology 2.4.0 (backward compatible): adds `:relatedAtlasIdNotInCatalogue`.
