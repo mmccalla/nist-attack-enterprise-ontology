@@ -86,7 +86,7 @@ Read these limits for CIS coverage:
 
 ## Coverage for AI systems and AI agents
 
-ATT&CK and NIST 800-53 do not describe attacks on AI agents. Thus, the tool also includes:
+ATT&CK 16.1, the version that the mapping uses, has no technique for attacks on AI agents. NIST 800-53 has no control specifically for them. ATT&CK 20.1 has some, for example T1698 Indirect Prompt Injection and T1699 Direct Prompt Injection. The CTID mapping to NIST 800-53 does not include ATT&CK 20.1. Thus, the tool also includes:
 
 - **MITRE ATLAS 2026.10** (released on 28 October 2026): 129 techniques, 92 sub-techniques and 44 mitigations for AI systems. By a rule of this project (names that contain "AI Agent" or "Agentic", and their sub-techniques), 39 of them concern AI agents and their tools, for example tool poisoning and agent configuration theft.
 - **OWASP GenAI lists:** the LLM Top 10 (2025) with the ATLAS techniques that OWASP links to each risk, and the MCP Top 10 (2025) titles (CC BY-NC-SA 4.0, non-commercial use only). The Agentic Top 10 is a reference.

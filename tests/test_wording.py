@@ -27,3 +27,33 @@ def test_coverage_states_do_not_say_more_than_the_mapping_shows():
     for text in (README, VIEWER):
         assert "More NIST controls cannot cover it" not in text
         assert "Selecting more NIST controls cannot cover them" not in text
+
+
+def test_ai_agent_statement_agrees_with_attack():
+    """ATT&CK 16.1, the version that the mapping uses, has no technique for attacks on AI agents. ATT&CK 20.1 has some
+    (prompt injection). The README must say both. Limit: the test finds these techniques by name only."""
+    import sys  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_population  # noqa: PLC0415
+
+    pattern = re.compile(r"Prompt Injection|AI Agent|Agentic|AI Result|AI-Enabled|Autonomous")
+
+    def matching(key):
+        out = {}
+        for o in build_population.fetch(key)["objects"]:
+            if o.get("type") == "attack-pattern" and not o.get("revoked") and not o.get("x_mitre_deprecated"):
+                tid = next(r["external_id"] for r in o["external_references"] if r.get("source_name") == "mitre-attack")
+                if pattern.search(o["name"]):
+                    out[tid] = o["name"]
+        return out
+
+    assert matching("attack") == {}
+    later = matching("attack_latest")
+    assert {"T1698", "T1699"} <= set(later)
+    statement = ("ATT&CK 16.1, the version that the mapping uses, has no technique for attacks on AI agents. "
+                 "NIST 800-53 has no control specifically for them. "
+                 f"ATT&CK 20.1 has some, for example T1698 {later['T1698']} and T1699 {later['T1699']}. "
+                 "The CTID mapping to NIST 800-53 does not include ATT&CK 20.1.")
+    assert statement in README
+    assert "do not describe attacks on AI agents" not in README

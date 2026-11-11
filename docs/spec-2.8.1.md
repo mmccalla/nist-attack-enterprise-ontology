@@ -8,7 +8,7 @@ Some statements in the README and on the page say more than the data shows:
 
 - "Covered" can be read as "the control is effective". The mapping shows only that a control can mitigate a technique.
 - "More NIST controls cannot cover it" is not true outside the mapping. Policy controls and control enhancements are not in the mapping.
-- "ATT&CK and NIST 800-53 do not describe attacks on AI agents" is false for ATT&CK. ATT&CK has techniques about AI, for example T1588.007 Artificial Intelligence.
+- "ATT&CK and NIST 800-53 do not describe attacks on AI agents" is true for ATT&CK 16.1, the version of the mapping, but false for ATT&CK 20.1. ATT&CK 20.1 has T1698 Indirect Prompt Injection and T1699 Direct Prompt Injection. Note: T1588.007 Artificial Intelligence and T1682 Query Public AI Services do not support the change. They describe attackers who use AI, not attacks on AI agents. A first draft of this spec used T1588.007 as the evidence. The search of both ATT&CK versions on 2026-11-11 corrected it.
 - "No published mapping exists from ATLAS to NIST 800-53" is a claim about all publishers. Nobody can examine all publishers.
 - "The newest release" has no date, so it becomes false without notice.
 
@@ -57,7 +57,7 @@ New users also need to see quickly why they can trust the results.
 | --- | --- | --- |
 | A1 | The README and the page give the same definition of each coverage state. | The three definitions in the README table appear unchanged in `src/viewer.html`. |
 | A2 | "Covered" says "mapped as able to mitigate". "No mapped control" says that no defence can still exist. | The README and the page contain the new definitions. The old sentence "More NIST controls cannot cover it" and "Selecting more NIST controls cannot cover them" are not present. |
-| A3 | The AI agents statement agrees with the data. | If the pinned ATT&CK 16.1 data has a technique with "AI" or "Artificial Intelligence" in its name, the README says "do not specifically cover attacks on AI agents". The old sentence is not present. |
+| A3 | The AI agents statement agrees with the data. | No ATT&CK 16.1 technique name contains "Prompt Injection", "AI Agent", "Agentic", "AI Result", "AI-Enabled" or "Autonomous". ATT&CK 20.1 has T1698 and T1699. The README states both facts with the names from the data. The old sentence is not present. |
 | A4 | The ATLAS statement is dated and names its source. | The README and `docs/vocabulary-alignment.md` say that CTID Mappings Explorer publishes no ATLAS mapping on the date in `data/source-checks.json`. "No published mapping exists" is not present. |
 | A5 | Each claim has a source row. | Each claim in each technique API file has at least one `evidence[].source_record` that is an integer. |
 | A6 | Each source file is in the manifest with its current digest. | Each file in `data/sources/` has a manifest row that contains its current SHA-256. |
@@ -67,4 +67,4 @@ New users also need to see quickly why they can trust the results.
 ## Failure modes
 
 - If a later check finds an ATLAS to NIST 800-53 mapping from CTID, the README must name it and link to it. The A4 statement becomes false. The date in the statement shows when it was true.
-- A3 finds AI techniques by name. A technique about AI with no AI word in its name is not found. This is a limit of the test.
+- A3 finds techniques by name. A technique about attacks on AI agents with none of the test words in its name is not found. This is a limit of the test.
