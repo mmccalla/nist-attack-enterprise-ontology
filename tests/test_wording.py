@@ -109,3 +109,9 @@ def test_each_source_file_is_in_the_manifest_with_its_current_digest():
         row = next((line for line in manifest.splitlines() if line.startswith(f"| `data/sources/{path.name}` |")), None)
         assert row, f"{path.name} is not in SOURCE-MANIFEST.md"
         assert hashlib.sha256(path.read_bytes()).hexdigest() in row, f"{path.name}: the manifest digest is not current"
+
+
+def test_each_newest_release_statement_has_the_check_date():
+    found = re.findall(r"the newest release( on \d{4}-\d{2}-\d{2})?", README)
+    assert len(found) >= 2
+    assert all(f == f" on {CHECKS_ON}" for f in found), found

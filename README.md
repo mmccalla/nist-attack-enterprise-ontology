@@ -138,9 +138,9 @@ Read these limits before you use a result in a decision.
 - A claim shows that a control **can** mitigate a technique. It does not show that your implementation is effective.
 - The mapping covers 109 technical base controls in 11 families. It does not include policy controls or control enhancements.
 - Some control families are not in the mapping, for example Awareness and Training.
-- The mapping uses ATT&CK 16.1. ATT&CK 20.1, the newest release, revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.1.csv`](exports/attack-16.1-to-20.1.csv) lists them.
+- The mapping uses ATT&CK 16.1. ATT&CK 20.1, the newest release on 2026-11-11, revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.1.csv`](exports/attack-16.1-to-20.1.csv) lists them.
 - 91 ATT&CK Enterprise techniques do not have a row in the mapping. The tool shows these techniques as "no mapped control". That result does not mean that no defence exists.
-- The control titles come from the OSCAL catalog 5.2.0, the newest release. CTID's file names only "rev5" and dates from 16 April 2025, before catalog 5.2.0. Catalog 5.2.0 changes no title of the 109 mapped controls. It adds one base control, SA-24, which the mapping does not cover. Three names differ from the catalog: two use Rev. 4 wording (SC-32 and the CA family) and one differs in letter case (IA-08).
+- The control titles come from the OSCAL catalog 5.2.0, the newest release on 2026-11-11. CTID's file names only "rev5" and dates from 16 April 2025, before catalog 5.2.0. Catalog 5.2.0 changes no title of the 109 mapped controls. It adds one base control, SA-24, which the mapping does not cover. Three names differ from the catalog: two use Rev. 4 wording (SC-32 and the CA family) and one differs in letter case (IA-08).
 - The IRIs in the knowledge graph use the `w3id.org/example` namespace. These IRIs do not resolve.
 
 ## Security and privacy

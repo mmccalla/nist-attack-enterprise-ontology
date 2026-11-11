@@ -59,7 +59,7 @@ def test_readme_atlas_and_attack_figures(src):
     assert f"{len(src.atlas_agent)} of them concern AI agents" in README
     later = CHECKS["laterVersion"]["version"]
     assert later == "20.1"
-    assert f"ATT&CK {later}, the newest release, revokes, renames or moves 208 of its techniques" in README
+    assert f"ATT&CK {later}, the newest release on {CHECKS['newestCheckedOn']}, revokes, renames or moves 208 of its techniques" in README
     assert f"attack-16.1-to-{later}.csv" in README and (ROOT / "exports" / f"attack-16.1-to-{later}.csv").exists()
     assert len({r["technique_id"] for r in csv.DictReader(open(ROOT / "exports" / f"attack-16.1-to-{later}.csv", encoding="utf-8"))}) == 208
 
