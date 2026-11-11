@@ -72,6 +72,8 @@ SOURCES = {
 }
 BASELINES = ["LOW", "MODERATE", "HIGH", "PRIVACY"]
 LATER_ATTACK = "20.1"
+# Date of the last check that each pin is the newest release and that CTID publishes no ATLAS mapping (docs/spec-2.8.1.md).
+NEWEST_CHECKED_ON = "2026-11-11"
 MAX_SOURCE_BYTES = 200 * 1024 * 1024  # refuse anything larger than any expected source
 
 
@@ -392,6 +394,7 @@ def build() -> tuple[Graph, dict]:
         "triples": len(g),
     }
     checks["sources"] = {k: {"url": u, "sha256": d} for k, (u, d) in SOURCES.items()}
+    checks["newestCheckedOn"] = NEWEST_CHECKED_ON
     return g, checks
 
 

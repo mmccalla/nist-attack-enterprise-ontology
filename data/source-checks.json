@@ -125,6 +125,7 @@
     "techniquesOnlyInLaterVersion": 66,
     "version": "20.1"
   },
+  "newestCheckedOn": "2026-11-11",
   "owasp": {
     "linksToAtlasIdsNotInCatalogue": [
       "LLM02:2025 AML.T0024.000",

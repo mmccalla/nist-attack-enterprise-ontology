@@ -96,7 +96,7 @@ ATT&CK 16.1, the version that the mapping uses, has no technique for attacks on 
 Read these limits for AI coverage:
 
 - The "AI agent" flag comes from the technique names. ATLAS does not publish it.
-- No published mapping exists from ATLAS to NIST 800-53. The tool shows the ATT&CK technique that an ATLAS technique adapts, but NIST claims do not transfer.
+- This tool uses no mapping from ATLAS to NIST 800-53. On 2026-11-11, [CTID Mappings Explorer](https://ctid.mitre.org/mappings/external/) publishes none. The tool shows the ATT&CK technique that an ATLAS technique adapts, but NIST claims do not transfer.
 - ATLAS changes often. MITRE published ten ATLAS releases in 2026, from 2026.01 to 2026.10, and a later release can add techniques and mitigations. The figures here are for ATLAS 2026.10.
 - In ATLAS 2026.10, 8 of the 39 agent techniques have no direct mitigation link. 4 of the 8 have a mitigation on their parent technique, so 4 have none on the technique or its parent. Counting a parent's mitigation for its sub-techniques is a rule of this project. ATLAS does not publish it.
 - No mitigation link in ATLAS does not mean that no mitigation exists. It means that ATLAS 2026.10 records none.

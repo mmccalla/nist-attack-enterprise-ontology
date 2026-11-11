@@ -57,3 +57,17 @@ def test_ai_agent_statement_agrees_with_attack():
                  "The CTID mapping to NIST 800-53 does not include ATT&CK 20.1.")
     assert statement in README
     assert "do not describe attacks on AI agents" not in README
+
+
+CHECKS_ON = __import__("json").loads((ROOT / "data" / "source-checks.json").read_text(encoding="utf-8"))["newestCheckedOn"]
+ATLAS_NIST = (f"This tool uses no mapping from ATLAS to NIST 800-53. On {CHECKS_ON}, "
+              "[CTID Mappings Explorer](https://ctid.mitre.org/mappings/external/) publishes none.")
+
+
+def test_atlas_to_nist_statement_is_dated_and_names_its_source():
+    """Evidence of the check is in docs/spec-2.8.1.md. A claim that no mapping exists anywhere cannot be examined."""
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", CHECKS_ON)
+    assert ATLAS_NIST in README
+    assert ATLAS_NIST in (ROOT / "docs" / "vocabulary-alignment.md").read_text(encoding="utf-8")
+    for path in ("README.md", "docs/vocabulary-alignment.md"):
+        assert "No published mapping exists" not in (ROOT / path).read_text(encoding="utf-8"), path
