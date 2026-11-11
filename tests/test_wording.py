@@ -71,3 +71,41 @@ def test_atlas_to_nist_statement_is_dated_and_names_its_source():
     assert ATLAS_NIST in (ROOT / "docs" / "vocabulary-alignment.md").read_text(encoding="utf-8")
     for path in ("README.md", "docs/vocabulary-alignment.md"):
         assert "No published mapping exists" not in (ROOT / path).read_text(encoding="utf-8"), path
+
+
+TRUST = ("Each claim shows the CTID source row that it comes from, on the page and in the API. "
+         "The build checks each downloaded source against a pinned SHA-256 digest. "
+         "[`SOURCE-MANIFEST.md`](SOURCE-MANIFEST.md) lists each source with its digest. "
+         "Possible gaps in the CTID mapping are filed for investigation as "
+         "[CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).")
+
+
+def test_trust_statement_is_in_the_readme():
+    assert TRUST in README.split("## ", 1)[0], "the trust statement must be in the first section of the README"
+
+
+def test_each_claim_gives_its_source_row():
+    import json  # noqa: PLC0415
+
+    files = sorted((ROOT / "api" / "v1" / "techniques").glob("*.json"))
+    assert len(files) > 600
+    checked = 0
+    for path in files:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        for claim in doc.get("claims", []) + doc.get("cis_claims", []):
+            records = [e.get("source_record") for e in claim["evidence"]]
+            assert records and all(isinstance(r, int) for r in records), path.name
+            checked += 1
+    assert checked > 5000
+
+
+def test_each_source_file_is_in_the_manifest_with_its_current_digest():
+    import hashlib  # noqa: PLC0415
+
+    manifest = (ROOT / "SOURCE-MANIFEST.md").read_text(encoding="utf-8")
+    files = sorted((ROOT / "data" / "sources").glob("*.json"))
+    assert len(files) >= 3
+    for path in files:
+        row = next((line for line in manifest.splitlines() if line.startswith(f"| `data/sources/{path.name}` |")), None)
+        assert row, f"{path.name} is not in SOURCE-MANIFEST.md"
+        assert hashlib.sha256(path.read_bytes()).hexdigest() in row, f"{path.name}: the manifest digest is not current"

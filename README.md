@@ -2,6 +2,8 @@
 
 This free tool shows which MITRE ATT&CK techniques your NIST SP 800-53 controls can mitigate. It also shows the gaps and the controls that close them.
 
+Each claim shows the CTID source row that it comes from, on the page and in the API. The build checks each downloaded source against a pinned SHA-256 digest. [`SOURCE-MANIFEST.md`](SOURCE-MANIFEST.md) lists each source with its digest. Possible gaps in the CTID mapping are filed for investigation as [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).
+
 **Open the tool: [mmccalla.github.io/nist-attack-enterprise-ontology](https://mmccalla.github.io/nist-attack-enterprise-ontology/)**
 
 You do not need an account, an installation or a server. The tool runs in your browser. It does not send your data to a server.
