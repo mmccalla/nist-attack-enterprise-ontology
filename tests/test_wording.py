@@ -115,3 +115,17 @@ def test_each_newest_release_statement_has_the_check_date():
     found = re.findall(r"the newest release( on \d{4}-\d{2}-\d{2})?", README)
     assert len(found) >= 2
     assert all(f == f" on {CHECKS_ON}" for f in found), found
+
+
+def test_release_number_and_date_agree_everywhere():
+    """CITATION.cff is the one place where the release is set. The newest released changelog heading, the API and
+    llms.txt must agree with it."""
+    import json  # noqa: PLC0415
+
+    cff = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    version = re.search(r"^version:\s*(\S+)", cff, re.M).group(1)
+    date = re.search(r"^date-released:\s*(\S+)", cff, re.M).group(1)
+    heading = re.search(r"^## (\d+\.\d+\.\d+) \((\d{4}-\d{2}-\d{2})\)$", (ROOT / "CHANGELOG.md").read_text(encoding="utf-8"), re.M)
+    assert heading.groups() == (version, date)
+    assert json.loads((ROOT / "api" / "v1" / "version.json").read_text(encoding="utf-8"))["versions"]["release"] == version
+    assert f"Release {version}," in (ROOT / "llms.txt").read_text(encoding="utf-8")
