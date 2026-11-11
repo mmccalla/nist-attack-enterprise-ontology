@@ -38,9 +38,9 @@ The tool shows each technique in one of three states:
 
 | State | Meaning |
 | --- | --- |
-| Covered | One or more of your controls mitigate the technique. |
+| Covered | At least one of your controls is mapped as able to mitigate the technique. |
 | Gap | No selected control mitigates the technique, but a different mapped control can. |
-| No mapped control | No NIST 800-53 control in the mapping mitigates the technique. More NIST controls cannot cover it. |
+| No mapped control | No control in this mapping is mapped to the technique. This does not mean that no defence exists. |
 
 ## Use the result in ATT&CK Navigator
 
