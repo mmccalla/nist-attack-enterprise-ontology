@@ -663,6 +663,7 @@ function gapReport() {
       <span class="stat"><b>${counts.none}</b>&#9675; no control in the mapping</span>
       <span class="stat"><b>${total}</b>techniques in total</span></div>
     <p><span class="key"><i class="s-good"></i>&#10003; Covered</span><span class="key"><i class="s-gap"></i>! Gap</span><span class="key"><i class="s-none"></i>&#9675; No mapped control</span></p>
+    <p class="note">Covered: At least one of your controls is mapped as able to mitigate the technique. Gap: No selected control mitigates the technique, but a different mapped control can. No mapped control: No control in this mapping is mapped to the technique. This does not mean that no defence exists.</p>
     <table class="cov"><caption class="note" style="text-align:left">Techniques per tactic. A technique counts in every tactic it serves.</caption>
       <thead><tr><th>Tactic</th><th>Coverage</th><th class="num">&#10003;</th><th class="num">!</th><th class="num">&#9675;</th><th class="num">%</th></tr></thead>
       <tbody>${tactics.map(([ta, c]) => { const d = c.covered + c.gap + c.none; return `<tr><td>${link(ta.id).split("</a>")[0]}</a> ${esc(ta.s)}</td>
@@ -670,7 +671,7 @@ function gapReport() {
         <td class="num">${c.covered}</td><td class="num">${c.gap}</td><td class="num">${c.none}</td><td class="num">${pct(c.covered, d)}</td></tr>`; }).join("")}</tbody></table>
     <h3>Gaps a mapped control would close (${gaps.length})</h3>
     ${gaps.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>Controls that would mitigate it</th></tr></thead><tbody>${gaps.slice(0, 300).map(([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(c => `<a href="#n/control_${c}">${c}</a>`).join(" ")}</td></tr>`).join("")}</tbody></table>${gaps.length > 300 ? `<p class="note">First 300 shown; the CSV has all ${gaps.length}.</p>` : ""}` : `<p>None: every technique that has a mapped control is covered by your selection.</p>`}
-    <p class="note">${counts.none} techniques have no mitigating control in the mapping (non-mappable rows and techniques the mapping does not mention). Selecting more NIST controls cannot cover them; see <a href="#q/CQ05">CQ05</a> and <a href="#q/CQ12">CQ12</a>.</p>`;
+    <p class="note">${counts.none} techniques have no mitigating control in the mapping (non-mappable rows and techniques the mapping does not mention). No control in this mapping can cover them. This does not mean that no defence exists. See <a href="#q/CQ05">CQ05</a> and <a href="#q/CQ12">CQ12</a>.</p>`;
   return {cov, recs, counts};
 }
 function renderGapPanel(result) {

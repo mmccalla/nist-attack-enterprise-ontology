@@ -34,7 +34,9 @@ The five files in `ontology/v2/` are the uploaded bundle `nist_attack_enterprise
 
 | File | Origin | Licence | SHA-256 |
 | --- | --- | --- | --- |
-| `data/sources/owasp-genai.json` | OWASP GenAI Security Project pages, retrieved 2026-11-02 | CC BY-SA 4.0 (LLM and Agentic parts); IDs and links only for CC BY-NC-SA 4.0 (MCP) | `f26a38d7a81fdf4766e7ad99639836414c4b91f122a91d98217fb9ae4e00ae69` |
+| `data/sources/cis-controls-8.1.2.json` | CIS workbook `CIS_Controls_v8_1_2_AI_Guidance_Combined_Workbook_20260714.xlsx` (SHA-256 `4cba315d91eb2f22bff54492149058a6d862fbba9d7b906368feab341b792079`), sheet "Controls v8.1.2 AI Guidance", retrieved 2026-11-04 | CC BY-NC-ND 4.0, exact text | `5a5b0639fc1ffa19eaf642e4114c126d2745945e89b20ece267c082a4fa8e905` |
+| `data/sources/owasp-genai.json` | OWASP GenAI Security Project pages, retrieved 2026-11-02 | CC BY-SA 4.0 (LLM and Agentic parts); IDs and links only for CC BY-NC-SA 4.0 (MCP) | `215b8b0a83c098a1af1bb6d8759e00d918d22274856fb0e756e045f39149f4f8` |
+| `data/sources/owasp-mcp-top10.json` | <https://raw.githubusercontent.com/OWASP/www-project-mcp-top-10/165fe0f78ef104459237b4a8e0f6e78db9b02391/index.md> (SHA-256 `4d65ec4917c33b9196b2bc7d15c89935c2084509dbbadf2ec4debf9dcfac7ded`) | CC BY-NC-SA 4.0, exact titles | `22ddb65aa14c2f7c055a0a0a8dae90bf7e609f73770d1fc3ae153764645470b1` |
 
 ## Vendored files
 

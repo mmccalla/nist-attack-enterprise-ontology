@@ -2,6 +2,8 @@
 
 This free tool shows which MITRE ATT&CK techniques your NIST SP 800-53 controls can mitigate. It also shows the gaps and the controls that close them.
 
+Each claim shows the CTID source row that it comes from, on the page and in the API. The build checks each downloaded source against a pinned SHA-256 digest. [`SOURCE-MANIFEST.md`](SOURCE-MANIFEST.md) lists each source with its digest. Possible gaps in the CTID mapping are filed for investigation as [CTID issue #151](https://github.com/center-for-threat-informed-defense/mappings-explorer/issues/151).
+
 **Open the tool: [mmccalla.github.io/nist-attack-enterprise-ontology](https://mmccalla.github.io/nist-attack-enterprise-ontology/)**
 
 You do not need an account, an installation or a server. The tool runs in your browser. It does not send your data to a server.
@@ -38,9 +40,9 @@ The tool shows each technique in one of three states:
 
 | State | Meaning |
 | --- | --- |
-| Covered | One or more of your controls mitigate the technique. |
+| Covered | At least one of your controls is mapped as able to mitigate the technique. |
 | Gap | No selected control mitigates the technique, but a different mapped control can. |
-| No mapped control | No NIST 800-53 control in the mapping mitigates the technique. More NIST controls cannot cover it. |
+| No mapped control | No control in this mapping is mapped to the technique. This does not mean that no defence exists. |
 
 ## Use the result in ATT&CK Navigator
 
@@ -86,7 +88,7 @@ Read these limits for CIS coverage:
 
 ## Coverage for AI systems and AI agents
 
-ATT&CK and NIST 800-53 do not describe attacks on AI agents. Thus, the tool also includes:
+ATT&CK 16.1, the version that the mapping uses, has no technique for attacks on AI agents. NIST 800-53 has no control specifically for them. ATT&CK 20.1 has some, for example T1698 Indirect Prompt Injection and T1699 Direct Prompt Injection. The CTID mapping to NIST 800-53 does not include ATT&CK 20.1. Thus, the tool also includes:
 
 - **MITRE ATLAS 2026.10** (released on 28 October 2026): 129 techniques, 92 sub-techniques and 44 mitigations for AI systems. By a rule of this project (names that contain "AI Agent" or "Agentic", and their sub-techniques), 39 of them concern AI agents and their tools, for example tool poisoning and agent configuration theft.
 - **OWASP GenAI lists:** the LLM Top 10 (2025) with the ATLAS techniques that OWASP links to each risk, and the MCP Top 10 (2025) titles (CC BY-NC-SA 4.0, non-commercial use only). The Agentic Top 10 is a reference.
@@ -96,7 +98,7 @@ ATT&CK and NIST 800-53 do not describe attacks on AI agents. Thus, the tool also
 Read these limits for AI coverage:
 
 - The "AI agent" flag comes from the technique names. ATLAS does not publish it.
-- No published mapping exists from ATLAS to NIST 800-53. The tool shows the ATT&CK technique that an ATLAS technique adapts, but NIST claims do not transfer.
+- This tool uses no mapping from ATLAS to NIST 800-53. On 2026-11-11, [CTID Mappings Explorer](https://ctid.mitre.org/mappings/external/) publishes none. The tool shows the ATT&CK technique that an ATLAS technique adapts, but NIST claims do not transfer.
 - ATLAS changes often. MITRE published ten ATLAS releases in 2026, from 2026.01 to 2026.10, and a later release can add techniques and mitigations. The figures here are for ATLAS 2026.10.
 - In ATLAS 2026.10, 8 of the 39 agent techniques have no direct mitigation link. 4 of the 8 have a mitigation on their parent technique, so 4 have none on the technique or its parent. Counting a parent's mitigation for its sub-techniques is a rule of this project. ATLAS does not publish it.
 - No mitigation link in ATLAS does not mean that no mitigation exists. It means that ATLAS 2026.10 records none.
@@ -136,9 +138,9 @@ Read these limits before you use a result in a decision.
 - A claim shows that a control **can** mitigate a technique. It does not show that your implementation is effective.
 - The mapping covers 109 technical base controls in 11 families. It does not include policy controls or control enhancements.
 - Some control families are not in the mapping, for example Awareness and Training.
-- The mapping uses ATT&CK 16.1. ATT&CK 20.1, the newest release, revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.1.csv`](exports/attack-16.1-to-20.1.csv) lists them.
+- The mapping uses ATT&CK 16.1. ATT&CK 20.1, the newest release on 2026-11-11, revokes, renames or moves 208 of its techniques. Each technique page shows the change, and [`attack-16.1-to-20.1.csv`](exports/attack-16.1-to-20.1.csv) lists them.
 - 91 ATT&CK Enterprise techniques do not have a row in the mapping. The tool shows these techniques as "no mapped control". That result does not mean that no defence exists.
-- The control titles come from the OSCAL catalog 5.2.0, the newest release. CTID's file names only "rev5" and dates from 16 April 2025, before catalog 5.2.0. Catalog 5.2.0 changes no title of the 109 mapped controls. It adds one base control, SA-24, which the mapping does not cover. Three names differ from the catalog: two use Rev. 4 wording (SC-32 and the CA family) and one differs in letter case (IA-08).
+- The control titles come from the OSCAL catalog 5.2.0, the newest release on 2026-11-11. CTID's file names only "rev5" and dates from 16 April 2025, before catalog 5.2.0. Catalog 5.2.0 changes no title of the 109 mapped controls. It adds one base control, SA-24, which the mapping does not cover. Three names differ from the catalog: two use Rev. 4 wording (SC-32 and the CA family) and one differs in letter case (IA-08).
 - The IRIs in the knowledge graph use the `w3id.org/example` namespace. These IRIs do not resolve.
 
 ## Security and privacy

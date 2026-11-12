@@ -61,7 +61,7 @@ Strength: **exact** means the formal meanings match and an OWL axiom or an ident
 | `owl:sameAs` between our technique IRIs and STIX ids | STIX ids are strings, not RDF resources. A literal `:stixId` carries the identity without a false identity axiom. |
 | `core:ExternalReference` nodes for every STIX and OSCAL identifier | Would double the node count to restate identifiers already held as literals. No competency question needs them. Add a derived export if a UCO consumer requires them. |
 | Agentic Top 10 item titles from vendor blogs and summaries | Not authoritative, and some use short forms. Item titles wait for a machine-readable official source. |
-| A project mapping from ATLAS techniques to NIST controls | No published mapping exists. The owner decided that claims stay with published sources. |
+| A project mapping from ATLAS techniques to NIST controls | This tool uses no mapping from ATLAS to NIST 800-53. On 2026-11-11, [CTID Mappings Explorer](https://ctid.mitre.org/mappings/external/) publishes none. The owner decided that claims stay with published sources. |
 | Community RDF renderings of STIX | None is normative or maintained by OASIS; aligning to one would tie the ontology to an unofficial model. |
 
 ## How the alignment is checked
