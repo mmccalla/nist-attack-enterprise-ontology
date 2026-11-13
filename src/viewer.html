@@ -215,6 +215,9 @@ const isNonMappable = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique
 const hasRow = id => IN.get(id).some(([p, s]) => p === ":assertsTechnique" && !s.startsWith("cis"));  // NIST rows only
 const atlasMitigationsOf = id => IN.get(id).filter(([p]) => p === ":atlasMitigationFor").map(([, s]) => s);
 const atlasParentMitigated = id => OUT.get(id).some(([p, o]) => p === ":subTechniqueOf" && atlasMitigationsOf(o).length);
+const isAttackTactic = n => (n.p.catalogue ?? "").startsWith("ATT&CK");
+const attackTactics = () => ofType("Tactic").filter(isAttackTactic);
+const nistFamilies = () => ofType("CapabilityGroup").filter(g => !g.id.startsWith("cisgroup_"));
 const QUESTIONS = DATA.questions;
 const byLabel = (a, b) => a.l.localeCompare(b.l, "en", {numeric: true});
 
@@ -262,7 +265,7 @@ function renderBrowse() {
   } else if (tab === "cis") {
     browse.innerHTML = `<p class="note">CIS Controls 8.1.2 Safeguards. Count: ATT&amp;CK ${CIS_ATTACK} techniques mitigated. The CIS mapping uses ATT&amp;CK ${CIS_ATTACK}. Titles: ${CIS_ATTRIBUTION}</p>` + listItems(ofType("CisSafeguard").sort(byLabel).map(n => ({...n, c: mitigated(n.id)})), current);
   } else if (tab === "tactics") {
-    const items = ofType("Tactic").filter(n => (n.p.catalogue ?? "").startsWith("ATT&CK")).sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
+    const items = attackTactics().sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(n => ({...n, c: IN.get(n.id).filter(([p]) => p === ":inTactic").length}));
     browse.innerHTML = `<p class="note">ATT&amp;CK matrix order. Count: Enterprise techniques in the tactic.</p>` + listItems(items, current);
   } else if (tab === "atlas") {
     const filter = document.getElementById("atlas-filter")?.value ?? "agent";
@@ -356,7 +359,7 @@ function neighbourhood(id) {
 }
 
 function overview() {
-  const groups = ofType("CapabilityGroup").filter(g => !g.id.startsWith("cisgroup_")), controls = ofType("SecurityControl");  // NIST families only
+  const groups = nistFamilies(), controls = ofType("SecurityControl");
   const nodes = [...groups.map(g => ({...nodeView(g), short: g.s, label: true, size: 700})),
     ...controls.map(c => { const m = mitigated(c.id); return {...nodeView(c), size: 60 + Math.sqrt(m) * 120, dim: m === 0, label: m >= 10}; })];
   const links = controls.flatMap(c => OUT.get(c.id).filter(([p]) => p === ":inCapabilityGroup").map(([, g]) => ({source: c.id, target: g})));
@@ -517,7 +520,7 @@ function showSchema() {
 function showOverview() {
   const top = ofType("SecurityControl").map(c => ({...c, c: mitigated(c.id)})).sort((a, b) => b.c - a.c).slice(0, 8);
   detail.innerHTML = `<h2>Overview</h2>
-    <p>${C.SecurityControl} NIST 800-53 controls in their ${C.CapabilityGroup} families (stars). A larger circle means more techniques mitigated. Faded circles have no claim.</p>
+    <p>${C.SecurityControl} NIST 800-53 controls in their ${nistFamilies().length} families (stars). A larger circle means more techniques mitigated. Faded circles have no claim.</p>
     <p>Select a node, or search on the left, to walk the graph. Each mitigation claim links a control to a technique and points back to the source row that supports it.</p>
     <h3>Controls with the most claims</h3><ul>${top.map(c => `<li>${link(c.id)} <span class="count">${c.c}</span></li>`).join("")}</ul>
     <h3>Try</h3><ul>
@@ -647,7 +650,7 @@ function gapReport() {
   const counts = {covered: 0, gap: 0, none: 0};
   for (const [s] of cov.values()) counts[s]++;
   const total = cov.size;
-  const tactics = ofType("Tactic").sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(ta => {
+  const tactics = attackTactics().sort((a, b) => +a.p[":tacticOrder"] - +b.p[":tacticOrder"]).map(ta => {
     const c = {covered: 0, gap: 0, none: 0};
     for (const [p, s] of IN.get(ta.id)) if (p === ":inTactic" && BY_ID.get(s).p[":inAttackEnterprise"] === "true") c[cov.get(BY_ID.get(s).l)[0]]++;
     return [ta, c];

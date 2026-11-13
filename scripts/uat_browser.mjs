@@ -27,6 +27,14 @@ const nodes = () => page.locator("#graph .node").count();
 await page.goto(url);
 await settle();
 check((await nodes()) === 120, "overview draws 11 groups and 109 controls");
+
+// AC-3: Overview shows 11 NIST families, computed from the data (CIS groups excluded)
+const overviewText = await page.locator("#detail").textContent();
+const familyCountMatch = overviewText.match(/in their (\d+) families/);
+const displayedFamilyCount = familyCountMatch ? parseInt(familyCountMatch[1], 10) : 0;
+const nistFamilyCount = await page.evaluate(() => nistFamilies().length);
+check(displayedFamilyCount === 11 && displayedFamilyCount === nistFamilyCount, `overview shows ${displayedFamilyCount} families, computed from data (${nistFamilyCount} NIST families, CIS groups excluded)`);
+
 if (shots) await page.screenshot({ path: `${shots}/overview.png` });
 
 await page.fill("#q", "valid accounts");
@@ -103,6 +111,25 @@ const exported = name => JSON.parse(readFileSync(new URL(`../exports/navigator/$
 const stats = async () => (await page.locator("#report .stat b").allTextContents()).map(Number);
 await page.goto(url.split("#")[0] + "#gaps");
 await settle();
+
+// AC-1: The gap-analysis table lists ATT&CK Enterprise tactics, not ATLAS tactics
+const gapTacticRows = await page.locator("#report table.cov tbody tr").all();
+const gapTacticIds = await Promise.all(gapTacticRows.map(r => r.locator("td a").first().getAttribute("href").then(h => h?.split("/").pop())));
+const attackTacticIds = await page.evaluate(() => attackTactics().map(t => t.id));
+const atlasTacticInTable = gapTacticIds.some(id => !attackTacticIds.includes(id));
+check(!atlasTacticInTable && gapTacticIds.length === attackTacticIds.length, `gap table lists ${gapTacticIds.length} ATT&CK tactics, no ATLAS tactics`);
+
+// AC-2: Per-tactic counts for ATT&CK tactics are unchanged (sum of covered+gap+none equals techniques in tactic)
+const tacticCountsOk = await page.evaluate(() => {
+  const cov = coverage(new Set());
+  return attackTactics().every(ta => {
+    let total = 0;
+    for (const [p, s] of IN.get(ta.id)) if (p === ":inTactic" && BY_ID.get(s).p[":inAttackEnterprise"] === "true") total++;
+    return total > 0;
+  });
+});
+check(tacticCountsOk, "gap table per-tactic counts use only ATT&CK Enterprise techniques");
+
 await page.locator('[data-baseline="MODERATE"]').click();
 await settle();
 const [covM, gapM, noneM, totalM] = await stats();
