@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-4KZu95I99cSOr1eYssl2Li9FGDERM8u2KbMynEY7OYQ=' 'sha256-J6hXNAYZplouABY30rgy24Df2S3OPHfyVAPxPSVT+to=' 'sha256-2+TntPQ9R/SAGpLof2QjPOiU31PgrntPNjVVyOoczjU=' 'sha256-QFAGZx1UPvTUYHGbj138kupM/2zw1cuNb8g3C+YYGl0='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-4KZu95I99cSOr1eYssl2Li9FGDERM8u2KbMynEY7OYQ=' 'sha256-J6hXNAYZplouABY30rgy24Df2S3OPHfyVAPxPSVT+to=' 'sha256-2+TntPQ9R/SAGpLof2QjPOiU31PgrntPNjVVyOoczjU=' 'sha256-SjRRUIX3pVU9N1RXawnIpTImof5Jc6lL+8/CgKNge2c='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; font-src 'none'; object-src 'none'; media-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <title>NIST 800-53 to MITRE ATT&amp;CK enterprise ontology</title>
 <meta name="description" content="Navigable knowledge graph of an enterprise ontology that maps NIST SP 800-53 Rev. 5 controls to MITRE ATT&amp;CK Enterprise techniques, aligned to ATT&amp;CK STIX, NIST OSCAL and UCO, with competency questions answered from the graph.">
@@ -1048,7 +1048,7 @@ function gapReport() {
         <td class="num">${c.covered}</td><td class="num">${c.gap}</td><td class="num">${c.none}</td><td class="num">${pct(c.covered, d)}</td></tr>`; }).join("")}</tbody></table>
     <h3>Gaps a mapped control would close (${gaps.length})</h3>
     ${gaps.length ? `<table><thead><tr><th>Technique</th><th>Name</th><th>Controls that would mitigate it</th></tr></thead><tbody>${gaps.slice(0, 300).map(([tid, [, cs]]) => `<tr><td>${link("technique_" + tid).split("</a>")[0]}</a></td><td>${esc(BY_ID.get("technique_" + tid).s)}</td><td>${cs.map(c => `<a href="#n/control_${c}">${c}</a>`).join(" ")}</td></tr>`).join("")}</tbody></table>${gaps.length > 300 ? `<p class="note">First 300 shown; the CSV has all ${gaps.length}.</p>` : ""}` : `<p>None: every technique that has a mapped control is covered by your selection.</p>`}
-    <p class="note">${counts.none} techniques have no mitigating control in the mapping (non-mappable rows and techniques the mapping does not mention). No control in this mapping can cover them. This does not mean that no defence exists. See <a href="#q/CQ05">CQ05</a> and <a href="#q/CQ12">CQ12</a>.</p>`;
+    <p class="note">${counts.none} techniques have no mitigating control in the mapping (non-mappable rows and techniques the mapping does not mention). No control in this mapping is mapped to them. This does not mean that no defence exists. See <a href="#q/CQ05">CQ05</a> and <a href="#q/CQ12">CQ12</a>.</p>`;
   return {cov, recs, counts};
 }
 function renderGapPanel(result) {

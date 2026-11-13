@@ -8,6 +8,7 @@ Ontology 2.4.0, unchanged. Wording and trust release: the data, the claims and t
 
 - Fixed: "Covered" now says that at least one of your controls is mapped as able to mitigate the technique. It no longer says that the control mitigates it. The page shows the same definitions as the README. A test keeps them the same.
 - Fixed: "No mapped control" said that more NIST controls cannot cover the technique. Controls outside the mapping can still help. It now says that this does not mean that no defence exists.
+- Fixed: the gap-analysis note said "No control in this mapping can cover them." It now says "is mapped to them" to agree with the README coverage table.
 - Fixed: the README said that ATT&CK and NIST 800-53 do not describe attacks on AI agents. This is true for ATT&CK 16.1, the version of the mapping. But ATT&CK 20.1 has techniques such as T1698 Indirect Prompt Injection and T1699 Direct Prompt Injection. The README now says both. A test reads both ATT&CK bundles.
 - Fixed: the README said that no published mapping exists from ATLAS to NIST 800-53. It now says that CTID Mappings Explorer publishes none on 2026-11-11, with a link.
 - Each "newest release" statement has the date of the check. The date is stored once in the build (`newestCheckedOn` in `data/source-checks.json`).
