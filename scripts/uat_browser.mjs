@@ -29,11 +29,13 @@ await settle();
 check((await nodes()) === 120, "overview draws 11 groups and 109 controls");
 
 // AC-3: Overview shows 11 NIST families, computed from the data (CIS groups excluded)
+// Compute NIST family count inline: CapabilityGroup nodes whose id does not start with "cisgroup_"
 const overviewText = await page.locator("#detail").textContent();
 const familyCountMatch = overviewText.match(/in their (\d+) families/);
 const displayedFamilyCount = familyCountMatch ? parseInt(familyCountMatch[1], 10) : 0;
-const nistFamilyCount = await page.evaluate(() => nistFamilies().length);
-check(displayedFamilyCount === 11 && displayedFamilyCount === nistFamilyCount, `overview shows ${displayedFamilyCount} families, computed from data (${nistFamilyCount} NIST families, CIS groups excluded)`);
+const nistFamilyCount = await page.evaluate(() => ofType("CapabilityGroup").filter(g => !g.id.startsWith("cisgroup_")).length);
+check(displayedFamilyCount === 11, `overview shows 11 families (displayed: ${displayedFamilyCount})`);
+check(displayedFamilyCount === nistFamilyCount, `displayed count ${displayedFamilyCount} equals computed NIST families ${nistFamilyCount} (CIS groups excluded)`);
 
 if (shots) await page.screenshot({ path: `${shots}/overview.png` });
 
@@ -113,22 +115,56 @@ await page.goto(url.split("#")[0] + "#gaps");
 await settle();
 
 // AC-1: The gap-analysis table lists ATT&CK Enterprise tactics, not ATLAS tactics
+// Read tactic ids from the rendered table (independent of any helper under test)
 const gapTacticRows = await page.locator("#report table.cov tbody tr").all();
 const gapTacticIds = await Promise.all(gapTacticRows.map(r => r.locator("td a").first().getAttribute("href").then(h => h?.split("/").pop())));
-const attackTacticIds = await page.evaluate(() => attackTactics().map(t => t.id));
-const atlasTacticInTable = gapTacticIds.some(id => !attackTacticIds.includes(id));
-check(!atlasTacticInTable && gapTacticIds.length === attackTacticIds.length, `gap table lists ${gapTacticIds.length} ATT&CK tactics, no ATLAS tactics`);
+// (a) No id starts with "atlastactic_" (ATLAS tactics have this prefix in the data)
+const hasAtlasTactic = gapTacticIds.some(id => id?.startsWith("atlastactic_"));
+check(!hasAtlasTactic, "gap table has no ATLAS tactics (no id starts with atlastactic_)");
+// (b) Row count equals the number of ATT&CK Enterprise tactics: 14 (ATT&CK 16.1 has 14 tactics in Enterprise)
+check(gapTacticIds.length === 14, `gap table has 14 rows (ATT&CK 16.1 Enterprise tactics), got ${gapTacticIds.length}`);
+// (c) No row has all three counts (covered, gap, none) at zero
+const rowCounts = await Promise.all(gapTacticRows.map(async r => {
+  const cells = await r.locator("td.num").allTextContents();
+  return cells.slice(0, 3).map(Number);  // covered, gap, none
+}));
+const hasAllZeroRow = rowCounts.some(([cov, gap, none]) => cov === 0 && gap === 0 && none === 0);
+check(!hasAllZeroRow, "no gap table row has all-zero counts (covered=0, gap=0, none=0)");
 
-// AC-2: Per-tactic counts for ATT&CK tactics are unchanged (sum of covered+gap+none equals techniques in tactic)
-const tacticCountsOk = await page.evaluate(() => {
-  const cov = coverage(new Set());
-  return attackTactics().every(ta => {
-    let total = 0;
-    for (const [p, s] of IN.get(ta.id)) if (p === ":inTactic" && BY_ID.get(s).p[":inAttackEnterprise"] === "true") total++;
-    return total > 0;
-  });
-});
-check(tacticCountsOk, "gap table per-tactic counts use only ATT&CK Enterprise techniques");
+// AC-2: Per-tactic counts match 64badaa baseline and sum to technique count
+// Baseline values from 64badaa viewer (commit 64badaa6cc8e1f6c2fc3af68bc9fd32db3c79b54) with no controls selected:
+// Each row shows [gap, none] because covered=0 when no controls are selected.
+// The baseline was captured by running the 64badaa viewer and reading the table.
+const baseline64badaa = {
+  tactic_TA0043: { gap: 7, none: 37, total: 44 },
+  tactic_TA0042: { gap: 0, none: 47, total: 47 },
+  tactic_TA0001: { gap: 20, none: 1, total: 21 },
+  tactic_TA0002: { gap: 38, none: 0, total: 38 },
+  tactic_TA0003: { gap: 108, none: 12, total: 120 },
+  tactic_TA0004: { gap: 95, none: 14, total: 109 },
+  tactic_TA0005: { gap: 165, none: 39, total: 204 },
+  tactic_TA0006: { gap: 63, none: 4, total: 67 },
+  tactic_TA0007: { gap: 15, none: 31, total: 46 },
+  tactic_TA0008: { gap: 22, none: 1, total: 23 },
+  tactic_TA0009: { gap: 27, none: 13, total: 40 },
+  tactic_TA0011: { gap: 39, none: 3, total: 42 },
+  tactic_TA0010: { gap: 18, none: 1, total: 19 },
+  tactic_TA0040: { gap: 26, none: 6, total: 32 },
+};
+const tacticMismatches = [];
+for (let i = 0; i < gapTacticIds.length; i++) {
+  const id = gapTacticIds[i];
+  const [cov, gap, none] = rowCounts[i];
+  const expected = baseline64badaa[id];
+  if (!expected) { tacticMismatches.push(`${id}: not in baseline`); continue; }
+  if (gap !== expected.gap || none !== expected.none) {
+    tacticMismatches.push(`${id}: gap=${gap} none=${none}, expected gap=${expected.gap} none=${expected.none}`);
+  }
+  if (cov + gap + none !== expected.total) {
+    tacticMismatches.push(`${id}: sum=${cov + gap + none}, expected total=${expected.total}`);
+  }
+}
+check(tacticMismatches.length === 0, `gap table per-tactic counts match 64badaa baseline${tacticMismatches.length ? ": " + tacticMismatches.join("; ") : ""}`);
 
 await page.locator('[data-baseline="MODERATE"]').click();
 await settle();
