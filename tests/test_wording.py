@@ -99,6 +99,41 @@ def test_each_claim_gives_its_source_row():
     assert checked > 5000
 
 
+def test_each_source_record_matches_the_raw_ctid_row():
+    """Each NIST claim must cite the correct raw CTID row (audit item 2, M8).
+
+    The source_record is a 1-based index into the raw mapping_objects array.
+    This test verifies that the cited row has the same control and technique.
+    """
+    import json  # noqa: PLC0415
+    import sys  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_population  # noqa: PLC0415
+
+    ctid_rows = build_population.fetch("ctid")["mapping_objects"]
+    files = sorted((ROOT / "api" / "v1" / "techniques").glob("*.json"))
+    checked = 0
+    for path in files:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        technique_id = doc["id"]
+        for claim in doc.get("claims", []):
+            control_id = claim["control"]["id"]
+            for ev in claim["evidence"]:
+                n = ev["source_record"]
+                raw = ctid_rows[n - 1]
+                assert raw["capability_id"] == control_id, (
+                    f"{path.name}: row {n} has control {raw['capability_id']!r}, "
+                    f"expected {control_id!r}"
+                )
+                assert raw["attack_object_id"] == technique_id, (
+                    f"{path.name}: row {n} has technique {raw['attack_object_id']!r}, "
+                    f"expected {technique_id!r}"
+                )
+                checked += 1
+    assert checked > 5000, f"only {checked} NIST records checked"
+
+
 def test_each_source_file_is_in_the_manifest_with_its_current_digest():
     import hashlib  # noqa: PLC0415
 
