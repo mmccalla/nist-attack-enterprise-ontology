@@ -12,6 +12,13 @@ Tests only. No product change.
 - New test: the 109 mapped controls, 11 families and 208 changed techniques come from the raw source files, not from data the build writes.
 - New test: the per-tactic coverage states (Covered, Gap, No mapped control) in the built API match the values that the source model computes. Also tests the Covered column with the MODERATE baseline.
 
+## 2.8.2 (2026-11-13)
+
+Ontology 2.4.0, unchanged. Bug-fix release: no change to the data or the API structure.
+
+- Fixed: The gap-analysis table listed ATLAS tactics with zero counts. It now lists ATT&CK Enterprise tactics.
+- Fixed: The Overview showed 29 families. It now shows 11 NIST 800-53 families and excludes CIS Controls groups.
+
 ## 2.8.1 (2026-11-11)
 
 Ontology 2.4.0, unchanged. Wording and trust release: the data, the claims and the API structure do not change. The spec and the source evidence are in `docs/spec-2.8.1.md`.
