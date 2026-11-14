@@ -2,7 +2,7 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
-## 2.8.3
+## 2.8.3 (2026-11-14)
 
 Tests only. No product change.
 

@@ -4,7 +4,7 @@
  "id": "T1021.003",
  "versions": {
   "api": "1",
-  "release": "2.8.2",
+  "release": "2.8.3",
   "ontology": "2.4.0",
   "attack": "16.1",
   "attack_later": "20.1",
