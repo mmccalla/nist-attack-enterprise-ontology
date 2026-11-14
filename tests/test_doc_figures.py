@@ -36,7 +36,14 @@ def test_readme_source_figures(src):
     c = CHECKS["counts"]
     assert f"{fmt(c['sourceRows'])} NIST mapping rows and {fmt(len(src.cis_rows))} CIS mapping rows" in README
     assert f"{c['techniquesInAttackEnterprise']} techniques, {c['tactics']} tactics" in README
-    assert f"The mapping covers {c['controls']} technical base controls in 11 families" in README
+
+    mapped_controls = {r["capability_id"] for r in src.rows
+                       if r["status"] == "complete" and r["attack_object_id"] in src.techniques}
+    mapped_families = {c[:2] for c in mapped_controls}
+    assert len(mapped_controls) == 109, f"expected 109 mapped controls, got {len(mapped_controls)}"
+    assert len(mapped_families) == 11, f"expected 11 families, got {len(mapped_families)}"
+    assert f"The mapping covers {len(mapped_controls)} technical base controls in {len(mapped_families)} families" in README
+
     no_row = len(set(src.techniques) - {r["attack_object_id"] for r in src.rows})
     assert f"{no_row} ATT&CK Enterprise techniques do not have a row in the mapping" in README
 
@@ -59,9 +66,15 @@ def test_readme_atlas_and_attack_figures(src):
     assert f"{len(src.atlas_agent)} of them concern AI agents" in README
     later = CHECKS["laterVersion"]["version"]
     assert later == "20.1"
-    assert f"ATT&CK {later}, the newest release on {CHECKS['newestCheckedOn']}, revokes, renames or moves 208 of its techniques" in README
+
+    changed_count = sum(1 for t, v in src.later.items()
+                        if v["revoked"] or v["renamed"] or v["tacticsChanged"])
+    assert changed_count == 208, f"expected 208 changed techniques, got {changed_count}"
+
+    assert f"ATT&CK {later}, the newest release on {CHECKS['newestCheckedOn']}, revokes, renames or moves {changed_count} of its techniques" in README
     assert f"attack-16.1-to-{later}.csv" in README and (ROOT / "exports" / f"attack-16.1-to-{later}.csv").exists()
-    assert len({r["technique_id"] for r in csv.DictReader(open(ROOT / "exports" / f"attack-16.1-to-{later}.csv", encoding="utf-8"))}) == 208
+    csv_count = len({r["technique_id"] for r in csv.DictReader(open(ROOT / "exports" / f"attack-16.1-to-{later}.csv", encoding="utf-8"))})
+    assert csv_count == changed_count, f"CSV has {csv_count} techniques, expected {changed_count}"
 
 
 def test_competency_answer_figures():
