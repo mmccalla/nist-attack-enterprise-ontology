@@ -588,7 +588,7 @@ function cellId(v) {
 }
 function showQuestions() {
   detail.innerHTML = `<h2>Competency questions</h2>
-    <p>What the graph must be able to answer, following the competency-question method in the ontology engineering guide. Each question is a SPARQL file in <code>queries/</code>; the tests check every answer against the same answer computed from the raw source files.</p>
+    <p>These questions give the facts that the graph must answer. Grüninger and Fox gave this method in 1995. Each question is a SPARQL file in <code>queries/</code>. The tests compare each answer with the same answer from the raw source files.</p>
     <ul class="list">${QUESTIONS.map(q => `<li><a href="#q/${q.id}"><span class="id">${q.id}</span><span class="sub">${esc(q.question)}</span><span class="count">${q.total}</span></a></li>`).join("")}</ul>`;
   overview();
   crumb("Competency questions");

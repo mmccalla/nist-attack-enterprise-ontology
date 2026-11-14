@@ -1,6 +1,6 @@
 # Vocabulary alignment register
 
-The Stage 4 deliverable of *A Practical Guide to Ontology Engineering*. The guide's rule is that reuse needs semantic alignment, not similar names, and that `owl:equivalentClass` and `owl:sameAs` must not be used as loose synonyms. This register records, for every external term considered, the relation used, the strength of the match and the reason. Terms rejected on purpose are listed too.
+This file is the Stage 4 result of an eight-stage method. Mark McCalla wrote the method in 2026. The method is an unpublished guide. The method is the author's own synthesis. Noy and McGuinness (2001) tell you to reuse existing ontologies. The NeOn methodology also tells you to reuse ontologies (Suárez-Figueroa, Gómez-Pérez and Fernández-López, 2012). The author recommends semantic alignment (McCalla, 2026). A similar name is not sufficient. The OWL 2 Primer shows that `owl:equivalentClass` and `owl:sameAs` have a logical effect (Hitzler, Krötzsch, Parsia, Patel-Schneider and Rudolph, 2012). Do not use these two properties as loose synonyms. This register gives the relation, the match strength and the reason for each external term. The register also lists the terms that the project rejected. The full references are in [references.md](references.md).
 
 ## How each standard can be aligned
 
@@ -55,7 +55,7 @@ Strength: **exact** means the formal meanings match and an OWL axiom or an ident
 
 | Candidate | Why rejected |
 | --- | --- |
-| `uco-pattern:Pattern` for `:AttackTechnique` | Similar name only. UCO patterns are logical pattern expressions (regular expressions, query expressions), the kind STIX indicators use. An ATT&CK attack pattern is adversary behaviour. This is the lexical-similarity trap the guide warns about. |
+| `uco-pattern:Pattern` for `:AttackTechnique` | Similar name only. UCO patterns are logical pattern expressions (regular expressions, query expressions), the kind STIX indicators use. An ATT&CK attack pattern is adversary behaviour. The names are similar. The meanings are different. The author recommends that you do not select a term only because the name is similar (McCalla, 2026). |
 | `uco-action:Action` for `:AttackTechnique` | A UCO action is an occurrence of something done. A technique is a type of behaviour, not an occurrence. |
 | `owl:equivalentClass` between `:SecurityControl` and `:AttackMitigation` | Different concepts from different publishers (ambiguity A7). Equivalence would merge their instances under reasoning. |
 | `owl:sameAs` between our technique IRIs and STIX ids | STIX ids are strings, not RDF resources. A literal `:stixId` carries the identity without a false identity axiom. |

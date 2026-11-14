@@ -2,6 +2,16 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## Unreleased
+
+Docs only. No change to the version. No change to the data, the ontology or the API.
+
+- The docs no longer give the name of an unpublished guide as a book title.
+- The eight-stage method is the author's own synthesis.
+- Mark McCalla wrote the method in 2026.
+- The method uses published methods and standards.
+- A new file, `docs/references.md`, gives the APA references.
+
 ## 2.8.3 (2026-11-14)
 
 Tests only. No product change.
