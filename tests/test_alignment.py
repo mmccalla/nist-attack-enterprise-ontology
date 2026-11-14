@@ -98,10 +98,21 @@ def test_alignment_modules_annotate_their_terms(module, annotation, terms):
 def test_alignment_annotation_values_match_specifications():
     """Each alignment annotation must have the correct value from the specification (M9).
 
-    STIX 2.1 object types: https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_Toc38214665
-    STIX 2.1 relationship types: https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_Toc38214671
-    ATT&CK STIX extensions: https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md
-    OSCAL catalog/profile: https://pages.nist.gov/OSCAL/
+    STIX 2.1 object types:
+      https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_Toc38214665
+    STIX 2.1 relationship types:
+      https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_Toc38214671
+    ATT&CK STIX extensions:
+      https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md
+
+    OSCAL model reference (catalog group and profile):
+      https://pages.nist.gov/OSCAL-Reference/models/latest/catalog/json-reference/#/catalog/groups
+      https://pages.nist.gov/OSCAL-Reference/models/latest/profile/
+
+    FINDING: The ontology's oscalAssembly values are descriptive text, not OSCAL spec terms.
+    The OSCAL spec calls them "group" (in the catalog model) and "profile" (for profiles).
+    The ontology uses "catalog group (class family)" and "profile" instead.
+    This is reported in the PR body; the ontology is not changed in this PR.
     """
     stix = Graph().parse(ROOT / "ontology" / "alignment-stix.ttl")
     oscal = Graph().parse(ROOT / "ontology" / "alignment-oscal.ttl")
@@ -126,11 +137,11 @@ def test_alignment_annotation_values_match_specifications():
         actual = str(stix.value(ONT[term], ONT.stixRelationshipType))
         assert actual == expected, f"{term} stixRelationshipType: got {actual!r}, expected {expected!r}"
 
-    oscal_assemblies = {
+    oscal_values = {
         "CapabilityGroup": "catalog group (class family)",
         "ControlBaseline": "profile",
     }
-    for term, expected in oscal_assemblies.items():
+    for term, expected in oscal_values.items():
         actual = str(oscal.value(ONT[term], ONT.oscalAssembly))
         assert actual == expected, f"{term} oscalAssembly: got {actual!r}, expected {expected!r}"
 

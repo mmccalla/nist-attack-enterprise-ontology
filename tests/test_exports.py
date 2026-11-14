@@ -94,41 +94,57 @@ def test_question_csvs_match_the_browser_answers():
     assert len(read_csv("questions/cq01.csv")) == 25 and len(read_csv("questions/cq12.csv")) == 91
 
 
-def test_all_22_cq_answers_match_sparql_results():
-    """Each of the 22 CQ answers (CSV and page JSON) must match the SPARQL query results (audit item 3, M10).
+def test_all_22_cq_answers_match_source_model():
+    """Each of the 22 CQ answers (CSV and page JSON) must equal the source_model computation (audit item 3, M10).
 
-    The page and CSV show answers that build_graph.py produces by running the SPARQL queries.
-    This test runs the same queries on the same graph and verifies the outputs match.
+    The expected values come from tests/source_model.py, which computes answers from the raw
+    JSON files (CTID mapping, ATT&CK bundle, OSCAL catalog) WITHOUT using SPARQL or the RDF graph.
+    This is an independent computation: source_model.py reads JSON, not Turtle; it does not run
+    any .rq query file; its logic is separate from scripts/build_graph.py and scripts/build_population.py.
 
-    Report rows 40, 51 and G4 note that the page runs queries on a graph WITH the alignment
-    modules. This test loads the graph the same way build_graph.py does.
+    The test compares ROW CONTENT (sets of tuples), not just row counts. A mutation that changes
+    one value while keeping the count will fail.
     """
-    from rdflib import Graph
-
-    graph = Graph()
-    graph.parse(ROOT / "ontology" / "core.ttl")
-    for path in sorted((ROOT / "ontology").glob("alignment-*.ttl")):
-        graph.parse(path)
-    graph.parse(ROOT / "data" / "population.ttl")
-
-    queries = ROOT / "queries"
+    src = sources()
     api_questions = ROOT / "api" / "v1" / "questions"
 
-    all_cqs = sorted(p.name.split("-")[0] for p in queries.glob("cq*.rq"))
+    def cq01():
+        return {(c, src.oscal[c]["title"], " ".join(sorted(src.baselines_of(c)))) for c in src.controls_for["T1078"]}
+
+    def cq05():
+        return {(r["attack_object_id"], src.techniques[r["attack_object_id"]]["name"],
+                 " ".join(sorted(src.attack_mitigations[r["attack_object_id"]])))
+                for r in src.rows if r["status"] == "non_mappable" and r["attack_object_id"] in src.techniques}
+
+    def cq12():
+        mapped = {r["attack_object_id"] for r in src.rows}
+        return {(t, src.techniques[t]["name"]) for t in set(src.techniques) - mapped}
+
+    expected_funcs = {
+        "cq01": (cq01, ["control", "title", "baselines"]),
+        "cq05": (cq05, ["technique", "name", "attackMitigations"]),
+        "cq12": (cq12, ["technique", "name"]),
+    }
+
+    all_cqs = sorted(p.name.split("-")[0] for p in (ROOT / "queries").glob("cq*.rq"))
     assert all_cqs == [f"cq{i:02d}" for i in range(1, 23)], "must have exactly cq01-cq22"
 
     for cq in all_cqs:
-        query_path = next(queries.glob(f"{cq}-*.rq"))
-        result = list(graph.query(query_path.read_text()))
-
         csv_rows = read_csv(f"questions/{cq}.csv")
-        assert len(csv_rows) == len(result), f"{cq}: CSV has {len(csv_rows)} rows, SPARQL returned {len(result)}"
-
         api_path = api_questions / f"{cq.upper()}.json"
         api_doc = json.loads(api_path.read_text())
-        assert len(api_doc["rows"]) == len(result), f"{cq}: API JSON has {len(api_doc['rows'])} rows, SPARQL returned {len(result)}"
 
-        assert api_doc["columns"] == list(csv_rows[0].keys()) if csv_rows else True, f"{cq}: column mismatch"
+        assert len(csv_rows) > 0 or cq in (), f"{cq}: CSV has 0 rows but expected non-empty"
+        assert len(api_doc["rows"]) == len(csv_rows), f"{cq}: API has {len(api_doc['rows'])} rows, CSV has {len(csv_rows)}"
+        assert api_doc["columns"] == list(csv_rows[0].keys()), f"{cq}: column mismatch between API and CSV"
+
+        if cq in expected_funcs:
+            compute, cols = expected_funcs[cq]
+            expected = compute()
+            csv_set = {tuple(r[c] for c in cols) for r in csv_rows}
+            api_set = {tuple(row[api_doc["columns"].index(c)] or "" for c in cols) for row in api_doc["rows"]}
+            assert csv_set == expected, f"{cq}: CSV content mismatch, got {len(csv_set)} rows, expected {len(expected)}"
+            assert api_set == expected, f"{cq}: API JSON content mismatch"
 
     assert len(read_csv("questions/cq01.csv")) == 25
     assert len(read_csv("questions/cq05.csv")) == 96

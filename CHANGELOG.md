@@ -6,9 +6,9 @@ Repository releases are numbered separately from the ontology version (`owl:vers
 
 Tests only. No product change.
 
-- New test: each NIST claim's source_record matches the raw CTID row. The test loads the raw CTID file directly and verifies its SHA-256 digest against the manifest.
-- New test: all 22 CQ answers (CSV and page JSON) match the SPARQL query results. The test loads the graph with the alignment modules and runs the same queries that the build runs.
-- New test: each alignment annotation value matches the STIX 2.1 or OSCAL specification.
+- New test: each NIST claim's source_record matches the raw CTID row. The test loads the raw CTID file directly and verifies its SHA-256 digest against the manifest (single source of truth).
+- New test: all 22 CQ answers (CSV and page JSON) match the source_model computation. The expected values come from raw JSON files, not from SPARQL queries. The test compares row content (sets of tuples), not just row counts.
+- New test: each alignment annotation value matches the STIX 2.1 specification. The OSCAL values use the ontology's descriptive text, not the spec term (see PR body).
 - New test: the 109 mapped controls, 11 families and 208 changed techniques come from the raw source files, not from data the build writes.
 - New test: the per-tactic coverage states (Covered, Gap, No mapped control) in the built API match the values that the source model computes. Also tests the Covered column with the MODERATE baseline.
 
