@@ -2,6 +2,15 @@
 
 Repository releases are numbered separately from the ontology version (`owl:versionInfo` in `ontology/core.ttl`).
 
+## 2.8.3
+
+Tests only. No product change.
+
+- New test: each NIST claim's source_record matches the raw CTID row (control and technique). Catches mutations that shift row numbers.
+- New test: each CQ CSV file matches the answer that the source model computes. Proves that the user-visible answers equal the pytest-verified answers.
+- New test: the 109 mapped controls, 11 families and 208 changed techniques come from the raw source files, not from data the build writes. Catches mutations that change these figures in the README but not in the data.
+- New test: the per-tactic Gap and No mapped control counts come from the raw CTID data. The baseline values are fixed at commit 64badaa.
+
 ## 2.8.1 (2026-11-11)
 
 Ontology 2.4.0, unchanged. Wording and trust release: the data, the claims and the API structure do not change. The spec and the source evidence are in `docs/spec-2.8.1.md`.
