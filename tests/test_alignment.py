@@ -95,6 +95,57 @@ def test_alignment_modules_annotate_their_terms(module, annotation, terms):
         assert g.value(ONT[term], ONT[annotation]) is not None, f"{term} lacks {annotation}"
 
 
+def test_alignment_annotation_values_match_specifications():
+    """Each alignment annotation must have the correct value from the specification (M9).
+
+    STIX 2.1 object types:
+      https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_Toc38214665
+    STIX 2.1 relationship types:
+      https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_Toc38214671
+    ATT&CK STIX extensions:
+      https://github.com/mitre-attack/attack-stix-data/blob/master/USAGE.md
+
+    OSCAL model reference (catalog group and profile):
+      https://pages.nist.gov/OSCAL-Reference/models/latest/catalog/json-reference/#/catalog/groups
+      https://pages.nist.gov/OSCAL-Reference/models/latest/profile/
+
+    FINDING: The ontology's oscalAssembly values are descriptive text, not OSCAL spec terms.
+    The OSCAL spec calls them "group" (in the catalog model) and "profile" (for profiles).
+    The ontology uses "catalog group (class family)" and "profile" instead.
+    This is reported in the PR body; the ontology is not changed in this PR.
+    """
+    stix = Graph().parse(ROOT / "ontology" / "alignment-stix.ttl")
+    oscal = Graph().parse(ROOT / "ontology" / "alignment-oscal.ttl")
+
+    stix_object_types = {
+        "AttackTechnique": "attack-pattern",
+        "Tactic": "x-mitre-tactic",
+        "AttackMitigation": "course-of-action",
+        "SecurityControl": "course-of-action",
+        "MitigationClaim": "relationship",
+    }
+    for term, expected in stix_object_types.items():
+        actual = str(stix.value(ONT[term], ONT.stixObjectType))
+        assert actual == expected, f"{term} stixObjectType: got {actual!r}, expected {expected!r}"
+
+    stix_relationship_types = {
+        "subTechniqueOf": "subtechnique-of",
+        "attackMitigationFor": "mitigates",
+        "MitigationClaim": "mitigates",
+    }
+    for term, expected in stix_relationship_types.items():
+        actual = str(stix.value(ONT[term], ONT.stixRelationshipType))
+        assert actual == expected, f"{term} stixRelationshipType: got {actual!r}, expected {expected!r}"
+
+    oscal_values = {
+        "CapabilityGroup": "catalog group (class family)",
+        "ControlBaseline": "profile",
+    }
+    for term, expected in oscal_values.items():
+        actual = str(oscal.value(ONT[term], ONT.oscalAssembly))
+        assert actual == expected, f"{term} oscalAssembly: got {actual!r}, expected {expected!r}"
+
+
 def test_every_technique_tactic_and_mitigation_in_attack_has_a_stix_id():
     g = gates.graph(gates.CORE)
     attack = DATA["catalogue_attack-enterprise-16.1"]

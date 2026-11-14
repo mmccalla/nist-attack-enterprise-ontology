@@ -1,12 +1,15 @@
 """Wording gate (release 2.8.1, docs/spec-2.8.1.md): each statement about what a result means, or about a source, must agree
 with the data and must not say more than the data shows. Added on 2026-11-11."""
 
+import hashlib
+import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 README = (ROOT / "README.md").read_text(encoding="utf-8")
 VIEWER = (ROOT / "src" / "viewer.html").read_text(encoding="utf-8")
+MANIFEST = (ROOT / "SOURCE-MANIFEST.md").read_text(encoding="utf-8")
 
 
 def coverage_states():
@@ -85,8 +88,6 @@ def test_trust_statement_is_in_the_readme():
 
 
 def test_each_claim_gives_its_source_row():
-    import json  # noqa: PLC0415
-
     files = sorted((ROOT / "api" / "v1" / "techniques").glob("*.json"))
     assert len(files) > 600
     checked = 0
@@ -99,9 +100,55 @@ def test_each_claim_gives_its_source_row():
     assert checked > 5000
 
 
-def test_each_source_file_is_in_the_manifest_with_its_current_digest():
-    import hashlib  # noqa: PLC0415
+def test_each_source_record_matches_the_raw_ctid_row():
+    """Each NIST claim must cite the correct raw CTID row (audit item 2, M8).
 
+    The source_record is a 1-based index into the raw mapping_objects array.
+    This test loads the raw CTID file directly (not through the pipeline loader)
+    and verifies its SHA-256 against the manifest before checking row content.
+
+    The test fails (not skips) if .cache/ctid.json is missing. CI creates this
+    file by running scripts/build_population.py before the test suite.
+    """
+    ctid_row = next((line for line in MANIFEST.splitlines() if line.startswith("| ctid |")), None)
+    assert ctid_row, "ctid not found in SOURCE-MANIFEST.md"
+    expected_digest = re.search(r"`([0-9a-f]{64})`", ctid_row).group(1)
+
+    ctid_path = ROOT / ".cache" / "ctid.json"
+    assert ctid_path.exists(), f"raw CTID file not found at {ctid_path} (CI must run build_population.py first)"
+    ctid_bytes = ctid_path.read_bytes()
+    actual_digest = hashlib.sha256(ctid_bytes).hexdigest()
+    assert actual_digest == expected_digest, (
+        f"CTID file digest mismatch: got {actual_digest}, expected {expected_digest}"
+    )
+
+    ctid_data = json.loads(ctid_bytes.decode("utf-8"))
+    ctid_rows = ctid_data["mapping_objects"]
+    assert len(ctid_rows) == 5410, f"expected 5410 CTID rows, got {len(ctid_rows)}"
+
+    files = sorted((ROOT / "api" / "v1" / "techniques").glob("*.json"))
+    checked = 0
+    for path in files:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        technique_id = doc["id"]
+        for claim in doc.get("claims", []):
+            control_id = claim["control"]["id"]
+            for ev in claim["evidence"]:
+                n = ev["source_record"]
+                raw = ctid_rows[n - 1]
+                assert raw["capability_id"] == control_id, (
+                    f"{path.name}: row {n} has control {raw['capability_id']!r}, "
+                    f"expected {control_id!r}"
+                )
+                assert raw["attack_object_id"] == technique_id, (
+                    f"{path.name}: row {n} has technique {raw['attack_object_id']!r}, "
+                    f"expected {technique_id!r}"
+                )
+                checked += 1
+    assert checked > 5000, f"only {checked} NIST records checked"
+
+
+def test_each_source_file_is_in_the_manifest_with_its_current_digest():
     manifest = (ROOT / "SOURCE-MANIFEST.md").read_text(encoding="utf-8")
     files = sorted((ROOT / "data" / "sources").glob("*.json"))
     assert len(files) >= 3
@@ -120,8 +167,6 @@ def test_each_newest_release_statement_has_the_check_date():
 def test_release_number_and_date_agree_everywhere():
     """CITATION.cff is the one place where the release is set. The newest released changelog heading, the API and
     llms.txt must agree with it."""
-    import json  # noqa: PLC0415
-
     cff = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
     version = re.search(r"^version:\s*(\S+)", cff, re.M).group(1)
     date = re.search(r"^date-released:\s*(\S+)", cff, re.M).group(1)
