@@ -99,19 +99,31 @@ def test_each_claim_gives_its_source_row():
     assert checked > 5000
 
 
+CTID_EXPECTED_DIGEST = "355ae97d309c00eb2428e5af07754ff4ca16cfe63928194081d0e883aed929c8"
+
+
 def test_each_source_record_matches_the_raw_ctid_row():
     """Each NIST claim must cite the correct raw CTID row (audit item 2, M8).
 
     The source_record is a 1-based index into the raw mapping_objects array.
-    This test verifies that the cited row has the same control and technique.
+    This test loads the raw CTID file directly (not through the pipeline loader)
+    and verifies its SHA-256 against the manifest before checking row content.
     """
+    import hashlib  # noqa: PLC0415
     import json  # noqa: PLC0415
-    import sys  # noqa: PLC0415
 
-    sys.path.insert(0, str(ROOT / "scripts"))
-    import build_population  # noqa: PLC0415
+    ctid_path = ROOT / ".cache" / "ctid.json"
+    assert ctid_path.exists(), f"raw CTID file not found at {ctid_path}"
+    ctid_bytes = ctid_path.read_bytes()
+    actual_digest = hashlib.sha256(ctid_bytes).hexdigest()
+    assert actual_digest == CTID_EXPECTED_DIGEST, (
+        f"CTID file digest mismatch: got {actual_digest}, expected {CTID_EXPECTED_DIGEST}"
+    )
 
-    ctid_rows = build_population.fetch("ctid")["mapping_objects"]
+    ctid_data = json.loads(ctid_bytes.decode("utf-8"))
+    ctid_rows = ctid_data["mapping_objects"]
+    assert len(ctid_rows) == 5410, f"expected 5410 CTID rows, got {len(ctid_rows)}"
+
     files = sorted((ROOT / "api" / "v1" / "techniques").glob("*.json"))
     checked = 0
     for path in files:

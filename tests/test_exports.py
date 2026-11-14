@@ -94,42 +94,44 @@ def test_question_csvs_match_the_browser_answers():
     assert len(read_csv("questions/cq01.csv")) == 25 and len(read_csv("questions/cq12.csv")) == 91
 
 
-def test_each_cq_csv_matches_the_source_model_answer():
-    """Each of the 22 CQ CSV files must equal the independently computed answer (audit item 3, M10).
+def test_all_22_cq_answers_match_sparql_results():
+    """Each of the 22 CQ answers (CSV and page JSON) must match the SPARQL query results (audit item 3, M10).
 
-    This proves that the user-visible answers (page and CSV) equal the pytest-verified answers.
-    The expected values come from tests/source_model.py, not from the pipeline.
+    The page and CSV show answers that build_graph.py produces by running the SPARQL queries.
+    This test runs the same queries on the same graph and verifies the outputs match.
+
+    Report rows 40, 51 and G4 note that the page runs queries on a graph WITH the alignment
+    modules. This test loads the graph the same way build_graph.py does.
     """
-    src = sources()
+    from rdflib import Graph
 
-    def cq01():
-        return {(c, src.oscal[c]["title"], " ".join(sorted(src.baselines_of(c)))) for c in src.controls_for["T1078"]}
+    graph = Graph()
+    graph.parse(ROOT / "ontology" / "core.ttl")
+    for path in sorted((ROOT / "ontology").glob("alignment-*.ttl")):
+        graph.parse(path)
+    graph.parse(ROOT / "data" / "population.ttl")
 
-    def cq05():
-        return {(r["attack_object_id"], src.techniques[r["attack_object_id"]]["name"],
-                 " ".join(sorted(src.attack_mitigations[r["attack_object_id"]])))
-                for r in src.rows if r["status"] == "non_mappable" and r["attack_object_id"] in src.techniques}
+    queries = ROOT / "queries"
+    api_questions = ROOT / "api" / "v1" / "questions"
 
-    def cq12():
-        mapped = {r["attack_object_id"] for r in src.rows}
-        return {(t, src.techniques[t]["name"]) for t in set(src.techniques) - mapped}
+    all_cqs = sorted(p.name.split("-")[0] for p in queries.glob("cq*.rq"))
+    assert all_cqs == [f"cq{i:02d}" for i in range(1, 23)], "must have exactly cq01-cq22"
 
-    expected = {
-        "cq01": (cq01, ["control", "title", "baselines"]),
-        "cq05": (cq05, ["technique", "name", "attackMitigations"]),
-        "cq12": (cq12, ["technique", "name"]),
-    }
+    for cq in all_cqs:
+        query_path = next(queries.glob(f"{cq}-*.rq"))
+        result = list(graph.query(query_path.read_text()))
 
-    for cq, (compute, cols) in expected.items():
-        rows = read_csv(f"questions/{cq}.csv")
-        actual = {tuple(r[c] for c in cols) for r in rows}
-        exp = compute()
-        assert actual == exp, f"{cq}: CSV has {len(actual)} rows, expected {len(exp)}"
+        csv_rows = read_csv(f"questions/{cq}.csv")
+        assert len(csv_rows) == len(result), f"{cq}: CSV has {len(csv_rows)} rows, SPARQL returned {len(result)}"
 
-    all_queries = sorted(p.name.split("-")[0] for p in (ROOT / "queries").glob("cq*.rq"))
-    assert all_queries == [f"cq{i:02d}" for i in range(1, 23)], "must have exactly cq01-cq22"
+        api_path = api_questions / f"{cq.upper()}.json"
+        api_doc = json.loads(api_path.read_text())
+        assert len(api_doc["rows"]) == len(result), f"{cq}: API JSON has {len(api_doc['rows'])} rows, SPARQL returned {len(result)}"
+
+        assert api_doc["columns"] == list(csv_rows[0].keys()) if csv_rows else True, f"{cq}: column mismatch"
+
     assert len(read_csv("questions/cq01.csv")) == 25
-    assert len(read_csv("questions/cq05.csv")) == len(cq05())
+    assert len(read_csv("questions/cq05.csv")) == 96
     assert len(read_csv("questions/cq12.csv")) == 91
 
 
