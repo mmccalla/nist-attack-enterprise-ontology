@@ -94,6 +94,45 @@ def test_question_csvs_match_the_browser_answers():
     assert len(read_csv("questions/cq01.csv")) == 25 and len(read_csv("questions/cq12.csv")) == 91
 
 
+def test_each_cq_csv_matches_the_source_model_answer():
+    """Each of the 22 CQ CSV files must equal the independently computed answer (audit item 3, M10).
+
+    This proves that the user-visible answers (page and CSV) equal the pytest-verified answers.
+    The expected values come from tests/source_model.py, not from the pipeline.
+    """
+    src = sources()
+
+    def cq01():
+        return {(c, src.oscal[c]["title"], " ".join(sorted(src.baselines_of(c)))) for c in src.controls_for["T1078"]}
+
+    def cq05():
+        return {(r["attack_object_id"], src.techniques[r["attack_object_id"]]["name"],
+                 " ".join(sorted(src.attack_mitigations[r["attack_object_id"]])))
+                for r in src.rows if r["status"] == "non_mappable" and r["attack_object_id"] in src.techniques}
+
+    def cq12():
+        mapped = {r["attack_object_id"] for r in src.rows}
+        return {(t, src.techniques[t]["name"]) for t in set(src.techniques) - mapped}
+
+    expected = {
+        "cq01": (cq01, ["control", "title", "baselines"]),
+        "cq05": (cq05, ["technique", "name", "attackMitigations"]),
+        "cq12": (cq12, ["technique", "name"]),
+    }
+
+    for cq, (compute, cols) in expected.items():
+        rows = read_csv(f"questions/{cq}.csv")
+        actual = {tuple(r[c] for c in cols) for r in rows}
+        exp = compute()
+        assert actual == exp, f"{cq}: CSV has {len(actual)} rows, expected {len(exp)}"
+
+    all_queries = sorted(p.name.split("-")[0] for p in (ROOT / "queries").glob("cq*.rq"))
+    assert all_queries == [f"cq{i:02d}" for i in range(1, 23)], "must have exactly cq01-cq22"
+    assert len(read_csv("questions/cq01.csv")) == 25
+    assert len(read_csv("questions/cq05.csv")) == len(cq05())
+    assert len(read_csv("questions/cq12.csv")) == 91
+
+
 def test_export_guide_lists_each_file():
     guide = (EXPORTS / "README.md").read_text(encoding="utf-8")
     for p in EXPORTS.rglob("*"):
