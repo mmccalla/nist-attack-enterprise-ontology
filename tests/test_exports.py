@@ -146,6 +146,29 @@ def test_all_22_cq_answers_match_source_model():
             result.add(("NIST control", cid))
         return result
 
+    def cq07():
+        import re
+        import hashlib
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import build_population
+        ctid_data = build_population.fetch("ctid")
+        meta = ctid_data["metadata"]
+        attack_version = meta["attack_version"]
+        last_update = meta["last_update"]
+        manifest = (ROOT / "SOURCE-MANIFEST.md").read_text(encoding="utf-8")
+        ctid_row_manifest = next(line for line in manifest.splitlines() if "| ctid |" in line)
+        url_match = re.search(r"<(https://[^>]+)>", ctid_row_manifest)
+        sha_match = re.search(r"`([0-9a-f]{64})`", ctid_row_manifest)
+        file_url = url_match.group(1)
+        sha256_digest = sha_match.group(1)
+        result = set()
+        for n, r in enumerate(src.rows, 1):
+            if r["capability_id"] == "AC-02" and r["attack_object_id"] == "T1556.009":
+                row_id = f"assertion_{r['capability_id']}_{r['attack_object_id']}"
+                rationale = r["comments"] or ""
+                result.add((row_id, str(n), rationale, attack_version, last_update, file_url, sha256_digest))
+        return result
+
     def cq08():
         return {(str(n), r["capability_id"] or "", r["attack_object_id"], r["attack_object_name"] or "")
                 for n, r in enumerate(src.rows, 1) if r["attack_object_id"] not in src.techniques}
@@ -267,6 +290,7 @@ def test_all_22_cq_answers_match_source_model():
         "cq04": (cq04, ["technique", "name", "onlyControl"]),
         "cq05": (cq05, ["technique", "name", "attackMitigations"]),
         "cq06": (cq06, ["kind", "id"]),
+        "cq07": (cq07, ["row", "record", "rationale", "attackVersion", "lastUpdate", "file", "sha256"]),
         "cq08": (cq08, ["record", "control", "technique", "name"]),
         "cq09": (cq09, ["control", "technique", "rows"]),
         "cq10": (cq10, ["family", "tactic", "techniques"]),
@@ -284,8 +308,6 @@ def test_all_22_cq_answers_match_source_model():
         "cq22": (cq22, ["technique", "name", "cisSafeguards"]),
     }
 
-    no_independent_ref = ["cq07"]
-
     all_cqs = sorted(p.name.split("-")[0] for p in (ROOT / "queries").glob("cq*.rq"))
     assert all_cqs == [f"cq{i:02d}" for i in range(1, 23)], "must have exactly cq01-cq22"
 
@@ -297,16 +319,14 @@ def test_all_22_cq_answers_match_source_model():
         assert len(api_doc["rows"]) == len(csv_rows), f"{cq}: API has {len(api_doc['rows'])} rows, CSV has {len(csv_rows)}"
         assert api_doc["columns"] == list(csv_rows[0].keys()), f"{cq}: column mismatch between API and CSV"
 
-        if cq in expected_funcs:
-            compute, cols = expected_funcs[cq]
-            expected = compute()
-            assert len(expected) > 0, f"{cq}: expected answer is empty"
-            csv_set = {tuple(r[c] for c in cols) for r in csv_rows}
-            api_set = {tuple(row[api_doc["columns"].index(c)] or "" for c in cols) for row in api_doc["rows"]}
-            assert csv_set == expected, f"{cq}: CSV content mismatch, got {len(csv_set)} rows, expected {len(expected)}"
-            assert api_set == expected, f"{cq}: API JSON content mismatch"
-        else:
-            assert cq in no_independent_ref, f"{cq}: missing independent reference"
+        assert cq in expected_funcs, f"{cq}: missing independent reference (all 22 CQs required)"
+        compute, cols = expected_funcs[cq]
+        expected = compute()
+        assert len(expected) > 0, f"{cq}: expected answer is empty"
+        csv_set = {tuple(r[c] for c in cols) for r in csv_rows}
+        api_set = {tuple(row[api_doc["columns"].index(c)] or "" for c in cols) for row in api_doc["rows"]}
+        assert csv_set == expected, f"{cq}: CSV content mismatch, got {len(csv_set)} rows, expected {len(expected)}"
+        assert api_set == expected, f"{cq}: API JSON content mismatch"
 
     assert len(read_csv("questions/cq01.csv")) == 25
     assert len(read_csv("questions/cq05.csv")) == 96
