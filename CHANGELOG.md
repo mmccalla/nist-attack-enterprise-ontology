@@ -11,6 +11,8 @@ Docs only. No change to the version. No change to the data, the ontology or the 
 - Mark McCalla wrote the method in 2026.
 - The method uses published methods and standards.
 - A new file, `docs/references.md`, gives the APA references.
+- Each claim about a published source now matches a passage in that source.
+- A claim with no passage is the author's recommendation (McCalla, 2026).
 
 ## 2.8.3 (2026-11-14)
 
