@@ -174,6 +174,7 @@ These documents give the design and the tests:
 | [`docs/semantic-decisions.md`](docs/semantic-decisions.md) | Scope, source terms, ambiguities and design decisions |
 | [`docs/vocabulary-alignment.md`](docs/vocabulary-alignment.md) | The alignment to ATT&CK STIX, NIST OSCAL and UCO |
 | [`docs/evaluation.md`](docs/evaluation.md) | The test gates and their most recent results |
+| [`docs/references.md`](docs/references.md) | The published sources for the eight-stage method |
 | [`docs/security.md`](docs/security.md) | Threat model, controls and evidence |
 | [`docs/roadmap.md`](docs/roadmap.md) | Planned work |
 | [`docs/api.md`](docs/api.md) | The agent API: endpoints, fields and rules |

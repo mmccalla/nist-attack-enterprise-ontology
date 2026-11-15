@@ -1,6 +1,6 @@
 # Scope, semantic inventory and decisions
 
-This file holds the Stage 1 to 3 deliverables of the method in *A Practical Guide to Ontology Engineering*: the scope statement, the semantic inventory, the ambiguity register and the semantic decision log. Vocabulary reuse (Stage 4) is in [vocabulary-alignment.md](vocabulary-alignment.md). Competency questions are in [competency-questions.md](competency-questions.md). Gates and results (Stage 8) are in [evaluation.md](evaluation.md).
+This file has the scope statement, the semantic inventory, the ambiguity register and the semantic decision log. These are the Stage 1, Stage 2 and Stage 3 results of an eight-stage method. Mark McCalla wrote the method in 2026. The method is an unpublished guide. The method is the author's own synthesis. The author based the method on published methods and standards. Noy and McGuinness wrote Ontology Development 101 in 2001. Fernández-López, Gómez-Pérez and Juristo wrote METHONTOLOGY in 1997. Suárez-Figueroa, Gómez-Pérez and Fernández-López wrote the NeOn methodology in 2012. Noy, Gómez-Pérez and the W3C did not write the eight-stage method. The Stage 4 results are in [vocabulary-alignment.md](vocabulary-alignment.md). The competency questions are in [competency-questions.md](competency-questions.md). The Stage 8 results are in [evaluation.md](evaluation.md). The full references are in [references.md](references.md).
 
 ## Scope statement
 
@@ -26,7 +26,7 @@ Every file is checked against a SHA-256 digest in `scripts/build_population.py` 
 
 ## Semantic inventory
 
-How each source term is interpreted. The guide warns against converting source columns into classes mechanically; the right-hand column records the decision for each.
+This table shows how the project reads each source term. The author recommends that you do not make a class from a column with no analysis (McCalla, 2026). The right column gives the decision for each term.
 
 | Source term | Source | Interpretation | Ontology term |
 | --- | --- | --- | --- |
@@ -80,11 +80,11 @@ R1 withholds one claim today: row 637 maps SC-12 to T1521.003 SSL Pinning, which
 | D5 | One assertion per source row, identified by `:sourceRecordNumber`; IRIs from the pair plus an occurrence suffix (`assertion_CM-02_T1021.001_2`). | Merging identical rows: loses what the source said. Row-number IRIs (v2 `assertion_97`): not stable across source releases. |
 | D6 | Build the population from the full source (5410 rows) instead of the v2 sample (250 rows). | Keeping the sample: competency answers over 5 percent of the rows would mislead. The v2 sample stays in `ontology/v2/` unchanged. |
 | D7 | Model ATT&CK mitigations and their links as separate terms from NIST controls and claims. | `owl:equivalentClass` between `:SecurityControl` and ATT&CK mitigations, or one shared mitigates property: different concepts and publishers (A7). |
-| D8 | Model sub-techniques with `:subTechniqueOf`, a sub-property of `skos:broader`, read from STIX `subtechnique-of`. | `rdfs:subClassOf`: techniques are individuals, and the guide warns against treating SKOS broader as subclass. Deriving the parent from the ID pattern (the v1 viewer did): not authoritative. |
+| D8 | Model sub-techniques with `:subTechniqueOf`, a sub-property of `skos:broader`, read from STIX `subtechnique-of`. | `rdfs:subClassOf`: techniques are individuals. RDF Schema 1.1 (section 3.4) uses `rdfs:subClassOf` to state that all instances of one class are instances of another. The SKOS Reference (section 1.3) uses `skos:broader` for a link between concepts. It does not use that link as a class axiom. The parent from the ID pattern is not authoritative. The v1 viewer used that pattern. |
 | D9 | Put each external alignment in its own module (`alignment-stix.ttl`, `alignment-oscal.ttl`, `alignment-uco.ttl`). | Folding alignments into `core.ttl`: couples the core to three external release cycles; NeOn favours networked modules. |
 | D10 | Keep readable IRIs (`control_AC-02`) rather than UUID IRIs. UCO's `core:UcoThing-identifier-regex-shape` reports them at severity Info, and that shape's own comment allows deactivation where identifiers are controlled. | UUID IRIs: unreadable in the graph browser and in SPARQL, with no competency question that needs them. |
 | D11 | Remove the per-node SPARQL constraints from class shapes and run them as whole-graph rules targeting the mapping dataset. | Per-node SPARQL: pySHACL runs it once per focus node; validation took 236 seconds against 22 seconds now. |
-| D12 | Deprecate `:KnowledgeGraph`. | Keeping an unused class: the guide lists excessive scope as an anti-pattern. |
+| D12 | Deprecate `:KnowledgeGraph`. | An unused class makes the scope too large. Noy and McGuinness (2001, section 4.7) give rules to limit the scope of an ontology. |
 | D13 | Reason over the full population with a profile that drops number restrictions and `owl:hasValue` restrictions; reason with the full TBox on a slice (one claim chain and one non-mappable row) and enforce those restrictions with SHACL on the whole population. | Full TBox on the full population: with thousands of rows pointing at the same few vocabulary individuals, HermiT's tableau grew exponentially (30 subjects in 6 seconds, 120 subjects past 90 seconds). Under open-world semantics these restrictions add almost no detectable inconsistency that SHACL does not already catch. Dropping them altogether: they document intent and are tested on the slice. |
 | D14 | Give the reasoner OWL only: remove SHACL triples and their blank-node structures before HermiT runs. UCO core's shapes are applied by pySHACL in the alignment gate instead. | Reasoning over UCO core as published: UCO puns each class as a SHACL node shape, and HermiT read those structures as anonymous individuals. The full-population check ran for more than 15 minutes; without the shapes it takes under a minute. |
 

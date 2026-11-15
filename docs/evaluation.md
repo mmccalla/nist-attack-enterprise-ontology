@@ -1,6 +1,6 @@
 # Evaluation
 
-The Stage 8 deliverable of *A Practical Guide to Ontology Engineering*. The guide asks for separate automated gates for logical consistency, data conformance and factual verification, and for competency coverage measured as expected against actual answers. Each gate below has negative probes: changes that break one rule and must make the gate fail. A gate that cannot run fails; it never passes by default.
+This file is the Stage 8 result of an eight-stage method. Mark McCalla wrote the method in 2026. The method is an unpublished guide. The method is the author's own synthesis. The author recommends separate automatic checks (McCalla, 2026). Use one check for logical consistency. Use one check for data conformance. Use one check for factual verification. Grüninger and Fox (1995) test the competency of an ontology against its competency questions. The author recommends that you compare the expected answers with the actual answers (McCalla, 2026). Each gate below has negative probes. A negative probe is a change that breaks one rule. The gate must fail for that change. A gate that cannot run fails. A gate does not pass by default. The full references are in [references.md](references.md).
 
 ## Gates
 
@@ -63,7 +63,7 @@ Run on an Apple M4 Mac with Python 3.14, rdflib 7.6.0, pySHACL 0.40.1, owlready2
 
 ## Semantic correctness
 
-The guide lists domain expert verification as its own dimension, and no automated gate replaces it. The competency answers in [competency-questions.md](competency-questions.md) are as good as the CTID mapping and should be reviewed by a security architect before they drive a control decision. The alignment decisions in [vocabulary-alignment.md](vocabulary-alignment.md) should be reviewed by someone who maintains a UCO, STIX or OSCAL integration.
+The author recommends a review by a domain expert (McCalla, 2026). No automatic gate replaces that review. The competency answers in [competency-questions.md](competency-questions.md) are as good as the CTID mapping and should be reviewed by a security architect before they drive a control decision. The alignment decisions in [vocabulary-alignment.md](vocabulary-alignment.md) should be reviewed by someone who maintains a UCO, STIX or OSCAL integration.
 
 ## Governance
 
